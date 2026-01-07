@@ -11,7 +11,7 @@ export function Hero() {
   const videoUrl = "https://player.vimeo.com/external/517090025.sd.mp4?s=d01072a2e485459345c70752179659a224a0d9b5&profile_id=165&oauth2_token_id=57447761";
 
   return (
-    <section className="relative min-h-[90vh] flex items-center bg-background border-b border-border pl-2 pr-2 lg:pl-32 lg:pr-32">
+    <section className="relative min-h-[90vh] flex items-center bg-white border-b border-border pl-2 pr-2 lg:pl-32 lg:pr-32">
       <div className="container relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-24 lg:gap-20 items-center py-20">
 
@@ -34,21 +34,20 @@ export function Hero() {
               transition={{ delay: 0.1 }}
               className="text-[40px] sm:text-[64px] font-bold text-foreground tracking-tight leading-[1] mb-6"
             >
-              The open-source <br />
+              An open-source <br />
               <span className="text-muted-foreground">
-                audio guide player
-                <motion.span
-                  animate={{ opacity: [1, 0] }}
-                  transition={{
-                    duration: 1,
-                    repeat: Infinity,
-                    ease: (v) => v < 0.5 ? 0 : 1
-                  }}
-                  className="ml-0.5 inline-block"
-                >
-                  _
-                </motion.span>
-              </span>
+                audio guide player</span> for museums
+              <motion.span
+                animate={{ opacity: [1, 0] }}
+                transition={{
+                  duration: 1,
+                  repeat: Infinity,
+                  ease: (v) => v < 0.5 ? 0 : 1
+                }}
+                className="ml-0.5 inline-block"
+              >
+                _
+              </motion.span>
             </motion.h1>
 
             {/* Subheadline */}

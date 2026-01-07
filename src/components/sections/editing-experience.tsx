@@ -6,18 +6,18 @@ export function EditingExperience() {
     <section className="relative py-32 bg-background border-b border-border overflow-hidden">
       <div className="max-w-[1000px] mx-auto px-4 sm:px-8">
         <div className="flex flex-col gap-24">
-            {/* Section Heading */}
-            <div className="flex flex-col items-start lg:items-center">
-              <div className="max-w-[800px] w-full">
-                <span className="inline-flex items-center px-2 py-0.5 text-[10px] font-mono font-medium tracking-widest text-muted-foreground bg-secondary uppercase border border-border rounded">
-                  CONFIGURABILITY
-                </span>
-                <h2 className="mt-6 text-[32px] sm:text-[48px] font-bold text-foreground tracking-tight leading-tight">
-                  A developer-friendly workflow.<br />
-                  <span className="text-muted-foreground text-[28px] sm:text-[36px]">Everything lives in your git repo.</span>
-                </h2>
-              </div>
+          {/* Section Heading */}
+          <div className="flex flex-col items-start lg:items-center">
+            <div className="max-w-[800px] w-full">
+              <span className="inline-flex items-center px-2 py-0.5 text-[10px] font-mono font-medium tracking-widest text-muted-foreground bg-secondary uppercase border border-border rounded">
+                CONFIGURABILITY
+              </span>
+              <h2 className="mt-6 text-[32px] sm:text-[48px] font-bold text-foreground tracking-tight leading-tight">
+                A developer-friendly workflow.<br />
+                <span className="text-muted-foreground text-[28px] sm:text-[36px]">Everything lives in your git repo.</span>
+              </h2>
             </div>
+          </div>
 
           {/* Block 1: Tour Content */}
           <div className="flex flex-col items-start lg:items-center">
@@ -29,7 +29,7 @@ export function EditingExperience() {
               </p>
             </div>
             <div className="w-full relative">
-              <div className="w-full bg-secondary/30 border border-border rounded-xl overflow-hidden shadow-2xl mockup-shadow">
+              <div className="w-full bg-white/30 border border-border rounded-xl overflow-hidden shadow-2xl mockup-shadow">
                 <div className="bg-secondary/50 border-b border-border px-4 py-3 flex items-center justify-between">
                   <div className="flex gap-1.5">
                     <div className="w-3 h-3 rounded-full bg-red-500/20 border border-red-500/30" />
@@ -75,7 +75,7 @@ export function EditingExperience() {
               </p>
             </div>
             <div className="w-full relative">
-              <div className="w-full bg-secondary/30 border border-border rounded-xl overflow-hidden shadow-2xl mockup-shadow">
+              <div className="w-full bg-white/30 border border-border rounded-xl overflow-hidden shadow-2xl mockup-shadow">
                 <div className="bg-secondary/50 border-b border-border px-4 py-3 flex items-center justify-between">
                   <div className="flex gap-1.5">
                     <div className="w-3 h-3 rounded-full bg-red-500/20 border border-red-500/30" />
@@ -117,7 +117,7 @@ export function EditingExperience() {
               </p>
             </div>
             <div className="w-full relative">
-              <div className="w-full bg-secondary/30 border border-border rounded-xl overflow-hidden shadow-2xl mockup-shadow">
+              <div className="w-full bg-white/30 border border-border rounded-xl overflow-hidden shadow-2xl mockup-shadow">
                 <div className="bg-secondary/50 border-b border-border px-4 py-3 flex items-center justify-between">
                   <div className="flex gap-1.5">
                     <div className="w-3 h-3 rounded-full bg-red-500/20 border border-red-500/30" />
