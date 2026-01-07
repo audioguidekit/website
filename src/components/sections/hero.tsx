@@ -6,6 +6,7 @@ import { PhoneFrame } from '@/components/ui/phone-frame';
 import { ProjectStatusShowcase } from './project-status-showcase';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import { Typewriter } from '@/components/ui/typewriter';
 
 export function Hero() {
   const videoUrl = "https://player.vimeo.com/external/517090025.sd.mp4?s=d01072a2e485459345c70752179659a224a0d9b5&profile_id=165&oauth2_token_id=57447761";
@@ -36,7 +37,8 @@ export function Hero() {
             >
               An open-source <br />
               <span className="text-muted-foreground">
-                audio guide player</span> for museums
+                audio guide player</span> for{' '}
+              <Typewriter words={['museums', 'galleries', 'exhibitions']} />
               <motion.span
                 animate={{ opacity: [1, 0] }}
                 transition={{
