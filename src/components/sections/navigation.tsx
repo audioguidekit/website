@@ -24,7 +24,7 @@ export function Navigation() {
       <div className="w-full max-w-[1400px] bg-background/20 backdrop-blur-md border-b border-x border-border h-16 flex items-center justify-between px-4 sm:px-8 pointer-events-auto relative">
 
           <Link href="/" className="flex items-center group" aria-label="Audio Tour Home">
-            <Logo className="h-6 w-auto transition-transform group-hover:scale-105" />
+            <Logo className="transition-transform group-hover:scale-105" />
           </Link>
 
 

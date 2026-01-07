@@ -7,15 +7,15 @@ interface LogoProps extends React.SVGProps<SVGSVGElement> {
 
 export function Logo({ className, ...props }: LogoProps) {
   return (
-    <svg
-      width="209"
-      height="38"
-      viewBox="0 0 209 38"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={cn("h-8 w-auto", className)}
-      {...props}
-    >
+      <svg
+        width="140"
+        height="25"
+        viewBox="0 0 209 38"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className={cn("w-[140px] h-auto", className)}
+        {...props}
+      >
       <path
         d="M201.261 24.2L208.701 23.8V29.4L198.261 29.8C196.061 29.88 194.861 28.6 194.861 26.4V14.8H190.061V9.20003H194.861V5.40002L201.261 3.40002V9.20003H207.901V14.8H201.261V24.2Z"
         fill="currentColor"

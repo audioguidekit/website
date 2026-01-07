@@ -22,7 +22,7 @@ export function Footer() {
       <div className="max-w-[1000px] mx-auto px-4 sm:px-8">
         <div className="flex flex-col md:flex-row justify-between items-start gap-12">
             <div className="space-y-4">
-              <Logo className="h-6 w-auto" />
+              <Logo />
               <p className="text-muted-foreground text-[14px] leading-relaxed max-w-[300px]">
 
               Open-source audio guide player for museums, galleries, and exhibitions. Reliable audio, offline support, wide customization and easy self-hosting.
