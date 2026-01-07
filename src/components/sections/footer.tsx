@@ -1,4 +1,5 @@
 import React from 'react';
+import { Logo } from '@/components/ui/logo';
 
 const steps = [
   "Clone repo",
@@ -20,14 +21,10 @@ export function Footer() {
     <footer className="w-full max-w-[1400px] bg-background py-24 border-x border-border mx-auto">
       <div className="max-w-[1000px] mx-auto px-4 sm:px-8">
         <div className="flex flex-col md:flex-row justify-between items-start gap-12">
-          <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <div className="w-6 h-6 bg-primary rounded flex items-center justify-center">
-                <span className="font-mono font-bold text-primary-foreground text-xs">A</span>
-              </div>
-              <span className="font-mono font-bold text-foreground text-sm tracking-tight uppercase">Audio Tour</span>
-            </div>
-            <p className="text-muted-foreground text-[14px] leading-relaxed max-w-[300px]">
+            <div className="space-y-4">
+              <Logo className="h-6 w-auto" />
+              <p className="text-muted-foreground text-[14px] leading-relaxed max-w-[300px]">
+
               Open-source audio guide player for museums, galleries, and exhibitions. Reliable audio, offline support, wide customization and easy self-hosting.
             </p>
           </div>

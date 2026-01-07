@@ -5,6 +5,7 @@ import { Github } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
+import { Logo } from '@/components/ui/logo';
 
 /**
  * Navigation Component for the Audio Tour project.
@@ -22,12 +23,10 @@ export function Navigation() {
     <nav className="fixed top-0 left-0 right-0 z-50 flex justify-center pointer-events-none">
       <div className="w-full max-w-[1400px] bg-background/20 backdrop-blur-md border-b border-x border-border h-16 flex items-center justify-between px-4 sm:px-8 pointer-events-auto relative">
 
-        <Link href="/" className="flex items-center gap-2 group" aria-label="Audio Tour Home">
-          <div className="w-8 h-8 bg-primary rounded flex items-center justify-center transition-transform group-hover:scale-105">
-            <span className="font-mono font-bold text-primary-foreground text-lg">A</span>
-          </div>
-          <span className="font-mono font-bold text-foreground hidden sm:block tracking-tight">AudioTour Player</span>
-        </Link>
+          <Link href="/" className="flex items-center group" aria-label="Audio Tour Home">
+            <Logo className="h-6 w-auto transition-transform group-hover:scale-105" />
+          </Link>
+
 
         <div className="flex items-center gap-6 sm:gap-8">
           {navLinks.map((link) => {
