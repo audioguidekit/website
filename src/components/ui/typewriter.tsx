@@ -12,8 +12,8 @@ interface TypewriterProps {
 
 export function Typewriter({
   words,
-  typingSpeed = 150,
-  deletingSpeed = 80,
+  typingSpeed = 190,
+  deletingSpeed = 100,
   delayBeforeDelete = 2000,
   delayBeforeNextWord = 500,
 }: TypewriterProps) {
