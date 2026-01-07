@@ -1,0 +1,7 @@
+{
+  "projectId": "152de46f-a71a-474c-bfbf-e72a6535956f",
+  "createdAt": 1767778948316,
+  "startupCommands": [
+    "./node_modules/.bin/next dev --port 3001"
+  ]
+}
