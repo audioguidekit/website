@@ -7,6 +7,7 @@ import { ProjectStatusShowcase } from './project-status-showcase';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { Typewriter } from '@/components/ui/typewriter';
+import { TerminalCopy } from '@/components/ui/terminal-copy';
 
 export function Hero() {
   const videoUrl = "https://player.vimeo.com/external/517090025.sd.mp4?s=d01072a2e485459345c70752179659a224a0d9b5&profile_id=165&oauth2_token_id=57447761";
@@ -93,21 +94,25 @@ export function Hero() {
             </motion.div>
 
             {/* Promise */}
-            <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-              className="mt-4 text-[13px] text-muted-foreground flex items-center gap-2 px-1"
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              Get audio playing locally in under 5 minutes.
-            </motion.p>
+            <div className="flex flex-col sm:flex-row items-center gap-4 mt-6">
+              <TerminalCopy command="npx create-audio-guide@latest" />
+              
+              <motion.p
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+                className="text-[13px] text-muted-foreground flex items-center gap-2 px-1"
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                Get audio playing locally in under 5 minutes.
+              </motion.p>
+            </div>
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
-              className="mt-6 w-full"
+              className="mt-10 w-full"
             >
               <ProjectStatusShowcase />
             </motion.div>
