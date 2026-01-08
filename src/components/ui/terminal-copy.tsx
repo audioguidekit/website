@@ -28,16 +28,17 @@ export function TerminalCopy({ command, className }: TerminalCopyProps) {
   return (
     <button
       onClick={copyToClipboard}
-      className={cn(
-        "group relative flex items-center gap-3 px-4 py-2 rounded-full border border-border bg-background transition-all hover:bg-secondary/50 cursor-copy font-mono text-[13px] text-muted-foreground",
-        className
-      )}
-      aria-label={`Copy ${command} command`}
-    >
-      <div className="flex items-center gap-2">
-        <span className="text-foreground/50">▲ ~</span>
-        <span>{command}</span>
-      </div>
+    className={cn(
+      "group relative flex items-center gap-3 cursor-copy font-mono text-[13px] text-muted-foreground hover:text-foreground transition-colors py-1",
+      className
+    )}
+    aria-label={`Copy ${command} command`}
+  >
+    <div className="flex items-center gap-2">
+      <span className="text-foreground/30 font-bold">▲</span>
+      <span className="text-foreground/30 font-bold">~</span>
+      <span>{command}</span>
+    </div>
       
       <div className="relative flex items-center justify-center w-4 h-4">
         <AnimatePresence mode="wait">
