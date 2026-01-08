@@ -14,10 +14,11 @@ import { Logo } from '@/components/ui/logo';
 export function Navigation() {
   const pathname = usePathname();
 
-  const navLinks = [
-    { name: 'Blog', href: '/blog' },
-    { name: 'Changelog', href: '/changelog' },
-  ];
+    const navLinks = [
+      { name: 'Blog', href: '/blog' },
+      { name: 'Changelog', href: '/changelog' },
+      { name: 'Documentation', href: '/docs', kbd: 'D' },
+    ];
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 flex justify-center pointer-events-none">
@@ -39,12 +40,17 @@ export function Navigation() {
                   "text-[13px] font-mono font-medium transition-colors relative flex items-center h-16 group",
                   isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"
                 )}
-              >
-                {link.name}
-                {isActive && (
-                  <span className="absolute bottom-0 left-0 w-full h-[2px] bg-primary shadow-[0_-1px_4px_rgba(var(--primary),0.5)]" />
-                )}
-              </Link>
+                >
+                  {link.name}
+                  {link.kbd && (
+                    <kbd className="hidden md:inline-flex items-center justify-center size-5 text-[10px] font-mono font-bold bg-foreground/5 text-muted-foreground rounded border border-border ml-2 group-hover:text-foreground transition-colors">
+                      {link.kbd}
+                    </kbd>
+                  )}
+                  {isActive && (
+                    <span className="absolute bottom-0 left-0 w-full h-[2px] bg-primary shadow-[0_-1px_4px_rgba(var(--primary),0.5)]" />
+                  )}
+                </Link>
             );
           })}
 

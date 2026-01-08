@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { ArrowRight, Github, Play } from 'lucide-react';
+import { ArrowRight, Github, BookOpen } from 'lucide-react';
 import { PhoneFrame } from '@/components/ui/phone-frame';
 import { ProjectStatusShowcase } from './project-status-showcase';
 import { motion } from 'framer-motion';
@@ -71,17 +71,23 @@ export function Hero() {
             >
               <a
                 href="https://github.com"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-3 rounded-full text-[14px] font-medium transition-all hover:opacity-90 shadow-soft"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-3 rounded-full text-[14px] font-medium transition-all hover:opacity-90 shadow-soft group"
               >
                 <Github className="w-4 h-4" />
                 View GitHub
+                <kbd className="hidden md:inline-flex items-center justify-center size-5 text-[10px] font-mono font-bold bg-background/20 text-background rounded border border-white/20 ml-1">
+                  G
+                </kbd>
               </a>
               <a
-                href="/demo"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-background text-foreground border border-border px-8 py-3 rounded-full text-[14px] font-medium transition-all hover:bg-secondary"
+                href="/docs"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-background text-foreground border border-border px-8 py-3 rounded-full text-[14px] font-medium transition-all hover:bg-secondary group"
               >
-                <Play className="w-3 h-3 fill-current" />
-                Live Demo
+                <BookOpen className="w-4 h-4" />
+                Documentation
+                <kbd className="hidden md:inline-flex items-center justify-center size-5 text-[10px] font-mono font-bold bg-foreground/5 text-muted-foreground rounded border border-border ml-1">
+                  D
+                </kbd>
                 <ArrowRight className="w-4 h-4 ml-1" />
               </a>
             </motion.div>

@@ -17,6 +17,10 @@ export function KeyboardShortcuts() {
       if (event.key.toLowerCase() === 'g') {
         window.location.href = 'https://github.com';
       }
+
+      if (event.key.toLowerCase() === 'd') {
+        window.location.href = '/docs';
+      }
     };
 
     window.addEventListener('keydown', handleKeyDown);
