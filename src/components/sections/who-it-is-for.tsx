@@ -5,7 +5,12 @@ const users = [
   "A museum, gallery, or any other cultural venue needing audio guide",
   "A developer building a city audio guide or walking tour",
   "An agency prototyping a tourism audio product",
-  "An indie project that needs solid mobile audio UX fast"
+  "An indie project that needs solid mobile audio UX fast",
+  "A botanical garden or nature reserve with poor cellular connectivity",
+  "A historical society mapping out local heritage walks and landmarks",
+  "A university providing self-guided campus tours for prospective students",
+  "A curator building a lightweight companion for a temporary art exhibition",
+  "A tourism board creating regional driving or walking tour narratives"
 ];
 
 export function WhoItIsFor() {
