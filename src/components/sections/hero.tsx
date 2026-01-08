@@ -92,11 +92,22 @@ export function Hero() {
               </a>
             </motion.div>
 
+            {/* Promise */}
+            <motion.p
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              className="mt-4 text-[13px] text-muted-foreground flex items-center gap-2 px-1"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              Get audio playing locally in under 5 minutes.
+            </motion.p>
+
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-              className="mt-4 w-full"
+              transition={{ delay: 0.5 }}
+              className="mt-6 w-full"
             >
               <ProjectStatusShowcase />
             </motion.div>

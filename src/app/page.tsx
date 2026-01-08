@@ -16,11 +16,11 @@ export default function LandingPage() {
       <Navigation />
       <main className="w-full max-w-[1400px] border-x border-border relative pt-16 bg-background">
         <Hero />
+        <WhoItIsFor />
         <CoreFeatures />
-        <HowItWorks />
         <AppShowcase />
         <EditingExperience />
-        <WhoItIsFor />
+        <HowItWorks />
         <Philosophy />
         <FAQ />
       </main>
