@@ -1,0 +1,219 @@
+---
+title: "UI Translations"
+description: "Customizing interface text and button labels"
+---
+
+# UI translations
+
+Beyond your tour content, AudioGuideKit's interface—buttons, labels, and messages—also needs translation. The good news: most of this is already done for you.
+
+## Built-in translations
+
+AudioGuideKit includes UI translations for 6 languages out of the box:
+
+| Language | Code | Status |
+|----------|------|--------|
+| English | `en` | Complete |
+| Czech | `cs` | Complete |
+| German | `de` | Complete |
+| French | `fr` | Complete |
+| Italian | `it` | Complete |
+| Spanish | `es` | Complete |
+
+If your tour uses any of these languages, the interface automatically translates.
+
+## How it works
+
+UI translations are stored in `src/translations/locales/`. Each language has its own file:
+
+```
+src/translations/locales/
+├── en.ts    # English UI strings
+├── cs.ts    # Czech UI strings
+├── de.ts    # German UI strings
+├── fr.ts    # French UI strings
+├── it.ts    # Italian UI strings
+└── es.ts    # Spanish UI strings
+```
+
+When a visitor selects a language, AudioGuideKit:
+
+1. Loads their tour content (`en.json`, etc.)
+2. Loads matching UI translations (`en.ts`)
+3. Falls back to default language if UI translation is missing
+
+## What gets translated
+
+Here's what the UI translation files contain:
+
+| Key | English | Spanish |
+|-----|---------|---------|
+| `startTour` | Start Tour | Iniciar Tour |
+| `continueTour` | Continue | Continuar |
+| `downloading` | Downloading... | Descargando... |
+| `downloadComplete` | Downloaded | Descargado |
+| `offlineAvailable` | Available offline | Disponible sin conexión |
+| `settings` | Settings | Configuración |
+| `language` | Language | Idioma |
+| `about` | About | Acerca de |
+
+## Customizing UI text
+
+To modify the built-in translations, edit the files in `src/translations/locales/`.
+
+### Example: Changing "start tour" to "begin journey"
+
+Edit `src/translations/locales/en.ts`:
+
+```typescript
+export const en = {
+  // ...
+  startTour: 'Begin Journey',  // Changed from 'Start Tour'
+  // ...
+};
+```
+
+<Note>
+Changes to UI translations require rebuilding the app. Run `bun run build` after editing.
+</Note>
+
+## Adding a new language
+
+If you need a language that isn't included, you can add it:
+
+<Steps>
+  <Step title="Create the locale file">
+    Create `src/translations/locales/pt.ts` (for Portuguese):
+
+    ```typescript
+    export const pt = {
+      startTour: 'Iniciar Tour',
+      continueTour: 'Continuar',
+      downloading: 'Baixando...',
+      downloadComplete: 'Baixado',
+      offlineAvailable: 'Disponível offline',
+      settings: 'Configurações',
+      language: 'Idioma',
+      about: 'Sobre',
+      // ... add all required keys
+    };
+    ```
+  </Step>
+  <Step title="Register the locale">
+    Add your locale to `src/translations/index.ts`:
+
+    ```typescript
+    import { pt } from './locales/pt';
+
+    export const locales = {
+      en,
+      cs,
+      de,
+      fr,
+      it,
+      es,
+      pt,  // Add new language
+    };
+    ```
+  </Step>
+  <Step title="Add language metadata">
+    Update `src/services/tourDiscovery.ts` to include display info:
+
+    ```typescript
+    const languageMetadata = {
+      // ...existing languages...
+      pt: { name: 'Português', flag: '🇵🇹', countryCode: 'PT' },
+    };
+    ```
+  </Step>
+</Steps>
+
+## Translation file structure
+
+Here's the complete structure of a UI translation file:
+
+```typescript
+export const en = {
+  // Tour actions
+  startTour: 'Start Tour',
+  continueTour: 'Continue',
+  replayTour: 'Replay',
+
+  // Offline
+  downloadForOffline: 'Download for Offline',
+  downloading: 'Downloading...',
+  downloadComplete: 'Downloaded',
+  offlineAvailable: 'Available offline',
+  offlineRequired: 'Download required',
+
+  // Player
+  play: 'Play',
+  pause: 'Pause',
+  skipForward: 'Skip forward',
+  skipBack: 'Skip back',
+  showTranscript: 'Show transcript',
+  hideTranscript: 'Hide transcript',
+
+  // Navigation
+  settings: 'Settings',
+  language: 'Language',
+  about: 'About',
+  back: 'Back',
+
+  // Feedback
+  rateYourExperience: 'Rate your experience',
+  submitRating: 'Submit',
+  thankYou: 'Thank you!',
+
+  // Errors
+  errorLoading: 'Error loading tour',
+  tryAgain: 'Try again',
+  noInternet: 'No internet connection',
+
+  // Misc
+  minutesAbbrev: 'mins',
+  stops: 'stops',
+};
+```
+
+## Graceful fallback
+
+If you create a tour in a language without UI translations (say, Portuguese), AudioGuideKit handles it gracefully:
+
+- Tour content displays in Portuguese
+- UI buttons/labels display in the default language
+- No errors are shown to the visitor
+
+This means you can add tours in any language, even without complete UI support.
+
+## Language selector display
+
+The language selector shows each language with:
+
+- **Flag icon** (SVG from country-flag-icons package)
+- **Native language name** ("Deutsch", not "German")
+
+This information comes from `languageMetadata` in `src/services/tourDiscovery.ts`:
+
+```typescript
+const languageMetadata = {
+  en: { name: 'English', flag: '🇬🇧', countryCode: 'GB' },
+  de: { name: 'Deutsch', flag: '🇩🇪', countryCode: 'DE' },
+  es: { name: 'Español', flag: '🇪🇸', countryCode: 'ES' },
+  // ...
+};
+```
+
+<Tip>
+Use the native language name ("Español" not "Spanish") so visitors can recognize their language even if the current UI is in a different language.
+</Tip>
+
+## RTL language support
+
+Right-to-left languages (Arabic, Hebrew) are not currently supported. This is a planned future enhancement.
+
+If you need RTL support, you'll need to:
+1. Add CSS for RTL layout
+2. Conditionally apply RTL direction based on language
+3. Test thoroughly for layout issues
+

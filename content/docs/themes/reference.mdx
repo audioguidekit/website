@@ -1,0 +1,554 @@
+---
+title: "Theme Reference"
+description: "Complete list of all theme properties"
+---
+
+# Theme reference
+
+This is the complete reference for all theme properties. Use it alongside the [Custom Themes](/docs/themes/custom) guide.
+
+## Theme metadata
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `id` | string | Unique identifier for the theme |
+| `name` | string | Display name |
+| `description` | string | Optional description |
+
+```typescript
+{
+  id: 'my-theme',
+  name: 'My Theme',
+  description: 'A brief description',
+}
+```
+
+---
+
+## Header
+
+Controls the top navigation bar.
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `backgroundColor` | color | Top bar background |
+| `iconColor` | color | Home button and settings icon |
+| `textColor` | color | Remaining time text |
+| `timeFontSize` | string | Remaining time font size |
+| `timeFontWeight` | string | Remaining time font weight |
+| `progressBar.backgroundColor` | color | Progress track (unfilled) |
+| `progressBar.highlightColor` | color | Progress fill (completed) |
+
+```typescript
+header: {
+  backgroundColor: '#FFFFFF',
+  iconColor: '#6366F1',
+  textColor: '#111827',
+  timeFontSize: '14px',
+  timeFontWeight: '600',
+  progressBar: {
+    backgroundColor: '#E5E7EB',
+    highlightColor: '#6366F1',
+  },
+}
+```
+
+---
+
+## Main content
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `backgroundColor` | color | Background behind all content |
+
+```typescript
+mainContent: {
+  backgroundColor: '#F9FAFB',
+}
+```
+
+---
+
+## Cards
+
+Controls all content cards (audio stops, text, email, rating).
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `backgroundColor` | color | Card background |
+| `textColor` | color | Main text color |
+| `borderColor` | color | Card border |
+| `borderRadius` | string | Corner rounding (e.g., `'12px'`) |
+| `shadow` | string | Drop shadow |
+| `titleFontSize` | string | Card title size |
+| `titleFontWeight` | string | Card title weight |
+| `durationBadgeFontSize` | string | Duration badge font size |
+| `numberFontSize` | string | Step number size |
+| `numberFontWeight` | string | Step number weight |
+| `image.placeholderColor` | color | Image loading placeholder |
+| `image.durationBadgeBackground` | color | Badge overlay on images |
+| `image.durationBadgeText` | color | Badge text color |
+
+```typescript
+cards: {
+  backgroundColor: '#FFFFFF',
+  textColor: '#111827',
+  borderColor: '#E5E7EB',
+  borderRadius: '12px',
+  shadow: '0 2px 15px rgba(0,0,0,0.1)',
+  titleFontSize: '18px',
+  titleFontWeight: '600',
+  durationBadgeFontSize: '14px',
+  numberFontSize: '14px',
+  numberFontWeight: '600',
+  image: {
+    placeholderColor: '#E5E7EB',
+    durationBadgeBackground: 'rgba(0,0,0,0.6)',
+    durationBadgeText: '#FFFFFF',
+  },
+}
+```
+
+---
+
+## Step indicators
+
+Controls the circular progress indicators.
+
+### Active (current step)
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `outlineColor` | color | Circle border |
+| `numberColor` | color | Number text |
+| `backgroundColor` | color | Circle fill |
+
+### Inactive (future steps)
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `borderColor` | color | Circle border |
+| `numberColor` | color | Number text |
+| `backgroundColor` | color | Circle fill |
+
+### Completed
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `backgroundColor` | color | Circle fill (solid) |
+| `checkmarkColor` | color | Checkmark icon |
+
+```typescript
+stepIndicators: {
+  active: {
+    outlineColor: '#6366F1',
+    numberColor: '#6366F1',
+    backgroundColor: '#EEF2FF',
+  },
+  inactive: {
+    borderColor: '#E5E7EB',
+    numberColor: '#9CA3AF',
+    backgroundColor: '#F9FAFB',
+  },
+  completed: {
+    backgroundColor: '#6366F1',
+    checkmarkColor: '#FFFFFF',
+  },
+}
+```
+
+---
+
+## Buttons
+
+### Primary button
+
+Used for main actions (Start Tour, Continue, Submit).
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `backgroundColor` | color | Button background |
+| `textColor` | color | Button text |
+| `hoverBackground` | color | Background on press/hover |
+| `iconColor` | color | Icon color |
+| `fontSize` | string | Text size |
+| `fontWeight` | string | Text weight |
+| `fontFamily` | string[] | Optional custom font |
+
+### Secondary button
+
+Used for secondary actions (Cancel, Skip).
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `backgroundColor` | color | Button background |
+| `textColor` | color | Button text |
+| `borderColor` | color | Button border |
+| `hoverBackground` | color | Background on press/hover |
+| `fontSize` | string | Text size |
+| `fontWeight` | string | Text weight |
+| `fontFamily` | string[] | Optional custom font |
+
+### Download button
+
+Full-width outline button for offline download.
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `backgroundColor` | color | Usually `'transparent'` |
+| `textColor` | color | Button text |
+| `borderColor` | color | Button border |
+| `hoverBackground` | color | Background on press/hover |
+| `iconColor` | color | Download icon |
+| `fontSize` | string | Text size |
+| `fontWeight` | string | Text weight |
+| `fontFamily` | string[] | Optional custom font |
+
+### Transcription button
+
+Circular button in the mini player.
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `backgroundColor` | color | Button background |
+| `iconColor` | color | Icon color |
+| `hoverBackground` | color | Background on press/hover |
+
+```typescript
+buttons: {
+  primary: {
+    backgroundColor: '#6366F1',
+    textColor: '#FFFFFF',
+    hoverBackground: '#4F46E5',
+    iconColor: '#FFFFFF',
+    fontSize: '18px',
+    fontWeight: '600',
+  },
+  secondary: {
+    backgroundColor: '#F9FAFB',
+    textColor: '#111827',
+    borderColor: '#E5E7EB',
+    hoverBackground: '#F3F4F6',
+    fontSize: '16px',
+    fontWeight: '500',
+  },
+  download: {
+    backgroundColor: 'transparent',
+    textColor: '#6366F1',
+    borderColor: '#6366F1',
+    hoverBackground: 'rgba(99, 102, 241, 0.1)',
+    iconColor: '#6366F1',
+    fontSize: '18px',
+    fontWeight: '600',
+  },
+  transcription: {
+    backgroundColor: '#FFFFFF',
+    iconColor: '#6366F1',
+    hoverBackground: '#F3F4F6',
+  },
+}
+```
+
+---
+
+## Typography
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `fontFamily.sans` | string[] | Body text font |
+| `fontFamily.heading` | string[] | Headlines font (optional) |
+| `fontFamily.numbers` | string[] | Numerical display font (optional) |
+
+```typescript
+typography: {
+  fontFamily: {
+    sans: ['Inter', 'system-ui', 'sans-serif'],
+    heading: ['Space Grotesk', 'Inter', 'sans-serif'],
+    numbers: ['Space Grotesk'],
+  },
+}
+```
+
+<Note>
+Font sizes and weights are defined per-component, not globally. This keeps the theme predictable.
+</Note>
+
+---
+
+## Branding
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `logoUrl` | string | Logo image URL (or `undefined`) |
+| `showLogoBorder` | boolean | Show border/background around logo |
+| `logoSize` | `'fit'` \| `'original'` | Constrain to 48x48 or use natural size |
+
+```typescript
+branding: {
+  logoUrl: 'https://example.com/logo.svg',
+  showLogoBorder: true,
+  logoSize: 'fit',
+}
+```
+
+---
+
+## Mini player
+
+Controls the floating audio player.
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `backgroundColor` | color | Player background |
+| `textColor` | color | Title and time text |
+| `titleFontSize` | string | Track title size |
+| `titleFontWeight` | string | Track title weight |
+| `transcriptionFontSize` | string | Transcription text size |
+| `progressBar.backgroundColor` | color | Track (unfilled) |
+| `progressBar.highlightColor` | color | Progress fill |
+| `controls.playButtonBackground` | color | Play/pause button background |
+| `controls.playButtonIcon` | color | Play/pause icon |
+| `controls.otherButtonsBackground` | color | Skip buttons background |
+| `controls.otherButtonsIcon` | color | Skip buttons icon |
+| `minimized.playButtonIcon` | color | Play icon when collapsed |
+
+```typescript
+miniPlayer: {
+  backgroundColor: '#FFFFFF',
+  textColor: '#111827',
+  titleFontSize: '16px',
+  titleFontWeight: '500',
+  transcriptionFontSize: '15px',
+  progressBar: {
+    backgroundColor: '#E5E7EB',
+    highlightColor: '#6366F1',
+  },
+  controls: {
+    playButtonBackground: '#6366F1',
+    playButtonIcon: '#FFFFFF',
+    otherButtonsBackground: '#F3F4F6',
+    otherButtonsIcon: '#6B7280',
+  },
+  minimized: {
+    playButtonIcon: '#6366F1',
+  },
+}
+```
+
+---
+
+## Sheets (bottom sheets)
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `backgroundColor` | color | Sheet background |
+| `handleColor` | color | Drag handle |
+| `textColor` | color | Text content |
+| `borderColor` | color | Top border |
+| `titleFontSize` | string | Sheet title size |
+| `titleFontWeight` | string | Sheet title weight |
+
+```typescript
+sheets: {
+  backgroundColor: '#FFFFFF',
+  handleColor: '#D1D5DB',
+  textColor: '#111827',
+  borderColor: '#E5E7EB',
+  titleFontSize: '18px',
+  titleFontWeight: '700',
+}
+```
+
+---
+
+## Start card
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `titleFontSize` | string | Tour title size |
+| `titleFontWeight` | string | Tour title weight |
+| `titleLineHeight` | string | Tour title line height |
+| `metaFontSize` | string | Duration/stops size |
+| `metaFontWeight` | string | Duration/stops weight |
+| `metaColor` | color | Duration/stops color |
+| `descriptionFontSize` | string | Description size |
+| `offlineMessage.backgroundColor` | color | Offline message background |
+| `offlineMessage.borderColor` | color | Offline message border |
+| `offlineMessage.textColor` | color | Offline message text |
+
+```typescript
+startCard: {
+  titleFontSize: '30px',
+  titleFontWeight: '700',
+  titleLineHeight: '1.2',
+  metaFontSize: '14px',
+  metaFontWeight: '400',
+  metaColor: '#6B7280',
+  descriptionFontSize: '16px',
+  offlineMessage: {
+    backgroundColor: 'rgba(59, 130, 246, 0.08)',
+    borderColor: 'rgba(59, 130, 246, 0.25)',
+    textColor: '#3b82f6',
+  },
+}
+```
+
+---
+
+## Loading states
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `spinnerColor` | color | Loading spinner |
+| `backgroundColor` | color | Loading screen background |
+| `messageFontSize` | string | Loading text size |
+| `messageFontWeight` | string | Loading text weight |
+
+```typescript
+loading: {
+  spinnerColor: '#6366F1',
+  backgroundColor: '#F9FAFB',
+  messageFontSize: '16px',
+  messageFontWeight: '500',
+}
+```
+
+---
+
+## Status colors
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `success` | color | Success messages/icons |
+| `error` | color | Error messages/icons |
+| `warning` | color | Warning messages/icons |
+
+```typescript
+status: {
+  success: '#10B981',
+  error: '#EF4444',
+  warning: '#F59E0B',
+}
+```
+
+---
+
+## Inputs
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `backgroundColor` | color | Input field background |
+| `textColor` | color | Input text |
+| `borderColor` | color | Default border |
+| `focusBorderColor` | color | Border when focused |
+| `placeholderColor` | color | Placeholder text |
+
+```typescript
+inputs: {
+  backgroundColor: '#FFFFFF',
+  textColor: '#111827',
+  borderColor: '#E5E7EB',
+  focusBorderColor: '#6366F1',
+  placeholderColor: '#9CA3AF',
+}
+```
+
+---
+
+## Semantic colors
+
+Global color tokens for consistency.
+
+### Text
+
+| Property | Description |
+|----------|-------------|
+| `primary` | Main headings, important text |
+| `secondary` | Subtitles, supporting text |
+| `tertiary` | Metadata, timestamps |
+| `inverse` | Text on dark backgrounds |
+
+### Border
+
+| Property | Description |
+|----------|-------------|
+| `light` | Subtle dividers |
+| `medium` | Card borders, section separators |
+| `dark` | Emphasized dividers |
+
+### Background
+
+| Property | Description |
+|----------|-------------|
+| `primary` | Cards, modals, overlays |
+| `secondary` | Page background, sections |
+| `tertiary` | Hover states, disabled elements |
+
+```typescript
+colors: {
+  text: {
+    primary: '#111827',
+    secondary: '#6B7280',
+    tertiary: '#9CA3AF',
+    inverse: '#FFFFFF',
+  },
+  border: {
+    light: '#F3F4F6',
+    medium: '#E5E7EB',
+    dark: '#D1D5DB',
+  },
+  background: {
+    primary: '#FFFFFF',
+    secondary: '#F9FAFB',
+    tertiary: '#F3F4F6',
+  },
+}
+```
+
+---
+
+## Color format
+
+Use hex codes for solid colors:
+
+```typescript
+backgroundColor: '#6366F1'
+```
+
+Use rgba for transparency:
+
+```typescript
+shadow: '0 2px 15px rgba(0, 0, 0, 0.1)'
+```
+
+<Warning>
+Avoid using named colors (`'blue'`) or rgb without alpha (`'rgb(99, 102, 241)'`). Stick to hex and rgba for consistency.
+</Warning>
+
+## TypeScript interface
+
+The complete type is in `src/theme/types.ts`:
+
+```typescript
+export interface ThemeConfig {
+  id: string;
+  name: string;
+  description?: string;
+  header: HeaderConfig;
+  mainContent: MainContentConfig;
+  cards: CardsConfig;
+  stepIndicators: StepIndicatorsConfig;
+  buttons: ButtonsConfig;
+  typography: TypographyConfig;
+  branding: BrandingConfig;
+  miniPlayer: MiniPlayerConfig;
+  sheets: SheetsConfig;
+  status: StatusConfig;
+  loading: LoadingConfig;
+  startCard: StartCardConfig;
+  inputs: InputsConfig;
+  colors: ColorsConfig;
+}
+```
+
+Use this as your reference when creating themes. TypeScript will tell you if you're missing any required properties.

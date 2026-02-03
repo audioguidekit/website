@@ -1,0 +1,176 @@
+---
+title: "Themes Overview"
+description: "Customize how your tour looks"
+---
+
+# Theming
+
+AudioGuideKit's theming system gives you complete control over the visual appearance. Change colors, fonts, and styling to match your brand or create a unique experience.
+
+## Built-in themes
+
+AudioGuideKit comes with two carefully designed themes:
+
+<CardGroup cols={2}>
+  <Card title="Default Light" icon="sun">
+    Clean, distraction-free light aesthetic with high legibility and soft gray accents.
+  </Card>
+  <Card title="Default Dark" icon="moon">
+    Refined dark aesthetic with grayscale palette and sans-serif typography.
+  </Card>
+</CardGroup>
+
+## Using a theme
+
+Set the theme in your `metadata.json`:
+
+```json
+{
+  "id": "barcelona",
+  "themeId": "default-light"
+}
+```
+
+Or `"default-dark"` for the dark theme.
+
+That's it! The entire app adopts the theme—cards, buttons, player, sheets, everything.
+
+## What you can customize
+
+Themes control virtually every visual aspect:
+
+| Area | What You Control |
+|------|------------------|
+| **Colors** | Backgrounds, text, borders, accents |
+| **Typography** | Font families, sizes, weights |
+| **Cards** | Background, borders, shadows, corner radius |
+| **Buttons** | Primary, secondary, and download button styles |
+| **Mini Player** | Progress bar, controls, transcription text |
+| **Bottom Sheets** | Background, handle color, title styling |
+| **Step Indicators** | Active, inactive, and completed states |
+| **Branding** | Custom logo on start screen |
+
+<Note>
+You can tweak individual properties or create an entirely new theme from scratch. It's up to you how far you want to go.
+</Note>
+
+## Theme structure
+
+Themes are TypeScript objects with a specific structure. Here's a simplified view:
+
+```typescript
+const myTheme = {
+  id: 'my-theme',
+  name: 'My Theme',
+
+  header: { /* colors, progress bar */ },
+  mainContent: { /* background */ },
+  cards: { /* colors, typography, shadows */ },
+  buttons: { /* primary, secondary styles */ },
+  miniPlayer: { /* player controls, progress */ },
+  sheets: { /* bottom sheet styles */ },
+  typography: { /* font families */ },
+  colors: { /* semantic color palette */ },
+  // ...and more
+};
+```
+
+Each section controls a specific part of the UI. We'll cover all of them in [Theme Reference](/docs/themes/reference).
+
+## Quick customization
+
+Want to just change the accent color? You don't need a full custom theme.
+
+The easiest approach is to copy an existing theme and modify it:
+
+<Steps>
+  <Step title="Copy a theme file">
+    ```bash
+    cp src/theme/themes/default-light.ts src/theme/themes/my-brand.ts
+    ```
+  </Step>
+  <Step title="Change the accent color">
+    Find all instances of the primary color (like `#6366F1`) and replace with your brand color.
+  </Step>
+  <Step title="Register the theme">
+    Add to `src/theme/themes/index.ts`:
+    ```typescript
+    import { myBrandTheme } from './my-brand';
+
+    export const themes = {
+      'default-light': defaultLightTheme,
+      'default-dark': defaultDarkTheme,
+      'my-brand': myBrandTheme,
+    };
+    ```
+  </Step>
+  <Step title="Use it">
+    Set `"themeId": "my-brand"` in your `metadata.json`.
+  </Step>
+</Steps>
+
+## Per-language themes
+
+You can use different themes for different languages by overriding in the language file:
+
+```json
+// es.json
+{
+  "id": "barcelona",
+  "language": "es",
+  "themeId": "warm-theme"
+}
+```
+
+Spanish visitors would see `warm-theme` while others see whatever's in `metadata.json`.
+
+## Custom fonts
+
+Themes support custom fonts from Google Fonts (or self-hosted):
+
+```typescript
+typography: {
+  fontFamily: {
+    sans: ['Roboto', 'system-ui', 'sans-serif'],
+    heading: ['Playfair Display', 'serif'],
+    numbers: ['JetBrains Mono', 'monospace'],
+  },
+}
+```
+
+Remember to add the font to `index.html`:
+
+```html
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+```
+
+## Branding: Custom logo
+
+Display your logo on the tour start screen:
+
+```typescript
+branding: {
+  logoUrl: 'https://your-domain.com/logo.svg',
+  showLogoBorder: true,
+  logoSize: 'fit',  // or 'original'
+}
+```
+
+| Option | Effect |
+|--------|--------|
+| `showLogoBorder: true` | Logo in a rounded rectangle with shadow |
+| `showLogoBorder: false` | Logo displayed directly, no container |
+| `logoSize: 'fit'` | Constrained to 48x48px |
+| `logoSize: 'original'` | Natural image dimensions |
+
+## What you can't customize
+
+Some things are intentionally fixed:
+
+- **Component layout** - Where elements are positioned
+- **Animation types** - Transitions use spring physics
+- **Icon shapes** - Only colors are themeable
+- **Spacing between elements** - Some spacing is hardcoded
+
+These constraints ensure the app remains usable and visually consistent regardless of theme choices.
+

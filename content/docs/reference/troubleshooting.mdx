@@ -1,0 +1,320 @@
+---
+title: "Troubleshooting"
+description: "Common issues and how to fix them. This guide covers the most common issues and their solutions."
+---
+
+## Tour issues
+
+### Tour doesn't load
+
+**Symptoms:** Blank screen, loading spinner never goes away, or error message.
+
+**Common Causes:**
+
+1. **Invalid JSON syntax**
+   - Check your tour files at [JSONLint](https://jsonlint.com)
+   - Look for missing commas, extra commas, or unclosed brackets
+
+2. **Tour ID mismatch**
+   - `metadata.json` `id` must match language file `id`
+   - Case-sensitive: `"Barcelona"` ≠ `"barcelona"`
+
+3. **Files in wrong location**
+   - Tour files must be in `/src/data/tour/`
+   - Tour data is bundled at build time via Vite's `import.meta.glob`
+
+4. **Missing required fields**
+   - Check that `id`, `language`, `title`, `description`, `totalDuration`, `totalStops`, and `stops` are all present
+
+**Debug steps:**
+```bash
+# 1. open browser devtools (F12)
+# 2. check console tab for errors
+# 3. check network tab for failed requests
+```
+
+### Images don't display
+
+**Symptoms:** Gray boxes where images should be, broken image icons.
+
+**Solutions:**
+
+1. **Check HTTPS** - URLs must use `https://`, not `http://`
+2. **Test URL directly** - Open the image URL in a new browser tab
+3. **CORS issues** - Image host may block cross-origin requests
+4. **Try Unsplash** - Guaranteed to work: `https://images.unsplash.com/photo-xxx`
+
+### Audio doesn't play
+
+**Symptoms:** Play button doesn't work, no sound, audio cuts out.
+
+**Solutions:**
+
+1. **Test URL directly** - Open audio URL in browser to verify it plays
+2. **Check format** - MP3 and M4A work best; WAV files are large
+3. **CORS issues** - Audio host needs proper headers
+4. **iOS autoplay** - First tap must be user-initiated (this is handled, but check for console errors)
+
+<Warning>
+iOS Safari is particularly sensitive to audio handling. If audio works on desktop but not iOS, there may be a CORS or autoplay issue.
+</Warning>
+
+### Wrong tour loads
+
+**Symptoms:** See a different tour than expected.
+
+**Solutions:**
+
+1. **Clear browser cache** - Cmd+Shift+R (Mac) or Ctrl+Shift+R (Windows)
+2. **Check tour ID** - Verify `id` in your JSON matches what you expect
+3. **Restart dev server** - Stop and run `bun run dev` again
+4. **Check both directories** - `/src/data/tour/` and `/src/data/tour/` must be in sync
+
+## Language issues
+
+### Language doesn't appear
+
+**Symptoms:** New language not in the language picker.
+
+**Solutions:**
+
+1. **Check `language` field** - Must be a valid ISO code like `"es"`, `"de"`, `"fr"`
+2. **File location** - Must be in both `/src/data/tour/` and `/src/data/tour/`
+3. **Valid JSON** - Check syntax at [JSONLint](https://jsonlint.com)
+4. **Restart dev server** - Language detection happens at build time
+
+**Debug:**
+```bash
+# Check console for tourdiscovery logs
+[TourDiscovery] Found languages: en, es, de
+```
+
+### Progress lost when switching languages
+
+**Symptoms:** Position resets to beginning after language switch.
+
+**Causes:**
+
+1. **Different tour IDs** - All language files must have the same `id`
+2. **Different stop IDs** - Stop `"3"` in English must be stop `"3"` in Spanish
+
+**Fix:** Ensure IDs are consistent across all language files.
+
+### Browser language not detected
+
+**Symptoms:** App shows wrong default language.
+
+**Solutions:**
+
+1. **Check saved preference** - Clear localStorage: `localStorage.removeItem('app-preferences')`
+2. **Verify browser settings** - Check your browser's language settings
+3. **Check console logs** - Look for `[LANGUAGE] Detected browser language: ...`
+
+## Build issues
+
+### Build fails
+
+**Symptoms:** `bun run build` shows errors.
+
+**Common errors:**
+
+1. **TypeScript errors**
+   - Fix any type errors in your code
+   - Check for missing imports
+
+2. **Missing dependencies**
+   - Run `bun install` again
+   - Delete `node_modules` and reinstall if needed
+
+3. **Invalid JSON**
+   - Build-time discovery reads JSON; syntax errors cause failures
+
+**Debug:**
+```bash
+# See full error output
+bun run build 2>&1 | less
+```
+
+### Module not found
+
+**Symptoms:** Error about missing module or package.
+
+**Solutions:**
+
+```bash
+# Clear and reinstall
+rm -rf node_modules
+rm bun.lock  # or package-lock.json
+bun install
+```
+
+## Development server issues
+
+### Port already in use
+
+**Symptoms:** `Error: listen EADDRINUSE: address already in use :::3000`
+
+**Solutions:**
+
+```bash
+# Use different port
+bun run dev -- --port 3001
+
+# Or kill the process using port 3000
+lsof -ti:3000 | xargs kill -9
+```
+
+### Changes not reflecting
+
+**Symptoms:** Edits to files don't appear in browser.
+
+**Solutions:**
+
+1. **Hard refresh** - Cmd+Shift+R (Mac) or Ctrl+Shift+R (Windows)
+2. **Clear browser cache** - DevTools → Network tab → "Disable cache" while open
+3. **Restart dev server** - Stop and run `bun run dev` again
+4. **Check file saved** - Make sure you saved the file
+
+## PWA / offline issues
+
+### Offline mode not working
+
+**Symptoms:** App doesn't work offline after downloading.
+
+**Solutions:**
+
+1. **Use HTTPS** - Service Worker requires HTTPS (localhost is an exception)
+2. **Clear site data** - DevTools → Application → Storage → Clear site data
+3. **Re-download** - Start fresh with a new download
+4. **Check Service Worker** - DevTools → Application → Service Workers
+
+### Download never completes
+
+**Symptoms:** Progress bar stuck or never reaches 100%.
+
+**Solutions:**
+
+1. **Check network** - Ensure stable connection during download
+2. **Audio file issues** - One bad audio URL can block download
+3. **Storage full** - Clear browser data or device storage
+4. **Try different browser** - Some browsers have stricter limits
+
+### Cached content doesn't update
+
+**Symptoms:** Updated tour content doesn't appear.
+
+**Solutions:**
+
+1. **Clear site data** - DevTools → Application → Clear site data
+2. **Unregister Service Worker** - DevTools → Application → Service Workers → Unregister
+3. **Hard refresh** - Cmd+Shift+R several times
+4. **Rename audio files** - Change filename for updated audio
+
+## Ios-specific issues
+
+### Audio crashes Safari
+
+**Symptoms:** "A problem repeatedly occurred" error on iOS Safari.
+
+**Cause:** Recreating audio elements causes Safari crashes.
+
+**Solution:** This is handled internally by AudioGuideKit. If you're seeing this in a fork, check that you're not recreating the audio element in `useAudioPlayer.ts`.
+
+### PWA loses data
+
+**Symptoms:** Progress or downloads lost on iOS.
+
+**Solutions:**
+
+1. **Add to Home Screen** - PWAs work best when added to home screen
+2. **Don't use private mode** - No persistence in private browsing
+3. **Keep app active** - iOS may clear data for apps not used recently
+
+### Audio doesn't resume after call
+
+**Symptoms:** Audio stops when receiving a call and doesn't auto-resume.
+
+**Note:** This is expected iOS behavior. Visitors need to manually press play after a call.
+
+## Theme issues
+
+### Theme not appearing
+
+**Symptoms:** Custom theme doesn't show.
+
+**Solutions:**
+
+1. **Check registration** - Theme must be in `src/theme/themes/index.ts`
+2. **TypeScript errors** - Check theme matches `ThemeConfig` interface
+3. **Correct `themeId`** - `metadata.json` must reference exact theme ID
+4. **Restart dev server** - Theme registration requires restart
+
+### Fonts not loading
+
+**Symptoms:** Default fonts instead of custom fonts.
+
+**Solutions:**
+
+1. **Add font link** - Add Google Fonts link to `index.html`
+2. **Check font name** - Must match Google Fonts name exactly
+3. **Include fallbacks** - `['Inter', 'system-ui', 'sans-serif']`
+4. **Check Network tab** - Look for failed font requests
+
+### Colors look wrong
+
+**Symptoms:** Theme colors don't match what you set.
+
+**Debug steps:**
+
+1. **Inspect element** - DevTools → select element → check computed styles
+2. **Check specificity** - Your theme might be overridden
+3. **Verify hex format** - Use `#RRGGBB` not `rgb()` or color names
+
+## Deployment issues
+
+### Build works locally but fails on Vercel
+
+**Solutions:**
+
+1. **Check Node version** - Vercel might use different version
+2. **Environment variables** - Set all `VITE_*` variables in Vercel
+3. **Check build logs** - Vercel dashboard → Deployments → View logs
+
+### Custom domain not working
+
+**Solutions:**
+
+1. **DNS propagation** - Wait up to 48 hours (usually faster)
+2. **Check DNS records** - Verify CNAME or A records are correct
+3. **SSL certificate** - Wait for certificate provisioning
+
+### 404 on page refresh
+
+**Symptoms:** Refreshing on a route like `/tour/barcelona` shows 404.
+
+**Cause:** Server needs to redirect all paths to `index.html`.
+
+**Solutions by platform:**
+
+- **Vercel/Netlify**: Automatic
+- **GitHub Pages**: Add `404.html` that copies `index.html`
+- **S3**: Set error document to `index.html`
+- **Apache**: Add `.htaccess` rewrite rule
+- **Nginx**: Use `try_files $uri /index.html`
+
+## Getting more help
+
+If you're still stuck:
+
+1. **Check console errors** - Most issues leave clues in browser DevTools
+2. **Search GitHub Issues** - Someone might have solved it: [github.com/audioguidekit/player/issues](https://github.com/audioguidekit/player/issues)
+3. **Open a new issue** - Include:
+   - What you expected
+   - What happened
+   - Steps to reproduce
+   - Browser and device info
+   - Relevant console errors
+
+<Note>
+When opening issues, include as much detail as possible. Screenshots and console logs help us help you faster.
+</Note>

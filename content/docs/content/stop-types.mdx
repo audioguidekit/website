@@ -1,0 +1,271 @@
+---
+title: "Stop Types"
+description: "All 9 content types you can use in your tours"
+---
+
+# Stop types
+
+AudioGuideKit supports 9 different stop types. While most tours primarily use audio stops, mixing in other types can create a richer, more engaging experience.
+
+## Overview
+
+| Type | Description | Use Case |
+|------|-------------|----------|
+| `audio` | Audio playback with optional transcription | Main tour content |
+| `text` | Rich text content | Detailed information |
+| `image-text` | Image with accompanying text | Photo essays |
+| `video` | Video playback | Demonstrations, intros |
+| `3d-object` | Interactive 3D model viewer | Artifacts, architecture |
+| `headline` | Large text header | Section dividers |
+| `quote` | Styled quotation | Historical quotes |
+| `rating` | Star rating collection | Feedback |
+| `email` | Email collection form | Newsletter signup |
+
+## Audio stops
+
+The bread and butter of audio tours. Displays a card with image, title, and audio player.
+
+```json
+{
+  "id": "1",
+  "type": "audio",
+  "title": "Welcome to Barcelona",
+  "duration": "3 min audio",
+  "image": "https://images.unsplash.com/photo-xxx",
+  "audioFile": "https://your-storage.com/01-welcome.mp3",
+  "transcription": "Welcome to Barcelona! Today we'll explore the Gothic Quarter..."
+}
+```
+
+### Audio stop fields
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `id` | Yes | Unique stop identifier |
+| `type` | Yes | Must be `"audio"` |
+| `title` | Yes | Stop title |
+| `duration` | Yes | Human-readable duration |
+| `image` | Yes | Stop image URL |
+| `audioFile` | Yes | Audio file URL (MP3, M4A) |
+| `transcription` | No | Text version of the audio |
+
+<Tip>
+Include transcriptions! They help with accessibility, allow visitors to read ahead, and improve SEO if search engines crawl your tour.
+</Tip>
+
+## Text stops
+
+Display rich text content without audio. Good for detailed information that visitors can read at their own pace.
+
+```json
+{
+  "id": "2",
+  "type": "text",
+  "title": "Cathedral History",
+  "duration": "2 min read",
+  "image": "https://images.unsplash.com/photo-xxx",
+  "content": "The Barcelona Cathedral was constructed between the 13th and 15th centuries..."
+}
+```
+
+### Text stop fields
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `content` | Yes | The text to display |
+| Other standard fields | Yes | `id`, `type`, `title`, `duration`, `image` |
+
+## Image-text stops
+
+Combines an image with accompanying text. Like text stops, but with more visual emphasis.
+
+```json
+{
+  "id": "3",
+  "type": "image-text",
+  "title": "The Main Altar",
+  "duration": "1 min read",
+  "image": "https://images.unsplash.com/photo-xxx",
+  "content": "Notice the intricate gold leaf work on the altar, dating back to..."
+}
+```
+
+<Note>
+Use image-text stops when the image is central to understanding the content. Use text stops when the image is decorative.
+</Note>
+
+## Video stops
+
+Embed video content. Useful for introductions, demonstrations, or drone footage.
+
+```json
+{
+  "id": "4",
+  "type": "video",
+  "title": "Cathedral Overview",
+  "duration": "2 min video",
+  "image": "https://images.unsplash.com/photo-xxx",
+  "videoUrl": "https://your-storage.com/cathedral-overview.mp4"
+}
+```
+
+### Video stop fields
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `videoUrl` | Yes | Video file URL (MP4 recommended) |
+| Other standard fields | Yes | `id`, `type`, `title`, `duration`, `image` |
+
+<Warning>
+Video files are large and may not work well offline. Consider using video stops only for online-only tours or keep videos short.
+</Warning>
+
+## 3D object stops
+
+Display interactive 3D models that visitors can rotate and zoom. Great for artifacts, sculptures, or architectural details.
+
+```json
+{
+  "id": "5",
+  "type": "3d-object",
+  "title": "Roman Amphora",
+  "duration": "Interactive",
+  "image": "https://images.unsplash.com/photo-xxx",
+  "modelUrl": "https://your-storage.com/amphora.glb"
+}
+```
+
+### 3D object fields
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `modelUrl` | Yes | 3D model file URL (GLB/GLTF format) |
+| Other standard fields | Yes | `id`, `type`, `title`, `duration`, `image` |
+
+<Note>
+3D models use the GLB format (binary glTF). You can export from Blender, SketchUp, or download from [Sketchfab](https://sketchfab.com).
+</Note>
+
+## Headline stops
+
+Large text headers to divide your tour into sections. Don't include duration—these are visual dividers.
+
+```json
+{
+  "id": "6",
+  "type": "headline",
+  "title": "Part 2: The Gothic Quarter",
+  "image": "https://images.unsplash.com/photo-xxx"
+}
+```
+
+### Headline stop fields
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `id` | Yes | Unique stop identifier |
+| `type` | Yes | Must be `"headline"` |
+| `title` | Yes | The headline text |
+| `image` | Yes | Background image |
+| `duration` | No | Typically omitted for headlines |
+
+## Quote stops
+
+Display a styled quotation. Perfect for historical quotes, visitor testimonials, or famous sayings about the location.
+
+```json
+{
+  "id": "7",
+  "type": "quote",
+  "title": "Antoni Gaudí",
+  "duration": "Quote",
+  "image": "https://images.unsplash.com/photo-xxx",
+  "quote": "Nothing is art if it does not come from nature.",
+  "attribution": "Antoni Gaudí, 1910"
+}
+```
+
+### Quote stop fields
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `quote` | Yes | The quotation text |
+| `attribution` | No | Who said it and when |
+| Other standard fields | Yes | `id`, `type`, `title`, `image` |
+
+## Rating stops
+
+Collect star ratings from visitors. Appears as an interactive card with 1-5 stars.
+
+```json
+{
+  "id": "8",
+  "type": "rating",
+  "title": "How was your tour?",
+  "duration": "Rate us",
+  "image": "https://images.unsplash.com/photo-xxx"
+}
+```
+
+<Tip>
+Place rating stops near the end of your tour, when visitors have experienced enough to form an opinion.
+</Tip>
+
+### Rating collection
+
+When a visitor submits a rating, it's stored locally. If `collectFeedback: true` is set in your metadata, ratings can be collected and analyzed.
+
+## Email stops
+
+Collect email addresses for newsletters or follow-up communication.
+
+```json
+{
+  "id": "9",
+  "type": "email",
+  "title": "Stay in Touch",
+  "duration": "Sign up",
+  "image": "https://images.unsplash.com/photo-xxx",
+  "description": "Get notified about new tours and special events.",
+  "placeholder": "Enter your email"
+}
+```
+
+### Email stop fields
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `description` | No | Text explaining why to sign up |
+| `placeholder` | No | Input placeholder text |
+| Other standard fields | Yes | `id`, `type`, `title`, `image` |
+
+<Warning>
+Email collection requires backend integration to actually store emails. The stop type provides the UI, but you'll need to connect it to your email service.
+</Warning>
+
+## Mixing stop types
+
+A typical tour might look like this:
+
+```json
+"stops": [
+  { "type": "audio", "title": "Welcome" },
+  { "type": "audio", "title": "First Stop" },
+  { "type": "audio", "title": "Second Stop" },
+  { "type": "headline", "title": "Part 2: The Old Town" },
+  { "type": "audio", "title": "Third Stop" },
+  { "type": "quote", "title": "Historical Quote" },
+  { "type": "audio", "title": "Fourth Stop" },
+  { "type": "rating", "title": "Rate Your Experience" },
+  { "type": "email", "title": "Stay Connected" }
+]
+```
+
+### Best practices
+
+1. **Lead with audio** - Visitors expect audio tours to have audio
+2. **Use headlines sparingly** - Too many breaks the flow
+3. **Place feedback at the end** - After visitors have context
+4. **Keep videos short** - 2 minutes max for mobile attention spans
+5. **Test 3D on mobile** - Performance varies by device
+

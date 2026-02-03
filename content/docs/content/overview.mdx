@@ -1,0 +1,151 @@
+---
+title: "Content Overview"
+description: "What you need to create an audio tour"
+---
+
+# Content overview
+
+Before diving into JSON files, let's talk about what you actually need to create an audio tour. Spoiler: it's probably less than you think.
+
+## The essential ingredients
+
+Every audio tour needs three things:
+
+<CardGroup cols={3}>
+  <Card title="Audio Files" icon="microphone">
+    MP3 or M4A recordings for each stop
+  </Card>
+  <Card title="Images" icon="image">
+    Photos to accompany each stop
+  </Card>
+  <Card title="Tour Data" icon="file-code">
+    A JSON file describing your tour
+  </Card>
+</CardGroup>
+
+That's it. Everything else—themes, multiple languages, offline mode—is optional polish.
+
+## Audio files
+
+Your audio content is the heart of the tour. Here's what works:
+
+### Supported formats
+
+| Format | Extension | Recommendation |
+|--------|-----------|----------------|
+| MP3 | `.mp3` | Universal support, good compression |
+| AAC | `.m4a` | Better quality at same file size |
+| WAV | `.wav` | Supported but large files |
+
+<Tip>
+We recommend **M4A (AAC)** for the best balance of quality and file size. Most podcast hosting services and audio editors support it.
+</Tip>
+
+### Recording tips
+
+You don't need a professional studio. Here's what matters:
+
+1. **Quiet environment** - Find a room without echo or background noise
+2. **Consistent volume** - Keep your mouth the same distance from the mic
+3. **Clear speech** - Speak naturally but enunciate
+4. **Reasonable length** - 2-5 minutes per stop is ideal; attention wanes after 7 minutes
+
+### Audio hosting
+
+Your audio files need to be accessible via URL. Options include:
+
+- **Cloud storage** (AWS S3, Google Cloud Storage, Backblaze B2)
+- **Podcast hosting** (Buzzsprout, Anchor, Transistor)
+- **Self-hosted** (your own server)
+- **Supabase Storage** (generous free tier)
+
+See [Media Hosting](/docs/content/media) for detailed setup guides.
+
+## Images
+
+Every tour stop needs an image. This provides visual context and makes the feed engaging.
+
+### Image requirements
+
+- **Format**: JPG or PNG (WebP also supported)
+- **Size**: At least 800px wide for good quality
+- **Aspect ratio**: No strict requirement, but 16:9 or 4:3 work well
+- **HTTPS**: URLs must use HTTPS (not HTTP)
+
+### Free image sources
+
+If you don't have your own photos:
+
+| Source | URL | Best For |
+|--------|-----|----------|
+| Unsplash | [unsplash.com](https://unsplash.com) | High-quality photos, great search |
+| Pexels | [pexels.com](https://pexels.com) | Similar to Unsplash, different catalog |
+| Pixabay | [pixabay.com](https://pixabay.com) | Includes vectors and illustrations |
+
+<Note>
+Unsplash URLs can include size parameters directly. For example:
+`https://images.unsplash.com/photo-xxx?w=800&auto=format`
+
+This delivers optimized images without any extra hosting.
+</Note>
+
+## Tour data (JSON)
+
+The tour data file tells AudioGuideKit about your tour structure. It's a JSON file containing:
+
+- Tour title and description
+- List of stops with their content
+- Settings like theme and offline mode
+
+### Example structure
+
+```json
+{
+  "id": "barcelona",
+  "language": "en",
+  "title": "Barcelona Walking Tour",
+  "description": "Discover Gothic Quarter's hidden gems",
+  "totalDuration": "45 mins",
+  "totalStops": 5,
+  "image": "https://images.unsplash.com/photo-barcelona...",
+  "stops": [
+    {
+      "id": "1",
+      "type": "audio",
+      "title": "Welcome to Barcelona",
+      "duration": "3 min audio",
+      "image": "https://...",
+      "audioFile": "https://..."
+    }
+  ]
+}
+```
+
+We'll cover the complete structure in [Creating a Guide](/docs/content/creating-guide).
+
+## File organization
+
+Here's how your content files should be organized:
+
+```
+src/data/tour/
+├── metadata.json     # Shared settings (theme, offline mode)
+├── en.json           # English tour content
+├── es.json           # Spanish tour content (optional)
+└── de.json           # German tour content (optional)
+```
+
+<Warning>
+Tour files also need to be copied to `src/data/tour/` for build-time discovery. Both directories must stay in sync. This is a technical requirement of how the app bundles content.
+</Warning>
+
+## Content checklist
+
+Before you start creating JSON files, gather:
+
+- [ ] Audio files for each stop (hosted with public URLs)
+- [ ] An image for each stop (URLs or Unsplash links)
+- [ ] Tour title and description
+- [ ] Stop titles and duration estimates
+- [ ] (Optional) Transcriptions of your audio
+

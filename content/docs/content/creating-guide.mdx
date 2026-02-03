@@ -1,0 +1,249 @@
+---
+title: "Creating a Guide"
+description: "Complete guide to structuring your tour JSON files"
+---
+
+# Creating your tour
+
+This guide walks through every field in your tour JSON files. By the end, you'll have a complete, working tour.
+
+## Tour file structure
+
+AudioGuideKit uses two types of files:
+
+1. **`metadata.json`** - Shared settings across all languages
+2. **Language files** (`en.json`, `es.json`, etc.) - Translated content
+
+### Why two file types?
+
+Settings like theme and offline mode should be consistent across languages. Content like titles and descriptions need translation. Splitting them keeps your files DRY (Don't Repeat Yourself).
+
+## The metadata file
+
+Create `src/data/tour/metadata.json`:
+
+```json
+{
+  "id": "barcelona",
+  "offlineMode": "optional",
+  "themeId": "default-light",
+  "transcriptAvailable": true,
+  "collectFeedback": true,
+  "image": "https://images.unsplash.com/photo-barcelona..."
+}
+```
+
+### Metadata fields
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `id` | Yes | Unique identifier for your tour (lowercase, hyphens okay) |
+| `offlineMode` | No | `"optional"`, `"online-only"`, or `"offline-only"` |
+| `themeId` | No | Theme name: `"default-light"`, `"default-dark"`, or your custom theme |
+| `transitionAudio` | No | URL to audio played between stops |
+| `transcriptAvailable` | No | Show transcription toggle when `true` |
+| `collectFeedback` | No | Show rating button when `true` |
+| `showLanguageLabel` | No | Show language name next to flag (default: `true`) |
+| `image` | No | Default tour cover image URL |
+
+<Tip>
+Start with just `id` and add other settings as needed. Every field except `id` has sensible defaults.
+</Tip>
+
+## The language file
+
+Create `src/data/tour/en.json` for English content:
+
+```json
+{
+  "id": "barcelona",
+  "language": "en",
+  "title": "Unlimited Barcelona",
+  "description": "Discover the rich history and hidden gems of Barcelona's Gothic Quarter on this self-guided walking tour.",
+  "totalDuration": "45 mins",
+  "totalStops": 5,
+  "image": "https://images.unsplash.com/photo-barcelona...",
+  "stops": [
+    {
+      "id": "1",
+      "type": "audio",
+      "title": "Welcome to Barcelona",
+      "duration": "3 min audio",
+      "image": "https://images.unsplash.com/photo-welcome...",
+      "audioFile": "https://your-storage.com/audio/01-welcome.mp3"
+    }
+  ]
+}
+```
+
+### Language file fields
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `id` | Yes | Must match `metadata.json` |
+| `language` | Yes | ISO language code (`"en"`, `"es"`, `"de"`, etc.) |
+| `title` | Yes | Tour title (displayed on start screen) |
+| `description` | Yes | Tour description (1-2 engaging sentences) |
+| `totalDuration` | Yes | Human-readable duration (`"45 mins"`) |
+| `totalStops` | Yes | Number of stops in the tour |
+| `image` | No | Tour cover image (overrides metadata) |
+| `stops` | Yes | Array of stop objects |
+
+<Note>
+The `language` field determines the language, not the filename. You could name your file `english.json` and it would still work if `"language": "en"` is set. (But please don't—use `en.json` for sanity.)
+</Note>
+
+## Stop objects
+
+Each item in the `stops` array represents one tour stop:
+
+```json
+{
+  "id": "1",
+  "type": "audio",
+  "title": "Welcome to Barcelona",
+  "duration": "3 min audio",
+  "image": "https://images.unsplash.com/photo-xxx",
+  "audioFile": "https://your-storage.com/audio/01-welcome.mp3",
+  "transcription": "Welcome to Barcelona! Today we'll explore..."
+}
+```
+
+### Stop fields
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `id` | Yes | Unique within the tour (`"1"`, `"2"`, etc.) |
+| `type` | Yes | Stop type (see [Stop Types](/docs/content/stop-types)) |
+| `title` | Yes | Stop title |
+| `duration` | Yes | Human-readable duration (`"3 min audio"`) |
+| `image` | Yes | Stop image URL |
+| `audioFile` | For audio | Audio file URL (MP3 or M4A) |
+| `transcription` | No | Text transcription of the audio |
+
+<Warning>
+Stop IDs must be unique within a tour and consistent across all language files. If English stop `"3"` is about the cathedral, Spanish stop `"3"` must also be about the cathedral.
+</Warning>
+
+## Complete example: London tour
+
+Let's build a real tour from scratch.
+
+### Step 1: Create metadata.json
+
+```json
+{
+  "id": "london-highlights",
+  "offlineMode": "optional",
+  "themeId": "default-light",
+  "transcriptAvailable": true,
+  "collectFeedback": true,
+  "image": "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=1000"
+}
+```
+
+### Step 2: Create en.json
+
+```json
+{
+  "id": "london-highlights",
+  "language": "en",
+  "title": "London Highlights",
+  "description": "Discover London's most iconic landmarks on this walking tour through Westminster and the South Bank.",
+  "totalDuration": "60 mins",
+  "totalStops": 4,
+  "stops": [
+    {
+      "id": "1",
+      "type": "audio",
+      "title": "Big Ben & Parliament",
+      "duration": "8 min audio",
+      "image": "https://images.unsplash.com/photo-1529655683826-aba9b3e77383?w=800",
+      "audioFile": "https://your-storage.com/london/01-big-ben.mp3",
+      "transcription": "Welcome to Westminster! Standing before you is the Elizabeth Tower, home to Big Ben..."
+    },
+    {
+      "id": "2",
+      "type": "audio",
+      "title": "Westminster Abbey",
+      "duration": "10 min audio",
+      "image": "https://images.unsplash.com/photo-1520986606214-8b456906c813?w=800",
+      "audioFile": "https://your-storage.com/london/02-abbey.mp3"
+    },
+    {
+      "id": "3",
+      "type": "audio",
+      "title": "London Eye",
+      "duration": "6 min audio",
+      "image": "https://images.unsplash.com/photo-1567157577867-05ccb1388e66?w=800",
+      "audioFile": "https://your-storage.com/london/03-eye.mp3"
+    },
+    {
+      "id": "4",
+      "type": "audio",
+      "title": "Tower Bridge",
+      "duration": "7 min audio",
+      "image": "https://images.unsplash.com/photo-1461949814715-0e9ad3b9e75a?w=800",
+      "audioFile": "https://your-storage.com/london/04-bridge.mp3"
+    }
+  ]
+}
+```
+
+### Step 3: Save to src/data/tour/
+
+Place your files in the `src/data/tour/` directory:
+
+```
+src/data/tour/
+├── metadata.json
+└── en.json
+```
+
+### Step 4: Test
+
+```bash
+bun run dev
+```
+
+Open http://localhost:3000 and your London tour should appear!
+
+## Adding another language
+
+To add Spanish, create `src/data/tour/es.json`:
+
+```json
+{
+  "id": "london-highlights",
+  "language": "es",
+  "title": "Lo Mejor de Londres",
+  "description": "Descubre los monumentos más icónicos de Londres en este recorrido a pie por Westminster y South Bank.",
+  "totalDuration": "60 mins",
+  "totalStops": 4,
+  "stops": [
+    {
+      "id": "1",
+      "type": "audio",
+      "title": "Big Ben y el Parlamento",
+      "duration": "8 min audio",
+      "image": "https://images.unsplash.com/photo-1529655683826-aba9b3e77383?w=800",
+      "audioFile": "https://your-storage.com/london/es/01-big-ben.mp3"
+    }
+  ]
+}
+```
+
+<Note>
+Notice the audio file points to a Spanish version. You need separate audio recordings for each language (unless you want all languages to hear the same audio, which... don't do that).
+</Note>
+
+## Validation checklist
+
+Before testing, verify:
+
+- [ ] Valid JSON (use [JSONLint](https://jsonlint.com) to check)
+- [ ] `id` matches between `metadata.json` and language files
+- [ ] All stop `id`s are unique within the tour
+- [ ] All URLs use HTTPS
+- [ ] Files exist in both `src/data/tour/` and `src/data/tour/`
+

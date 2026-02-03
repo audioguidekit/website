@@ -1,0 +1,564 @@
+---
+title: "Custom Themes"
+description: "Create a theme from scratch that matches your brand"
+---
+
+# Creating a custom theme
+
+This guide walks through creating a complete custom theme. We'll build an "Ocean" theme with cool blues and clean typography.
+
+## Before you start
+
+Gather your brand assets:
+
+- **Primary color** (your main brand color)
+- **Font choices** (or stick with system fonts)
+- **Logo** (optional, for start screen)
+
+## Step 1: Create the theme file
+
+Create `src/theme/themes/ocean.ts`:
+
+```typescript
+import { ThemeConfig } from '../types';
+
+export const oceanTheme: ThemeConfig = {
+  // We'll fill this in step by step
+};
+```
+
+## Step 2: Add metadata
+
+Every theme needs an ID, name, and optional description:
+
+```typescript
+export const oceanTheme: ThemeConfig = {
+  id: 'ocean',
+  name: 'Ocean',
+  description: 'Cool blues with clean typography',
+
+  // More sections coming...
+};
+```
+
+## Step 3: Define colors first
+
+Start by defining your color palette. Use CSS-in-JS color values (hex or rgba):
+
+```typescript
+// Color constants (for easy reuse)
+const ACCENT = '#0284C7';       // Primary blue
+const ACCENT_LIGHT = '#E0F2FE'; // Light blue background
+const ACCENT_DARK = '#0369A1';  // Darker blue for hover
+const TEXT_PRIMARY = '#0C4A6E'; // Dark blue-gray text
+const TEXT_SECONDARY = '#64748B'; // Medium gray
+const BORDER = '#BAE6FD';       // Light blue border
+const BACKGROUND = '#F0F9FF';   // Very light blue background
+```
+
+<Tip>
+Define color constants at the top of your file. This makes it easy to maintain consistency and adjust the palette later.
+</Tip>
+
+## Step 4: Configure each section
+
+Now fill in each theme section. Here's the complete ocean theme:
+
+### Header
+
+```typescript
+header: {
+  backgroundColor: ACCENT_LIGHT,
+  iconColor: ACCENT,
+  textColor: TEXT_PRIMARY,
+  timeFontSize: '14px',
+  timeFontWeight: '600',
+  progressBar: {
+    backgroundColor: 'rgba(7, 89, 133, 0.15)',
+    highlightColor: ACCENT,
+  },
+},
+```
+
+### Main content
+
+```typescript
+mainContent: {
+  backgroundColor: BACKGROUND,
+},
+```
+
+### Cards
+
+```typescript
+cards: {
+  backgroundColor: '#FFFFFF',
+  textColor: TEXT_PRIMARY,
+  borderColor: BORDER,
+  borderRadius: '16px',
+  shadow: '0 4px 20px rgba(2, 132, 199, 0.1)',
+  titleFontSize: '18px',
+  titleFontWeight: '600',
+  durationBadgeFontSize: '14px',
+  numberFontSize: '14px',
+  numberFontWeight: '600',
+  image: {
+    placeholderColor: ACCENT_LIGHT,
+    durationBadgeBackground: 'rgba(12, 74, 110, 0.7)',
+    durationBadgeText: BACKGROUND,
+  },
+},
+```
+
+### Step indicators
+
+```typescript
+stepIndicators: {
+  active: {
+    outlineColor: ACCENT,
+    numberColor: ACCENT,
+    backgroundColor: BACKGROUND,
+  },
+  inactive: {
+    borderColor: BORDER,
+    numberColor: TEXT_SECONDARY,
+    backgroundColor: BACKGROUND,
+  },
+  completed: {
+    backgroundColor: ACCENT,
+    checkmarkColor: '#FFFFFF',
+  },
+},
+```
+
+### Buttons
+
+```typescript
+buttons: {
+  primary: {
+    backgroundColor: ACCENT,
+    textColor: '#FFFFFF',
+    hoverBackground: ACCENT_DARK,
+    iconColor: '#FFFFFF',
+    fontSize: '18px',
+    fontWeight: '600',
+  },
+  secondary: {
+    backgroundColor: BACKGROUND,
+    textColor: TEXT_PRIMARY,
+    borderColor: BORDER,
+    hoverBackground: ACCENT_LIGHT,
+    fontSize: '16px',
+    fontWeight: '500',
+  },
+  download: {
+    backgroundColor: 'transparent',
+    textColor: ACCENT,
+    borderColor: ACCENT,
+    hoverBackground: 'rgba(2, 132, 199, 0.1)',
+    iconColor: ACCENT,
+    fontSize: '18px',
+    fontWeight: '600',
+  },
+  transcription: {
+    backgroundColor: '#FFFFFF',
+    iconColor: ACCENT,
+    hoverBackground: BACKGROUND,
+  },
+},
+```
+
+### Typography
+
+```typescript
+typography: {
+  fontFamily: {
+    sans: ['Inter', 'system-ui', 'sans-serif'],
+    heading: ['Inter', 'sans-serif'],
+    numbers: ['Inter'],
+  },
+},
+```
+
+### Branding
+
+```typescript
+branding: {
+  logoUrl: undefined,  // Or your logo URL
+  showLogoBorder: true,
+  logoSize: 'fit',
+},
+```
+
+### Mini player
+
+```typescript
+miniPlayer: {
+  backgroundColor: '#FFFFFF',
+  textColor: TEXT_PRIMARY,
+  titleFontSize: '16px',
+  titleFontWeight: '500',
+  transcriptionFontSize: '15px',
+  progressBar: {
+    backgroundColor: ACCENT_LIGHT,
+    highlightColor: ACCENT_DARK,
+  },
+  controls: {
+    playButtonBackground: ACCENT,
+    playButtonIcon: '#FFFFFF',
+    otherButtonsBackground: ACCENT_LIGHT,
+    otherButtonsIcon: '#075985',
+  },
+  minimized: {
+    playButtonIcon: ACCENT,
+  },
+},
+```
+
+### Sheets (bottom sheets)
+
+```typescript
+sheets: {
+  backgroundColor: '#FFFFFF',
+  handleColor: BORDER,
+  textColor: TEXT_PRIMARY,
+  borderColor: ACCENT_LIGHT,
+  titleFontSize: '18px',
+  titleFontWeight: '700',
+},
+```
+
+### Status colors
+
+```typescript
+status: {
+  success: ACCENT,
+  error: '#DC2626',
+  warning: '#F59E0B',
+},
+```
+
+### Loading states
+
+```typescript
+loading: {
+  spinnerColor: ACCENT,
+  backgroundColor: BACKGROUND,
+  messageFontSize: '16px',
+  messageFontWeight: '500',
+},
+```
+
+### Start card
+
+```typescript
+startCard: {
+  titleFontSize: '30px',
+  titleFontWeight: '700',
+  titleLineHeight: '1.2',
+  metaFontSize: '14px',
+  metaFontWeight: '400',
+  metaColor: TEXT_SECONDARY,
+  descriptionFontSize: '16px',
+  offlineMessage: {
+    backgroundColor: 'rgba(2, 132, 199, 0.08)',
+    borderColor: 'rgba(2, 132, 199, 0.25)',
+    textColor: ACCENT,
+  },
+},
+```
+
+### Inputs
+
+```typescript
+inputs: {
+  backgroundColor: '#FFFFFF',
+  textColor: TEXT_PRIMARY,
+  borderColor: BORDER,
+  focusBorderColor: ACCENT,
+  placeholderColor: '#94A3B8',
+},
+```
+
+### Semantic colors
+
+```typescript
+colors: {
+  text: {
+    primary: TEXT_PRIMARY,
+    secondary: '#475569',
+    tertiary: TEXT_SECONDARY,
+    inverse: '#FFFFFF',
+  },
+  border: {
+    light: BACKGROUND,
+    medium: ACCENT_LIGHT,
+    dark: BORDER,
+  },
+  background: {
+    primary: '#FFFFFF',
+    secondary: BACKGROUND,
+    tertiary: ACCENT_LIGHT,
+  },
+},
+```
+
+## Step 5: Register the theme
+
+Add your theme to `src/theme/themes/index.ts`:
+
+```typescript
+import { defaultLightTheme } from './default-light';
+import { defaultDarkTheme } from './default-dark';
+import { oceanTheme } from './ocean';
+
+export const themes = {
+  'default-light': defaultLightTheme,
+  'default-dark': defaultDarkTheme,
+  'ocean': oceanTheme,
+};
+
+export type ThemeName = keyof typeof themes;
+```
+
+## Step 6: Load custom fonts (if needed)
+
+If you're using fonts not already loaded, add them to `index.html`:
+
+```html
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+```
+
+## Step 7: Test your theme
+
+1. Set `"themeId": "ocean"` in your `metadata.json`
+2. Run `bun run dev`
+3. Check every screen:
+   - [ ] Start screen
+   - [ ] Stop cards
+   - [ ] Mini player (expanded and minimized)
+   - [ ] Language sheet
+   - [ ] Rating sheet
+   - [ ] Loading states
+   - [ ] Error states
+
+## Step 8: Check contrast
+
+Use a contrast checker to verify readability:
+
+- [WebAIM Contrast Checker](https://webaim.org/resources/contrastchecker/)
+- Aim for **4.5:1** ratio for body text (WCAG AA)
+- Aim for **7:1** for enhanced accessibility (WCAG AAA)
+
+<Warning>
+Low-contrast themes look modern but are hard to read for many visitors. Prioritize legibility over aesthetics.
+</Warning>
+
+## Complete example
+
+Here's the full ocean theme file for reference:
+
+<Accordion title="Complete ocean.ts">
+```typescript
+import { ThemeConfig } from '../types';
+
+const ACCENT = '#0284C7';
+const ACCENT_LIGHT = '#E0F2FE';
+const ACCENT_DARK = '#0369A1';
+const TEXT_PRIMARY = '#0C4A6E';
+const TEXT_SECONDARY = '#64748B';
+const BORDER = '#BAE6FD';
+const BACKGROUND = '#F0F9FF';
+
+export const oceanTheme: ThemeConfig = {
+  id: 'ocean',
+  name: 'Ocean',
+  description: 'Cool blues with clean typography',
+
+  header: {
+    backgroundColor: ACCENT_LIGHT,
+    iconColor: ACCENT,
+    textColor: TEXT_PRIMARY,
+    timeFontSize: '14px',
+    timeFontWeight: '600',
+    progressBar: {
+      backgroundColor: 'rgba(7, 89, 133, 0.15)',
+      highlightColor: ACCENT,
+    },
+  },
+
+  mainContent: {
+    backgroundColor: BACKGROUND,
+  },
+
+  cards: {
+    backgroundColor: '#FFFFFF',
+    textColor: TEXT_PRIMARY,
+    borderColor: BORDER,
+    borderRadius: '16px',
+    shadow: '0 4px 20px rgba(2, 132, 199, 0.1)',
+    titleFontSize: '18px',
+    titleFontWeight: '600',
+    durationBadgeFontSize: '14px',
+    numberFontSize: '14px',
+    numberFontWeight: '600',
+    image: {
+      placeholderColor: ACCENT_LIGHT,
+      durationBadgeBackground: 'rgba(12, 74, 110, 0.7)',
+      durationBadgeText: BACKGROUND,
+    },
+  },
+
+  stepIndicators: {
+    active: {
+      outlineColor: ACCENT,
+      numberColor: ACCENT,
+      backgroundColor: BACKGROUND,
+    },
+    inactive: {
+      borderColor: BORDER,
+      numberColor: TEXT_SECONDARY,
+      backgroundColor: BACKGROUND,
+    },
+    completed: {
+      backgroundColor: ACCENT,
+      checkmarkColor: '#FFFFFF',
+    },
+  },
+
+  buttons: {
+    primary: {
+      backgroundColor: ACCENT,
+      textColor: '#FFFFFF',
+      hoverBackground: ACCENT_DARK,
+      iconColor: '#FFFFFF',
+      fontSize: '18px',
+      fontWeight: '600',
+    },
+    secondary: {
+      backgroundColor: BACKGROUND,
+      textColor: TEXT_PRIMARY,
+      borderColor: BORDER,
+      hoverBackground: ACCENT_LIGHT,
+      fontSize: '16px',
+      fontWeight: '500',
+    },
+    download: {
+      backgroundColor: 'transparent',
+      textColor: ACCENT,
+      borderColor: ACCENT,
+      hoverBackground: 'rgba(2, 132, 199, 0.1)',
+      iconColor: ACCENT,
+      fontSize: '18px',
+      fontWeight: '600',
+    },
+    transcription: {
+      backgroundColor: '#FFFFFF',
+      iconColor: ACCENT,
+      hoverBackground: BACKGROUND,
+    },
+  },
+
+  typography: {
+    fontFamily: {
+      sans: ['Inter', 'system-ui', 'sans-serif'],
+      heading: ['Inter', 'sans-serif'],
+      numbers: ['Inter'],
+    },
+  },
+
+  branding: {
+    logoUrl: undefined,
+    showLogoBorder: true,
+    logoSize: 'fit',
+  },
+
+  miniPlayer: {
+    backgroundColor: '#FFFFFF',
+    textColor: TEXT_PRIMARY,
+    titleFontSize: '16px',
+    titleFontWeight: '500',
+    transcriptionFontSize: '15px',
+    progressBar: {
+      backgroundColor: ACCENT_LIGHT,
+      highlightColor: ACCENT_DARK,
+    },
+    controls: {
+      playButtonBackground: ACCENT,
+      playButtonIcon: '#FFFFFF',
+      otherButtonsBackground: ACCENT_LIGHT,
+      otherButtonsIcon: '#075985',
+    },
+    minimized: {
+      playButtonIcon: ACCENT,
+    },
+  },
+
+  sheets: {
+    backgroundColor: '#FFFFFF',
+    handleColor: BORDER,
+    textColor: TEXT_PRIMARY,
+    borderColor: ACCENT_LIGHT,
+    titleFontSize: '18px',
+    titleFontWeight: '700',
+  },
+
+  status: {
+    success: ACCENT,
+    error: '#DC2626',
+    warning: '#F59E0B',
+  },
+
+  loading: {
+    spinnerColor: ACCENT,
+    backgroundColor: BACKGROUND,
+    messageFontSize: '16px',
+    messageFontWeight: '500',
+  },
+
+  startCard: {
+    titleFontSize: '30px',
+    titleFontWeight: '700',
+    titleLineHeight: '1.2',
+    metaFontSize: '14px',
+    metaFontWeight: '400',
+    metaColor: TEXT_SECONDARY,
+    descriptionFontSize: '16px',
+    offlineMessage: {
+      backgroundColor: 'rgba(2, 132, 199, 0.08)',
+      borderColor: 'rgba(2, 132, 199, 0.25)',
+      textColor: ACCENT,
+    },
+  },
+
+  inputs: {
+    backgroundColor: '#FFFFFF',
+    textColor: TEXT_PRIMARY,
+    borderColor: BORDER,
+    focusBorderColor: ACCENT,
+    placeholderColor: '#94A3B8',
+  },
+
+  colors: {
+    text: {
+      primary: TEXT_PRIMARY,
+      secondary: '#475569',
+      tertiary: TEXT_SECONDARY,
+      inverse: '#FFFFFF',
+    },
+    border: {
+      light: BACKGROUND,
+      medium: ACCENT_LIGHT,
+      dark: BORDER,
+    },
+    background: {
+      primary: '#FFFFFF',
+      secondary: BACKGROUND,
+      tertiary: ACCENT_LIGHT,
+    },
+  },
+};
+```
+</Accordion>
+

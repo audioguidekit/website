@@ -1,0 +1,127 @@
+---
+title: "Translations Overview"
+description: "How AudioGuideKit's multi-language system works"
+---
+
+# Multi-language system
+
+AudioGuideKit has first-class support for multiple languages. Visitors can switch languages mid-tour without losing their place—something many audio tour apps get wrong.
+
+## How it works
+
+The language system has two parts:
+
+1. **Tour content** - Your translated tour JSON files (`en.json`, `es.json`, etc.)
+2. **UI translations** - Button labels, messages, and interface text
+
+Both work automatically based on which language files you provide.
+
+## The visitor experience
+
+When someone opens your tour:
+
+<Steps>
+  <Step title="Auto-Detection">
+    AudioGuideKit detects the visitor's device language. Spanish phone? They see the Spanish tour (if available).
+  </Step>
+  <Step title="Fallback">
+    If their language isn't available, they get the default language (configurable in `metadata.json`).
+  </Step>
+  <Step title="Manual Switch">
+    Visitors can tap the language flag to switch anytime.
+  </Step>
+  <Step title="Progress Preserved">
+    When switching, their exact position is saved. Same stop, same timestamp, new language.
+  </Step>
+</Steps>
+
+<Tip>
+The language flag only appears if you have multiple language files. Single-language tours don't show it.
+</Tip>
+
+## What gets translated
+
+| Content | Source | Automatic? |
+|---------|--------|------------|
+| Tour title, description | Your `{lang}.json` file | You provide it |
+| Stop titles, content | Your `{lang}.json` file | You provide it |
+| Button labels ("Start Tour") | Built-in UI translations | Automatic |
+| System messages | Built-in UI translations | Automatic |
+
+## Supported languages
+
+AudioGuideKit includes UI translations for:
+
+| Code | Language | UI Included |
+|------|----------|-------------|
+| `en` | English | Yes |
+| `cs` | Czech | Yes |
+| `de` | German | Yes |
+| `fr` | French | Yes |
+| `it` | Italian | Yes |
+| `es` | Spanish | Yes |
+
+<Note>
+You can add tour content in any language—even ones without UI translations. The interface will fall back to the default language while your tour content displays in the visitor's language.
+</Note>
+
+## Language detection logic
+
+Here's how AudioGuideKit picks a language:
+
+```
+1. Check localStorage for saved preference
+   ↓ (if none found)
+2. Detect browser/device language
+   ↓ (if not available in tour)
+3. Use defaultLanguage from metadata.json
+   ↓ (if not set)
+4. Use first available language
+```
+
+### Preference persistence
+
+Once a visitor manually selects a language, that choice is remembered. Even if they close the browser and return later, they'll see their preferred language.
+
+## Setting default language
+
+Configure the fallback language in `metadata.json`:
+
+```json
+{
+  "id": "barcelona",
+  "defaultLanguage": "en"
+}
+```
+
+This is used when:
+- Visitor's device language isn't available
+- No preference has been saved
+- The detected language code doesn't match any tour file
+
+## Progress preservation
+
+When visitors switch languages, AudioGuideKit:
+
+1. **Stops audio** (smoothly, not abruptly)
+2. **Saves position** (stop ID + timestamp within audio)
+3. **Reloads tour** in new language
+4. **Restores position** (same stop, paused at same timestamp)
+5. **Visitor presses play** to continue in new language
+
+This works because stop IDs are consistent across languages. English stop `"3"` corresponds to Spanish stop `"3"`.
+
+<Warning>
+If you use different stop IDs across languages, position restoration will break. Always keep stop IDs consistent!
+</Warning>
+
+## Quick setup
+
+To enable multiple languages:
+
+1. Create language files with the same `id` but different `language` values
+2. Ensure stop IDs match across all files
+3. (Optionally) Set `defaultLanguage` in `metadata.json`
+
+That's it. AudioGuideKit handles detection, switching, and persistence automatically.
+

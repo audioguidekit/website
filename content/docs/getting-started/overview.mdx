@@ -1,0 +1,78 @@
+---
+title: "Overview"
+description: "What you need to know before getting started"
+---
+
+# Before you begin
+
+AudioGuideKit is designed to be approachable for non-developers while remaining flexible enough for technical users who want to customize everything. Here's what you need to know.
+
+## What AudioGuideKit is
+
+AudioGuideKit is a **ready-made audio tour player** that you host yourself. It's a web application built with React that visitors access through their phone's browser—no app store download required.
+
+You provide the content (audio files, images, text), and AudioGuideKit handles:
+- Audio playback with lock screen controls
+- Offline downloads for poor-connectivity areas
+- Multi-language support with automatic detection
+- Progress tracking so visitors can pause and resume
+- A polished mobile-first interface
+
+## What you'll need
+
+### Required
+
+<Steps>
+  <Step title="Audio content">
+    MP3 or M4A audio files for your tour stops. These need to be hosted somewhere accessible via URL (we'll cover options in the [Media](/docs/content/media) section).
+  </Step>
+  <Step title="Images">
+    Photos for each tour stop. You can use free sources like Unsplash, or host your own.
+  </Step>
+  <Step title="A computer">
+    Mac, Windows, or Linux—anything that can run Node.js.
+  </Step>
+  <Step title="A place to host">
+    A static hosting service like Vercel (free), Netlify, or GitHub Pages.
+  </Step>
+</Steps>
+
+### Nice to have
+
+- **Basic command line familiarity** - You'll run a few terminal commands, but we'll walk you through each one
+- **A code editor** - VS Code is free and works great, but any text editor will do
+- **Audio recording equipment** - Or just your phone! Modern smartphones record surprisingly good audio
+
+## Technical requirements
+
+AudioGuideKit uses:
+- **Node.js 18+** or **Bun** (recommended) for running the development server
+- **Git** for cloning the repository
+
+<Note>
+Don't have these installed? No problem. The [Installation](/docs/getting-started/installation) guide walks through setting everything up.
+</Note>
+
+## How tours are structured
+
+Every AudioGuideKit tour consists of:
+
+1. **A metadata file** (`metadata.json`) containing settings like the theme and offline mode
+2. **Language files** (like `en.json`, `es.json`) containing the actual tour content
+
+Here's a simplified view:
+
+```
+src/data/tour/
+├── metadata.json     # Settings (theme, offline mode)
+├── en.json           # English tour content
+├── de.json           # German tour content (optional)
+└── fr.json           # French tour content (optional)
+```
+
+Each language file contains the tour title, description, and an array of "stops"—each stop being an audio segment with its title, image, and audio file URL.
+
+<Tip>
+You can start with just one language file. Add more languages later when you're ready.
+</Tip>
+

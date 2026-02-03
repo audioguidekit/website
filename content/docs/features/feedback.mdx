@@ -1,0 +1,199 @@
+---
+title: "Feedback collection"
+description: "Collect ratings and emails from your visitors"
+---
+
+# Feedback collection
+
+AudioGuideKit includes built-in features to collect visitor feedback: star ratings and email signup. These help you understand your audience and build a community.
+
+## Enabling feedback
+
+Enable the rating button in `metadata.json`:
+
+```json
+{
+  "id": "barcelona",
+  "collectFeedback": true
+}
+```
+
+When `true`, a rating button appears in the header. Visitors can tap it anytime to submit a star rating.
+
+## Star ratings
+
+### How it works
+
+1. Visitor taps the rating button (star icon in header)
+2. Bottom sheet slides up with 1-5 star selection
+3. Visitor selects a rating and taps Submit
+4. Rating is stored locally and can be sent to your backend
+
+### Adding a rating stop
+
+For a more prominent feedback request, add a rating stop at the end of your tour:
+
+```json
+{
+  "id": "8",
+  "type": "rating",
+  "title": "How was your tour?",
+  "duration": "Rate us",
+  "image": "https://images.unsplash.com/photo-xxx"
+}
+```
+
+This creates a card in the tour feed that encourages feedback.
+
+<Tip>
+Place rating requests near the end of the tour, after visitors have experienced enough to form an opinion. Don't ask too early.
+</Tip>
+
+## Email collection
+
+Collect email addresses for newsletters or follow-up communication.
+
+### Adding an email stop
+
+```json
+{
+  "id": "9",
+  "type": "email",
+  "title": "Stay in Touch",
+  "duration": "Sign up",
+  "image": "https://images.unsplash.com/photo-xxx",
+  "description": "Get notified about new tours and special events.",
+  "placeholder": "Enter your email"
+}
+```
+
+### What visitors see
+
+- Card with your title, description, and image
+- Email input field with your placeholder text
+- Submit button
+- Success message after submission
+
+## Connecting to your backend
+
+Out of the box, feedback is stored locally. To actually collect and analyze it, you'll need to:
+
+1. Set up a backend endpoint to receive data
+2. Modify the app to POST feedback to your endpoint
+
+### Example: Sending to a webhook
+
+In a production setup, you'd modify the rating/email handlers to send data:
+
+```typescript
+// Example - you'd add this to your fork
+async function submitRating(rating: number) {
+  await fetch('https://your-api.com/feedback', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      tourId: 'barcelona',
+      rating,
+      timestamp: new Date().toISOString(),
+    }),
+  });
+}
+```
+
+### Backend options
+
+| Service | Complexity | Cost |
+|---------|------------|------|
+| Zapier Webhook | Easy | Free tier available |
+| Supabase | Medium | Free tier available |
+| Custom API | Harder | Varies |
+| Google Sheets | Easy | Free |
+
+<Note>
+Backend integration requires code changes. This is an area where AudioGuideKit provides the UI, but you customize the data flow.
+</Note>
+
+## Analytics considerations
+
+With feedback collection, consider:
+
+### Privacy
+
+- Inform visitors you're collecting data
+- Add a privacy policy link if collecting emails
+- Consider GDPR compliance for EU visitors
+
+### Storage
+
+- Decide how long to keep feedback
+- Anonymize or delete on request
+- Secure any PII (personally identifiable information)
+
+### What to track
+
+| Data Point | Usefulness | Privacy Impact |
+|------------|------------|----------------|
+| Star rating | High | Low |
+| Email address | High | High |
+| Tour ID | High | Low |
+| Timestamp | Medium | Low |
+| Device type | Medium | Low |
+| Location | Low | High |
+
+## Rating best practices
+
+### When to ask
+
+- **Do:** After completing at least half the tour
+- **Don't:** On the first stop
+- **Do:** As an optional stop near the end
+- **Don't:** Force rating before continuing
+
+### How to frame it
+
+Good:
+- "How was your tour?"
+- "Help us improve"
+- "Share your experience"
+
+Avoid:
+- "Rate us 5 stars!"
+- "Don't forget to rate!"
+- Anything that feels pushy
+
+## Email best practices
+
+### Provide value
+
+Tell visitors what they get for signing up:
+- "Get notified about new tours"
+- "Receive exclusive discounts"
+- "Join our community"
+
+### Make it optional
+
+Email collection should never block tour progress. It's a gentle ask, not a gate.
+
+### Follow up
+
+If you collect emails, actually send valuable content:
+- New tour announcements
+- Behind-the-scenes stories
+- Related travel tips
+
+<Warning>
+Collecting emails and not using them is worse than not collecting at all. It erodes trust and wastes visitor goodwill.
+</Warning>
+
+## Future enhancements
+
+Potential improvements to the feedback system:
+
+- Written review submission
+- Photo upload from visitors
+- Net Promoter Score (NPS) questions
+- Multi-question surveys
+- Real-time feedback dashboard
+
+These would require custom development but are possible with AudioGuideKit as a foundation.
+

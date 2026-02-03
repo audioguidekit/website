@@ -1,0 +1,264 @@
+---
+title: "Media Hosting"
+description: "Where and how to host your audio files and images"
+---
+
+# Media hosting
+
+Your audio files and images need to be accessible via public URLs. This guide covers your options, from free solutions to professional setups.
+
+## Quick recommendations
+
+| Use Case | Recommendation | Cost |
+|----------|----------------|------|
+| Getting started | Supabase Storage | Free tier generous |
+| Production | AWS S3 + CloudFront | ~$0.02/GB/month |
+| Images only | Unsplash URLs | Free |
+| Podcast-style | Transistor, Buzzsprout | $19+/month |
+
+## Option 1: Supabase storage (recommended for starting)
+
+Supabase offers 1GB free storage with 2GB bandwidth—plenty for a small tour.
+
+<Steps>
+  <Step title="Create Account">
+    Sign up at [supabase.com](https://supabase.com). Create a new project.
+  </Step>
+  <Step title="Create Storage Bucket">
+    Go to Storage → Create new bucket. Name it `audio` and set it to **Public**.
+  </Step>
+  <Step title="Upload Files">
+    Drag and drop your audio files into the bucket.
+  </Step>
+  <Step title="Get URLs">
+    Click a file → Copy URL. It will look like:
+    ```
+    https://xxxxx.supabase.co/storage/v1/object/public/audio/01-welcome.mp3
+    ```
+  </Step>
+</Steps>
+
+<Tip>
+Enable the Supabase CDN for faster global delivery. It's in Settings → Storage.
+</Tip>
+
+### Supabase pros & cons
+
+**Pros:**
+- Generous free tier
+- Simple UI for uploading
+- Built-in CDN option
+- No credit card required
+
+**Cons:**
+- 1GB limit on free tier
+- Bandwidth limits (2GB/month free)
+- Need to upgrade for larger tours
+
+## Option 2: AWS S3 + CloudFront (production)
+
+For production tours with significant traffic, AWS S3 with CloudFront CDN is the gold standard.
+
+### Setup overview
+
+<Steps>
+  <Step title="Create S3 Bucket">
+    In AWS Console → S3 → Create bucket. Use a region close to your visitors.
+  </Step>
+  <Step title="Configure Permissions">
+    Enable public access or use CloudFront with signed URLs for access control.
+  </Step>
+  <Step title="Set Up CloudFront">
+    Create a CloudFront distribution pointing to your S3 bucket. This caches files globally.
+  </Step>
+  <Step title="Upload Files">
+    Use the AWS CLI or S3 console to upload your audio files.
+  </Step>
+</Steps>
+
+### Example S3 URL structure
+
+```
+https://d1234567890.cloudfront.net/tours/london/audio/01-welcome.mp3
+```
+
+### Cost estimate
+
+For a tour with 10 audio files (50MB each) serving 1,000 visitors/month:
+- Storage: ~$0.01/month
+- Transfer: ~$4/month
+- Total: ~$5/month
+
+<Note>
+AWS pricing is complex but usually cheaper than alternatives at scale. Use the [AWS Calculator](https://calculator.aws/) for accurate estimates.
+</Note>
+
+## Option 3: Backblaze B2 (budget production)
+
+Backblaze B2 is significantly cheaper than S3 with similar reliability.
+
+| Metric | AWS S3 | Backblaze B2 |
+|--------|--------|--------------|
+| Storage | $0.023/GB | $0.006/GB |
+| Download | $0.09/GB | $0.01/GB |
+
+### Setup
+
+1. Create account at [backblaze.com](https://www.backblaze.com/b2/cloud-storage.html)
+2. Create a bucket (set to Public)
+3. Upload files
+4. Copy the "Friendly URL" for each file
+
+<Tip>
+Pair Backblaze B2 with Cloudflare for free CDN. Cloudflare has a bandwidth alliance with Backblaze that eliminates egress fees.
+</Tip>
+
+## Option 4: Google cloud storage
+
+Similar to AWS S3, with slightly different pricing and a nicer console UI.
+
+```
+https://storage.googleapis.com/your-bucket/audio/01-welcome.mp3
+```
+
+Google Cloud offers $300 free credits for new accounts—enough to test extensively.
+
+## Option 5: Podcast hosting services
+
+If you're already using a podcast host, you might be able to use it for tour audio too.
+
+**Services that work:**
+- Transistor
+- Buzzsprout
+- Anchor (now Spotify for Podcasters)
+- Podbean
+
+**Pros:**
+- Already paying for it
+- Usually includes analytics
+- Reliable CDN delivery
+
+**Cons:**
+- Not designed for this use case
+- May have terms of service issues
+- Usually more expensive than cloud storage
+
+## Images: Use Unsplash directly
+
+For images, you don't need to host anything. Unsplash allows direct hotlinking with parameters:
+
+```
+https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=800&auto=format&fit=crop
+```
+
+### Unsplash URL parameters
+
+| Parameter | Description | Example |
+|-----------|-------------|---------|
+| `w` | Width in pixels | `w=800` |
+| `h` | Height in pixels | `h=600` |
+| `auto=format` | Auto WebP delivery | Always include |
+| `fit=crop` | Crop to fit dimensions | Optional |
+| `q` | Quality (1-100) | `q=80` |
+
+### Finding the right image
+
+1. Go to [unsplash.com](https://unsplash.com)
+2. Search for your location (e.g., "Big Ben London")
+3. Click an image → right-click → "Copy image address"
+4. Add parameters: `?w=800&auto=format`
+
+<Warning>
+Don't use `w=2000` for every image. Card images only need ~800px. Larger sizes waste bandwidth and slow down the tour.
+</Warning>
+
+## File naming best practices
+
+Keep your files organized:
+
+```
+tours/
+├── london/
+│   ├── audio/
+│   │   ├── en/
+│   │   │   ├── 01-big-ben.mp3
+│   │   │   ├── 02-abbey.mp3
+│   │   │   └── 03-eye.mp3
+│   │   └── es/
+│   │       ├── 01-big-ben.mp3
+│   │       └── ...
+│   └── images/
+│       ├── cover.jpg
+│       └── ...
+└── barcelona/
+    └── ...
+```
+
+**Naming conventions:**
+- Lowercase with hyphens
+- Number prefix for ordering (`01-`, `02-`)
+- Language subfolder for audio
+- Descriptive names (not `audio1.mp3`)
+
+## Audio file optimization
+
+Before uploading, optimize your audio files:
+
+### Recommended settings
+
+| Setting | Recommended |
+|---------|-------------|
+| Format | M4A (AAC) or MP3 |
+| Bitrate | 128 kbps (speech) |
+| Sample rate | 44.1 kHz |
+| Channels | Mono (for speech) |
+
+### Why these settings?
+
+- **128 kbps**: Perfect for speech; higher bitrates don't improve voice quality
+- **Mono**: Human voice doesn't benefit from stereo; saves 50% file size
+- **M4A**: Better compression than MP3 at same quality
+
+### Quick optimization with FFmpeg
+
+```bash
+# Convert to optimized M4A
+ffmpeg -i input.wav -c:a aac -b:a 128k -ac 1 output.m4a
+
+# Batch convert all WAV files
+for f in *.wav; do
+  ffmpeg -i "$f" -c:a aac -b:a 128k -ac 1 "${f%.wav}.m4a"
+done
+```
+
+## CORS configuration
+
+If you're hosting on S3 or similar, you may need to configure CORS (Cross-Origin Resource Sharing) to allow AudioGuideKit to access your files.
+
+### Example S3 CORS policy
+
+```json
+[
+  {
+    "AllowedHeaders": ["*"],
+    "AllowedMethods": ["GET", "HEAD"],
+    "AllowedOrigins": ["*"],
+    "ExposeHeaders": []
+  }
+]
+```
+
+<Note>
+Replace `"*"` in AllowedOrigins with your actual domain in production for better security:
+`["https://yourtour.com", "http://localhost:3000"]`
+</Note>
+
+## Testing your URLs
+
+Before adding to your tour JSON, verify each URL works:
+
+1. Open the URL directly in your browser
+2. Audio should play; images should display
+3. Check for HTTPS (not HTTP)
+4. Test on mobile (some hosts block certain user agents)
+

@@ -1,0 +1,138 @@
+---
+title: "First Run"
+description: "Explore the demo tour and learn how AudioGuideKit works"
+---
+
+# Exploring the demo tour
+
+With the development server running (`bun run dev`), let's take a tour of the tour player. This will help you understand what visitors will experience and how the different features work.
+
+## The start screen
+
+When you first open http://localhost:3000, you'll see the tour start screen:
+
+<Steps>
+  <Step title="Tour Header">
+    Shows the tour title, duration, and number of stops. This information comes from your tour JSON file.
+  </Step>
+  <Step title="Tour Image">
+    A hero image that sets the mood for the tour. This is the `image` field in your tour file.
+  </Step>
+  <Step title="Description">
+    A brief overview of what visitors will experience. Keep this engaging—it's your pitch!
+  </Step>
+  <Step title="Start Button">
+    Tapping this begins the tour and loads the first stop.
+  </Step>
+</Steps>
+
+<Tip>
+Notice the language selector in the header? If you have multiple language files, visitors can switch languages here. Try it!
+</Tip>
+
+## The tour feed
+
+After starting the tour, you'll see a scrollable feed of "stops." Each stop is a card that can contain:
+
+- **Audio content** with playback controls
+- **Images** with optional duration badges
+- **Text** for written content
+- **Videos** for multimedia stops
+- **And more** (quotes, ratings, 3D objects...)
+
+### Try playing audio
+
+Tap on an audio stop card. Notice:
+
+1. **The Mini Player appears** at the bottom of the screen
+2. **Lock screen controls work** (try locking your phone while playing)
+3. **Progress is saved** automatically—close the browser and reopen to resume
+
+## The mini player
+
+The mini player is the floating control bar at the bottom. It has two states:
+
+### Expanded state
+
+When you tap the player, it expands to show:
+- **Track title and progress bar**
+- **Play/pause button** (center)
+- **Skip forward/backward buttons** (15 seconds)
+- **Transcription toggle** (if transcripts are available)
+
+### Minimized state
+
+When you scroll or tap elsewhere, the player collapses to a compact bar. Audio keeps playing!
+
+<Note>
+The mini player uses spring physics for smooth animations. This is built with Framer Motion and feels native on mobile devices.
+</Note>
+
+## Progress tracking
+
+AudioGuideKit automatically tracks visitor progress:
+
+- **Completed stops** show a checkmark
+- **Current position** is saved (even the exact second within an audio track)
+- **Progress persists** across page refreshes and browser sessions
+
+Try this experiment:
+1. Start playing audio
+2. Close the browser tab
+3. Reopen http://localhost:3000
+4. Your progress should be exactly where you left it!
+
+## Offline mode
+
+If the tour has offline mode enabled, you'll see a "Download for Offline" button on the start screen.
+
+<Tabs>
+  <Tab title="Optional Mode">
+    Visitors can choose to download. Great for most use cases.
+  </Tab>
+  <Tab title="Offline Only Mode">
+    Download is required before playback. Use for locations with no connectivity.
+  </Tab>
+  <Tab title="Online Only Mode">
+    No download option. For tours with frequently updated content.
+  </Tab>
+</Tabs>
+
+## Language switching
+
+If your tour has multiple languages, visitors can switch anytime:
+
+1. Tap the **language flag** in the header
+2. Select a new language from the sheet
+3. Tour reloads in the new language
+4. **Progress is preserved**—same stop, same position!
+
+This is one of AudioGuideKit's killer features. Many audio tour apps lose your place when switching languages. We don't.
+
+## Responsive design
+
+Try resizing your browser window or opening on different devices. AudioGuideKit is mobile-first but works beautifully on tablets and desktops too.
+
+The layout adapts with:
+- **Mobile**: Full-screen cards, bottom mini player
+- **Tablet**: Slightly larger cards, more breathing room
+- **Desktop**: Centered content with max-width constraint
+
+## Quick commands reference
+
+While developing, you'll use these commands:
+
+```bash
+# Start development server
+bun run dev
+
+# Build for production
+bun run build
+
+# Preview production build locally
+bun run preview
+
+# Run tests
+bun run test
+```
+

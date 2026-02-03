@@ -1,0 +1,124 @@
+---
+title: "Installation"
+description: "Get AudioGuideKit running on your computer"
+---
+
+# Installation
+
+This guide will have you running AudioGuideKit locally in about 5 minutes. We'll install the prerequisites, clone the repository, and start the development server.
+
+## Prerequisites
+
+### Install Bun (recommended)
+
+Bun is a fast JavaScript runtime that makes development snappy. It's what we use internally.
+
+<Tabs>
+  <Tab title="macOS / Linux">
+    Open Terminal and run:
+    ```bash
+    curl -fsSL https://bun.sh/install | bash
+    ```
+    Then restart your terminal or run `source ~/.bashrc` (or `~/.zshrc` on Mac).
+  </Tab>
+  <Tab title="Windows">
+    Open PowerShell as Administrator and run:
+    ```powershell
+    powershell -c "irm bun.sh/install.ps1 | iex"
+    ```
+    Then restart PowerShell.
+  </Tab>
+</Tabs>
+
+<Accordion title="Using Node.js instead?">
+If you prefer Node.js, you can use that instead. Install Node.js 18 or later from [nodejs.org](https://nodejs.org), then replace `bun` with `npm` in all commands below.
+
+For example: `bun install` becomes `npm install`, and `bun run dev` becomes `npm run dev`.
+</Accordion>
+
+### Install git
+
+Git is needed to clone the repository.
+
+<Tabs>
+  <Tab title="macOS">
+    Git comes pre-installed on macOS. Open Terminal and type `git --version` to verify.
+
+    If not installed, you'll be prompted to install the Xcode Command Line Tools.
+  </Tab>
+  <Tab title="Windows">
+    Download and install from [git-scm.com](https://git-scm.com/download/win).
+
+    Use the default settings during installation.
+  </Tab>
+  <Tab title="Linux">
+    ```bash
+    # Ubuntu/Debian
+    sudo apt install git
+
+    # Fedora
+    sudo dnf install git
+    ```
+  </Tab>
+</Tabs>
+
+## Clone the repository
+
+Open your terminal, navigate to where you want the project, and clone:
+
+```bash
+git clone https://github.com/audioguidekit/player.git
+cd player
+```
+
+This creates a `player` folder with all the AudioGuideKit source code.
+
+## Install dependencies
+
+From inside the `player` folder, install the required packages:
+
+```bash
+bun install
+```
+
+This downloads all the libraries AudioGuideKit needs. It typically takes 30-60 seconds.
+
+<Note>
+If you see warnings about optional dependencies or peer dependencies, that's normal and can be safely ignored.
+</Note>
+
+## Verify installation
+
+Make sure everything is set up correctly by starting the development server:
+
+```bash
+bun run dev
+```
+
+You should see output like:
+
+```
+  VITE v6.x.x  ready in 500 ms
+
+  ➜  Local:   http://localhost:3000/
+  ➜  Network: use --host to expose
+```
+
+Open http://localhost:3000 in your browser. You should see the demo tour!
+
+<Warning>
+If the page doesn't load, check that port 3000 isn't being used by another application. You can also try `bun run dev -- --port 3001` to use a different port.
+</Warning>
+
+## What you just installed
+
+Your project now contains:
+
+| Folder | Purpose |
+|--------|---------|
+| `src/data/tour/` | Where your tour JSON files go |
+| `src/` | Application source code |
+| `components/` | React components |
+| `hooks/` | Custom React hooks |
+| `docs/` | Additional documentation |
+
