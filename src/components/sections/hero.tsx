@@ -37,11 +37,11 @@ const OpenSourceBadge = (
 
 export function Hero() {
   return (
-    <section className="relative min-h-[90vh] flex items-center bg-white border-b border-border lg:pl-32 lg:pr-32">
-      <div className="container relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-24 lg:gap-20 items-center py-20">
+    <section className="relative min-h-[90vh] flex items-center bg-white border-b border-border">
+      <div className="max-w-[1000px] mx-auto px-4 sm:px-8 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-16 lg:gap-8 items-center py-20">
 
-          <div>
+          <div className="relative z-40">
             {/* Supporting Note */}
             <MotionDiv
               initial={{ opacity: 0, y: 10 }}
@@ -59,19 +59,19 @@ export function Hero() {
               className="text-[32px] sm:text-[40px] md:text-[64px] font-bold text-foreground tracking-tight leading-[1] mb-6"
             >
               An open-source <br />
-              <span className="text-muted-foreground">
-                audio guide player</span>{' '}
-              <span className="whitespace-nowrap">for <Typewriter words={['museums', 'galleries', 'cultural institutions']} /><MotionSpan
+              <span className="text-muted-foreground">audio guide player</span>
+              <br className="hidden md:block" />
+              <span className="whitespace-nowrap"> for <span className="relative inline-block"><span className="invisible">cultural institutions_</span><span className="absolute left-0 top-0 whitespace-nowrap"><Typewriter words={['museums', 'galleries', 'cultural institutions']} /><MotionSpan
                 animate={{ opacity: [1, 0] }}
                 transition={{
                   duration: 1,
                   repeat: Infinity,
                   ease: (v) => v < 0.5 ? 0 : 1
                 }}
-                className="ml-0.5 inline-block"
+                className="inline-block"
               >
                 _
-              </MotionSpan></span>
+              </MotionSpan></span></span></span>
             </MotionH1>
 
             {/* Subheadline */}
@@ -84,30 +84,24 @@ export function Hero() {
               A lightweight audio guide player built in React for the web. Runs online and offline as a PWA, self-hosted by default, with customizable branding and no platform lock-in.
             </MotionP>
 
-            {/* Primary CTA - Terminal */}
+            {/* Primary CTA - Terminal + Status */}
             <MotionDiv
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="inline-flex flex-col items-start gap-3"
+              className="inline-flex flex-col items-center"
             >
-              <div className="inline-flex items-center gap-4 pl-8 px-5 py-2 bg-foreground/[0.03] border-1 border-foreground/10 rounded-md hover:border-foreground/20 transition-colors">
+              <div className="inline-flex items-center gap-4 px-5 py-2 bg-foreground/[0.03] border border-foreground/10 rounded-md hover:border-foreground/20 transition-colors">
                 <TerminalCopy command="npx create-audioguidekit-player my-project" className="text-[15px] sm:text-[17px]" />
               </div>
-            </MotionDiv>
-
-            {/* Project Status */}
-            <MotionDiv
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-            >
-              <ProjectStatusShowcase />
+              <div className="pt-4">
+                <ProjectStatusShowcase />
+              </div>
             </MotionDiv>
           </div>
 
 
-          <div className="relative flex justify-center lg:justify-end py-8">
+          <div className="relative flex justify-center lg:justify-start py-8">
             <MotionDiv
               initial={{ opacity: 0, scale: 0.9, rotate: -4 }}
               animate={{
@@ -122,9 +116,9 @@ export function Hero() {
                 rotate: { duration: 6, repeat: Infinity, ease: "easeInOut" },
                 y: { duration: 6, repeat: Infinity, ease: "easeInOut" }
               }}
-              className="relative z-30 lg:-mr-12"
+              className="relative z-30 lg:-ml-16"
             >
-              <PhoneFrame className="w-full max-w-[280px] sm:max-w-[320px] mockup-shadow">
+              <PhoneFrame className="w-[280px] sm:w-[320px] shrink-0 mockup-shadow">
                 <img
                   src="/images/screenshot-main.png"
                   alt="AudioGuideKit player interface"

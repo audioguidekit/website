@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 export function TryPlayer() {
   return (
-    <section className="w-full py-12 md:py-24 bg-background border-b border-border">
+    <section className="w-full pt-0 pb-12 md:py-24 bg-background border-b border-border">
       <div className="hidden md:block w-[80%] mx-auto h-px bg-border -mt-24 mb-24" />
       <div className="max-w-[1000px] mx-auto px-4 sm:px-8">
         <div className="flex flex-col items-center lg:items-center">

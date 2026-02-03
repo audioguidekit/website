@@ -29,7 +29,7 @@ export function AppShowcase() {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   return (
-    <section className="w-full py-24 bg-background">
+    <section className="w-full pt-24 pb-8 md:py-24 bg-background">
       <div className="max-w-[1000px] mx-auto px-4 sm:px-8">
         <div className="mb-16">
           <span className="inline-flex items-center px-2 py-0.5 text-[10px] font-mono font-medium tracking-widest text-muted-foreground bg-secondary uppercase border border-border rounded">

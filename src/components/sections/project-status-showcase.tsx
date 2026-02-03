@@ -33,16 +33,16 @@ export function ProjectStatusShowcase() {
   }, []);
 
   return (
-    <div className="mt-4 pl-8 flex flex-wrap items-center gap-x-4 gap-y-2 text-[13px] font-mono">
+    <div className="flex items-center gap-4 text-[13px] font-mono whitespace-nowrap">
       <div className="flex items-center gap-2 text-muted-foreground">
         <GitCommit className="w-4 h-4 text-emerald-500/70" />
         <span>
           {loading ? (
             <span className="animate-pulse">Fetching latest pulse...</span>
           ) : commit ? (
-            <>Last update {formatRelativeTime(commit.date)}</>
+            <>Updated {formatRelativeTime(commit.date)}</>
           ) : (
-            <span>Last update today</span>
+            <span>Updated today</span>
           )}
         </span>
       </div>
@@ -53,7 +53,7 @@ export function ProjectStatusShowcase() {
         href="/updates"
         className="text-muted-foreground hover:text-primary transition-colors underline decoration-border hover:decoration-primary/30 underline-offset-4"
       >
-        See updates and roadmap
+        Updates and roadmap
       </a>
     </div>
   );
