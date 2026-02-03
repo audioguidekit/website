@@ -8,20 +8,20 @@ const features = [
   {
     title: "Quick overview",
     description: "Get a clear overview of the guide and use it online or offline.",
-    lightImage: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=2070&auto=format&fit=crop",
-    darkImage: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=2070&auto=format&fit=crop"
+    lightImage: "/images/screenshot-start.png",
+    darkImage: "/images/screenshot-start.png" // TODO: add dark variant
   },
   {
     title: "Simple audio guide",
     description: "All stops in one place, with a simple audio player and transcript support.",
-    lightImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop",
-    darkImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop"
+    lightImage: "/images/screenshot-audio.png",
+    darkImage: "/images/screenshot-audio.png" // TODO: add dark variant
   },
   {
     title: "Visitor feedback",
     description: "Collect visitor feedback once the guide is complete.",
-    lightImage: "https://images.unsplash.com/photo-1452421822248-d4c2b47f0c81?q=80&w=1974&auto=format&fit=crop",
-    darkImage: "https://images.unsplash.com/photo-1452421822248-d4c2b47f0c81?q=80&w=1974&auto=format&fit=crop"
+    lightImage: "/images/screenshot-feedback.png",
+    darkImage: "/images/screenshot-feedback.png" // TODO: add dark variant
   }
 ];
 
@@ -84,10 +84,10 @@ export function AppShowcase() {
               </div>
 
               <div className="text-center w-full">
-                <h3 className="text-[16px] font-bold text-foreground mb-2">
+                <h3 className="text-[18px] md:text-[17px] font-bold text-foreground mb-2">
                   {feature.title}
                 </h3>
-                <p className="text-[14px] text-muted-foreground leading-relaxed">
+                <p className="text-[16px] md:text-[15px] text-muted-foreground leading-relaxed">
                   {feature.description}
                 </p>
               </div>

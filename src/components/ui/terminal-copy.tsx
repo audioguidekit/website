@@ -70,10 +70,10 @@ export function TerminalCopy({ command, className }: TerminalCopyProps) {
             </motion.div>
           ) : (
             <>
-              <kbd className="absolute inline-flex items-center justify-center size-5 text-[10px] font-mono font-bold bg-background text-muted-foreground rounded border border-border opacity-100 group-hover:opacity-0 transition-opacity">
+              <kbd className="absolute hidden md:inline-flex items-center justify-center size-5 text-[10px] font-mono font-bold bg-background text-muted-foreground rounded border border-border opacity-100 group-hover:opacity-0 transition-opacity">
                 C
               </kbd>
-              <Copy className="w-3.5 h-3.5 absolute opacity-0 group-hover:opacity-100 transition-opacity" />
+              <Copy className="w-3.5 h-3.5 absolute opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity" />
             </>
           )}
         </AnimatePresence>

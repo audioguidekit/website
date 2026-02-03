@@ -43,10 +43,10 @@ export function CoreFeatures() {
                 </span>
                 <div className="w-1.5 h-1.5 bg-primary/20 rounded-full group-hover:bg-primary transition-colors" />
               </div>
-              <h3 className="text-[16px] font-bold text-foreground mb-3 leading-tight">
+              <h3 className="text-[18px] md:text-[17px] font-bold text-foreground mb-3 leading-tight">
                 {step.title}
               </h3>
-              <p className="text-[14px] text-muted-foreground leading-relaxed">
+              <p className="text-[16px] md:text-[15px] text-muted-foreground leading-relaxed">
                 {step.description}
               </p>
             </div>
@@ -62,7 +62,7 @@ export function CoreFeatures() {
           <h3 className="text-[13px] font-mono font-bold text-muted-foreground mb-4 uppercase tracking-[0.2em]">
             OUT_OF_SCOPE
           </h3>
-          <p className="text-[16px] text-muted-foreground text-center max-w-[700px] font-normal leading-relaxed">
+          <p className="text-[18px] md:text-[17px] text-muted-foreground text-center max-w-[700px] font-normal leading-relaxed">
             {[
               "content management",
               "audio & image hosting",

@@ -23,7 +23,7 @@ export function WhoItIsFor() {
           {users.map((user, i) => (
             <div key={i} className="flex items-start gap-4 group">
               <Check className="mt-1 w-4 h-4 text-primary shrink-0 group-hover:scale-110 transition-transform" />
-              <p className="text-[16px] text-muted-foreground group-hover:text-foreground transition-colors leading-relaxed">
+              <p className="text-[18px] md:text-[17px] text-muted-foreground group-hover:text-foreground transition-colors leading-relaxed">
                 {user}
               </p>
             </div>

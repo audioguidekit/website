@@ -15,7 +15,7 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-background flex flex-col items-center">
       <Navigation />
-      <main className="w-full max-w-[1400px] border-x border-border relative pt-16 bg-background">
+      <main className="w-full max-w-[1400px] border-x border-border relative pt-16 md:pt-22 bg-background">
         <Hero />
         <CoreFeatures />
         <WhoItIsFor />

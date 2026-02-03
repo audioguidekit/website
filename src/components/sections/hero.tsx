@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic';
 import { PhoneFrame } from '@/components/ui/phone-frame';
 import { Typewriter } from '@/components/ui/typewriter';
 import { TerminalCopy } from '@/components/ui/terminal-copy';
+import { ProjectStatusShowcase } from './project-status-showcase';
 
 // Dynamic import for motion components - reduces initial bundle
 const MotionDiv = dynamic(
@@ -55,13 +56,12 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="text-[40px] sm:text-[64px] font-bold text-foreground tracking-tight leading-[1] mb-6"
+              className="text-[32px] sm:text-[40px] md:text-[64px] font-bold text-foreground tracking-tight leading-[1] mb-6"
             >
               An open-source <br />
               <span className="text-muted-foreground">
-                audio guide player</span> for{' '}
-              <Typewriter words={['museums', 'galleries', 'cultural institutions']} />
-              <MotionSpan
+                audio guide player</span>{' '}
+              <span className="whitespace-nowrap">for <Typewriter words={['museums', 'galleries', 'cultural institutions']} /><MotionSpan
                 animate={{ opacity: [1, 0] }}
                 transition={{
                   duration: 1,
@@ -71,7 +71,7 @@ export function Hero() {
                 className="ml-0.5 inline-block"
               >
                 _
-              </MotionSpan>
+              </MotionSpan></span>
             </MotionH1>
 
             {/* Subheadline */}
@@ -89,16 +89,25 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="inline-flex flex-col items-center gap-3"
+              className="inline-flex flex-col items-start gap-3"
             >
               <div className="inline-flex items-center gap-4 pl-8 px-5 py-2 bg-foreground/[0.03] border-1 border-foreground/10 rounded-md hover:border-foreground/20 transition-colors">
                 <TerminalCopy command="npx create-audioguidekit-player my-project" className="text-[15px] sm:text-[17px]" />
               </div>
             </MotionDiv>
+
+            {/* Project Status */}
+            <MotionDiv
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+            >
+              <ProjectStatusShowcase />
+            </MotionDiv>
           </div>
 
 
-          <div className="relative flex justify-center lg:justify-end">
+          <div className="relative flex justify-center lg:justify-end overflow-hidden lg:overflow-visible">
             <MotionDiv
               initial={{ opacity: 0, scale: 0.9, rotate: -4 }}
               animate={{
@@ -117,11 +126,10 @@ export function Hero() {
             >
               <PhoneFrame className="w-full max-w-[280px] sm:max-w-[320px] mockup-shadow">
                 <img
-                  src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=2070&auto=format&fit=crop"
-                  alt="App Interface"
+                  src="/images/screenshot-main.png"
+                  alt="AudioGuideKit player interface"
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-black/5 pointer-events-none" />
               </PhoneFrame>
             </MotionDiv>
 

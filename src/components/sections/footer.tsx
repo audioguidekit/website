@@ -23,7 +23,7 @@ export function Footer() {
             </p>
           </div>
 
-          <nav className="flex flex-justify gap-8">
+          <nav className="flex flex-justify gap-4 md:gap-8">
             {footerLinks.map((link) => (
               <a
                 key={link.label}
@@ -36,8 +36,8 @@ export function Footer() {
           </nav>
         </div>
 
-        <div className="mt-20 pt-8 border-t border-border flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="font-mono text-[10px] text-muted-foreground uppercase tracking-[0.2em]">
+        <div className="mt-20 pt-8 border-t border-border flex flex-col items-center gap-4">
+          <p className="font-mono text-[10px] text-muted-foreground uppercase tracking-[0.2em] text-center">
             © {currentYear} AudioGuideKit • MIT LICENSE • <a href="/llms.txt" className="hover:text-foreground transition-colors">LLMs.txt</a>
           </p>
           <div className="flex items-center gap-4">

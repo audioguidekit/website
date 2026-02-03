@@ -49,14 +49,14 @@ export function FAQ() {
         <div className="space-y-12">
           {faqs.map((faq, index) => (
             <div key={index} className="flex flex-col gap-3 group">
-              <h3 className="text-[16px] font-bold text-foreground leading-tight group-hover:text-primary transition-colors">
+              <h3 className="text-[18px] md:text-[17px] font-bold text-foreground leading-tight group-hover:text-primary transition-colors">
                 {faq.question}
               </h3>
               <div className="flex items-start gap-4">
                 <span className="text-muted-foreground font-mono text-sm leading-[1.6] mt-0.5 select-none opacity-30 group-hover:opacity-100 transition-opacity">
                   └
                 </span>
-                <p className="text-[15px] text-muted-foreground font-normal leading-relaxed group-hover:text-foreground transition-colors">
+                <p className="text-[16px] md:text-[16px] text-muted-foreground font-normal leading-relaxed group-hover:text-foreground transition-colors">
                   {faq.answer.split(/(updates|documentation)/i).map((part, i) =>
                     part.toLowerCase() === 'updates' ? (
                       <Link key={i} href="/updates" className="text-foreground hover:text-primary underline decoration-primary/30 hover:decoration-primary transition-all font-medium">

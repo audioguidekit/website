@@ -47,17 +47,17 @@ const HowItWorks = () => {
 
               {/* Step Content */}
               <div className="flex flex-col gap-1">
-                <h3 className="text-[15px] font-semibold text-foreground leading-tight">
+                <h3 className="text-[18px] md:text-[17px] font-semibold text-foreground leading-tight">
                   {step.title}
                 </h3>
-                <p className="text-[15px] text-muted-foreground font-mono leading-relaxed">
+                <p className="text-[16px] md:text-[16px] text-muted-foreground font-mono leading-relaxed">
                   {step.description}
                 </p>
               </div>
             </div>
           ))}
           <div className="mt-12 pt-8 border-t border-border">
-            <p className="text-[14px] text-muted-foreground">
+            <p className="text-[16px] md:text-[15px] text-muted-foreground">
               Fully static. No servers, no databases, no maintenance.
             </p>
             </div>

@@ -28,7 +28,7 @@ export function Navigation() {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 flex justify-center pointer-events-none">
-      <div className="w-full max-w-[1400px] bg-background/20 backdrop-blur-md border-b border-x border-border h-22 flex items-center justify-between px-4 sm:px-16 pointer-events-auto relative">
+      <div className="w-full max-w-[1400px] bg-background/20 backdrop-blur-md border-b border-x border-border h-16 md:h-22 flex items-center justify-between px-4 sm:px-16 pointer-events-auto relative">
 
         <Link href="/" className="flex items-center group shrink-0" aria-label="Audio Tour Home">
           <Logo className="transition-transform group-hover:scale-105" />
@@ -43,7 +43,7 @@ export function Navigation() {
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "text-[13px] font-mono font-medium transition-colors relative flex items-center h-22 group",
+                  "text-[13px] font-mono font-medium transition-colors relative flex items-center h-16 md:h-22 group",
                   isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"
                 )}
               >
