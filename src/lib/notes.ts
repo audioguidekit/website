@@ -3,8 +3,9 @@ import path from 'path';
 import matter from 'gray-matter';
 import { remark } from 'remark';
 import html from 'remark-html';
+import gfm from 'remark-gfm';
 
-const postsDirectory = path.join(process.cwd(), 'src/content/blog');
+const postsDirectory = path.join(process.cwd(), 'src/content/notes');
 
 export interface BlogPost {
   slug: string;
@@ -13,13 +14,12 @@ export interface BlogPost {
   category: string;
   excerpt: string;
   author: string;
-  authorTwitter: string;
   readingTime: string;
   contentHtml: string;
 }
 
 export async function getSortedPostsData() {
-  // Get file names under /src/content/blog
+  // Get file names under /src/content/notes
   const fileNames = fs.readdirSync(postsDirectory);
   const allPostsData = fileNames.map((fileName) => {
     // Remove ".md" from file name to get slug
@@ -35,13 +35,12 @@ export async function getSortedPostsData() {
     // Combine the data with the slug
     return {
       slug,
-      ...(matterResult.data as { 
-        title: string; 
-        date: string; 
-        category: string; 
+      ...(matterResult.data as {
+        title: string;
+        date: string;
+        category: string;
         excerpt: string;
         author: string;
-        authorTwitter: string;
         readingTime: string;
       }),
     };
@@ -66,6 +65,7 @@ export async function getPostData(slug: string): Promise<BlogPost> {
 
   // Use remark to convert markdown into HTML string
   const processedContent = await remark()
+    .use(gfm)
     .use(html)
     .process(matterResult.content);
   const contentHtml = processedContent.toString();
@@ -74,13 +74,12 @@ export async function getPostData(slug: string): Promise<BlogPost> {
   return {
     slug,
     contentHtml,
-    ...(matterResult.data as { 
-      title: string; 
-      date: string; 
-      category: string; 
+    ...(matterResult.data as {
+      title: string;
+      date: string;
+      category: string;
       excerpt: string;
       author: string;
-      authorTwitter: string;
       readingTime: string;
     }),
   };

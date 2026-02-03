@@ -1,18 +1,18 @@
 "use client"
 
 import * as React from "react"
-import useEmblaCarousel, {
-  type UseEmblaCarouselType,
-} from "embla-carousel-react"
 import { ArrowLeft, ArrowRight } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 
+// Lazy load embla-carousel-react
+type EmblaCarouselType = typeof import("embla-carousel-react").default
+type UseEmblaCarouselType = ReturnType<EmblaCarouselType>
+
 type CarouselApi = UseEmblaCarouselType[1]
-type UseCarouselParameters = Parameters<typeof useEmblaCarousel>
-type CarouselOptions = UseCarouselParameters[0]
-type CarouselPlugin = UseCarouselParameters[1]
+type CarouselOptions = Parameters<EmblaCarouselType>[0]
+type CarouselPlugin = Parameters<EmblaCarouselType>[1]
 
 type CarouselProps = {
   opts?: CarouselOptions
@@ -22,8 +22,8 @@ type CarouselProps = {
 }
 
 type CarouselContextProps = {
-  carouselRef: ReturnType<typeof useEmblaCarousel>[0]
-  api: ReturnType<typeof useEmblaCarousel>[1]
+  carouselRef: React.RefCallback<HTMLDivElement> | null
+  api: CarouselApi
   scrollPrev: () => void
   scrollNext: () => void
   canScrollPrev: boolean
@@ -42,6 +42,42 @@ function useCarousel() {
   return context
 }
 
+// Hook to lazily load embla-carousel
+function useEmblaCarouselLazy(
+  options?: CarouselOptions,
+  plugins?: CarouselPlugin
+): [React.RefCallback<HTMLDivElement> | null, CarouselApi] {
+  const [emblaModule, setEmblaModule] = React.useState<{ default: EmblaCarouselType } | null>(null)
+  const [carouselRef, setCarouselRef] = React.useState<React.RefCallback<HTMLDivElement> | null>(null)
+  const [api, setApi] = React.useState<CarouselApi>(undefined)
+
+  // Load embla-carousel-react dynamically
+  React.useEffect(() => {
+    let mounted = true
+    import("embla-carousel-react").then((mod) => {
+      if (mounted) {
+        setEmblaModule(mod)
+      }
+    })
+    return () => {
+      mounted = false
+    }
+  }, [])
+
+  // Initialize carousel once embla is loaded
+  React.useEffect(() => {
+    if (!emblaModule) return
+
+    const useEmblaCarousel = emblaModule.default
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const [ref, emblaApi] = useEmblaCarousel(options, plugins)
+    setCarouselRef(() => ref)
+    setApi(emblaApi)
+  }, [emblaModule, options, plugins])
+
+  return [carouselRef, api]
+}
+
 function Carousel({
   orientation = "horizontal",
   opts,
@@ -51,13 +87,15 @@ function Carousel({
   children,
   ...props
 }: React.ComponentProps<"div"> & CarouselProps) {
-  const [carouselRef, api] = useEmblaCarousel(
-    {
+  const mergedOpts = React.useMemo(
+    () => ({
       ...opts,
       axis: orientation === "horizontal" ? "x" : "y",
-    },
-    plugins
+    } as CarouselOptions),
+    [opts, orientation]
   )
+
+  const [carouselRef, api] = useEmblaCarouselLazy(mergedOpts, plugins)
   const [canScrollPrev, setCanScrollPrev] = React.useState(false)
   const [canScrollNext, setCanScrollNext] = React.useState(false)
 

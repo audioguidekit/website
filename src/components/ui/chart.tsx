@@ -1,9 +1,38 @@
 "use client"
 
 import * as React from "react"
-import * as RechartsPrimitive from "recharts"
+import dynamic from "next/dynamic"
 
 import { cn } from "@/lib/utils"
+
+// Dynamically import Recharts to reduce initial bundle (~300KB)
+const RechartsPrimitive = {
+  ResponsiveContainer: dynamic(
+    () => import("recharts").then((mod) => mod.ResponsiveContainer),
+    { ssr: false }
+  ),
+  Tooltip: dynamic(
+    () => import("recharts").then((mod) => mod.Tooltip),
+    { ssr: false }
+  ),
+  Legend: dynamic(
+    () => import("recharts").then((mod) => mod.Legend),
+    { ssr: false }
+  ),
+}
+
+// Re-export common chart components for consumers who need direct access
+export const LazyLineChart = dynamic(() => import("recharts").then((mod) => mod.LineChart), { ssr: false })
+export const LazyBarChart = dynamic(() => import("recharts").then((mod) => mod.BarChart), { ssr: false })
+export const LazyAreaChart = dynamic(() => import("recharts").then((mod) => mod.AreaChart), { ssr: false })
+export const LazyPieChart = dynamic(() => import("recharts").then((mod) => mod.PieChart), { ssr: false })
+export const LazyLine = dynamic(() => import("recharts").then((mod) => mod.Line), { ssr: false })
+export const LazyBar = dynamic(() => import("recharts").then((mod) => mod.Bar), { ssr: false })
+export const LazyArea = dynamic(() => import("recharts").then((mod) => mod.Area), { ssr: false })
+export const LazyPie = dynamic(() => import("recharts").then((mod) => mod.Pie), { ssr: false })
+export const LazyXAxis = dynamic(() => import("recharts").then((mod) => mod.XAxis), { ssr: false })
+export const LazyYAxis = dynamic(() => import("recharts").then((mod) => mod.YAxis), { ssr: false })
+export const LazyCartesianGrid = dynamic(() => import("recharts").then((mod) => mod.CartesianGrid), { ssr: false })
 
 // Format: { THEME_NAME: CSS_SELECTOR }
 const THEMES = { light: "", dark: ".dark" } as const
@@ -42,9 +71,7 @@ function ChartContainer({
   ...props
 }: React.ComponentProps<"div"> & {
   config: ChartConfig
-  children: React.ComponentProps<
-    typeof RechartsPrimitive.ResponsiveContainer
-  >["children"]
+  children: React.ReactNode
 }) {
   const uniqueId = React.useId()
   const chartId = `chart-${id || uniqueId.replace(/:/g, "")}`
@@ -118,14 +145,28 @@ function ChartTooltipContent({
   color,
   nameKey,
   labelKey,
-}: React.ComponentProps<typeof RechartsPrimitive.Tooltip> &
-  React.ComponentProps<"div"> & {
-    hideLabel?: boolean
-    hideIndicator?: boolean
-    indicator?: "line" | "dot" | "dashed"
-    nameKey?: string
-    labelKey?: string
-  }) {
+}: {
+  active?: boolean
+  payload?: Array<{
+    name?: string
+    value?: number
+    dataKey?: string
+    type?: string
+    color?: string
+    payload?: Record<string, unknown>
+  }>
+  className?: string
+  indicator?: "line" | "dot" | "dashed"
+  hideLabel?: boolean
+  hideIndicator?: boolean
+  label?: React.ReactNode
+  labelFormatter?: (value: React.ReactNode, payload: unknown[]) => React.ReactNode
+  labelClassName?: string
+  formatter?: (value: unknown, name: unknown, item: unknown, index: number, payload: unknown) => React.ReactNode
+  color?: string
+  nameKey?: string
+  labelKey?: string
+}) {
   const { config } = useChart()
 
   const tooltipLabel = React.useMemo(() => {
@@ -184,7 +225,7 @@ function ChartTooltipContent({
           .map((item, index) => {
             const key = `${nameKey || item.name || item.dataKey || "value"}`
             const itemConfig = getPayloadConfigFromPayload(config, item, key)
-            const indicatorColor = color || item.payload.fill || item.color
+            const indicatorColor = color || item.payload?.fill as string || item.color
 
             return (
               <div
@@ -258,11 +299,17 @@ function ChartLegendContent({
   payload,
   verticalAlign = "bottom",
   nameKey,
-}: React.ComponentProps<"div"> &
-  Pick<RechartsPrimitive.LegendProps, "payload" | "verticalAlign"> & {
-    hideIcon?: boolean
-    nameKey?: string
-  }) {
+}: React.ComponentProps<"div"> & {
+  payload?: Array<{
+    value?: string
+    type?: string
+    dataKey?: string
+    color?: string
+  }>
+  verticalAlign?: "top" | "bottom"
+  hideIcon?: boolean
+  nameKey?: string
+}) {
   const { config } = useChart()
 
   if (!payload?.length) {

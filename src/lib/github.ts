@@ -1,3 +1,5 @@
+import { cache } from 'react';
+
 export interface GitHubCommit {
   sha: string;
   message: string;
@@ -5,12 +7,14 @@ export interface GitHubCommit {
   url: string;
 }
 
-export async function getLatestCommit(owner: string, repo: string): Promise<GitHubCommit | null> {
+// Wrapped with React.cache() for per-request deduplication in RSC
+export const getLatestCommit = cache(async (owner: string, repo: string): Promise<GitHubCommit | null> => {
   const commits = await getCommits(owner, repo, 1);
   return commits.length > 0 ? commits[0] : null;
-}
+});
 
-export async function getCommits(owner: string, repo: string, perPage: number = 20): Promise<GitHubCommit[]> {
+// Wrapped with React.cache() for per-request deduplication in RSC
+export const getCommits = cache(async (owner: string, repo: string, perPage: number = 20): Promise<GitHubCommit[]> => {
   try {
     const response = await fetch(
       `https://api.github.com/repos/${owner}/${repo}/commits?per_page=${perPage}`,
@@ -29,14 +33,14 @@ export async function getCommits(owner: string, repo: string, perPage: number = 
     const data = await response.json();
     if (!data || !Array.isArray(data)) return [];
 
-    return data.map((commit: any) => ({
-      sha: commit.sha.substring(0, 7),
-      message: commit.commit.message,
-      date: commit.commit.author.date,
-      url: commit.html_url,
+    return data.map((commit: Record<string, unknown>) => ({
+      sha: (commit.sha as string).substring(0, 7),
+      message: (commit.commit as Record<string, unknown>).message as string,
+      date: ((commit.commit as Record<string, unknown>).author as Record<string, unknown>).date as string,
+      url: commit.html_url as string,
     }));
   } catch (error) {
     console.error('Error fetching GitHub commits:', error);
     return [];
   }
-}
+});

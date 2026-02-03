@@ -24,6 +24,15 @@
 .DS_Store
 *.pem
 
+# drafts
+/src/content/drafts
+
+# local tasks
+tasks.md
+
+# claude code
+CLAUDE.md
+
 # debug
 npm-debug.log*
 yarn-debug.log*

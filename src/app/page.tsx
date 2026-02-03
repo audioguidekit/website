@@ -9,6 +9,7 @@ import { FAQ } from '@/components/sections/faq';
 import { Footer } from '@/components/sections/footer';
 import HowItWorks from '@/components/sections/how-it-works';
 import { AppShowcase } from '@/components/sections/app-showcase';
+import { TryPlayer } from '@/components/sections/try-player';
 
 export default function LandingPage() {
   return (
@@ -16,9 +17,10 @@ export default function LandingPage() {
       <Navigation />
       <main className="w-full max-w-[1400px] border-x border-border relative pt-16 bg-background">
         <Hero />
-        <WhoItIsFor />
         <CoreFeatures />
+        <WhoItIsFor />
         <AppShowcase />
+        <TryPlayer />
         <EditingExperience />
         <HowItWorks />
         <Philosophy />

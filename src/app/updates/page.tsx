@@ -1,6 +1,16 @@
 import React from 'react';
+import type { Metadata } from 'next';
 import { Navigation } from '@/components/sections/navigation';
 import { Footer } from '@/components/sections/footer';
+
+export const metadata: Metadata = {
+  title: 'Updates - Changelog & Roadmap',
+  description: 'Latest updates, changelog, and roadmap for AudioGuideKit. See what we are working on and what is coming next.',
+  openGraph: {
+    title: 'Updates - AudioGuideKit Changelog & Roadmap',
+    description: 'Latest updates and roadmap for AudioGuideKit open-source audio guide player.',
+  },
+};
 import { getCommits } from '@/lib/github';
 import { GitCommit, Github, Rocket, Wrench, Sparkles } from 'lucide-react';
 import { formatRelativeTime } from '@/lib/utils';
@@ -14,17 +24,27 @@ type RoadmapItem = {
 };
 
 const roadmapItems: RoadmapItem[] = [
-  { id: '0', title: 'Cloud CMS for tour management', status: 'planned', quarter: 'Q1 2026' },
-  { id: '1', title: 'Support for more languages in UI than English', status: 'planned', quarter: 'Q2 2026' },
-  { id: '4', title: 'Outdoor tours specific features', status: 'planned', quarter: 'Q2 2026' },
-  { id: '3', title: 'More themes for the app', status: 'planned', quarter: 'Q3 2026' },
-  { id: '5', title: 'Alternative layout for the main UI and player', status: 'in-progress' },
-  { id: '6', title: 'Better support for offline audio', status: 'in-progress' },
+  { id: '6', title: 'Alternative layout for the main UI and player', status: 'planned', quarter: 'Q1/2026' },
+  { id: '6', title: 'Multiple guides support in one app', status: 'planned', quarter: 'Q1/2026' },
+  { id: '3', title: 'Support for more languages on UI', status: 'planned', quarter: 'Q2/2026' },
+  { id: '4', title: 'Outdoor guides support', status: 'planned', quarter: 'Q2/2026' },
+  { id: '2', title: 'Content management system', status: 'planned', quarter: 'Q3/2026' },
+  { id: '1', title: 'More themes for the app', status: 'in-progress'},
+  { id: '7', title: 'Better support for offline audio', status: 'in-progress' },
 ];
 
-export default async function ChangelogPage() {
-  const owner = process.env.GITHUB_OWNER || 'vercel';
-  const repo = process.env.GITHUB_REPO || 'next.js';
+// Pre-grouped roadmap items to avoid multiple filter iterations
+const groupedRoadmapItems = roadmapItems.reduce(
+  (acc, item) => {
+    acc[item.status].push(item);
+    return acc;
+  },
+  { 'planned': [] as RoadmapItem[], 'in-progress': [] as RoadmapItem[] }
+);
+
+export default async function UpdatesPage() {
+  const owner = process.env.GITHUB_OWNER || 'audioguidekit';
+  const repo = process.env.GITHUB_REPO || 'player-react';
   const commits = await getCommits(owner, repo, 15);
 
   return (
@@ -46,12 +66,12 @@ export default async function ChangelogPage() {
           <header className="mb-20">
             <div className="mb-6">
               <span className="inline-flex items-center px-2 py-0.5 text-[11px] font-mono font-medium tracking-widest text-muted-foreground bg-secondary uppercase border border-border rounded">
-                PROJECT_CHANGELOG
+                PAST + FUTURE
               </span>
             </div>
-            <h1 className="text-4xl sm:text-5xl font-bold text-foreground tracking-tight mb-6">Product Updates</h1>
+            <h1 className="text-4xl sm:text-5xl font-bold text-foreground tracking-tight mb-6">Development updates</h1>
             <p className="text-[18px] text-muted-foreground leading-relaxed">
-              A streamlined view of all recent improvements, fixes, and features delivered to the project.
+            Updates on what we’re building and where it’s heading.
             </p>
           </header>
 
@@ -68,7 +88,7 @@ export default async function ChangelogPage() {
                 </span>
 
                 <div className="mt-4 rounded-xl border border-amber-500/10 bg-amber-500/5 overflow-hidden">
-                  {roadmapItems.filter(item => item.status === 'planned').map((item, index) => (
+                  {groupedRoadmapItems['planned'].map((item, index) => (
                     <div
                       key={item.id}
                       className={`flex items-center gap-3 py-3 px-4 ${index !== 0 ? 'border-t border-amber-500/10' : ''}`}
@@ -91,7 +111,7 @@ export default async function ChangelogPage() {
                 </span>
 
                 <div className="mt-4 rounded-xl border border-blue-500/10 bg-blue-500/5 overflow-hidden">
-                  {roadmapItems.filter(item => item.status === 'in-progress').map((item, index) => (
+                  {groupedRoadmapItems['in-progress'].map((item, index) => (
                     <div
                       key={item.id}
                       className={`flex items-center gap-3 py-3 px-4 ${index !== 0 ? 'border-t border-blue-500/10' : ''}`}
@@ -173,7 +193,7 @@ export default async function ChangelogPage() {
           {/* Footer note */}
           <div className="mt-32 pt-12 border-t border-border">
             <p className="text-[12px] font-mono text-muted-foreground uppercase tracking-[0.2em] text-center">
-              END_OF_CHANGELOG // AUTO_SYNC_ENABLED
+              END_OF_UPDATES // AUTO_SYNC_ENABLED
             </p>
           </div>
         </div>

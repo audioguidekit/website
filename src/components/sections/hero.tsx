@@ -1,36 +1,57 @@
 'use client';
 
 import React from 'react';
-import { ArrowRight, Github, BookOpen } from 'lucide-react';
+import dynamic from 'next/dynamic';
 import { PhoneFrame } from '@/components/ui/phone-frame';
-import { ProjectStatusShowcase } from './project-status-showcase';
-import { motion } from 'framer-motion';
-import { cn } from '@/lib/utils';
 import { Typewriter } from '@/components/ui/typewriter';
 import { TerminalCopy } from '@/components/ui/terminal-copy';
 
-export function Hero() {
-  const videoUrl = "https://player.vimeo.com/external/517090025.sd.mp4?s=d01072a2e485459345c70752179659a224a0d9b5&profile_id=165&oauth2_token_id=57447761";
+// Dynamic import for motion components - reduces initial bundle
+const MotionDiv = dynamic(
+  () => import('framer-motion').then((mod) => mod.motion.div),
+  { ssr: false }
+);
 
+const MotionH1 = dynamic(
+  () => import('framer-motion').then((mod) => mod.motion.h1),
+  { ssr: false }
+);
+
+const MotionP = dynamic(
+  () => import('framer-motion').then((mod) => mod.motion.p),
+  { ssr: false }
+);
+
+const MotionSpan = dynamic(
+  () => import('framer-motion').then((mod) => mod.motion.span),
+  { ssr: false }
+);
+
+// Static badge element - hoisted to module scope
+const OpenSourceBadge = (
+  <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-medium bg-secondary text-muted-foreground border border-border uppercase tracking-widest">
+    Open Source • MIT License
+  </span>
+);
+
+export function Hero() {
   return (
-    <section className="relative min-h-[90vh] flex items-center bg-white border-b border-border pl-2 pr-2 lg:pl-32 lg:pr-32">
+    <section className="relative min-h-[90vh] flex items-center bg-white border-b border-border lg:pl-32 lg:pr-32">
       <div className="container relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-24 lg:gap-20 items-center py-20">
 
           <div>
             {/* Supporting Note */}
-            <motion.div
+            <MotionDiv
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               className="mb-8"
             >
-              <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-medium bg-secondary text-muted-foreground border border-border uppercase tracking-widest">
-                v1.0.0 • Open Source • MIT License
-              </span>
-            </motion.div>
+              {OpenSourceBadge}
+            </MotionDiv>
 
             {/* Headline */}
-            <motion.h1
+            <MotionH1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
@@ -39,8 +60,8 @@ export function Hero() {
               An open-source <br />
               <span className="text-muted-foreground">
                 audio guide player</span> for{' '}
-              <Typewriter words={['museums', 'galleries', 'exhibitions']} />
-              <motion.span
+              <Typewriter words={['museums', 'galleries', 'cultural institutions']} />
+              <MotionSpan
                 animate={{ opacity: [1, 0] }}
                 transition={{
                   duration: 1,
@@ -50,77 +71,35 @@ export function Hero() {
                 className="ml-0.5 inline-block"
               >
                 _
-              </motion.span>
-            </motion.h1>
+              </MotionSpan>
+            </MotionH1>
 
             {/* Subheadline */}
-            <motion.p
+            <MotionP
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="text-[18px] sm:text-[20px] text-muted-foreground leading-relaxed mb-10 text-balance lg:max-w-[540px]"
+              className="text-[18px] sm:text-[20px] text-muted-foreground leading-relaxed mb-6 text-balance lg:max-w-[640px]"
             >
-              A lightweight, offline-first player for cities, museums, and walking tours. Built for the web. Self-hosted. No platform lock-in.
-            </motion.p>
+              A lightweight audio guide player built in React for the web. Runs online and offline as a PWA, self-hosted by default, with customizable branding and no platform lock-in.
+            </MotionP>
 
-            {/* Actions */}
-            <motion.div
+            {/* Primary CTA - Terminal */}
+            <MotionDiv
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto"
+              className="inline-flex flex-col items-center gap-3"
             >
-              <a
-                href="https://github.com"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-3 rounded-full text-[14px] font-medium transition-all hover:opacity-90 shadow-soft group"
-              >
-                <Github className="w-4 h-4" />
-                View GitHub
-                <kbd className="hidden md:inline-flex items-center justify-center size-5 text-[10px] font-mono font-bold bg-background/20 text-background rounded border border-white/20 ml-1">
-                  G
-                </kbd>
-              </a>
-              <a
-                href="/docs"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-background text-foreground border border-border px-8 py-3 rounded-full text-[14px] font-medium transition-all hover:bg-secondary group"
-              >
-                <BookOpen className="w-4 h-4" />
-                Documentation
-                <kbd className="hidden md:inline-flex items-center justify-center size-5 text-[10px] font-mono font-bold bg-foreground/5 text-muted-foreground rounded border border-border ml-1">
-                  D
-                </kbd>
-                <ArrowRight className="w-4 h-4 ml-1" />
-              </a>
-            </motion.div>
-
-            {/* Promise */}
-            <div className="flex flex-col sm:flex-row items-center gap-4 mt-6">
-              <TerminalCopy command="npx create-audio-guide@latest" />
-              
-              <motion.p
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
-                className="text-[13px] text-muted-foreground flex items-center gap-2 px-1"
-              >
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                Get audio playing locally in under 5 minutes.
-              </motion.p>
-            </div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-              className="mt-10 w-full"
-            >
-              <ProjectStatusShowcase />
-            </motion.div>
+              <div className="inline-flex items-center gap-4 pl-8 px-5 py-2 bg-foreground/[0.03] border-1 border-foreground/10 rounded-md hover:border-foreground/20 transition-colors">
+                <TerminalCopy command="npx create-audioguidekit-player my-project" className="text-[15px] sm:text-[17px]" />
+              </div>
+            </MotionDiv>
           </div>
 
 
           <div className="relative flex justify-center lg:justify-end">
-            <motion.div
+            <MotionDiv
               initial={{ opacity: 0, scale: 0.9, rotate: -4 }}
               animate={{
                 opacity: 1,
@@ -144,7 +123,7 @@ export function Hero() {
                 />
                 <div className="absolute inset-0 bg-black/5 pointer-events-none" />
               </PhoneFrame>
-            </motion.div>
+            </MotionDiv>
 
             {/* Technical accents around the phone */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[140%] bg-radial from-border/20 to-transparent -z-10" />

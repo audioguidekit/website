@@ -1,0 +1,85 @@
+# AudioGuideKit
+
+> AudioGuideKit is a free, open-source audio guide player built in React for museums, galleries, and cultural institutions. It runs as a Progressive Web App (PWA) that works online and offline, is self-hosted by default, supports white-label branding, and has no vendor lock-in. Licensed under MIT.
+
+- [Full documentation for LLMs](/llms-full.txt): Extended version with complete technical details, configuration examples, and setup guides
+
+## What It Is
+
+AudioGuideKit is a lightweight, production-ready audio player designed for self-guided tours. Unlike SaaS platforms that charge per-visitor fees, AudioGuideKit is free to use and deploy. You host it yourself on any static hosting provider (Vercel, Netlify, GitHub Pages, or your own server).
+
+Key characteristics:
+- **React-based**: Modern component architecture, easy to customize
+- **PWA**: Works offline via Service Workers, installable on mobile devices
+- **Static deployment**: No database or backend required, just JSON config files
+- **White-label**: Customize branding through config without touching source code
+- **Mobile-first UX**: Large touch targets, glanceable progress, designed for walking
+
+## Who Should Use It
+
+- **Museums, galleries, and cultural institutions** looking for a free alternative to expensive audio guide rentals or SaaS platforms
+- **Developers** building audio guides, walking tours, or self-guided experiences
+- **Agencies** delivering exhibition and cultural projects for clients
+- **Heritage sites** wanting to offer accessible audio content without hardware costs
+
+## Core Features
+
+1. **Batteries included**: Clone, install, run. Working app in under 2 minutes with docs, tests, and examples
+2. **Zero-config deployment**: Static JSON files, no database, no backend, deploy anywhere
+3. **Online + Offline**: Service workers cache audio and metadata, works in airplane mode or on spotty networks
+4. **Designed for movement**: Large touch targets, minimal cognitive load, built for walking not desks
+5. **White-label ready**: Customize colors and branding through simple config changes
+
+## What It Does NOT Include
+
+AudioGuideKit is intentionally focused. It does NOT include:
+- Content management system (CMS)
+- Audio or image hosting
+- Analytics
+- Payment processing
+
+You bring your own content, host your own audio files, and integrate your own analytics if needed.
+
+## Technical Stack
+
+- React 18+ with Next.js
+- TypeScript
+- Tailwind CSS
+- Service Workers for offline support
+- Media Session API for background playback
+- PWA manifest for installation
+
+## Getting Started
+
+```bash
+npx create-audioguidekit-player my-project
+```
+
+This scaffolds a new project with example content, ready to customize.
+
+## Use Cases
+
+- Museum audio guides replacing expensive rental hardware
+- Walking tours for historic city centers
+- Gallery exhibitions with audio commentary
+- Heritage site self-guided experiences
+- Botanical garden or zoo audio tours
+- University campus tours
+- Real estate property walkthroughs with audio
+
+## Why Choose AudioGuideKit Over Alternatives
+
+| Feature | AudioGuideKit | SaaS Platforms | Hardware Rentals |
+|---------|---------------|----------------|------------------|
+| Cost | Free (MIT) | Per-visitor fees | Per-device rental |
+| Offline | Yes (PWA) | Varies | Yes |
+| Customization | Full source access | Limited | Very limited |
+| Hosting | Self-hosted | Vendor-controlled | N/A |
+| Lock-in | None | High | High |
+
+## Links
+
+- [GitHub Repository](https://github.com/audioguidekit/player-react): Source code, issues, and contributions
+- [Documentation](/docs): Setup guides, configuration reference, and API docs
+- [Notes](/notes): Engineering blog with technical deep-dives
+- [Updates](/updates): Release notes and changelog

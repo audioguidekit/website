@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 interface TypewriterProps {
   words: string[];
@@ -17,43 +17,72 @@ export function Typewriter({
   delayBeforeDelete = 2000,
   delayBeforeNextWord = 500,
 }: TypewriterProps) {
-  const [currentWordIndex, setCurrentWordIndex] = useState(0);
-  const [currentText, setCurrentText] = useState(words[0]);
-  const [isDeleting, setIsDeleting] = useState(false);
+  const [displayText, setDisplayText] = useState(words[0]);
+
+  // Store all mutable state in refs to minimize effect dependencies
+  const stateRef = useRef({
+    currentWordIndex: 0,
+    currentText: words[0],
+    isDeleting: false,
+  });
+
+  // Store config in refs to avoid effect re-runs
+  const configRef = useRef({ typingSpeed, deletingSpeed, delayBeforeDelete, delayBeforeNextWord });
+  const wordsRef = useRef(words);
+
+  // Update config ref when props change
+  useEffect(() => {
+    configRef.current = { typingSpeed, deletingSpeed, delayBeforeDelete, delayBeforeNextWord };
+  }, [typingSpeed, deletingSpeed, delayBeforeDelete, delayBeforeNextWord]);
 
   useEffect(() => {
-    let timeout: NodeJS.Timeout;
+    wordsRef.current = words;
+  }, [words]);
 
-    const handleTyping = () => {
-      const fullWord = words[currentWordIndex];
-      
-      if (!isDeleting) {
-        if (currentText.length < fullWord.length) {
-          setCurrentText(fullWord.substring(0, currentText.length + 1));
+  // Main animation loop - only depends on words array identity for reset
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
+
+    const tick = () => {
+      const state = stateRef.current;
+      const config = configRef.current;
+      const currentWords = wordsRef.current;
+      const fullWord = currentWords[state.currentWordIndex];
+
+      let nextDelay: number;
+
+      if (!state.isDeleting) {
+        if (state.currentText.length < fullWord.length) {
+          // Typing
+          state.currentText = fullWord.substring(0, state.currentText.length + 1);
+          nextDelay = config.typingSpeed;
         } else {
-          timeout = setTimeout(() => setIsDeleting(true), delayBeforeDelete);
-          return;
+          // Finished typing, wait then start deleting
+          state.isDeleting = true;
+          nextDelay = config.delayBeforeDelete;
         }
       } else {
-        if (currentText.length > 0) {
-          setCurrentText(fullWord.substring(0, currentText.length - 1));
+        if (state.currentText.length > 0) {
+          // Deleting
+          state.currentText = fullWord.substring(0, state.currentText.length - 1);
+          nextDelay = config.deletingSpeed;
         } else {
-          setIsDeleting(false);
-          setCurrentWordIndex((prev) => (prev + 1) % words.length);
-          return;
+          // Finished deleting, move to next word
+          state.isDeleting = false;
+          state.currentWordIndex = (state.currentWordIndex + 1) % currentWords.length;
+          nextDelay = config.delayBeforeNextWord;
         }
       }
 
-      timeout = setTimeout(handleTyping, isDeleting ? deletingSpeed : typingSpeed);
+      setDisplayText(state.currentText);
+      timeoutId = setTimeout(tick, nextDelay);
     };
 
-    // Only start the loop if we're not already waiting for a delay (like delayBeforeDelete)
-    if (!timeout) {
-      timeout = setTimeout(handleTyping, isDeleting ? deletingSpeed : typingSpeed);
-    }
+    // Start the animation loop
+    timeoutId = setTimeout(tick, configRef.current.typingSpeed);
 
-    return () => clearTimeout(timeout);
-  }, [currentText, isDeleting, currentWordIndex, words, typingSpeed, deletingSpeed, delayBeforeDelete, delayBeforeNextWord]);
+    return () => clearTimeout(timeoutId);
+  }, []); // Empty deps - runs once on mount
 
-  return <span>{currentText}</span>;
+  return <span>{displayText}</span>;
 }

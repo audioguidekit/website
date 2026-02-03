@@ -6,15 +6,16 @@ export function Philosophy() {
       <div className="max-w-[1000px] mx-auto px-4 sm:px-8 relative z-10">
         <div className="mb-10">
           <span className="inline-flex items-center px-2 py-0.5 text-[10px] font-mono font-medium tracking-widest text-muted-foreground bg-secondary uppercase border border-border rounded">
-            CORE_PHILOSOPHY
+            CORE_VALUES
           </span>
         </div>
 
         <div className="border border-border rounded-lg bg-secondary/10 overflow-hidden divide-y divide-border">
           {[
-            { title: "TRUST", desc: "No dark patterns or hidden tracking." },
-            { title: "VALUE", desc: "The open-source version must be useful on its own." },
-            { title: "STABILITY", desc: "Reliability is prioritized over novelty." }
+            { title: "One thing, done well", desc: "Solve a single problem without feature creep." },
+            { title: "Fully yours", desc: "Your data, your infrastructure. No lock-in." },
+            { title: "Simple by design", desc: "Fewer moving parts mean fewer surprises." },
+            { title: "Great DX and UX", desc: "Clear for developers. Smooth for visitors." }
           ].map((item, i) => (
             <div key={i} className="flex flex-col gap-2 p-6 transition-colors hover:bg-background/50">
               <span className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest opacity-50">{item.title}</span>
@@ -23,12 +24,6 @@ export function Philosophy() {
               </p>
             </div>
           ))}
-        </div>
-
-        <div className="mt-12 pt-8 border-t border-border">
-          <p className="text-[14px] text-muted-foreground italic">
-            Pull requests are welcome. If the community helps improve it, everyone wins.
-          </p>
         </div>
       </div>
     </section>

@@ -4,22 +4,22 @@ const steps = [
   {
     number: "1.",
     title: "Clone the repository",
-    description: "Get access to the player's source code",
+    description: "Access the player source code",
   },
   {
     number: "2.",
-    title: "Prepare the audio tour content",
-    description: "Local audio files or CDN-hosted assets works best",
+    title: "Add audio content",
+    description: "Use local files or CDN-hosted assets",
   },
   {
     number: "3.",
-    title: "Customize theme and supported languages",
-    description: "Your brand, one guide, one or more languages",
+    title: "Configure theme and languages",
+    description: "Set up your theme and supported languages",
   },
   {
     number: "4.",
     title: "Deploy the app",
-    description: "Host on Netlify, Vercel, or your own server",
+    description: "Host anywhere that serves static files",
   },
 ];
 
@@ -27,15 +27,17 @@ const HowItWorks = () => {
   return (
     <section className="w-full py-16 sm:py-20 bg-background border-b border-border">
       <div className="max-w-[1000px] mx-auto px-4 sm:px-8">
-        {/* Labeled Header Box */}
-        <div className="mb-10">
-          <span className="inline-block px-2 py-1 text-[10px] font-mono tracking-wider text-muted-foreground bg-secondary uppercase border border-border rounded-sm">
-            How it works
-          </span>
-        </div>
+        <div className="flex flex-col items-center">
+          <div className="w-full max-w-[600px]">
+            {/* Labeled Header Box */}
+            <div className="mb-10">
+              <span className="inline-block px-2 py-1 text-[10px] font-mono tracking-wider text-muted-foreground bg-secondary uppercase border border-border rounded-sm">
+                How it works
+              </span>
+            </div>
 
-        {/* Numbered List of Steps */}
-        <div className="space-y-10">
+            {/* Numbered List of Steps */}
+            <div className="space-y-10">
           {steps.map((step, index) => (
             <div key={index} className="flex items-start gap-4">
               {/* Step Number */}
@@ -55,12 +57,11 @@ const HowItWorks = () => {
             </div>
           ))}
           <div className="mt-12 pt-8 border-t border-border">
-            <p className="text-[14px] font-mono text-foreground uppercase tracking-wider opacity-60">
-              Runtime Status: <span className="text-primary font-bold">Stateless</span>
+            <p className="text-[14px] text-muted-foreground">
+              Fully static. No servers, no databases, no maintenance.
             </p>
-            <p className="mt-2 text-[14px] text-muted-foreground">
-              No backend required. No services to babysit. Fully portable.
-            </p>
+            </div>
+            </div>
           </div>
         </div>
       </div>

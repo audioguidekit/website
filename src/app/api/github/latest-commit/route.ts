@@ -3,8 +3,8 @@ import { getLatestCommit } from '@/lib/github';
 
 export async function GET() {
   // You can change these to your own repository
-  const owner = process.env.GITHUB_OWNER || 'vercel';
-  const repo = process.env.GITHUB_REPO || 'next.js';
+  const owner = process.env.GITHUB_OWNER || 'audioguidekit';
+  const repo = process.env.GITHUB_REPO || 'player-react';
 
   const commit = await getLatestCommit(owner, repo);
 

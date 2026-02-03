@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import { toast } from 'sonner';
 
 export function KeyboardShortcuts() {
   useEffect(() => {
@@ -15,11 +16,17 @@ export function KeyboardShortcuts() {
       }
 
       if (event.key.toLowerCase() === 'g') {
-        window.location.href = 'https://github.com';
+        window.location.href = 'https://github.com/audioguidekit/player-react';
       }
 
       if (event.key.toLowerCase() === 'd') {
         window.location.href = '/docs';
+      }
+
+      if (event.key.toLowerCase() === 'c') {
+        navigator.clipboard.writeText('npx create-audioguidekit-player my-project');
+        toast.success('Command copied to clipboard');
+        window.dispatchEvent(new CustomEvent('terminal-copy'));
       }
     };
 

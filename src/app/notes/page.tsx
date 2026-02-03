@@ -1,13 +1,23 @@
 import React from 'react';
+import type { Metadata } from 'next';
 import { Navigation } from '@/components/sections/navigation';
 import { Footer } from '@/components/sections/footer';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
-import { getSortedPostsData } from '@/lib/blog';
+import { getSortedPostsData } from '@/lib/notes';
 import { format, parseISO } from 'date-fns';
 import { NewsletterForm } from '@/components/sections/newsletter-form';
 
-export default async function BlogPage() {
+export const metadata: Metadata = {
+  title: 'Notes - Engineering Blog',
+  description: 'Technical deep-dives, architectural decisions, and development updates from the AudioGuideKit project. Learn about building audio guides for museums.',
+  openGraph: {
+    title: 'Notes - AudioGuideKit Engineering Blog',
+    description: 'Technical deep-dives and development updates from the AudioGuideKit project.',
+  },
+};
+
+export default async function NotesPage() {
   const blogPosts = await getSortedPostsData();
 
     return (
@@ -29,12 +39,12 @@ export default async function BlogPage() {
           <header className="mb-20">
             <div className="mb-6">
               <span className="inline-flex items-center px-2 py-0.5 text-[11px] font-mono font-medium tracking-widest text-muted-foreground bg-secondary uppercase border border-border rounded">
-                BLOG_INDEX
+                NOTES_INDEX
               </span>
             </div>
-            <h1 className="text-4xl sm:text-5xl font-bold text-foreground tracking-tight mb-6">Engineering Journal</h1>
+            <h1 className="text-4xl sm:text-5xl font-bold text-foreground tracking-tight mb-6">Notes on development</h1>
             <p className="text-[18px] text-muted-foreground leading-relaxed">
-              Technical deep dives, architectural decisions, and updates from the project.
+            Learn about the background of the project, understand key design & development decisions, and follow ongoing work and updates.
             </p>
           </header>
 
@@ -54,7 +64,7 @@ export default async function BlogPage() {
                 </div>
 
                 <h2 className="text-2xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors leading-tight">
-                  <Link href={`/blog/${post.slug}`}>
+                  <Link href={`/notes/${post.slug}`}>
                     {post.title}
                   </Link>
                 </h2>
@@ -64,7 +74,7 @@ export default async function BlogPage() {
                 </p>
 
                 <Link 
-                  href={`/blog/${post.slug}`}
+                  href={`/notes/${post.slug}`}
                   className="inline-flex items-center gap-2 text-[13px] font-mono font-bold text-foreground group/link uppercase tracking-widest"
                 >
                   Read_Entry

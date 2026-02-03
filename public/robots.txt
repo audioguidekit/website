@@ -1,0 +1,13 @@
+# AudioGuideKit - robots.txt
+# https://audioguidekit.org
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://audioguidekit.org/sitemap.xml
+
+# LLM-friendly content
+# See https://llmstxt.org for specification
+# /llms.txt - concise version
+# /llms-full.txt - extended documentation

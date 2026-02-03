@@ -1,0 +1,25 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#FAFAF9"/>
+  <rect x="40" y="40" width="1120" height="550" stroke="#E5E5E5" stroke-width="2" fill="none"/>
+
+  <!-- Logo area -->
+  <rect x="80" y="80" width="60" height="60" rx="12" fill="#1A1A1A"/>
+  <text x="110" y="120" font-family="monospace" font-size="24" font-weight="bold" fill="#FAFAF9" text-anchor="middle">A</text>
+
+  <!-- Title -->
+  <text x="80" y="220" font-family="system-ui, sans-serif" font-size="64" font-weight="bold" fill="#1A1A1A">AudioGuideKit</text>
+
+  <!-- Subtitle -->
+  <text x="80" y="290" font-family="system-ui, sans-serif" font-size="32" fill="#666666">Open-source audio guide player</text>
+  <text x="80" y="340" font-family="system-ui, sans-serif" font-size="32" fill="#666666">for museums and cultural institutions</text>
+
+  <!-- Features -->
+  <text x="80" y="440" font-family="monospace" font-size="20" fill="#888888">FREE • OFFLINE • SELF-HOSTED • MIT LICENSE</text>
+
+  <!-- URL -->
+  <text x="80" y="540" font-family="monospace" font-size="18" fill="#AAAAAA">audioguidekit.org</text>
+
+  <!-- Decorative elements -->
+  <circle cx="1080" cy="520" r="8" fill="#1A1A1A"/>
+  <rect x="1040" y="516" width="24" height="2" fill="#1A1A1A"/>
+</svg>

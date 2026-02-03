@@ -3,36 +3,36 @@ import Link from 'next/link';
 
 const faqs = [
   {
-    question: "why audio guide player?",
-    answer: "Many museums, galleries and other public institutions use audio tours to enhance visitor experience. But they either have old, clunky physical players or are locked into platforms that are not always reliable or user-friendly. This project aims to offer a modern, lightweight and offline-first open source player without a vendor lock-in."
+    question: "Why audio guide player?",
+    answer: "At first, we tried to scratch our own itch. Then we discovered that most audio tour solutions are either clunky hardware or locked-in platforms. This is a modern alternative you actually own."
   },
   {
-    question: "why is this open source?",
-    answer: "Because something as fundamental as audio playback shouldn’t lock institutions into a vendor’s platform. Open-sourcing it means you can see exactly what runs on visitors’ devices, avoid long-term vendor dependency, and ensure that improvements flow back to everyone—not just a single company."
+    question: "Why is this open source?",
+    answer: "Audio playback shouldn't lock you into a vendor (it happens more often than not!). Open source means you see exactly what runs, avoid dependency, and everyone benefits from improvements."
   },
   {
-    question: "can i use this commercially?",
-    answer: "Yes, absolutely! But you need to be prepared to edit and manage files manually. There is no 'admin panel' for non-technical staff (yet) so you need to have some basic technical skills or someone around to help you. We plan to introduce a (paid) cloud system for tour management and analytics in the future."
+    question: "Can I use this commercially?",
+    answer: "Yes! This project is open-source with MIT license."
   },
   {
-    question: "is it only for audio tours or guides?",
-    answer: "No, you can use it for any kind of audio application. But please be aware audio tours are our primary focus and we plan to introduce some specific features for audio tours in the future."
+    question: "Does it work only for audio guides?",
+    answer: "Nope, you can build literally any audio app on top of this. But audio guides for museums, galleries and cultural institutions are our focus, so expect more features for these down the road."
   },
   {
-    question: "why doesn’t this include a CMS?",
-    answer: "Because a CMS changes everything. The moment you add authentication, permissions, and media management, you’re no longer shipping a player. You’re shipping a platform. This project deliberately stops before that line."
+    question: "Why doesn't this include a CMS?",
+    answer: "A CMS turns a player into a platform. Auth, permissions, media management — and that's a different beast. We stop before that line on purpose. A management system is on the roadmap later in 2026."
   },
   {
-    question: "how do i actually 'deploy' this?",
-    answer: "It’s just a Next.js site. You can host it on Vercel, Netlify, or even a Raspberry Pi. There is no database to configure and no 'server' to manage beyond the frontend. If you can push to GitHub, you can deploy this."
+    question: "How do I actually 'deploy' this?",
+    answer: "The output is a static site. Host on Vercel, Netlify, anywhere. No database, no server. If you can push to GitHub, you're good."
   },
   {
-    question: "what’s the catch?",
-    answer: "The catch is that you have to manage files. There is no 'admin panel' for your non-technical staff to break things, but that also means you are the one renaming images and updating JSON files."
+    question: "What's the catch?",
+    answer: "You need to invest some time, especially if you have no technical skills. You'll be the one updating JSON files and adding all guide content. But hey, if you follow the documentation, you will make it. Guaranteed!"
   },
   {
-    question: "is there a roadmap?",
-    answer: "Yes, check the changelog. We build what we need for our own projects and ship it. If you need a specific feature, the best way to get it is to build it yourself, or contact us via email in GitHub profile."
+    question: "Is there a roadmap?",
+    answer: "Check the updates. We build what we need and ship it. Want a specific feature? Reach out via GitHub."
   }
 ];
 
@@ -57,9 +57,13 @@ export function FAQ() {
                   └
                 </span>
                 <p className="text-[15px] text-muted-foreground font-normal leading-relaxed group-hover:text-foreground transition-colors">
-                  {faq.answer.split(/(changelog)/i).map((part, i) =>
-                    part.toLowerCase() === 'changelog' ? (
-                      <Link key={i} href="/changelog" className="text-foreground hover:text-primary underline decoration-primary/30 hover:decoration-primary transition-all font-medium">
+                  {faq.answer.split(/(updates|documentation)/i).map((part, i) =>
+                    part.toLowerCase() === 'updates' ? (
+                      <Link key={i} href="/updates" className="text-foreground hover:text-primary underline decoration-primary/30 hover:decoration-primary transition-all font-medium">
+                        {part}
+                      </Link>
+                    ) : part.toLowerCase() === 'documentation' ? (
+                      <Link key={i} href="/docs" className="text-foreground hover:text-primary underline decoration-primary/30 hover:decoration-primary transition-all font-medium">
                         {part}
                       </Link>
                     ) : (

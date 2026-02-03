@@ -44,9 +44,9 @@ export function NewsletterForm() {
       <span className="text-[10px] font-mono font-medium text-muted-foreground uppercase tracking-widest mb-4 block">
         SUBSCRIBE_FOR_UPDATES
       </span>
-      <h3 className="text-xl font-bold text-foreground mb-2">No spam, just engineering.</h3>
+      <h3 className="text-xl font-bold text-foreground mb-2">No spam. No marketing. Just updates.</h3>
       <p className="text-[14px] text-muted-foreground mb-8">
-        Get notified about new features and technical guides.
+      New features and technical guides, straight to your inbox.
       </p>
 
       <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
@@ -54,7 +54,7 @@ export function NewsletterForm() {
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder="you@example.com"
+          placeholder="your@email.com"
           required
           disabled={status === 'loading' || status === 'success'}
           className="flex-grow bg-background border border-border px-4 py-2 rounded-full text-[13px] focus:outline-none focus:ring-1 focus:ring-primary font-mono transition-all disabled:opacity-50"
@@ -69,7 +69,7 @@ export function NewsletterForm() {
           ) : status === 'success' ? (
             <Check className="w-4 h-4" />
           ) : (
-            'Join'
+            'Subscribe'
           )}
         </button>
       </form>

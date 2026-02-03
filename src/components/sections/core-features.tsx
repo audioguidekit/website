@@ -2,24 +2,24 @@ import React from 'react';
 
 const steps = [
   {
-    title: "Reliable audio playback",
-    description: "Play, pause, seek, speed control, progress persistence. Survives refreshes and bad networks.",
+    title: "Batteries included",
+    description: "Clone, install, run. A working app in under 2 minutes with docs, tests, and examples included.",
   },
   {
-    title: "Offline-first by design",
-    description: "Cache audio and metadata so guides work underground, outdoors, and abroad.",
+    title: "Zero-config deployment",
+    description: "Static JSON files. No database, no backend, no vendor lock-in. Deploy to any host.",
   },
   {
-    title: "Walking-friendly UX",
-    description: "Large controls, minimal cognitive load, glanceable progress. Designed for movement, not desks.",
+    title: "Online + Offline",
+    description: "Service workers cache audio and metadata. Works in airplane mode, underground, or on spotty networks.",
   },
   {
-    title: "Accessible defaults",
-    description: "Keyboard navigation, screen-reader labels, and sensible contrast without extra work.",
+    title: "Designed for movement",
+    description: "Large touch targets, glanceable progress, minimal cognitive load. Built for walking, not desks.",
   },
   {
-    title: "Simple configuration",
-    description: "Static JSON or local files. No database required. Deploy anywhere.",
+    title: "White-label ready",
+    description: "Customize colors and branding through simple config changes without touching source code.",
   },
 ];
 
@@ -60,14 +60,14 @@ export function CoreFeatures() {
         {/* Non-goals */}
         <div className="mt-20 flex flex-col items-center">
           <h3 className="text-[13px] font-mono font-bold text-muted-foreground mb-4 uppercase tracking-[0.2em]">
-            EXCLUSIONS_IN_SCOPE
+            OUT_OF_SCOPE
           </h3>
-          <p className="text-[16px] text-foreground text-center max-w-[700px] font-normal leading-relaxed">This itentionally excludes &nbsp;
+          <p className="text-[16px] text-muted-foreground text-center max-w-[700px] font-normal leading-relaxed">
             {[
-              "Content Management System",
-              "Audio hosting or storage",
-              "Visitor data analytics",
-              "Paid subscription layers"
+              "content management",
+              "audio & image hosting",
+              "analytics",
+              "payments"
             ].join(", ")}
           </p>
         </div>
