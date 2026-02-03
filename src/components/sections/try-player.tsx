@@ -3,12 +3,12 @@ import Image from 'next/image';
 
 export function TryPlayer() {
   return (
-    <section className="w-full py-24 bg-background border-b border-border">
-      <div className="w-[80%] mx-auto h-px bg-border -mt-24 mb-24" />
+    <section className="w-full py-12 md:py-24 bg-background border-b border-border">
+      <div className="hidden md:block w-[80%] mx-auto h-px bg-border -mt-24 mb-24" />
       <div className="max-w-[1000px] mx-auto px-4 sm:px-8">
-        <div className="flex flex-col items-start lg:items-center">
+        <div className="flex flex-col items-center lg:items-center">
           <div className="max-w-[800px] w-full flex flex-col md:flex-row md:items-center md:justify-between gap-8">
-            <div>
+            <div className="hidden md:block">
               <h2 className="text-[32px] font-bold text-foreground tracking-tight mb-4">
                 Test the player now
               </h2>

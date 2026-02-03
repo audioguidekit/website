@@ -107,7 +107,7 @@ export function Hero() {
           </div>
 
 
-          <div className="relative flex justify-center lg:justify-end overflow-hidden lg:overflow-visible">
+          <div className="relative flex justify-center lg:justify-end py-8">
             <MotionDiv
               initial={{ opacity: 0, scale: 0.9, rotate: -4 }}
               animate={{

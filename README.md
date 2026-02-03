@@ -1,6 +1,6 @@
 # AudioGuideKit Website
 
-Marketing site and blog for [audioguidekit.org](https://audioguidekit.org) — an open-source, self-hosted PWA audio guide player for museums and cultural institutions.
+Code for site [audioguidekit.org](https://audioguidekit.org) — an open-source, self-hosted PWA audio guide player for museums and cultural institutions.
 
 ## About
 

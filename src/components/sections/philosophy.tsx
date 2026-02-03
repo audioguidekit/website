@@ -19,7 +19,7 @@ export function Philosophy() {
           ].map((item, i) => (
             <div key={i} className="flex flex-col gap-2 p-6 transition-colors hover:bg-background/50">
               <span className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest opacity-50">{item.title}</span>
-              <p className="text-[18px] md:text-[17px] text-foreground leading-relaxed">
+              <p className="text-[18px] md:text-[17px] text-foreground leading-relaxed text-balance">
                 {item.desc}
               </p>
             </div>
