@@ -11,7 +11,7 @@ export function Logo({ className }: LogoProps) {
     <Image
       src="/audioguidekit-logo.svg"
       alt="AudioGuideKit"
-      width={233}
+      width={209}
       height={24}
       className={cn("w-[160px] sm:w-[200px] h-auto", className)}
       priority

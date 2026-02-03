@@ -33,7 +33,7 @@ export function ProjectStatusShowcase() {
   }, []);
 
   return (
-    <div className="mt-8 flex flex-wrap items-center gap-x-4 gap-y-2 text-[13px] font-mono">
+    <div className="mt-4 pl-8 flex flex-wrap items-center gap-x-4 gap-y-2 text-[13px] font-mono">
       <div className="flex items-center gap-2 text-muted-foreground">
         <GitCommit className="w-4 h-4 text-emerald-500/70" />
         <span>
