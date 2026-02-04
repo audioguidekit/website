@@ -60,8 +60,8 @@ export function Hero() {
             >
               An open-source <br />
               <span className="text-muted-foreground">audio guide player</span>
-              <br className="hidden md:block" />
-              <span className="whitespace-nowrap"> for <span className="relative inline-block"><span className="invisible">cultural institutions_</span><span className="absolute left-0 top-0 whitespace-nowrap"><Typewriter words={['museums', 'galleries', 'cultural institutions']} /><MotionSpan
+              <br className="hidden md:block" />{' '}
+              <span className="whitespace-nowrap">for <span className="relative inline-block"><span className="invisible">cultural institutions_</span><span className="absolute left-0 top-0 whitespace-nowrap"><Typewriter words={['museums', 'galleries', 'cultural institutions']} /><MotionSpan
                 animate={{ opacity: [1, 0] }}
                 transition={{
                   duration: 1,

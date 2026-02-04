@@ -1,146 +1,40 @@
 ---
-title: "Deployment Overview"
-description: "Getting your tour online for visitors"
+title: "Deployment"
+description: "Getting your tour online"
 ---
 
-# Deployment
+AudioGuideKit builds to a static site—no server required. Deploy to any platform that serves files over HTTPS.
 
-AudioGuideKit is a static site—no server required. This means you can deploy to virtually any hosting platform for free or very low cost.
-
-## What gets deployed
-
-When you build AudioGuideKit, it produces:
-
-```
-dist/
-├── index.html          # Main HTML file
-├── assets/            # JS, CSS bundles
-│   ├── index-xxx.js
-│   └── index-xxx.css
-├── data/              # Your tour JSON files
-│   └── tour/
-│       ├── metadata.json
-│       ├── en.json
-│       └── ...
-├── sw.js              # Service Worker
-├── manifest.webmanifest  # PWA manifest
-└── ...
-```
-
-This is a self-contained static site. Upload it anywhere that serves files over HTTPS.
-
-## Building for production
-
-Before deploying, create a production build:
+## Build for production
 
 ```bash
 bun run build
 ```
 
-This:
-1. Bundles and minifies JavaScript
-2. Optimizes CSS
-3. Copies assets to `dist/`
-4. Generates Service Worker
-
-The output is in the `dist/` folder.
+This creates a `dist/` folder with your complete app: HTML, JS, CSS, tour data, and Service Worker.
 
 ## Hosting options
 
-### Free platforms
-
-| Platform | Setup Difficulty | Custom Domain | HTTPS |
-|----------|-----------------|---------------|-------|
-| Vercel | Easy | Yes (free) | Yes |
-| Netlify | Easy | Yes (free) | Yes |
-| GitHub Pages | Medium | Yes (free) | Yes |
-| Cloudflare Pages | Easy | Yes (free) | Yes |
-
-### Paid platforms
-
-| Platform | Cost | Benefits |
-|----------|------|----------|
-| AWS S3 + CloudFront | ~$1-5/month | Full control, scalability |
-| DigitalOcean App Platform | $5/month | Simple, predictable |
-| Traditional hosting | Varies | Use existing infrastructure |
+| Platform | Cost | Difficulty | Best For |
+|----------|------|------------|----------|
+| [Vercel](https://vercel.com) | Free (100GB/mo) | Easy | Most users |
+| [Netlify](https://netlify.com) | Free (100GB/mo) | Easy | Alternative to Vercel |
+| [Cloudflare Pages](https://pages.cloudflare.com) | Free (unlimited) | Easy | High traffic |
+| [GitHub Pages](https://pages.github.com) | Free (unlimited) | Medium | Open source projects |
+| [Firebase Hosting](https://firebase.google.com/docs/hosting) | Free (10GB/mo) | Medium | Firebase users |
+| [AWS S3 + CloudFront](https://aws.amazon.com/s3/) | ~$1-5/mo | Hard | Full control |
+| [DigitalOcean](https://www.digitalocean.com/products/app-platform) | $0-5/mo | Easy | Predictable pricing |
 
 <Tip>
-For most tours, Vercel or Netlify's free tier is more than sufficient. You'd need thousands of daily visitors before needing to pay.
+Vercel or Netlify's free tier is sufficient for most tours. You'd need thousands of daily visitors before exceeding limits.
 </Tip>
 
-## Recommended: Vercel
+See [Deployment guides](/docs/deployment/platforms) for step-by-step instructions.
 
-We recommend Vercel for most users because:
+## Custom domains
 
-- **Zero configuration** - Detects Vite projects automatically
-- **Instant deploys** - Push to GitHub, deploy in seconds
-- **Free SSL** - HTTPS with custom domains
-- **Global CDN** - Fast everywhere
-- **Preview deployments** - Test changes before going live
+Options:
+- **Platform subdomain** (free): `your-tour.vercel.app`
+- **Custom domain**: `tour.your-museum.org` (~$10-15/year or free if you already have it)
 
-See [Deploy to Vercel](/docs/deployment/vercel) for step-by-step instructions.
-
-## Domain setup
-
-You can use:
-
-1. **Platform subdomain** (free): `your-tour.vercel.app`
-2. **Custom domain**: `tour.your-museum.org`
-
-Custom domains typically require:
-- Purchasing a domain (~$10-15/year)
-- Configuring DNS records
-- Waiting for propagation (minutes to hours)
-
-Most platforms provide guides for their specific setup.
-
-## Environment variables
-
-If you're using features that require environment variables (like a storage origin for media caching), configure them in your hosting platform:
-
-```bash
-VITE_STORAGE_ORIGIN=https://your-supabase-project.supabase.co
-```
-
-Each platform has its own way of setting environment variables:
-- **Vercel**: Project Settings → Environment Variables
-- **Netlify**: Site settings → Environment variables
-- **GitHub Pages**: Repository secrets (for Actions)
-
-## Pre-deployment checklist
-
-Before deploying, verify:
-
-- [ ] Tour content is complete and tested
-- [ ] All audio URLs work (test each one)
-- [ ] Images load correctly
-- [ ] Language switching works (if applicable)
-- [ ] Offline download works (if applicable)
-- [ ] Theme looks correct
-- [ ] No console errors in browser DevTools
-- [ ] Build completes without errors (`bun run build`)
-
-## Post-deployment checklist
-
-After deploying:
-
-- [ ] Visit the live URL and test
-- [ ] Test on a mobile device (not just desktop)
-- [ ] Test offline mode (download, then airplane mode)
-- [ ] Check HTTPS is working (lock icon in browser)
-- [ ] Verify custom domain (if applicable)
-
-## Updating your tour
-
-After initial deployment, updates are easy:
-
-1. Make changes locally
-2. Test with `bun run dev`
-3. Commit and push to GitHub
-4. Automatic deploy happens (if using Vercel/Netlify with GitHub)
-
-Or for manual platforms:
-
-1. Run `bun run build`
-2. Upload the new `dist/` folder
-
+Each platform provides DNS setup instructions in their dashboard.

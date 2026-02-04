@@ -1,9 +1,7 @@
 ---
-title: "Translations Overview"
-description: "How AudioGuideKit's multi-language system works"
+title: "Multi-language support"
+description: "How multi-language translation system works"
 ---
-
-# Multi-language system
 
 AudioGuideKit has first-class support for multiple languages. Visitors can switch languages mid-tour without losing their place—something many audio tour apps get wrong.
 
@@ -21,16 +19,16 @@ Both work automatically based on which language files you provide.
 When someone opens your tour:
 
 <Steps>
-  <Step title="Auto-Detection">
+  <Step title="Auto-detection">
     AudioGuideKit detects the visitor's device language. Spanish phone? They see the Spanish tour (if available).
   </Step>
   <Step title="Fallback">
     If their language isn't available, they get the default language (configurable in `metadata.json`).
   </Step>
-  <Step title="Manual Switch">
+  <Step title="Manual switch">
     Visitors can tap the language flag to switch anytime.
   </Step>
-  <Step title="Progress Preserved">
+  <Step title="Progress preserved">
     When switching, their exact position is saved. Same stop, same timestamp, new language.
   </Step>
 </Steps>
@@ -45,7 +43,7 @@ The language flag only appears if you have multiple language files. Single-langu
 |---------|--------|------------|
 | Tour title, description | Your `{lang}.json` file | You provide it |
 | Stop titles, content | Your `{lang}.json` file | You provide it |
-| Button labels ("Start Tour") | Built-in UI translations | Automatic |
+| Button labels ("Start tour") | Built-in UI translations | Automatic |
 | System messages | Built-in UI translations | Automatic |
 
 ## Supported languages
@@ -62,7 +60,7 @@ AudioGuideKit includes UI translations for:
 | `es` | Spanish | Yes |
 
 <Note>
-You can add tour content in any language—even ones without UI translations. The interface will fall back to the default language while your tour content displays in the visitor's language.
+You can add tour content in any language—even ones without UI translations. The interface will fall back to the default language while your tour content displays in the visitor's language. Need another language included out of the box? [Open a GitHub issue](https://github.com/AudioGuideKit/player/issues) and we'll add it.
 </Note>
 
 ## Language detection logic

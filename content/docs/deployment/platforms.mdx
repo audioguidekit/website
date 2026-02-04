@@ -1,0 +1,109 @@
+---
+title: "Deployment guides"
+description: "Step-by-step deployment for each platform"
+---
+
+Quick guides for deploying AudioGuideKit. Each platform auto-detects Vite projects.
+
+## Vercel (recommended)
+
+1. Push your project to GitHub
+2. Go to [vercel.com](https://vercel.com) → Sign in with GitHub
+3. Click "Add New..." → "Project" → Import your repository
+4. Click "Deploy" (settings auto-detected)
+
+Your tour is live at `your-project.vercel.app`.
+
+**Custom domain**: Project Settings → Domains → Add your domain and follow DNS instructions.
+
+<LinkButton href="https://vercel.com/docs">Vercel documentation</LinkButton>
+
+## Netlify
+
+1. Go to [netlify.com](https://netlify.com) → Sign in with GitHub
+2. Click "Add new site" → "Import an existing project"
+3. Select your repository
+4. Build command: `npm run build`, Publish directory: `dist`
+5. Click "Deploy site"
+
+**Custom domain**: Site settings → Domain management → Add custom domain.
+
+<LinkButton href="https://docs.netlify.com">Netlify documentation</LinkButton>
+
+## Cloudflare Pages
+
+1. Go to [pages.cloudflare.com](https://pages.cloudflare.com)
+2. Connect to Git → Select repository
+3. Framework preset: Vite, Build output: `dist`
+4. Save and Deploy
+
+Benefits: Unlimited bandwidth, fast global edge network.
+
+<LinkButton href="https://developers.cloudflare.com/pages">Cloudflare Pages documentation</LinkButton>
+
+## GitHub Pages
+
+Requires a GitHub Actions workflow. Create `.github/workflows/deploy.yml`:
+
+```yaml
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v1
+      - run: bun install
+      - run: bun run build
+      - uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+```
+
+Then enable in Repository Settings → Pages → Source: "GitHub Actions".
+
+<Warning>
+If deploying to `username.github.io/repo-name/`, add `base: '/repo-name/'` to your `vite.config.ts`.
+</Warning>
+
+<LinkButton href="https://docs.github.com/en/pages">GitHub Pages documentation</LinkButton>
+
+## Firebase Hosting
+
+```bash
+npm install -g firebase-tools
+firebase login
+firebase init hosting  # public: dist, SPA: yes
+bun run build
+firebase deploy
+```
+
+<LinkButton href="https://firebase.google.com/docs/hosting">Firebase documentation</LinkButton>
+
+## AWS S3 + CloudFront
+
+For full control over infrastructure:
+
+```bash
+bun run build
+aws s3 sync dist/ s3://your-bucket --delete
+aws cloudfront create-invalidation --distribution-id YOUR_ID --paths "/*"
+```
+
+Requires S3 static website hosting enabled and CloudFront for HTTPS.
+
+<LinkButton href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteHosting.html">AWS S3 documentation</LinkButton>
+
+## Important notes
+
+**HTTPS required**: PWA features (Service Worker, offline mode) only work over HTTPS. All platforms above provide free SSL.
+
+**SPA routing**: AudioGuideKit uses client-side routing. Most platforms handle this automatically. For manual setups, redirect all paths to `index.html`.
+
+**Updating your tour**: With GitHub connected, just push changes—platforms auto-deploy. For manual deploys, run `bun run build` and upload the `dist/` folder.

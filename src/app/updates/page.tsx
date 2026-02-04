@@ -1,24 +1,24 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import { Navigation } from '@/components/sections/navigation';
-import { Footer } from '@/components/sections/footer';
 
 export const metadata: Metadata = {
-  title: 'Updates - Changelog & Roadmap',
+  title: 'Updates - Changelog & roadmap',
   description: 'Latest updates, changelog, and roadmap for AudioGuideKit. See what we are working on and what is coming next.',
   openGraph: {
-    title: 'Updates - AudioGuideKit Changelog & Roadmap',
+    title: 'Updates - AudioGuideKit changelog & roadmap',
     description: 'Latest updates and roadmap for AudioGuideKit open-source audio guide player.',
   },
 };
 import { getCommits } from '@/lib/github';
 import { GitCommit, Github, Rocket, Wrench, Sparkles } from 'lucide-react';
+import Link from 'next/link';
 import { formatRelativeTime } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 
 type RoadmapItem = {
   id: string;
-  title: string;
+  title: React.ReactNode;
   status: 'planned' | 'in-progress';
   quarter?: string;
 };
@@ -26,10 +26,11 @@ type RoadmapItem = {
 const roadmapItems: RoadmapItem[] = [
   { id: '6', title: 'Alternative layout for the main UI and player', status: 'planned', quarter: 'Q1/2026' },
   { id: '6', title: 'Multiple guides support in one app', status: 'planned', quarter: 'Q1/2026' },
+  { id: '3', title: <>More stop types than audio as revealed <Link href="/docs/content/stop-types" className="underline hover:text-amber-600">in documentation</Link></>, status: 'planned', quarter: 'Q2/2026' },
   { id: '3', title: 'Support for more languages on UI', status: 'planned', quarter: 'Q2/2026' },
   { id: '4', title: 'Outdoor guides support', status: 'planned', quarter: 'Q2/2026' },
   { id: '2', title: 'Content management system', status: 'planned', quarter: 'Q3/2026' },
-  { id: '1', title: 'More themes for the app', status: 'in-progress'},
+  { id: '1', title: 'More themes for the app', status: 'in-progress' },
   { id: '7', title: 'Better support for offline audio', status: 'in-progress' },
 ];
 
@@ -71,7 +72,7 @@ export default async function UpdatesPage() {
             </div>
             <h1 className="text-4xl sm:text-5xl font-bold text-foreground tracking-tight mb-6">Development updates</h1>
             <p className="text-[18px] text-muted-foreground leading-relaxed">
-            Updates on what we’re building and where it’s heading.
+              Updates on what we’re building and where it’s heading.
             </p>
           </header>
 
@@ -190,16 +191,20 @@ export default async function UpdatesPage() {
             </div>
           </div>
 
-          {/* Footer note */}
-          <div className="mt-32 pt-12 border-t border-border">
-            <p className="text-[12px] font-mono text-muted-foreground uppercase tracking-[0.2em] text-center">
-              END_OF_UPDATES // AUTO_SYNC_ENABLED
+          {/* Footer */}
+          <footer className="border-t border-border mt-32 py-12 flex flex-col items-center gap-6">
+            <nav className="flex flex-wrap justify-center gap-4 md:gap-8">
+              <a href="/notes" className="font-mono text-[12px] text-muted-foreground hover:text-foreground transition-colors uppercase tracking-widest">Notes</a>
+              <a href="/updates" className="font-mono text-[12px] text-muted-foreground hover:text-foreground transition-colors uppercase tracking-widest">Updates</a>
+              <a href="/docs" className="font-mono text-[12px] text-muted-foreground hover:text-foreground transition-colors uppercase tracking-widest">Documentation</a>
+              <a href="https://github.com/nicobrinkkemper/audioguide-demo-react" className="font-mono text-[12px] text-muted-foreground hover:text-foreground transition-colors uppercase tracking-widest">Github</a>
+            </nav>
+            <p className="font-mono text-[10px] text-muted-foreground uppercase tracking-[0.2em] text-center">
+              © {new Date().getFullYear()} AudioGuideKit • MIT License • <a href="/llms.txt" className="hover:text-foreground transition-colors">LLMs.txt</a>
             </p>
-          </div>
+          </footer>
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 }

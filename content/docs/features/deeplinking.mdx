@@ -1,0 +1,100 @@
+---
+title: "Deep linking"
+description: "Link directly to tours, stops, and specific content"
+---
+
+Deep links let you send visitors straight to specific content in AudioGuideKit. Use them on signage, printed brochures, or QR codes.
+
+## URL structure
+
+| Link to | URL Pattern | Example |
+|---------|-------------|---------|
+| Tour overview | `/tour/{tourId}` | `yoursite.com/tour/barcelona` |
+| Specific stop | `/tour/{tourId}/{stopId}` | `yoursite.com/tour/barcelona/3` |
+| Pre-selected language | `/tour/{tourId}?lang={code}` | `yoursite.com/tour/barcelona?lang=de` |
+
+The `tourId` matches the `id` field in your `metadata.json`. The `stopId` is the numeric ID from each stop in your tour JSON (e.g., `1`, `2`, `3`).
+
+## Linking to tours
+
+```
+https://yoursite.com/tour/barcelona
+```
+
+This shows the tour overview with title, description, cover image, and "Start tour" button.
+
+## Linking to stops
+
+```
+https://yoursite.com/tour/barcelona/8
+```
+
+When visitors open a stop link:
+1. The tour loads (if not already cached)
+2. Navigation jumps to the specified stop
+3. Audio begins automatically (browser permitting)
+
+<Warning>
+Mobile browsers may block autoplay until the user interacts with the page.
+</Warning>
+
+## Pre-selecting language
+
+Use the `?lang=` parameter to set the tour language via URL:
+
+```
+https://yoursite.com/tour/barcelona?lang=de
+```
+
+This is useful for venues with multilingual visitors. Create separate QR codes for each language:
+
+| Audience | Deep Link |
+|----------|-----------|
+| German visitors | `/tour/museum?lang=de` |
+| Spanish visitors | `/tour/museum?lang=es` |
+| English visitors | `/tour/museum?lang=en` |
+
+The language parameter:
+- Takes priority over browser language detection
+- Is saved to the visitor's preferences for the session
+- Works on both tour and stop URLs (`/tour/museum/3?lang=de`)
+- Is case-insensitive (`?lang=DE` works the same as `?lang=de`)
+
+<Note>
+Invalid language codes are ignored and the app falls back to browser detection or the default language.
+</Note>
+
+## Example: Multiple entry points
+
+A museum with QR codes at each section:
+
+| Location | Deep Link |
+|----------|-----------|
+| Main entrance | `/tour/museum` |
+| Egyptian wing | `/tour/museum/3` |
+| Gift shop | `/tour/museum/8` |
+
+## Tracking with UTM parameters
+
+Add tracking parameters without breaking the deep link:
+
+```
+https://yoursite.com/tour/barcelona/3?utm_source=signage&utm_medium=qr
+```
+
+AudioGuideKit ignores unknown query parameters, so UTM codes won't affect functionality.
+
+## Invalid links
+
+| Scenario | Behavior |
+|----------|----------|
+| Invalid stop ID | Loads tour overview normally |
+| Malformed URL | Redirects to default tour |
+
+<Tip>
+Test your deep links after content changes. A changed stop ID will break existing QR codes.
+</Tip>
+
+## Offline behavior
+
+Deep links work offline after the tour is downloaded. If a visitor is offline and hasn't downloaded the tour, the tour will fail to load.

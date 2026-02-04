@@ -21,9 +21,18 @@ const siteUrl = "https://audioguidekit.org";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "AudioGuideKit - Open-Source Audio Guide Player for Museums",
+    default: "AudioGuideKit - open-source audio guide player in React",
     template: "%s | AudioGuideKit",
   },
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon-96x96.png", sizes: "96x96", type: "image/png" },
+    ],
+    apple: "/apple-touch-icon.png",
+  },
+  manifest: "/site.webmanifest",
   description:
     "Free, open-source audio guide player for museums, galleries, and cultural institutions. Self-hosted PWA that works offline. No vendor lock-in, no per-visitor fees.",
   keywords: [
@@ -53,7 +62,7 @@ export const metadata: Metadata = {
     canonical: siteUrl,
   },
   openGraph: {
-    title: "AudioGuideKit - Free Open-Source Audio Guide Player",
+    title: "AudioGuideKit - open-source audio guide player in React",
     description:
       "Build audio guides for museums and cultural institutions. Free, self-hosted, works offline. No vendor lock-in.",
     type: "website",
@@ -64,13 +73,13 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "AudioGuideKit - Open-source audio guide player for museums",
+        alt: "AudioGuideKit - open-source audio guide player in React",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "AudioGuideKit - Free Open-Source Audio Guide Player",
+    title: "AudioGuideKit - open-source audio guide player in React",
     description:
       "Build audio guides for museums and cultural institutions. Free, self-hosted, works offline.",
     creator: "@audiotour_oss",

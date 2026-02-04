@@ -1,28 +1,13 @@
 ---
-title: "Offline Support"
+title: "Offline support"
 description: "How AudioGuideKit works without internet"
 ---
 
-# Offline support
-
-AudioGuideKit is a Progressive Web App (PWA) with robust offline capabilities. Visitors can download tours for areas with poor connectivity—like underground metro stations, remote nature trails, or historic buildings with thick walls.
-
-## How it works
-
-AudioGuideKit uses a Service Worker to cache assets and enable offline playback:
-
-1. **App shell caching** - The core app is cached on first visit
-2. **Tour content caching** - JSON files are cached when accessed
-3. **Media caching** - Audio and images can be pre-downloaded
-4. **IndexedDB storage** - Progress is saved locally
-
-<Note>
-Even without explicit "Download for Offline", the app works better on repeat visits because basic assets are cached.
-</Note>
+AudioGuideKit is a Progressive Web App (PWA) with offline capabilities. Visitors can download tours for areas with poor connectivity—underground metro stations, remote trails, or historic buildings with thick walls.
 
 ## Offline modes
 
-Configure offline behavior per-tour in `metadata.json`:
+Configure offline behavior in `metadata.json`:
 
 ```json
 {
@@ -31,190 +16,59 @@ Configure offline behavior per-tour in `metadata.json`:
 }
 ```
 
-### Mode comparison
+| Mode | Behavior | Use Case |
+|------|----------|----------|
+| `optional` | Download button shown, streaming also works | Most tours |
+| `online-only` | No download button, streams only | Frequently updated content |
+| `offline-only` | Must download before starting | Remote locations with no connectivity |
 
-| Mode | Download Button | Start Tour | Use Case |
-|------|-----------------|------------|----------|
-| `optional` | Shown below Start | Can start without downloading | Most tours |
-| `online-only` | Hidden | Requires internet | Frequently updated content |
-| `offline-only` | Required first | Must download before starting | Remote locations |
-
-### Optional mode (default)
-
-```json
-"offlineMode": "optional"
-```
+### Optional (default)
 
 - "Download for Offline" button appears below "Start Tour"
-- Visitors can choose to download or stream
-- After download, shows "Available offline" status
-- Best for **most use cases**
+- Visitors choose to download or stream
+- Best for most use cases
 
-### Online only mode
+### Online only
 
-```json
-"offlineMode": "online-only"
-```
+- No download button
+- Tour streams directly from network
+- Use when you don't want stale cached versions
 
-- No download button shown
-- Tour plays directly from network
-- Best for **frequently updated content** where you don't want stale cached versions
+### Offline only
 
-### Offline only mode
-
-```json
-"offlineMode": "offline-only"
-```
-
-- "Download Tour" is the main button (not "Start Tour")
-- Explains why download is required
-- After download completes, button changes to "Start Tour"
-- Best for **locations with no connectivity**
+- "Download Tour" is the primary action
+- Tour won't start until download completes
+- Use for locations with no internet
 
 ## What gets downloaded
 
-When a visitor downloads a tour, AudioGuideKit caches:
-
-| Content | Size Impact | Cached |
-|---------|-------------|--------|
-| Tour JSON | Tiny (~10KB) | Always |
-| Images | Medium (~1MB total) | Yes |
-| Audio files | Large (~50-200MB) | Yes |
-| App shell | Small (~500KB) | Always |
+| Content | Typical Size |
+|---------|--------------|
+| Tour data | ~10 KB |
+| Images | ~1-2 MB |
+| Audio files | ~50-200 MB |
 
 <Warning>
-Audio files are the biggest download. A 45-minute tour with quality audio can be 100MB+. Set appropriate expectations in your tour description.
+Audio is the biggest download. A 45-minute tour can be 100MB+. Set expectations in your tour description.
 </Warning>
 
-## Download progress
+## iOS notes
 
-During download, visitors see:
-
-1. **Progress percentage** (0-100%)
-2. **"Downloading..." status**
-3. **Ability to cancel** (close the tab/app)
-
-If download is interrupted, partial progress is lost. The visitor will need to restart.
-
-## Storage limits
-
-Browsers limit how much storage PWAs can use:
-
-| Browser | Limit |
-|---------|-------|
-| Chrome | ~80% of available disk space |
-| Safari | ~1GB per origin |
-| Firefox | ~50% of available space |
-
-For most tours, you'll never hit these limits. But be mindful with video-heavy content.
-
-## Service worker strategy
-
-AudioGuideKit uses different caching strategies for different content:
-
-| Content | Strategy | Why |
-|---------|----------|-----|
-| App shell (HTML, JS, CSS) | Cache First | Fast loading, updates in background |
-| Tour JSON | Network First | Get latest content, fall back to cache |
-| Images | Cache First | Don't re-download images |
-| Audio | Cache First | Large files, don't re-download |
-
-### What "cache first" means
-
-1. Check if asset is in cache
-2. If yes, return from cache (instant!)
-3. If no, fetch from network and cache for next time
-
-### What "network first" means
-
-1. Try to fetch from network
-2. If successful, cache the response
-3. If offline, fall back to cached version
-
-## Testing offline mode
-
-### In development
-
-Chrome DevTools has offline simulation:
-
-1. Open DevTools (F12)
-2. Network tab → "Offline" checkbox
-3. Test your tour
-
-<Tip>
-Also test "Slow 3G" to simulate real-world poor connectivity.
-</Tip>
-
-### On mobile
-
-1. Download the tour while on WiFi
-2. Enable Airplane Mode
-3. Open the app and test
-
-## iOS considerations
-
-Safari on iOS has some PWA quirks:
-
-- **Add to Home Screen** required for best offline experience
-- **Limited background downloads** - keep the app in foreground while downloading
-- **Storage can be cleared** if device is low on space
-
-### Recommend "add to home screen"
-
-For critical offline use, guide visitors to add the app to their home screen:
+For the best offline experience on iOS, recommend visitors add the app to their home screen:
 
 1. Tap Share button in Safari
 2. Select "Add to Home Screen"
-3. Open from home screen icon
-
-This gives the best PWA experience on iOS.
-
-## Pre-caching vs on-demand
-
-AudioGuideKit uses **on-demand caching** by default:
-
-- Content is cached as visitors access it
-- Explicit "Download" button pre-caches everything
-
-You could modify the Service Worker to pre-cache specific tours at app install time, but this isn't built-in. Most tours work fine with on-demand caching.
-
-## Updating cached content
-
-When you update tour content:
-
-1. Change the tour JSON files
-2. Deploy the update
-3. Visitors with cached content will get updates when online
-
-For critical updates, the Network First strategy for JSON files ensures visitors get the latest content when connected.
+3. Open from the home screen icon
 
 <Note>
-Audio files use Cache First, so updated audio won't automatically download. For audio updates, consider changing filenames (e.g., `01-welcome-v2.mp3`) or instructing visitors to re-download.
+Safari may clear PWA storage when the device is low on space. Home screen apps have better persistence.
 </Note>
 
-## Troubleshooting offline issues
+## Updating content
 
-### Tour won't play offline
+When you update tour content and deploy:
 
-**Causes:**
-- Download didn't complete
-- Audio files hosted with CORS issues
-- Cache storage full
+- Tour data (JSON) updates automatically when visitors are online
+- Audio files stay cached until visitors re-download
 
-**Solutions:**
-1. Delete the tour data (browser settings → site data)
-2. Re-download while on stable WiFi
-3. Check browser console for errors
-
-### "download" button missing
-
-**Cause:** `offlineMode: "online-only"` is set
-
-**Solution:** Change to `"optional"` or `"offline-only"` in `metadata.json`
-
-### Progress lost after closing app
-
-**Cause:** Safari can clear PWA data when device storage is low
-
-**Solution:** No guaranteed fix. Recommend "Add to Home Screen" for persistence.
-
+For audio updates, either change filenames (e.g., `01-welcome-v2.mp3`) or ask visitors to re-download the tour.

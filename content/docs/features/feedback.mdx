@@ -3,13 +3,11 @@ title: "Feedback collection"
 description: "Collect ratings and emails from your visitors"
 ---
 
-# Feedback collection
-
-AudioGuideKit includes built-in features to collect visitor feedback: star ratings and email signup. These help you understand your audience and build a community.
+AudioGuideKit includes built-in features to collect visitor feedback: star ratings, written feedback, and email signup.
 
 ## Enabling feedback
 
-Enable the rating button in `metadata.json`:
+Enable the feedback button in `metadata.json`:
 
 ```json
 {
@@ -18,35 +16,38 @@ Enable the rating button in `metadata.json`:
 }
 ```
 
-When `true`, a rating button appears in the header. Visitors can tap it anytime to submit a star rating.
+When `true`, a feedback button appears on the tour start screen. Set to `false` to hide it.
 
 ## Star ratings
 
 ### How it works
 
-1. Visitor taps the rating button (star icon in header)
+1. Visitor taps the feedback button on the start screen
 2. Bottom sheet slides up with 1-5 star selection
-3. Visitor selects a rating and taps Submit
-4. Rating is stored locally and can be sent to your backend
+3. After selecting stars, a text field appears for written feedback
+4. Visitor writes feedback and taps Next
+5. Optional email collection step (can be skipped)
+6. Thank you message
+
+The full flow collects: star rating + written feedback + optional email.
 
 ### Adding a rating stop
 
-For a more prominent feedback request, add a rating stop at the end of your tour:
+For a more prominent feedback request, add a rating stop in your tour feed:
 
 ```json
 {
   "id": "8",
   "type": "rating",
-  "title": "How was your tour?",
-  "duration": "Rate us",
-  "image": "https://images.unsplash.com/photo-xxx"
+  "question": "How was your tour?",
+  "description": "Your feedback helps us improve"
 }
 ```
 
-This creates a card in the tour feed that encourages feedback.
+This creates a card with star selection that opens the full feedback sheet when tapped.
 
 <Tip>
-Place rating requests near the end of the tour, after visitors have experienced enough to form an opinion. Don't ask too early.
+Place rating requests near the end of the tour, after visitors have experienced enough to form an opinion.
 </Tip>
 
 ## Email collection
@@ -60,44 +61,62 @@ Collect email addresses for newsletters or follow-up communication.
   "id": "9",
   "type": "email",
   "title": "Stay in Touch",
-  "duration": "Sign up",
-  "image": "https://images.unsplash.com/photo-xxx",
   "description": "Get notified about new tours and special events.",
-  "placeholder": "Enter your email"
+  "placeholder": "Enter your email",
+  "buttonText": "Subscribe"
 }
 ```
 
+All fields are optional and have sensible defaults from the UI translations.
+
 ### What visitors see
 
-- Card with your title, description, and image
+- Card with title, description, and email icon
 - Email input field with your placeholder text
-- Submit button
+- Submit button with your button text
 - Success message after submission
 
-## Connecting to your backend
+## Data storage
 
-Out of the box, feedback is stored locally. To actually collect and analyze it, you'll need to:
-
-1. Set up a backend endpoint to receive data
-2. Modify the app to POST feedback to your endpoint
-
-### Example: Sending to a webhook
-
-In a production setup, you'd modify the rating/email handlers to send data:
+Out of the box, feedback is stored in the browser's localStorage. The data includes:
 
 ```typescript
-// Example - you'd add this to your fork
-async function submitRating(rating: number) {
+{
+  tourId: string;
+  rating: number;      // 1-5 stars
+  feedback: string;    // Written feedback text
+  email: string;       // Optional email
+  submittedAt: string; // ISO timestamp
+}
+```
+
+### Connecting to your backend
+
+To collect and analyze feedback, you'll need to modify the app to send data to your backend.
+
+The rating context (`context/RatingContext.tsx`) handles all feedback state. Modify the `submitRating` function to POST data to your endpoint:
+
+```typescript
+// Example modification to RatingContext.tsx
+const submitRating = async () => {
+  const ratingData = {
+    tourId,
+    rating,
+    feedback,
+    email,
+    submittedAt: new Date().toISOString(),
+  };
+
+  // Send to your backend
   await fetch('https://your-api.com/feedback', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      tourId: 'barcelona',
-      rating,
-      timestamp: new Date().toISOString(),
-    }),
+    body: JSON.stringify(ratingData),
   });
-}
+
+  // Mark as submitted
+  setIsSubmitted(true);
+};
 ```
 
 ### Backend options
@@ -106,94 +125,9 @@ async function submitRating(rating: number) {
 |---------|------------|------|
 | Zapier Webhook | Easy | Free tier available |
 | Supabase | Medium | Free tier available |
+| Google Sheets API | Easy | Free |
 | Custom API | Harder | Varies |
-| Google Sheets | Easy | Free |
 
 <Note>
-Backend integration requires code changes. This is an area where AudioGuideKit provides the UI, but you customize the data flow.
+Backend integration requires code changes. AudioGuideKit provides the UI and local storage, but you customize where data goes.
 </Note>
-
-## Analytics considerations
-
-With feedback collection, consider:
-
-### Privacy
-
-- Inform visitors you're collecting data
-- Add a privacy policy link if collecting emails
-- Consider GDPR compliance for EU visitors
-
-### Storage
-
-- Decide how long to keep feedback
-- Anonymize or delete on request
-- Secure any PII (personally identifiable information)
-
-### What to track
-
-| Data Point | Usefulness | Privacy Impact |
-|------------|------------|----------------|
-| Star rating | High | Low |
-| Email address | High | High |
-| Tour ID | High | Low |
-| Timestamp | Medium | Low |
-| Device type | Medium | Low |
-| Location | Low | High |
-
-## Rating best practices
-
-### When to ask
-
-- **Do:** After completing at least half the tour
-- **Don't:** On the first stop
-- **Do:** As an optional stop near the end
-- **Don't:** Force rating before continuing
-
-### How to frame it
-
-Good:
-- "How was your tour?"
-- "Help us improve"
-- "Share your experience"
-
-Avoid:
-- "Rate us 5 stars!"
-- "Don't forget to rate!"
-- Anything that feels pushy
-
-## Email best practices
-
-### Provide value
-
-Tell visitors what they get for signing up:
-- "Get notified about new tours"
-- "Receive exclusive discounts"
-- "Join our community"
-
-### Make it optional
-
-Email collection should never block tour progress. It's a gentle ask, not a gate.
-
-### Follow up
-
-If you collect emails, actually send valuable content:
-- New tour announcements
-- Behind-the-scenes stories
-- Related travel tips
-
-<Warning>
-Collecting emails and not using them is worse than not collecting at all. It erodes trust and wastes visitor goodwill.
-</Warning>
-
-## Future enhancements
-
-Potential improvements to the feedback system:
-
-- Written review submission
-- Photo upload from visitors
-- Net Promoter Score (NPS) questions
-- Multi-question surveys
-- Real-time feedback dashboard
-
-These would require custom development but are possible with AudioGuideKit as a foundation.
-

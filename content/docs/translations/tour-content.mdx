@@ -1,9 +1,7 @@
 ---
-title: "Tour Content Translations"
+title: "Tour content translations"
 description: "Creating and structuring translated tour files"
 ---
-
-# Translating tour content
 
 This guide covers how to create translated versions of your tour. We'll use Barcelona as an example, adding English, Spanish, and German versions.
 
@@ -22,13 +20,13 @@ src/data/tour/
 ## The golden rules
 
 <CardGroup cols={2}>
-  <Card title="Same Tour ID" icon="link">
+  <Card title="Same tour ID" icon="link">
     All language files must have the same `id` value as `metadata.json`
   </Card>
-  <Card title="Same Stop IDs" icon="list-ol">
+  <Card title="Same stop IDs" icon="list-ol">
     Stop IDs must match across all languages (stop `"3"` = stop `"3"`)
   </Card>
-  <Card title="Same Number of Stops" icon="equals">
+  <Card title="Same number of stops" icon="equals">
     All languages should have the same stops in the same order
   </Card>
   <Card title="Unique Language Code" icon="flag">
@@ -38,7 +36,7 @@ src/data/tour/
 
 ## Step-by-step example
 
-### 1. start with English (en.json)
+### 1. Start with English (en.json)
 
 ```json
 {
@@ -78,7 +76,7 @@ src/data/tour/
 }
 ```
 
-### 2. create Spanish (es.json)
+### 2. Create Spanish (es.json)
 
 ```json
 {
@@ -118,7 +116,7 @@ src/data/tour/
 }
 ```
 
-### 3. create German (de.json)
+### 3. Create German (de.json)
 
 ```json
 {
@@ -219,18 +217,6 @@ This Spanish version would use `"warm-theme"` while other languages use whatever
 <Tip>
 This is useful for language-specific branding or when a different color scheme works better for certain markets.
 </Tip>
-
-## Translation checklist
-
-For each language, verify:
-
-- [ ] `id` matches `metadata.json`
-- [ ] `language` is a valid ISO code
-- [ ] Same number of stops as other languages
-- [ ] All stop IDs match across languages
-- [ ] Audio URLs point to correct language files
-- [ ] Text is actually translated (not just copied)
-- [ ] Files exist in both `src/data/tour/` and `src/data/tour/`
 
 ## Common mistakes
 

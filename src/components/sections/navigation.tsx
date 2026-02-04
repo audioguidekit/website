@@ -64,7 +64,7 @@ export function Navigation() {
             href="https://github.com/audioguidekit/player-react"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-primary text-primary-foreground hover:opacity-90 font-medium h-9 px-4 rounded-full transition-all text-[13px] group"
+            className="inline-flex items-center gap-2 bg-primary text-primary-foreground hover:opacity-90 font-mono font-medium h-9 px-4 rounded-full transition-all text-[13px] group"
           >
             <GitHubIcon className="w-4 h-4" />
             <span className="hidden sm:inline">GitHub</span>
@@ -112,7 +112,7 @@ export function Navigation() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setMobileMenuOpen(false)}
-              className="inline-flex items-center gap-2 bg-primary text-primary-foreground hover:opacity-90 font-medium py-3 px-4 rounded-lg transition-all text-[15px] mt-2"
+              className="inline-flex items-center gap-2 bg-primary text-primary-foreground hover:opacity-90 font-mono font-medium py-3 px-4 rounded-lg transition-all text-[15px] mt-2"
             >
               <GitHubIcon className="w-4 h-4" />
               <span>GitHub</span>

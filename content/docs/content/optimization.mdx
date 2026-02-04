@@ -1,0 +1,138 @@
+---
+title: "Media optimization"
+description: "Optimize audio and images for the best quality and file size"
+---
+
+Optimizing your media files reduces download times and improves the visitor experience, especially for offline use.
+
+## Audio optimization
+
+### Recommended settings
+
+| Setting | Recommended | Why |
+|---------|-------------|-----|
+| Format | M4A (AAC) or MP3 | Universal browser support |
+| Bitrate | 128 kbps | Perfect for speech |
+| Sample rate | 44.1 kHz | Standard quality |
+| Channels | Mono | Speech doesn't need stereo |
+
+### Why these settings?
+
+- **128 kbps** is ideal for speech—higher bitrates don't improve voice quality
+- **Mono** saves 50% file size with no perceptible difference for narration
+- **M4A (AAC)** provides better compression than MP3 at the same quality
+
+### Using FFmpeg
+
+[FFmpeg](https://ffmpeg.org/) is a free tool for audio conversion.
+
+**Convert a single file:**
+
+```bash
+ffmpeg -i input.wav -c:a aac -b:a 128k -ac 1 output.m4a
+```
+
+**Batch convert all WAV files:**
+
+```bash
+for f in *.wav; do
+  ffmpeg -i "$f" -c:a aac -b:a 128k -ac 1 "${f%.wav}.m4a"
+done
+```
+
+**Convert MP3 to optimized M4A:**
+
+```bash
+ffmpeg -i input.mp3 -c:a aac -b:a 128k -ac 1 output.m4a
+```
+
+### File size estimates
+
+| Duration | 128 kbps Mono | 256 kbps Stereo |
+|----------|---------------|-----------------|
+| 1 minute | ~1 MB | ~2 MB |
+| 5 minutes | ~5 MB | ~10 MB |
+| 30 minutes | ~30 MB | ~60 MB |
+
+<Tip>
+A typical audio guide with 10 stops averaging 3 minutes each will be around 30 MB total—manageable for offline download.
+</Tip>
+
+## Image optimization
+
+### Recommended settings
+
+| Setting | Recommended |
+|---------|-------------|
+| Format | WebP or JPEG |
+| Width | 800-1200px |
+| Quality | 80% |
+| Color profile | sRGB |
+
+### Why these settings?
+
+- **WebP** offers 25-35% smaller files than JPEG at the same quality
+- **800-1200px** width is sufficient for mobile screens
+- **80% quality** balances file size and visual quality
+- **sRGB** ensures consistent colors across devices
+
+### Using ImageMagick
+
+[ImageMagick](https://imagemagick.org/) is a free tool for image conversion.
+
+**Convert to optimized JPEG:**
+
+```bash
+convert input.png -resize 1000x -quality 80 -strip output.jpg
+```
+
+**Convert to WebP:**
+
+```bash
+convert input.png -resize 1000x -quality 80 output.webp
+```
+
+**Batch convert all PNG files:**
+
+```bash
+for f in *.png; do
+  convert "$f" -resize 1000x -quality 80 "${f%.png}.webp"
+done
+```
+
+### Using Squoosh
+
+[Squoosh](https://squoosh.app/) is a free browser-based tool from Google for image optimization. Drag and drop images to compress them without installing anything.
+
+### File size targets
+
+| Image Type | Target Size |
+|------------|-------------|
+| Stop image | 50-150 KB |
+| Cover image | 100-200 KB |
+| Thumbnail | 20-50 KB |
+
+<Warning>
+Avoid images over 500 KB. Large images slow down loading and consume visitor data, especially on mobile networks.
+</Warning>
+
+## Bulk optimization workflow
+
+For tours with many files, consider this workflow:
+
+1. **Organize source files** in a folder structure
+2. **Run batch conversion** scripts for audio and images
+3. **Upload optimized files** to your hosting provider
+4. **Verify quality** by testing a few files in the browser
+
+### Example folder structure
+
+```
+tours/
+├── audio/
+│   ├── 01-welcome.m4a
+│   └── 02-history.m4a
+└── images/
+    ├── cover.webp
+    └── stop-01.webp
+```

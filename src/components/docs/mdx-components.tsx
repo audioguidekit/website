@@ -9,7 +9,7 @@ export function Note({ children }: { children: React.ReactNode }) {
   return (
     <div className="my-6 flex gap-3 rounded-lg border border-blue-200 bg-blue-50 p-4 dark:border-blue-900 dark:bg-blue-950">
       <Info className="h-5 w-5 shrink-0 text-blue-600 dark:text-blue-400" />
-      <div className="text-sm text-blue-800 dark:text-blue-200 [&>p]:m-0">{children}</div>
+      <div className="text-sm text-blue-800 dark:text-blue-200 [&>p]:m-0 [&_*]:!leading-[1.5]" style={{ lineHeight: 1.5 }}>{children}</div>
     </div>
   );
 }
@@ -19,7 +19,7 @@ export function Warning({ children }: { children: React.ReactNode }) {
   return (
     <div className="my-6 flex gap-3 rounded-lg border border-amber-200 bg-amber-50 p-4 dark:border-amber-900 dark:bg-amber-950">
       <AlertTriangle className="h-5 w-5 shrink-0 text-amber-600 dark:text-amber-400" />
-      <div className="text-sm text-amber-800 dark:text-amber-200 [&>p]:m-0">{children}</div>
+      <div className="text-sm text-amber-800 dark:text-amber-200 [&>p]:m-0 [&_*]:!leading-[1.5]" style={{ lineHeight: 1.5 }}>{children}</div>
     </div>
   );
 }
@@ -29,7 +29,7 @@ export function Tip({ children }: { children: React.ReactNode }) {
   return (
     <div className="my-6 flex gap-3 rounded-lg border border-green-200 bg-green-50 p-4 dark:border-green-900 dark:bg-green-950">
       <Lightbulb className="h-5 w-5 shrink-0 text-green-600 dark:text-green-400" />
-      <div className="text-sm text-green-800 dark:text-green-200 [&>p]:m-0">{children}</div>
+      <div className="text-sm text-green-800 dark:text-green-200 [&>p]:m-0 [&_*]:!leading-[1.5]" style={{ lineHeight: 1.5 }}>{children}</div>
     </div>
   );
 }
@@ -37,7 +37,7 @@ export function Tip({ children }: { children: React.ReactNode }) {
 // Steps component
 export function Steps({ children }: { children: React.ReactNode }) {
   return (
-    <div className="my-6 ml-4 border-l-2 border-border pl-6 [counter-reset:step]">
+    <div className="my-6 ml-4 pl-10 [counter-reset:step]">
       {children}
     </div>
   );
@@ -47,7 +47,9 @@ export function Steps({ children }: { children: React.ReactNode }) {
 export function Step({ title, children }: { title: string; children?: React.ReactNode }) {
   return (
     <div className="relative pb-6 last:pb-0 [counter-increment:step]">
-      <div className="absolute -left-[31px] flex h-6 w-6 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground before:content-[counter(step)]" />
+      {/* Vertical line - hidden on last step */}
+      <div className="absolute -left-[40px] top-6 bottom-0 w-0.5 bg-border last-of-type:hidden [div:last-child>&]:hidden" />
+      <div className="absolute -left-[53px] flex h-6 w-6 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground before:content-[counter(step)]" />
       <h4 className="mb-2 font-semibold">{title}</h4>
       {children && <div className="text-muted-foreground">{children}</div>}
     </div>
@@ -71,11 +73,13 @@ export function Card({
   title,
   icon,
   href,
+  badge,
   children
 }: {
   title: string;
   icon?: string;
   href?: string;
+  badge?: string;
   children?: React.ReactNode
 }) {
   const content = (
@@ -83,7 +87,14 @@ export function Card({
       "group rounded-lg border border-border bg-card p-4 transition-colors",
       href && "hover:border-primary/30 hover:bg-secondary cursor-pointer"
     )}>
-      <h4 className="mb-1 font-semibold group-hover:text-primary transition-colors">{title}</h4>
+      <div className="flex items-center gap-2 mb-1">
+        <h4 className="font-semibold group-hover:text-primary transition-colors">{title}</h4>
+        {badge && (
+          <span className="px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide rounded bg-amber-100 text-amber-700 border border-amber-200">
+            {badge}
+          </span>
+        )}
+      </div>
       {children && <div className="text-sm text-muted-foreground [&>p]:m-0">{children}</div>}
     </div>
   );
@@ -97,6 +108,35 @@ export function Card({
 
 // Cards alias for Card (some MDX uses Cards)
 export const Cards = CardGroup;
+
+// LinkButton component - compact button-style link
+export function LinkButton({
+  href,
+  children
+}: {
+  href: string;
+  children: React.ReactNode;
+}) {
+  const isExternal = href.startsWith('http');
+  const linkProps = isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {};
+
+  const content = (
+    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-md border border-border bg-secondary hover:bg-secondary/80 hover:border-primary/30 transition-colors cursor-pointer">
+      {children}
+      {isExternal && (
+        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+        </svg>
+      )}
+    </span>
+  );
+
+  if (isExternal) {
+    return <a href={href} {...linkProps}>{content}</a>;
+  }
+
+  return <Link href={href}>{content}</Link>;
+}
 
 // Tabs components
 export function Tabs({ children }: { children: React.ReactNode }) {
@@ -168,6 +208,7 @@ export const mdxComponents = {
   Tabs,
   Tab,
   Accordion,
+  LinkButton,
   a: CustomLink,
   // Typography
   h1: ({ children, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (

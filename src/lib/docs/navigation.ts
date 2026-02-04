@@ -12,20 +12,21 @@ export const docsNavigation: NavGroup[] = [
   {
     title: "Introduction",
     items: [
-      { title: "Welcome", href: "/docs" },
-      { title: "Overview", href: "/docs/getting-started/overview" },
+      { title: "Overview", href: "/docs" },
+      { title: "Before you begin", href: "/docs/getting-started/overview" },
       { title: "Installation", href: "/docs/getting-started/installation" },
       { title: "First run", href: "/docs/getting-started/first-run" },
       { title: "Next steps", href: "/docs/getting-started/next-steps" },
     ],
   },
   {
-    title: "Content Creation",
+    title: "Content creation",
     items: [
       { title: "Overview", href: "/docs/content/overview" },
       { title: "Creating a guide", href: "/docs/content/creating-guide" },
       { title: "Media hosting", href: "/docs/content/media" },
-      { title: "Stop Types", href: "/docs/content/stop-types" },
+      { title: "Media optimization", href: "/docs/content/optimization" },
+      { title: "Stop types", href: "/docs/content/stop-types" },
     ],
   },
   {
@@ -48,6 +49,7 @@ export const docsNavigation: NavGroup[] = [
     title: "Features",
     items: [
       { title: "Offline support", href: "/docs/features/offline" },
+      { title: "Deep linking", href: "/docs/features/deeplinking" },
       { title: "Feedback collection", href: "/docs/features/feedback" },
     ],
   },
@@ -55,8 +57,7 @@ export const docsNavigation: NavGroup[] = [
     title: "Deployment",
     items: [
       { title: "Overview", href: "/docs/deployment/overview" },
-      { title: "Deploy to Vercel", href: "/docs/deployment/vercel" },
-      { title: "Other platforms", href: "/docs/deployment/other-platforms" },
+      { title: "Platform guides", href: "/docs/deployment/platforms" },
     ],
   },
   {

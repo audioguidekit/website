@@ -1,9 +1,7 @@
 ---
-title: "Creating a Guide"
+title: "Creating your tour"
 description: "Complete guide to structuring your tour JSON files"
 ---
-
-# Creating your tour
 
 This guide walks through every field in your tour JSON files. By the end, you'll have a complete, working tour.
 
@@ -114,7 +112,7 @@ Each item in the `stops` array represents one tour stop:
 | Field | Required | Description |
 |-------|----------|-------------|
 | `id` | Yes | Unique within the tour (`"1"`, `"2"`, etc.) |
-| `type` | Yes | Stop type (see [Stop Types](/docs/content/stop-types)) |
+| `type` | Yes | Stop type (see [Stop types](/docs/content/stop-types)) |
 | `title` | Yes | Stop title |
 | `duration` | Yes | Human-readable duration (`"3 min audio"`) |
 | `image` | Yes | Stop image URL |
@@ -237,13 +235,4 @@ To add Spanish, create `src/data/tour/es.json`:
 Notice the audio file points to a Spanish version. You need separate audio recordings for each language (unless you want all languages to hear the same audio, which... don't do that).
 </Note>
 
-## Validation checklist
-
-Before testing, verify:
-
-- [ ] Valid JSON (use [JSONLint](https://jsonlint.com) to check)
-- [ ] `id` matches between `metadata.json` and language files
-- [ ] All stop `id`s are unique within the tour
-- [ ] All URLs use HTTPS
-- [ ] Files exist in both `src/data/tour/` and `src/data/tour/`
 

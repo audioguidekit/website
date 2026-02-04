@@ -1,24 +1,51 @@
 ---
-title: "Media Hosting"
+title: "Media hosting"
 description: "Where and how to host your audio files and images"
 ---
 
-# Media hosting
-
-Your audio files and images need to be accessible via public URLs. This guide covers your options, from free solutions to professional setups.
+Your audio files and images need to be accessible via public URLs. This guide covers reliable hosting options for audio guide content.
 
 ## Quick recommendations
 
-| Use Case | Recommendation | Cost |
-|----------|----------------|------|
-| Getting started | Supabase Storage | Free tier generous |
-| Production | AWS S3 + CloudFront | ~$0.02/GB/month |
-| Images only | Unsplash URLs | Free |
-| Podcast-style | Transistor, Buzzsprout | $19+/month |
+| Provider | Best For | Free Tier | Pricing |
+|----------|----------|-----------|---------|
+| [Cloudflare R2](https://www.cloudflare.com/r2/) | Most projects (recommended) | 10GB storage, no egress fees | $0.015/GB/month |
+| [Backblaze B2](https://www.backblaze.com/cloud-storage) | Budget production | 10GB storage | $0.006/GB/month |
+| [AWS S3](https://aws.amazon.com/s3/) | Enterprise scale | Limited | ~$0.023/GB/month |
+| [Google Cloud Storage](https://cloud.google.com/storage) | GCP users | $300 credits | ~$0.020/GB/month |
+| [Supabase Storage](https://supabase.com/storage) | Quick prototypes | 1GB storage | $0.021/GB/month |
 
-## Option 1: Supabase storage (recommended for starting)
+<Tip>
+We recommend **Cloudflare R2** for most audio guides—zero egress fees means you pay only for storage, not downloads. This makes costs predictable regardless of how popular your tour becomes.
+</Tip>
 
-Supabase offers 1GB free storage with 2GB bandwidth—plenty for a small tour.
+## Cloudflare R2 (recommended)
+
+[R2](https://www.cloudflare.com/r2/) is S3-compatible storage with zero egress fees. For audio guides with many visitors, this can save significant costs.
+
+<Steps>
+  <Step title="Create Account">
+    Sign up at [cloudflare.com](https://www.cloudflare.com) and enable R2 in your dashboard.
+  </Step>
+  <Step title="Create Bucket">
+    Create a new R2 bucket. Enable public access via a custom domain or R2.dev subdomain.
+  </Step>
+  <Step title="Upload Files">
+    Use the dashboard, S3-compatible CLI tools, or rclone to upload files.
+  </Step>
+  <Step title="Get URLs">
+    Files are accessible at:
+    ```
+    https://pub-xxxxx.r2.dev/audio/01-welcome.mp3
+    ```
+  </Step>
+</Steps>
+
+<LinkButton href="https://developers.cloudflare.com/r2/">Cloudflare R2 documentation</LinkButton>
+
+## Supabase Storage
+
+Supabase offers simple storage with a clean UI—great for getting started quickly.
 
 <Steps>
   <Step title="Create Account">
@@ -38,28 +65,11 @@ Supabase offers 1GB free storage with 2GB bandwidth—plenty for a small tour.
   </Step>
 </Steps>
 
-<Tip>
-Enable the Supabase CDN for faster global delivery. It's in Settings → Storage.
-</Tip>
+<LinkButton href="https://supabase.com/docs/guides/storage">Supabase Storage documentation</LinkButton>
 
-### Supabase pros & cons
+## AWS S3 + CloudFront
 
-**Pros:**
-- Generous free tier
-- Simple UI for uploading
-- Built-in CDN option
-- No credit card required
-
-**Cons:**
-- 1GB limit on free tier
-- Bandwidth limits (2GB/month free)
-- Need to upgrade for larger tours
-
-## Option 2: AWS S3 + CloudFront (production)
-
-For production tours with significant traffic, AWS S3 with CloudFront CDN is the gold standard.
-
-### Setup overview
+For production tours with significant traffic, AWS S3 with CloudFront CDN is the enterprise standard.
 
 <Steps>
   <Step title="Create S3 Bucket">
@@ -76,44 +86,39 @@ For production tours with significant traffic, AWS S3 with CloudFront CDN is the
   </Step>
 </Steps>
 
-### Example S3 URL structure
+### Example URL structure
 
 ```
 https://d1234567890.cloudfront.net/tours/london/audio/01-welcome.mp3
 ```
 
-### Cost estimate
+<LinkButton href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html">AWS S3 documentation</LinkButton>
 
-For a tour with 10 audio files (50MB each) serving 1,000 visitors/month:
-- Storage: ~$0.01/month
-- Transfer: ~$4/month
-- Total: ~$5/month
+## Backblaze B2
 
-<Note>
-AWS pricing is complex but usually cheaper than alternatives at scale. Use the [AWS Calculator](https://calculator.aws/) for accurate estimates.
-</Note>
+Backblaze B2 is significantly cheaper than S3 with similar reliability. Pair it with Cloudflare for free CDN via their bandwidth alliance.
 
-## Option 3: Backblaze B2 (budget production)
+<Steps>
+  <Step title="Create Account">
+    Sign up at [backblaze.com](https://www.backblaze.com/cloud-storage).
+  </Step>
+  <Step title="Create Bucket">
+    Create a new bucket and set it to **Public**.
+  </Step>
+  <Step title="Upload Files">
+    Upload your audio and image files via the dashboard.
+  </Step>
+  <Step title="Get URLs">
+    Copy the "Friendly URL" for each file:
+    ```
+    https://f005.backblazeb2.com/file/your-bucket/audio/01-welcome.mp3
+    ```
+  </Step>
+</Steps>
 
-Backblaze B2 is significantly cheaper than S3 with similar reliability.
+<LinkButton href="https://www.backblaze.com/docs/cloud-storage">Backblaze B2 documentation</LinkButton>
 
-| Metric | AWS S3 | Backblaze B2 |
-|--------|--------|--------------|
-| Storage | $0.023/GB | $0.006/GB |
-| Download | $0.09/GB | $0.01/GB |
-
-### Setup
-
-1. Create account at [backblaze.com](https://www.backblaze.com/b2/cloud-storage.html)
-2. Create a bucket (set to Public)
-3. Upload files
-4. Copy the "Friendly URL" for each file
-
-<Tip>
-Pair Backblaze B2 with Cloudflare for free CDN. Cloudflare has a bandwidth alliance with Backblaze that eliminates egress fees.
-</Tip>
-
-## Option 4: Google cloud storage
+## Google Cloud Storage
 
 Similar to AWS S3, with slightly different pricing and a nicer console UI.
 
@@ -123,58 +128,11 @@ https://storage.googleapis.com/your-bucket/audio/01-welcome.mp3
 
 Google Cloud offers $300 free credits for new accounts—enough to test extensively.
 
-## Option 5: Podcast hosting services
+<LinkButton href="https://cloud.google.com/storage/docs">Google Cloud Storage documentation</LinkButton>
 
-If you're already using a podcast host, you might be able to use it for tour audio too.
+## File organization
 
-**Services that work:**
-- Transistor
-- Buzzsprout
-- Anchor (now Spotify for Podcasters)
-- Podbean
-
-**Pros:**
-- Already paying for it
-- Usually includes analytics
-- Reliable CDN delivery
-
-**Cons:**
-- Not designed for this use case
-- May have terms of service issues
-- Usually more expensive than cloud storage
-
-## Images: Use Unsplash directly
-
-For images, you don't need to host anything. Unsplash allows direct hotlinking with parameters:
-
-```
-https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=800&auto=format&fit=crop
-```
-
-### Unsplash URL parameters
-
-| Parameter | Description | Example |
-|-----------|-------------|---------|
-| `w` | Width in pixels | `w=800` |
-| `h` | Height in pixels | `h=600` |
-| `auto=format` | Auto WebP delivery | Always include |
-| `fit=crop` | Crop to fit dimensions | Optional |
-| `q` | Quality (1-100) | `q=80` |
-
-### Finding the right image
-
-1. Go to [unsplash.com](https://unsplash.com)
-2. Search for your location (e.g., "Big Ben London")
-3. Click an image → right-click → "Copy image address"
-4. Add parameters: `?w=800&auto=format`
-
-<Warning>
-Don't use `w=2000` for every image. Card images only need ~800px. Larger sizes waste bandwidth and slow down the tour.
-</Warning>
-
-## File naming best practices
-
-Keep your files organized:
+Keep your files organized with a consistent structure:
 
 ```
 tours/
@@ -200,37 +158,6 @@ tours/
 - Language subfolder for audio
 - Descriptive names (not `audio1.mp3`)
 
-## Audio file optimization
-
-Before uploading, optimize your audio files:
-
-### Recommended settings
-
-| Setting | Recommended |
-|---------|-------------|
-| Format | M4A (AAC) or MP3 |
-| Bitrate | 128 kbps (speech) |
-| Sample rate | 44.1 kHz |
-| Channels | Mono (for speech) |
-
-### Why these settings?
-
-- **128 kbps**: Perfect for speech; higher bitrates don't improve voice quality
-- **Mono**: Human voice doesn't benefit from stereo; saves 50% file size
-- **M4A**: Better compression than MP3 at same quality
-
-### Quick optimization with FFmpeg
-
-```bash
-# Convert to optimized M4A
-ffmpeg -i input.wav -c:a aac -b:a 128k -ac 1 output.m4a
-
-# Batch convert all WAV files
-for f in *.wav; do
-  ffmpeg -i "$f" -c:a aac -b:a 128k -ac 1 "${f%.wav}.m4a"
-done
-```
-
 ## CORS configuration
 
 If you're hosting on S3 or similar, you may need to configure CORS (Cross-Origin Resource Sharing) to allow AudioGuideKit to access your files.
@@ -255,10 +182,9 @@ Replace `"*"` in AllowedOrigins with your actual domain in production for better
 
 ## Testing your URLs
 
-Before adding to your tour JSON, verify each URL works:
+Before adding URLs to your tour JSON, verify each one works:
 
 1. Open the URL directly in your browser
 2. Audio should play; images should display
 3. Check for HTTPS (not HTTP)
 4. Test on mobile (some hosts block certain user agents)
-

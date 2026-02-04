@@ -1,36 +1,23 @@
 ---
-title: "First Run"
+title: "First run"
 description: "Explore the demo tour and learn how AudioGuideKit works"
 ---
-
-# Exploring the demo tour
 
 With the development server running (`bun run dev`), let's take a tour of the tour player. This will help you understand what visitors will experience and how the different features work.
 
 ## The start screen
 
-When you first open http://localhost:3000, you'll see the tour start screen:
+When you first open http://localhost:3000, you'll see the guide start screen with:
 
-<Steps>
-  <Step title="Tour Header">
-    Shows the tour title, duration, and number of stops. This information comes from your tour JSON file.
-  </Step>
-  <Step title="Tour Image">
-    A hero image that sets the mood for the tour. This is the `image` field in your tour file.
-  </Step>
-  <Step title="Description">
-    A brief overview of what visitors will experience. Keep this engaging—it's your pitch!
-  </Step>
-  <Step title="Start Button">
-    Tapping this begins the tour and loads the first stop.
-  </Step>
-</Steps>
+- A hero image that sets the mood for the tour. This is the `image` field in your tour file.
+- Guide title, short description and duration. Keep this engaging—it's your pitch!
+- A "Start" button that begins the tour and loads the first stop.
 
 <Tip>
 Notice the language selector in the header? If you have multiple language files, visitors can switch languages here. Try it!
 </Tip>
 
-## The tour feed
+## The guide detail
 
 After starting the tour, you'll see a scrollable feed of "stops." Each stop is a card that can contain:
 
@@ -44,7 +31,7 @@ After starting the tour, you'll see a scrollable feed of "stops." Each stop is a
 
 Tap on an audio stop card. Notice:
 
-1. **The Mini Player appears** at the bottom of the screen
+1. **The mini player appears** at the bottom of the screen
 2. **Lock screen controls work** (try locking your phone while playing)
 3. **Progress is saved** automatically—close the browser and reopen to resume
 
@@ -52,29 +39,31 @@ Tap on an audio stop card. Notice:
 
 The mini player is the floating control bar at the bottom. It has two states:
 
-### Expanded state
+### Default state
 
-When you tap the player, it expands to show:
-- **Track title and progress bar**
-- **Play/pause button** (center)
+This is a standard player with:
+- **Track title and progress bar** shown around the main play/pause button
 - **Skip forward/backward buttons** (15 seconds)
 - **Transcription toggle** (if transcripts are available)
 
+You can **swipe left/right to skip** to the next/previous stop
+
 ### Minimized state
 
-When you scroll or tap elsewhere, the player collapses to a compact bar. Audio keeps playing!
+When you drag the player down, it collapses to a compact bar. Audio keeps playing!
 
 <Note>
-The mini player uses spring physics for smooth animations. This is built with Framer Motion and feels native on mobile devices.
+Our player uses spring physics for smooth animations. This is built with Framer Motion and feels native on mobile devices.
 </Note>
 
 ## Progress tracking
 
 AudioGuideKit automatically tracks visitor progress:
 
-- **Completed stops** show a checkmark
-- **Current position** is saved (even the exact second within an audio track)
-- **Progress persists** across page refreshes and browser sessions
+- **Overall progress** in the header shows how much is left to listen
+- **Completed stops** show a checkmark on each stop
+
+Progress persists across page refreshes and browser sessions and current position is always saved (even the exact second within an audio track).
 
 Try this experiment:
 1. Start playing audio
@@ -84,30 +73,26 @@ Try this experiment:
 
 ## Offline mode
 
-If the tour has offline mode enabled, you'll see a "Download for Offline" button on the start screen.
+By default, each guide has two buttons on the main screen:
 
-<Tabs>
-  <Tab title="Optional Mode">
-    Visitors can choose to download. Great for most use cases.
-  </Tab>
-  <Tab title="Offline Only Mode">
-    Download is required before playback. Use for locations with no connectivity.
-  </Tab>
-  <Tab title="Online Only Mode">
-    No download option. For tours with frequently updated content.
-  </Tab>
-</Tabs>
+1. Start tour
+2. Download for offline
+
+This setup  can be chaned easily and there are in total three options:
+- **online and offline (default)** - Visitors can choose to download. Great for most use cases.
+- **offline only** - Download is required before playback. Use for locations with no connectivity.
+- **online only** - No download option. For tours with frequently updated content.
 
 ## Language switching
 
 If your tour has multiple languages, visitors can switch anytime:
 
-1. Tap the **language flag** in the header
+1. Tap the language flag in the header
 2. Select a new language from the sheet
 3. Tour reloads in the new language
-4. **Progress is preserved**—same stop, same position!
+4. Progress is preserved—same stop, same position!
 
-This is one of AudioGuideKit's killer features. Many audio tour apps lose your place when switching languages. We don't.
+Many audio tour apps lose your place when switching languages. We don't.
 
 ## Responsive design
 

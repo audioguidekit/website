@@ -58,7 +58,9 @@ export default async function DocPage({ params }: PageProps) {
           <span key={segment} className="flex items-center gap-2">
             <span>/</span>
             <span className={index === slug.length - 1 ? 'text-foreground' : ''}>
-              {segment.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
+              {index === slug.length - 1
+                ? doc.meta.title
+                : segment.replace(/-/g, ' ').replace(/^\w/, l => l.toUpperCase())}
             </span>
           </span>
         ))}

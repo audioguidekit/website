@@ -41,13 +41,11 @@ function NavGroupComponent({ group }: { group: NavGroup }) {
 export function Sidebar() {
   return (
     <aside className="hidden lg:block w-64 shrink-0">
-      <div className="sticky top-24 max-h-[calc(100vh-6rem)] overflow-y-auto pb-8 pr-4">
-        <nav>
-          {docsNavigation.map((group) => (
-            <NavGroupComponent key={group.title} group={group} />
-          ))}
-        </nav>
-      </div>
+      <nav className="fixed top-32 bottom-0 w-64 pb-8 pr-4 overflow-y-auto z-10 bg-background">
+        {docsNavigation.map((group) => (
+          <NavGroupComponent key={group.title} group={group} />
+        ))}
+      </nav>
     </aside>
   );
 }
