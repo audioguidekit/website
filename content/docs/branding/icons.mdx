@@ -1,0 +1,156 @@
+---
+title: "App Icons"
+description: "Customize PWA icons for your audio guide"
+---
+
+AudioGuideKit is a Progressive Web App (PWA) that can be installed on mobile devices. When users add your tour to their home screen, they'll see your app icon—so make it count!
+
+## Default icons
+
+AudioGuideKit includes a default headphones icon. You'll want to replace it with your own branding.
+
+<Note>
+Icons are located in `public/icons/` and the source SVG is `public/favicon.svg`.
+</Note>
+
+## Required icon sizes
+
+The PWA manifest requires icons in multiple sizes:
+
+| File | Size | Purpose |
+|------|------|---------|
+| `icon-72x72.png` | 72×72 | Android legacy devices |
+| `icon-96x96.png` | 96×96 | Android legacy devices |
+| `icon-128x128.png` | 128×128 | Chrome Web Store |
+| `icon-144x144.png` | 144×144 | Android legacy devices |
+| `icon-152x152.png` | 152×152 | iOS devices |
+| `icon-192x192.png` | 192×192 | Android / iOS |
+| `icon-384x384.png` | 384×384 | Android splash screen |
+| `icon-512x512.png` | 512×512 | Android maskable icon |
+
+<Warning>
+Missing icons will prevent the PWA from installing properly on some devices.
+</Warning>
+
+## Replacing icons
+
+### Option 1: Replace the SVG and regenerate (Recommended)
+
+The easiest way is to replace the source SVG and regenerate all PNG sizes:
+
+<Steps>
+  <Step title="Create your icon">
+    Design a square SVG icon (256×256 viewBox recommended). Keep it simple—it needs to be recognizable at 72px.
+  </Step>
+  <Step title="Replace the source">
+    Replace `public/favicon.svg` with your design.
+  </Step>
+  <Step title="Generate PNGs">
+    Run this command (requires [ImageMagick](https://imagemagick.org/)):
+    ```bash
+    cd public/icons
+    for size in 72 96 128 144 152 192 384 512; do
+      magick -background none -density 300 ../favicon.svg \
+        -resize ${size}x${size} icon-${size}x${size}.png
+    done
+    ```
+  </Step>
+</Steps>
+
+<Tip>
+Install ImageMagick with `brew install imagemagick` (macOS) or `apt install imagemagick` (Linux).
+</Tip>
+
+### Option 2: Use RealFaviconGenerator
+
+For a web-based solution:
+
+1. Visit [realfavicongenerator.net](https://realfavicongenerator.net/)
+2. Upload your logo (512×512 or larger)
+3. Configure settings for each platform
+4. Download the package
+5. Extract files to `public/icons/`
+
+### Option 3: Use PWA Asset Generator
+
+```bash
+npx @vite-pwa/assets-generator --preset minimal public/favicon.svg
+```
+
+This automatically generates all required sizes.
+
+## Icon design guidelines
+
+<CardGroup cols={2}>
+  <Card title="Keep it simple" icon="star">
+    Icons are tiny. Complex designs become unrecognizable blobs at 72px.
+  </Card>
+  <Card title="Use contrast" icon="sun">
+    Test on both light and dark backgrounds. Your icon appears on home screens of all colors.
+  </Card>
+  <Card title="Respect the safe zone" icon="shield">
+    For maskable icons (512×512), keep important content in the center 80%.
+  </Card>
+  <Card title="Avoid text" icon="message-circle-off">
+    Text is illegible at small sizes. Use a symbol or logo mark instead.
+  </Card>
+</CardGroup>
+
+## Manifest configuration
+
+Icons are configured in `vite.config.ts` under the PWA plugin. The default configuration:
+
+```typescript
+manifest: {
+  icons: [
+    { src: '/icons/icon-72x72.png', sizes: '72x72', type: 'image/png' },
+    { src: '/icons/icon-96x96.png', sizes: '96x96', type: 'image/png' },
+    { src: '/icons/icon-128x128.png', sizes: '128x128', type: 'image/png' },
+    { src: '/icons/icon-144x144.png', sizes: '144x144', type: 'image/png' },
+    { src: '/icons/icon-152x152.png', sizes: '152x152', type: 'image/png' },
+    { src: '/icons/icon-192x192.png', sizes: '192x192', type: 'image/png', purpose: 'any' },
+    { src: '/icons/icon-384x384.png', sizes: '384x384', type: 'image/png' },
+    { src: '/icons/icon-512x512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' }
+  ]
+}
+```
+
+<Note>
+The `purpose: 'maskable'` on the 512×512 icon tells Android to apply adaptive icon masking.
+</Note>
+
+## Testing your icons
+
+<Steps>
+  <Step title="Build the app">
+    ```bash
+    bun run build && bun run preview
+    ```
+  </Step>
+  <Step title="Check the manifest">
+    Open Chrome DevTools → Application → Manifest. Verify all icons load correctly.
+  </Step>
+  <Step title="Test installation">
+    On a mobile device, visit your app and use "Add to Home Screen". Check that:
+    - The icon appears correctly on the home screen
+    - The splash screen shows your icon
+    - The app switcher displays your icon
+  </Step>
+</Steps>
+
+## Troubleshooting
+
+**Icons not updating?**
+- Clear the browser cache
+- Uninstall and reinstall the PWA
+- Service workers cache aggressively—you may need to increment the SW version
+
+**Icons look blurry?**
+- Ensure source images are the correct size (not upscaled)
+- Use PNG format, not JPEG
+- Check that ImageMagick is using the `-density 300` flag
+
+**Maskable icon looks wrong on Android?**
+- The important content must be in the center 80%
+- Android applies different mask shapes (circle, squircle, etc.)
+- Test with [Maskable.app](https://maskable.app/) before deploying

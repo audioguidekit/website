@@ -1,8 +1,118 @@
 import React from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
-import { AlertCircle, Info, AlertTriangle, Lightbulb, ChevronDown } from 'lucide-react';
 import { CodeBlockWrapper } from './code-block-wrapper';
+import {
+  Info,
+  AlertTriangle,
+  Lightbulb,
+  ChevronDown,
+  Sun,
+  Moon,
+  Book,
+  BookOpen,
+  Palette,
+  Paintbrush,
+  Settings,
+  FileText,
+  FileCode,
+  Code,
+  Globe,
+  Languages,
+  Smartphone,
+  Play,
+  Music,
+  Map,
+  Image,
+  Folder,
+  Zap,
+  Star,
+  Heart,
+  Check,
+  X,
+  Plus,
+  Minus,
+  ArrowRight,
+  ExternalLink,
+  Link as LinkIcon,
+  ListOrdered,
+  List,
+  Equal,
+  Flag,
+  Headphones,
+  WifiOff,
+  Video,
+  Shield,
+  MessageCircleOff,
+  Mic,
+  CloudUpload,
+  Shapes,
+  Terminal,
+  Rocket,
+  Server,
+  Wrench,
+  type LucideIcon,
+} from 'lucide-react';
+
+// Icon mapping for Card component
+const iconMap: Record<string, LucideIcon> = {
+  sun: Sun,
+  moon: Moon,
+  book: Book,
+  'book-open': BookOpen,
+  palette: Palette,
+  paintbrush: Paintbrush,
+  settings: Settings,
+  file: FileText,
+  'file-text': FileText,
+  'file-lines': FileText,
+  'file-code': FileCode,
+  code: Code,
+  globe: Globe,
+  language: Languages,
+  languages: Languages,
+  smartphone: Smartphone,
+  play: Play,
+  music: Music,
+  map: Map,
+  image: Image,
+  folder: Folder,
+  zap: Zap,
+  star: Star,
+  heart: Heart,
+  check: Check,
+  x: X,
+  plus: Plus,
+  minus: Minus,
+  'arrow-right': ArrowRight,
+  'external-link': ExternalLink,
+  link: LinkIcon,
+  'list-ol': ListOrdered,
+  list: List,
+  equals: Equal,
+  flag: Flag,
+  headphones: Headphones,
+  'wifi-slash': WifiOff,
+  'wifi-off': WifiOff,
+  'photo-film': Video,
+  video: Video,
+  film: Video,
+  shield: Shield,
+  'message-circle-off': MessageCircleOff,
+  microphone: Mic,
+  mic: Mic,
+  'cloud-arrow-up': CloudUpload,
+  'cloud-upload': CloudUpload,
+  shapes: Shapes,
+  'rectangle-terminal': Terminal,
+  terminal: Terminal,
+  rocket: Rocket,
+  server: Server,
+  wrench: Wrench,
+  info: Info,
+  warning: AlertTriangle,
+  lightbulb: Lightbulb,
+};
 
 // Note component
 export function Note({ children }: { children: React.ReactNode }) {
@@ -82,12 +192,17 @@ export function Card({
   badge?: string;
   children?: React.ReactNode
 }) {
+  const IconComponent = icon ? iconMap[icon.toLowerCase()] : null;
+
   const content = (
     <div className={cn(
       "group rounded-lg border border-border bg-card p-4 transition-colors",
       href && "hover:border-primary/30 hover:bg-secondary cursor-pointer"
     )}>
       <div className="flex items-center gap-2 mb-1">
+        {IconComponent && (
+          <IconComponent className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
+        )}
         <h4 className="font-semibold group-hover:text-primary transition-colors">{title}</h4>
         {badge && (
           <span className="px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide rounded bg-amber-100 text-amber-700 border border-amber-200">

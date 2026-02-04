@@ -38,11 +38,12 @@ export const docsNavigation: NavGroup[] = [
     ],
   },
   {
-    title: "Themes",
+    title: "Branding",
     items: [
-      { title: "Overview", href: "/docs/themes/overview" },
-      { title: "Custom themes", href: "/docs/themes/custom" },
-      { title: "Theme reference", href: "/docs/themes/reference" },
+      { title: "Overview", href: "/docs/branding/overview" },
+      { title: "Custom themes", href: "/docs/branding/custom" },
+      { title: "Theme reference", href: "/docs/branding/reference" },
+      { title: "App icons", href: "/docs/branding/icons" },
     ],
   },
   {
