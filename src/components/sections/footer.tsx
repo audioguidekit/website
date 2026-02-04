@@ -14,15 +14,15 @@ export function Footer() {
   return (
     <footer className="w-full max-w-[1400px] bg-background py-24 border-x border-border mx-auto">
       <div className="max-w-[1000px] mx-auto px-4 sm:px-8">
-        <div className="flex flex-col gap-8">
-          <div className="space-y-4">
-            <Logo />
-            <p className="text-muted-foreground text-[14px] leading-relaxed max-w-[500px]">
+        <div className="flex flex-col items-center gap-8">
+          <div className="space-y-4 flex flex-col items-center">
+            <Logo className="w-[100px] sm:w-[140px]" />
+            <p className="text-muted-foreground text-[14px] leading-relaxed max-w-[500px] text-center">
               Open-source audio guide player for museums, galleries, and cultural institutions. Built in React for the web. Runs online and offline as a PWA, self-hosted by default, with customizable branding and no platform lock-in.
             </p>
           </div>
 
-          <nav className="flex flex-wrap gap-4 md:gap-8">
+          <nav className="flex flex-wrap justify-center gap-4 md:gap-8">
             {footerLinks.map((link) => (
               <a
                 key={link.label}

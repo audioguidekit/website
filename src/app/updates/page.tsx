@@ -159,12 +159,6 @@ export default async function UpdatesPage() {
                         <h2 className="text-[16px] font-medium text-foreground leading-snug group-hover:text-primary transition-colors">
                           {commit.message.split('\n')[0]}
                         </h2>
-
-                        {commit.message.split('\n').length > 1 && (
-                          <p className="text-[14px] text-muted-foreground leading-relaxed mt-1">
-                            {commit.message.split('\n').slice(1).join(' ').trim()}
-                          </p>
-                        )}
                       </div>
                     </div>
                   ))}

@@ -57,8 +57,12 @@ export function FAQ() {
                   └
                 </span>
                 <p className="text-[16px] md:text-[16px] text-muted-foreground font-normal leading-relaxed group-hover:text-foreground transition-colors">
-                  {faq.answer.split(/(updates|documentation)/i).map((part, i) =>
-                    part.toLowerCase() === 'updates' ? (
+                  {faq.answer.split(/(scratch our own itch|updates|documentation)/i).map((part, i) =>
+                    part.toLowerCase() === 'scratch our own itch' ? (
+                      <Link key={i} href="/notes/why" className="text-foreground hover:text-primary underline decoration-primary/30 hover:decoration-primary transition-all font-medium">
+                        {part}
+                      </Link>
+                    ) : part.toLowerCase() === 'updates' ? (
                       <Link key={i} href="/updates" className="text-foreground hover:text-primary underline decoration-primary/30 hover:decoration-primary transition-all font-medium">
                         {part}
                       </Link>

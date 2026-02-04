@@ -52,8 +52,8 @@ This project is an audio guide player.
 
 It plays audio. It lists stops. It remembers progress. It gives visitors option to share their feedback with the venue owner. It runs in a browser (beacuse it is more agnostic than a native app as it prevents vendor lock-in). You can host it yourself. You can read the code. You can change it in any way you want (it is [MIT licensed](https://en.wikipedia.org/wiki/MIT_License)).
 
-There is no CMS.  
-There is no hosting service.  
+But there is no CMS for editing content.  
+There is also no hosting service for your data.  
 This is not a universal solution for every tourism scenario.
 
 Those are real problems, but they come with a different set of responsibilities: user management, permissions, infrastructure, compliance, and long-term operational guarantees. Mixing those concerns into the core would make the foundation weaker, not stronger.

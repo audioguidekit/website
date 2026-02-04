@@ -23,8 +23,8 @@ export default function LandingPage() {
         <TryPlayer />
         <EditingExperience />
         <HowItWorks />
-        <Philosophy />
         <FAQ />
+        <Philosophy />
       </main>
       <Footer />
     </div>
