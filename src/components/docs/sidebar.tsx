@@ -59,12 +59,12 @@ export function MobileSidebar({ isOpen, onClose }: { isOpen: boolean; onClose: (
     <>
       {/* Backdrop */}
       <div
-        className="fixed inset-0 z-40 bg-background/80 backdrop-blur-sm lg:hidden"
+        className="fixed inset-0 z-[60] bg-background/80 backdrop-blur-[1px] lg:hidden"
         onClick={onClose}
       />
 
       {/* Sidebar */}
-      <aside className="fixed inset-y-0 left-0 z-50 w-72 bg-background border-r border-border p-6 overflow-y-auto lg:hidden">
+      <aside className="fixed inset-y-0 left-0 z-[70] w-72 bg-background border-r border-border p-6 overflow-y-auto lg:hidden">
         <nav className="pt-16">
           {docsNavigation.map((group) => (
             <div key={group.title} className="mb-6">
