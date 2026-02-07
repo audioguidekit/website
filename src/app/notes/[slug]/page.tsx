@@ -2,10 +2,14 @@ import React from 'react';
 import type { Metadata } from 'next';
 import { Navigation } from '@/components/sections/navigation';
 import Link from 'next/link';
-import { ArrowLeft, Share2 } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { getPostData, getSortedPostsData } from '@/lib/notes';
 import { format, parseISO } from 'date-fns';
 import { NewsletterForm } from '@/components/sections/newsletter-form';
+import type { BlogPost } from '@/lib/notes';
+
+const siteUrl = 'https://audioguidekit.org';
+const defaultOgImage = `${siteUrl}/og-image.png`;
 
 export async function generateStaticParams() {
   const posts = await getSortedPostsData();
@@ -17,25 +21,71 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const post = await getPostData(slug);
+  const articleUrl = `${siteUrl}/notes/${slug}`;
 
   return {
     title: post.title,
     description: post.excerpt,
     authors: [{ name: post.author }],
+    alternates: { canonical: articleUrl },
     openGraph: {
       title: post.title,
       description: post.excerpt,
       type: 'article',
+      url: articleUrl,
       publishedTime: post.date,
       authors: [post.author],
+      images: [
+        {
+          url: defaultOgImage,
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
     },
     twitter: {
       card: 'summary_large_image',
       title: post.title,
       description: post.excerpt,
       creator: '@agilek',
+      images: [defaultOgImage],
     },
   };
+}
+
+function ArticleStructuredData({ post, slug }: { post: BlogPost; slug: string }) {
+  const articleUrl = `${siteUrl}/notes/${slug}`;
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    description: post.excerpt,
+    datePublished: post.date,
+    author: {
+      '@type': 'Person',
+      name: post.author,
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'AudioGuideKit',
+      logo: {
+        '@type': 'ImageObject',
+        url: `${siteUrl}/audioguidekit-logo.svg`,
+      },
+    },
+    image: defaultOgImage,
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': articleUrl,
+    },
+  };
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
 }
 
 export default async function BlogPostDetail({ params }: { params: Promise<{ slug: string }> }) {
@@ -44,6 +94,7 @@ export default async function BlogPostDetail({ params }: { params: Promise<{ slu
 
   return (
     <div className="min-h-screen bg-background flex flex-col items-center">
+      <ArticleStructuredData post={postData} slug={slug} />
       <Navigation />
 
       <main className="w-full max-w-[1400px] border-x border-border relative pt-32 pb-24 min-h-[90vh]">

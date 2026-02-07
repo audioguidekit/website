@@ -7,12 +7,21 @@ import { getSortedPostsData } from '@/lib/notes';
 import { format, parseISO } from 'date-fns';
 import { NewsletterForm } from '@/components/sections/newsletter-form';
 
+const siteUrl = 'https://audioguidekit.org';
+const defaultOgImage = `${siteUrl}/og-image.png`;
+
 export const metadata: Metadata = {
   title: 'Notes - Engineering blog',
   description: 'Technical deep-dives, architectural decisions, and development updates from the AudioGuideKit project. Learn about building audio guides for museums.',
   openGraph: {
     title: 'Notes - AudioGuideKit engineering blog',
     description: 'Technical deep-dives and development updates from the AudioGuideKit project.',
+    url: `${siteUrl}/notes`,
+    images: [{ url: defaultOgImage, width: 1200, height: 630, alt: 'AudioGuideKit' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [defaultOgImage],
   },
 };
 

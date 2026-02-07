@@ -20,6 +20,9 @@ export async function generateStaticParams() {
   }));
 }
 
+const siteUrl = 'https://audioguidekit.org';
+const defaultOgImage = `${siteUrl}/og-image.png`;
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug = [] } = await params;
   const doc = getDocBySlug(slug);
@@ -30,9 +33,22 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
+  const pathname = slug.length === 0 ? '/docs' : `/docs/${slug.join('/')}`;
+  const url = `${siteUrl}${pathname}`;
+
   return {
     title: doc.meta.title,
     description: doc.meta.description,
+    openGraph: {
+      title: doc.meta.title,
+      description: doc.meta.description ?? undefined,
+      url,
+      images: [{ url: defaultOgImage, width: 1200, height: 630, alt: 'AudioGuideKit' }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      images: [defaultOgImage],
+    },
   };
 }
 

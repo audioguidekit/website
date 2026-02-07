@@ -2,12 +2,21 @@ import React from 'react';
 import type { Metadata } from 'next';
 import { Navigation } from '@/components/sections/navigation';
 
+const siteUrl = 'https://audioguidekit.org';
+const defaultOgImage = `${siteUrl}/og-image.png`;
+
 export const metadata: Metadata = {
   title: 'Updates - Changelog & roadmap',
   description: 'Latest updates, changelog, and roadmap for AudioGuideKit. See what we are working on and what is coming next.',
   openGraph: {
     title: 'Updates - AudioGuideKit changelog & roadmap',
     description: 'Latest updates and roadmap for AudioGuideKit open-source audio guide player.',
+    url: `${siteUrl}/updates`,
+    images: [{ url: defaultOgImage, width: 1200, height: 630, alt: 'AudioGuideKit' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: [defaultOgImage],
   },
 };
 import { getCommits } from '@/lib/github';

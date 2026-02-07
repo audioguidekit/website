@@ -107,6 +107,11 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <StructuredData />
+        <Script
+          src="https://cloud.umami.is/script.js"
+          data-website-id="fde99ccc-ba6c-4f43-8017-1fac4547a234"
+          strategy="afterInteractive"
+        />
         {process.env.NODE_ENV === "development" && (
           <Script
             src="//unpkg.com/react-grab/dist/index.global.js"
