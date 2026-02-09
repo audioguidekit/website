@@ -41,7 +41,7 @@ export function Footer() {
           </p>
           <div className="flex items-center gap-4">
             <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-            <span className="font-mono text-[10px] text-muted-foreground uppercase tracking-widest">System_Optimal</span>
+            <span className="font-mono text-[10px] text-muted-foreground uppercase tracking-widest">System_Online</span>
           </div>
         </div>
       </div>

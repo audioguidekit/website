@@ -8,20 +8,20 @@ const features = [
   {
     title: "Quick overview",
     description: "Get a clear overview of the guide and use it online or offline.",
-    lightImage: "/images/screenshot-start.png",
-    darkImage: "/images/screenshot-start.png" // TODO: add dark variant
+    lightImage: "/screenshots/audioguidekit-tour-start-screen-light.png",
+    darkImage: "/screenshots/audioguidekit-tour-start-screen-dark.png"
   },
   {
     title: "Simple audio guide",
     description: "All stops in one place, with a simple audio player and transcript support.",
-    lightImage: "/images/screenshot-audio.png",
-    darkImage: "/images/screenshot-audio.png" // TODO: add dark variant
+    lightImage: "/screenshots/audioguidekit-tour-tracklist-progress-light.png",
+    darkImage: "/screenshots/audioguidekit-tour-tracklist-progress-dark.png"
   },
   {
     title: "Visitor feedback",
     description: "Collect visitor feedback once the guide is complete.",
-    lightImage: "/images/screenshot-feedback.png",
-    darkImage: "/images/screenshot-feedback.png" // TODO: add dark variant
+    lightImage: "/screenshots/audioguidekit-tour-rating-feedback-light.png",
+    darkImage: "/screenshots/audioguidekit-tour-rating-feedback-dark.png"
   }
 ];
 
@@ -78,7 +78,7 @@ export function AppShowcase() {
                   <img
                     src={isDarkMode ? feature.darkImage : feature.lightImage}
                     alt={feature.title}
-                    className="w-full h-full object-cover"
+                    className="w-full h-auto"
                   />
                 </PhoneFrame>
               </div>
