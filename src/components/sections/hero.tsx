@@ -118,11 +118,11 @@ export function Hero() {
               }}
               className="relative z-30 lg:-ml-16"
             >
-              <PhoneFrame className="w-[280px] sm:w-[320px] shrink-0 mockup-shadow">
+              <PhoneFrame className="w-[280px] sm:w-[320px] shrink-0">
                 <img
-                  src="/images/screenshot-main.png"
+                  src="/screenshots/audioguidekit-tour-tracklist-playing-light.png"
                   alt="AudioGuideKit player interface"
-                  className="w-full h-full object-cover"
+                  className="w-full h-auto"
                 />
               </PhoneFrame>
             </MotionDiv>

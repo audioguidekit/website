@@ -9,9 +9,9 @@ interface PhoneFrameProps {
 
 export function PhoneFrame({ children, className, priority = false }: PhoneFrameProps) {
   return (
-    <div className={cn("relative mx-auto isolate rounded-[3.2rem] overflow-hidden", className)}>
+    <div className={cn("relative mx-auto isolate", className)}>
       {/* Outer frame - minimalist technical look */}
-      <div className="relative p-[10px] rounded-[3.2rem] bg-primary shadow-2xl aspect-[9/19.5] w-full max-w-[300px] ring-1 ring-border/50">
+      <div className="relative p-[10px] rounded-[2.5rem] bg-primary w-full max-w-[300px] mockup-shadow">
         {/* Physical buttons - Left */}
         <div className="absolute left-[-2px] top-24 w-[3px] h-12 bg-primary rounded-l-md border-l border-white/10" />
         <div className="absolute left-[-2px] top-40 w-[3px] h-16 bg-primary rounded-l-md border-l border-white/10" />
@@ -20,7 +20,7 @@ export function PhoneFrame({ children, className, priority = false }: PhoneFrame
         <div className="absolute right-[-2px] top-32 w-[3px] h-20 bg-primary rounded-r-md border-r border-white/10" />
 
         {/* Inner Screen Container - This handles the clipping */}
-        <div className="relative h-full w-full bg-transparent overflow-hidden rounded-[2.6rem] shadow-inner">
+        <div className="relative w-full aspect-[375/812] bg-transparent overflow-hidden rounded-[30px] shadow-inner">
           {/* Content */}
           {children}
           
@@ -37,11 +37,8 @@ export function PhoneFrame({ children, className, priority = false }: PhoneFrame
         </div>
 
         {/* Bezel details */}
-        <div className="absolute inset-[10px] rounded-[2.6rem] border border-white/5 pointer-events-none z-30" />
+        <div className="absolute inset-[10px] rounded-[30px] border border-white/5 pointer-events-none z-30" />
       </div>
-
-      {/* Ambient Shadow */}
-      <div className="absolute -inset-4 bg-black/20 blur-3xl -z-10 rounded-[4rem] opacity-50" />
     </div>
   );
 }

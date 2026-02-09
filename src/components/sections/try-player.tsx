@@ -13,8 +13,16 @@ export function TryPlayer() {
                 Test the player now
               </h2>
               <p className="text-[16px] text-muted-foreground leading-relaxed max-w-md">
-                Experience our player on your own in seconds by scanning this QR code.
+                Experience our player on your own in seconds by scanning this QR code or clicking the button below.
               </p>
+              <a
+                href="https://audioguidekit.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center bg-primary text-primary-foreground hover:opacity-90 font-medium h-12 px-6 rounded-full transition-all text-[15px] mt-4 w-fit"
+              >
+                Try the player
+              </a>
             </div>
             {/* QR code for desktop */}
             <div className="hidden md:block w-[200px] h-[200px] sm:w-[240px] sm:h-[240px] shrink-0">
