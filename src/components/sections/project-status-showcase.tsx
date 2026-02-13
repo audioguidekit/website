@@ -35,9 +35,7 @@ export function ProjectStatusShowcase() {
   return (
     <div className="flex items-center gap-4 text-[13px] font-mono whitespace-nowrap">
       <a
-        href={commit?.url ?? '#'}
-        target="_blank"
-        rel="noopener noreferrer"
+        href="/updates"
         className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors underline decoration-border hover:decoration-primary/30 underline-offset-4"
       >
         <GitCommit className="w-4 h-4 text-emerald-500/70" />
