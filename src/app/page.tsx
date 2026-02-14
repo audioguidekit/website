@@ -5,6 +5,7 @@ import { CoreFeatures } from '@/components/sections/core-features';
 import { WhoItIsFor } from '@/components/sections/who-it-is-for';
 import { EditingExperience } from '@/components/sections/editing-experience';
 import { Philosophy } from '@/components/sections/philosophy';
+import { CTA } from '@/components/sections/cta';
 import { FAQ } from '@/components/sections/faq';
 import { Footer } from '@/components/sections/footer';
 import HowItWorks from '@/components/sections/how-it-works';
@@ -25,6 +26,7 @@ export default function LandingPage() {
         <HowItWorks />
         <FAQ />
         <Philosophy />
+        <CTA />
       </main>
       <Footer />
     </div>
