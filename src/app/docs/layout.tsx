@@ -30,7 +30,7 @@ export default function DocsLayout({
         <div className="flex items-start px-4 sm:px-8 lg:px-16 py-8 min-h-screen">
           <Sidebar />
           <div className="flex-1 min-w-0 lg:pl-8 flex flex-col">
-            <main className="flex-1">
+            <main className="flex-1" data-pagefind-body>
               {children}
             </main>
             <footer className="max-w-3xl border-t border-border mt-8 py-12 flex flex-col items-center gap-6">

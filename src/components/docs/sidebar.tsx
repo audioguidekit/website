@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { docsNavigation, type NavGroup } from '@/lib/docs/navigation';
+import { DocSearch } from '@/components/docs/search';
 
 function NavGroupComponent({ group }: { group: NavGroup }) {
   const pathname = usePathname();
@@ -42,6 +43,7 @@ export function Sidebar() {
   return (
     <aside className="hidden lg:block w-64 shrink-0">
       <nav className="fixed top-32 bottom-0 w-64 pb-8 pr-4 overflow-y-auto z-10 bg-background">
+        <DocSearch />
         {docsNavigation.map((group) => (
           <NavGroupComponent key={group.title} group={group} />
         ))}
@@ -66,6 +68,7 @@ export function MobileSidebar({ isOpen, onClose }: { isOpen: boolean; onClose: (
       {/* Sidebar */}
       <aside className="fixed inset-y-0 left-0 z-[70] w-72 bg-background border-r border-border p-6 overflow-y-auto lg:hidden">
         <nav className="pt-16">
+          <DocSearch onNavigate={onClose} />
           {docsNavigation.map((group) => (
             <div key={group.title} className="mb-6">
               <h4 className="mb-2 px-2 text-[11px] font-mono font-semibold uppercase tracking-widest text-foreground">
