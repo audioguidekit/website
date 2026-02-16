@@ -16,11 +16,11 @@ const faqs = [
   },
   {
     question: "Does it work only for audio guides?",
-    answer: "Nope, you can build literally any audio app on top of this. But audio guides for museums, galleries and cultural institutions are our focus, so expect more features for these down the road."
+    answer: "Nope, you can build literally any audio app on top of this. But audio guides for museums, galleries, cities, cultural institutions and cultural institutions are our focus, so expect more features for these down the road."
   },
   {
     question: "Why doesn't this include a CMS?",
-    answer: "A CMS turns a player into a platform. Auth, permissions, media management — and that's a different beast. We stop before that line on purpose. A management system is on the roadmap later in 2026."
+    answer: "A CMS turns a player into a platform. Auth, permissions, media management — and that's a different beast. We stop before that line on purpose. But a simple headless management system for audio guides is on the roadmap later in 2026."
   },
   {
     question: "How do I actually 'deploy' this?",
@@ -57,9 +57,13 @@ export function FAQ() {
                   └
                 </span>
                 <p className="text-[16px] md:text-[16px] text-muted-foreground font-normal leading-relaxed group-hover:text-foreground transition-colors">
-                  {faq.answer.split(/(scratch our own itch|updates|documentation)/i).map((part, i) =>
+                  {faq.answer.split(/(scratch our own itch|on the roadmap|updates|documentation)/i).map((part, i) =>
                     part.toLowerCase() === 'scratch our own itch' ? (
                       <Link key={i} href="/notes/why" className="text-foreground hover:text-primary underline decoration-primary/30 hover:decoration-primary transition-all font-medium">
+                        {part}
+                      </Link>
+                    ) : part.toLowerCase() === 'on the roadmap' ? (
+                      <Link key={i} href="/updates" className="text-foreground hover:text-primary underline decoration-primary/30 hover:decoration-primary transition-all font-medium">
                         {part}
                       </Link>
                     ) : part.toLowerCase() === 'updates' ? (

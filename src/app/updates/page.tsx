@@ -34,9 +34,9 @@ type RoadmapItem = {
 
 const roadmapItems: RoadmapItem[] = [
   { id: '6', title: 'Alternative layout for the main UI and player', status: 'planned', quarter: 'Q1/2026' },
-  { id: '6', title: 'Multiple guides support in one app', status: 'planned', quarter: 'Q1/2026' },
+  { id: '8', title: 'Multiple guides support in one app', status: 'planned', quarter: 'Q1/2026' },
   { id: '3', title: <>More stop types than audio as revealed <Link href="/docs/content/stop-types" className="underline hover:text-amber-600">in documentation</Link></>, status: 'planned', quarter: 'Q2/2026' },
-  { id: '3', title: 'Support for more languages on UI', status: 'planned', quarter: 'Q2/2026' },
+  { id: '9', title: 'Support for more languages on UI', status: 'planned', quarter: 'Q2/2026' },
   { id: '4', title: 'Outdoor guides support', status: 'planned', quarter: 'Q2/2026' },
   { id: '2', title: 'Content management system', status: 'planned', quarter: 'Q3/2026' },
   { id: '1', title: 'More themes for the app', status: 'in-progress' },

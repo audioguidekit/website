@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   },
   manifest: "/site.webmanifest",
   description:
-    "Free, open-source audio guide player for museums, galleries, and cultural institutions. Self-hosted PWA that works offline. No vendor lock-in, no per-visitor fees.",
+    "Free, open-source audio guide player for museums, galleries, cities, tourism boards and cultural institutions. Self-hosted PWA that works offline. No vendor lock-in, no per-visitor fees.",
   keywords: [
     "audio guide",
     "museum audio guide",

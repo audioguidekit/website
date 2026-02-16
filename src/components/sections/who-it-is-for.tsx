@@ -2,9 +2,9 @@ import React from 'react';
 import { Check } from 'lucide-react';
 
 const users = [
-  "Museums, galleries, and cultural institutions",
+  "Museums, galleries, cities and cultural institutions",
   "Developers building audio guides and self-guided tours",
-  "Agencies delivering exhibition and cultural projects"
+  "Agencies and tourism boards delivering exhibition and cultural projects"
 ];
 
 export function WhoItIsFor() {

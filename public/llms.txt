@@ -1,6 +1,6 @@
 # AudioGuideKit
 
-> AudioGuideKit is a free, open-source audio guide player built in React for museums, galleries, and cultural institutions. It runs as a Progressive Web App (PWA) that works online and offline, is self-hosted by default, supports white-label branding, and has no vendor lock-in. Licensed under MIT.
+> AudioGuideKit is a free, open-source audio guide player built in React for museums, galleries, cities, tourism boards and cultural institutions. It runs as a Progressive Web App (PWA) that works online and offline, is self-hosted by default, supports white-label branding, and has no vendor lock-in. Licensed under MIT.
 
 - [Full documentation for LLMs](/llms-full.txt): Extended version with complete technical details, configuration examples, and setup guides
 

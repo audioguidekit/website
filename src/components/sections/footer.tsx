@@ -18,7 +18,7 @@ export function Footer() {
           <div className="space-y-4 flex flex-col items-center">
             <Logo className="w-[100px] sm:w-[140px]" />
             <p className="text-muted-foreground text-[14px] leading-relaxed max-w-[500px] text-center">
-              Open-source audio guide player for museums, galleries, and cultural institutions. Built in React for the web. Runs online and offline as a PWA, self-hosted by default, with customizable branding and no platform lock-in.
+              Open-source audio guide player for museums, galleries, cities and cultural institutions. Built in React for the web. Runs online and offline as a PWA, self-hosted by default, with customizable branding and no platform lock-in.
             </p>
           </div>
 
