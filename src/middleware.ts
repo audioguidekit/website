@@ -35,5 +35,7 @@ export const config = {
     "/notes/:path*",
     "/docs/:path*",
     "/updates",
+    "/robots.txt",
+    "/sitemap.xml",
   ],
 };
