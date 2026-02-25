@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Sun, Moon, ChevronLeft, ChevronRight } from 'lucide-react';
 import { PhoneFrame } from '@/components/ui/phone-frame';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -55,6 +55,15 @@ export function AppShowcase() {
   const prev = () => setStartIndex(i => Math.max(0, i - 1));
   const next = () => setStartIndex(i => Math.min(maxIndex, i + 1));
 
+  const touchStartX = useRef<number | null>(null);
+  const onTouchStart = (e: React.TouchEvent) => { touchStartX.current = e.touches[0].clientX; };
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+    const delta = touchStartX.current - e.changedTouches[0].clientX;
+    if (Math.abs(delta) > 40) delta > 0 ? next() : prev();
+    touchStartX.current = null;
+  };
+
   return (
     <section className="w-full pt-24 pb-8 md:py-24 bg-background">
       <div className="max-w-[1000px] mx-auto px-4 sm:px-8">
@@ -100,7 +109,7 @@ export function AppShowcase() {
         </div>
 
         {/* Carousel track */}
-        <div className="overflow-hidden">
+        <div className="overflow-hidden" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
           <div
             className="flex transition-transform duration-300 ease-in-out"
             style={{ transform: `translateX(-${safeIndex * (100 / visible)}%)` }}

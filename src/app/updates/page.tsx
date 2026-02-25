@@ -19,44 +19,50 @@ export const metadata: Metadata = {
     images: [defaultOgImage],
   },
 };
-import { getCommits } from '@/lib/github';
-import { GitCommit, Github, Rocket, Wrench, Sparkles } from 'lucide-react';
+import { Github, Rocket, Wrench, Sparkles } from 'lucide-react';
 import Link from 'next/link';
-import { formatRelativeTime } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 
 type RoadmapItem = {
   id: string;
   title: React.ReactNode;
-  status: 'planned' | 'in-progress';
   quarter?: string;
 };
 
-const roadmapItems: RoadmapItem[] = [
-  { id: '6', title: 'Alternative layout for the main UI and player', status: 'planned', quarter: 'Q1/2026' },
-  { id: '8', title: 'Multiple guides support in one app', status: 'planned', quarter: 'Q1/2026' },
-  { id: '3', title: <>More stop types than audio as revealed <Link href="/docs/content/stop-types" className="underline hover:text-amber-600">in documentation</Link></>, status: 'planned', quarter: 'Q2/2026' },
-  { id: '9', title: 'Support for more languages on UI', status: 'planned', quarter: 'Q2/2026' },
-  { id: '4', title: 'Outdoor guides support', status: 'planned', quarter: 'Q2/2026' },
-  { id: '2', title: 'Content management system', status: 'planned', quarter: 'Q3/2026' },
-  { id: '1', title: 'More themes for the app', status: 'in-progress' },
-  { id: '7', title: 'Better support for offline audio', status: 'in-progress' },
+const plannedItems: RoadmapItem[] = [
+  { id: 'p1', title: 'Multiple guides support in one app', quarter: 'Q1/2026' },
+  { id: 'p1', title: 'Generate tour files from Google Sheets', quarter: 'Q1/2026' },
+  { id: 'p3', title: 'More sample themes for the app', quarter: 'Q2/2026' },
+  { id: 'p4', title: 'Support for more languages on UI', quarter: 'Q2/2026' },
+  { id: 'p5', title: 'Outdoor guides support', quarter: 'Q2/2026' },
+  { id: 'p6', title: 'Accessibility options', quarter: 'Q2/2026' },
+  { id: 'p7', title: 'Search (keyword, stop number)', quarter: 'Q2/2026' },
+  { id: 'p7', title: 'Tabbed navigation', quarter: 'Q2/2026' },
 ];
 
-// Pre-grouped roadmap items to avoid multiple filter iterations
-const groupedRoadmapItems = roadmapItems.reduce(
-  (acc, item) => {
-    acc[item.status].push(item);
-    return acc;
-  },
-  { 'planned': [] as RoadmapItem[], 'in-progress': [] as RoadmapItem[] }
-);
+const inProgressItems: RoadmapItem[] = [
+  { id: 'i2', title: <>More stop types than audio as revealed <Link href="/docs/content/stop-types" className="underline hover:text-amber-600">in documentation</Link></> },
+  { id: 'i2', title: 'Headless content management system (MVP)' },
+  { id: 'i3', title: 'Tool for making screenshots from your audio guide' },
+];
 
-export default async function UpdatesPage() {
-  const owner = process.env.GITHUB_OWNER || 'audioguidekit';
-  const repo = process.env.GITHUB_REPO || 'player-react';
-  const commits = await getCommits(owner, repo, 15);
+const owner = process.env.GITHUB_OWNER || 'audioguidekit';
+const repo = process.env.GITHUB_REPO || 'player-react';
 
+type DeliveredItem = {
+  id: string;
+  title: string;
+  date: string;
+};
+
+const deliveredItems: DeliveredItem[] = [
+  { id: '3', title: 'Alternative layout for the main UI and player', date: '02/2026' },
+  { id: '4', title: 'Better support for offline playback', date: '02/2026' },
+  { id: '2', title: 'Light and dark theme', date: '02/2026' },
+  { id: '1', title: 'Released v1.0.0', date: '02/2026' },
+];
+
+export default function UpdatesPage() {
   return (
     <div className="min-h-screen bg-background flex flex-col items-center">
       <Navigation />
@@ -98,7 +104,7 @@ export default async function UpdatesPage() {
                 </span>
 
                 <div className="mt-4 rounded-xl border border-amber-500/10 bg-amber-500/5 overflow-hidden">
-                  {groupedRoadmapItems['planned'].map((item, index) => (
+                  {plannedItems.map((item, index) => (
                     <div
                       key={item.id}
                       className={`flex items-center gap-3 py-3 px-4 ${index !== 0 ? 'border-t border-amber-500/10' : ''}`}
@@ -121,7 +127,7 @@ export default async function UpdatesPage() {
                 </span>
 
                 <div className="mt-4 rounded-xl border border-blue-500/10 bg-blue-500/5 overflow-hidden">
-                  {groupedRoadmapItems['in-progress'].map((item, index) => (
+                  {inProgressItems.map((item, index) => (
                     <div
                       key={item.id}
                       className={`flex items-center gap-3 py-3 px-4 ${index !== 0 ? 'border-t border-blue-500/10' : ''}`}
@@ -140,57 +146,34 @@ export default async function UpdatesPage() {
                 <span className="text-[12px] font-mono font-semibold text-emerald-500 uppercase tracking-widest">
                   DELIVERED // SHIPPED
                 </span>
-              </div>
 
-              {commits.length > 0 ? (
-                <>
-                  {commits.map((commit) => (
-                    <div key={commit.sha} className="relative pl-8 group">
-                      <div className="absolute left-0 top-[10px] w-[9px] h-[9px] bg-emerald-500 rounded-full border-2 border-background z-10 transition-transform group-hover:scale-125" />
-
-                      <div className="flex flex-col gap-2">
-                        <div className="flex items-center gap-2 text-muted-foreground">
-                          <Sparkles className="w-4 h-4 text-emerald-500/70" />
-                          <span className="text-[13px] font-mono">
-                            Shipped {formatRelativeTime(commit.date)}:{' '}
-                            <a
-                              href={commit.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="bg-secondary px-1.5 py-0.5 rounded text-[11px] font-mono border border-border/50 hover:bg-secondary/80 transition-colors"
-                              title={commit.message}
-                            >
-                              {commit.sha}
-                            </a>
-                          </span>
-                        </div>
-
-                        <h2 className="text-[16px] font-medium text-foreground leading-snug group-hover:text-primary transition-colors">
-                          {commit.message.split('\n')[0]}
-                        </h2>
-                      </div>
+                <div className="mt-4 rounded-xl border border-emerald-500/10 bg-emerald-500/5 overflow-hidden">
+                  {deliveredItems.map((item, index) => (
+                    <div
+                      key={item.id}
+                      className={`flex items-center gap-3 py-3 px-4 ${index !== 0 ? 'border-t border-emerald-500/10' : ''}`}
+                    >
+                      <Sparkles className="w-4 h-4 text-emerald-500/70 shrink-0" />
+                      <span className="text-[15px] text-foreground">{item.title}</span>
+                      <span className="ml-auto text-[12px] font-mono text-emerald-700/60 uppercase">{item.date}</span>
                     </div>
                   ))}
-
-                  <div className="pt-8 pl-8">
-                    <Button variant="outline" size="sm" asChild className="font-mono text-[11px] uppercase tracking-wider h-9">
-                      <a
-                        href={`https://github.com/${owner}/${repo}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-2"
-                      >
-                        <Github className="w-3.5 h-3.5" />
-                        View full history on GitHub
-                      </a>
-                    </Button>
-                  </div>
-                </>
-              ) : (
-                <div className="text-center py-12 border border-dashed border-border rounded-lg bg-secondary/10">
-                  <p className="text-sm text-muted-foreground font-mono">NO_COMMITS_FOUND</p>
                 </div>
-              )}
+              </div>
+
+              <div className="pt-8 pl-8">
+                <Button variant="outline" size="sm" asChild className="font-mono text-[11px] uppercase tracking-wider h-9">
+                  <a
+                    href={`https://github.com/${owner}/${repo}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2"
+                  >
+                    <Github className="w-3.5 h-3.5" />
+                    View full history on GitHub
+                  </a>
+                </Button>
+              </div>
             </div>
           </div>
 

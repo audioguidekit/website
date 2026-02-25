@@ -33,6 +33,45 @@ Or `"default-dark"` for the dark theme.
 
 That's it! The entire app adopts the theme—cards, buttons, player, sheets, everything.
 
+## Tour layout options
+
+Themes control colors, fonts, and visual styling — but several **layout and UI visibility options** are configured per-tour in `metadata.json`, not in the theme file.
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `showStopImage` | `boolean \| "thumbnail"` | Stop card layout: `true` = full image card, `"thumbnail"` = compact row with small thumbnail, `false` = text-only list |
+| `showStopDuration` | `boolean` | Show/hide the duration badge on stop cards |
+| `showStopNumber` | `boolean` | Show/hide the numbered circle indicator on stop cards |
+| `showProgressBar` | `boolean` | Show/hide the playback progress bar |
+| `showLanguageLabel` | `boolean` | Show/hide the language name next to the flag in the language selector |
+| `fullscreenPlayer` | `boolean` | Enable the fullscreen overlay player (slides up over the stop list) |
+| `backgroundColor` | `string` | Background color of the TourStart screen and its status bar area |
+
+These work alongside your theme — you can define card colors in the theme while controlling whether cards show images or render as a plain list via `showStopImage` in metadata.
+
+## Status bar background
+
+The narrow safe-area region at the very top of the screen (behind the iOS clock, battery, and signal icons) is automatically filled. The color depends on which screen is active:
+
+| Screen | Color source |
+|--------|-------------|
+| **TourStart** | `backgroundColor` in `metadata.json` |
+| **TourDetail** | `header.backgroundColor` from the active theme |
+
+Add `backgroundColor` to your `metadata.json` to control the TourStart status bar:
+
+```json
+{
+  "backgroundColor": "#1A2634"
+}
+```
+
+Pick a color that matches the top edge of your cover image — this makes the status bar feel like a natural extension of the photo. If omitted, the theme's `header.backgroundColor` is used on both screens.
+
+<Note>
+Both values also update the `<meta name="theme-color">` tag, which tints the browser chrome on iOS and influences status bar icon contrast (light/dark).
+</Note>
+
 ## What you can customize
 
 Themes control virtually every visual aspect:
@@ -171,4 +210,3 @@ Some things are intentionally fixed:
 - **Spacing between elements** - Some spacing is hardcoded
 
 These constraints ensure the app remains usable and visually consistent regardless of theme choices.
-
