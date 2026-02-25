@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Sun, Moon } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Sun, Moon, ChevronLeft, ChevronRight } from 'lucide-react';
 import { PhoneFrame } from '@/components/ui/phone-frame';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const features = [
   {
@@ -18,6 +19,18 @@ const features = [
     darkImage: "/screenshots/audioguidekit-tour-tracklist-progress-dark.png"
   },
   {
+    title: "Full transcripts",
+    description: "Follow along with complete transcripts for every audio stop.",
+    lightImage: "/screenshots/audioguidekit-tour-transcript-light.png",
+    darkImage: "/screenshots/audioguidekit-tour-transcript-dark.png"
+  },
+  {
+    title: "Fullscreen player",
+    description: "An immersive fullscreen experience for focused listening.",
+    lightImage: "/screenshots/audioguidekit-tour-player-fullscreen-light.png",
+    darkImage: "/screenshots/audioguidekit-tour-player-fullscreen-dark.png"
+  },
+  {
     title: "Visitor feedback",
     description: "Collect visitor feedback once the guide is complete.",
     lightImage: "/screenshots/audioguidekit-tour-rating-feedback-light.png",
@@ -27,6 +40,20 @@ const features = [
 
 export function AppShowcase() {
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [startIndex, setStartIndex] = useState(0);
+  const isMobile = useIsMobile();
+
+  const visible = isMobile ? 1 : 3;
+  const maxIndex = features.length - visible;
+  const safeIndex = Math.min(startIndex, maxIndex);
+
+  // Clamp index when visible count changes (e.g. on resize)
+  useEffect(() => {
+    setStartIndex(i => Math.min(i, maxIndex));
+  }, [maxIndex]);
+
+  const prev = () => setStartIndex(i => Math.max(0, i - 1));
+  const next = () => setStartIndex(i => Math.min(maxIndex, i + 1));
 
   return (
     <section className="w-full pt-24 pb-8 md:py-24 bg-background">
@@ -36,9 +63,14 @@ export function AppShowcase() {
             APP_SHOWCASE
           </span>
           <div className="mt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <h2 className="text-[32px] font-bold text-foreground tracking-tight">
-              Designed for the modern visitor
-            </h2>
+            <div>
+              <h2 className="text-[32px] font-bold text-foreground tracking-tight">
+                Designed for the modern visitor
+              </h2>
+              <p className="mt-2 text-[15px] text-muted-foreground">
+                Comes with light and dark themes, both easily customisable to match your brand.
+              </p>
+            </div>
 
             <div className="flex items-center bg-secondary border border-border rounded-md p-0.5 w-fit">
               <button
@@ -67,32 +99,75 @@ export function AppShowcase() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-          {features.map((feature, index) => (
-            <div
-              key={index}
-              className="flex flex-col items-center"
-            >
-              <div className="mb-10 w-full">
-                <PhoneFrame className="w-full max-w-[260px] mockup-shadow">
-                  <img
-                    src={isDarkMode ? feature.darkImage : feature.lightImage}
-                    alt={feature.title}
-                    className="w-full h-auto block"
-                  />
-                </PhoneFrame>
-              </div>
+        {/* Carousel track */}
+        <div className="overflow-hidden">
+          <div
+            className="flex transition-transform duration-300 ease-in-out"
+            style={{ transform: `translateX(-${safeIndex * (100 / visible)}%)` }}
+          >
+            {features.map((feature, index) => (
+              <div
+                key={index}
+                className="flex-shrink-0 flex flex-col items-center px-6"
+                style={{ width: `${100 / visible}%` }}
+              >
+                <div className="mb-10 w-full">
+                  <PhoneFrame className="w-full max-w-[260px] mockup-shadow">
+                    <img
+                      src={isDarkMode ? feature.darkImage : feature.lightImage}
+                      alt={feature.title}
+                      className="w-full h-auto block"
+                    />
+                  </PhoneFrame>
+                </div>
 
-              <div className="text-center w-full">
-                <h3 className="text-[18px] md:text-[17px] font-bold text-foreground mb-2">
-                  {feature.title}
-                </h3>
-                <p className="text-[16px] md:text-[15px] text-muted-foreground leading-relaxed">
-                  {feature.description}
-                </p>
+                <div className="text-center w-full">
+                  <h3 className="text-[18px] md:text-[17px] font-bold text-foreground mb-2">
+                    {feature.title}
+                  </h3>
+                  <p className="text-[16px] md:text-[15px] text-muted-foreground leading-relaxed">
+                    {feature.description}
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
+        </div>
+
+        {/* Navigation */}
+        <div className="flex items-center justify-center gap-3 mt-10">
+          <button
+            onClick={prev}
+            disabled={safeIndex === 0}
+            className="p-1.5 rounded-md text-muted-foreground hover:text-foreground disabled:opacity-30 transition-colors cursor-pointer disabled:cursor-default"
+            aria-label="Previous"
+          >
+            <ChevronLeft className="w-4 h-4" />
+          </button>
+
+          <div className="flex items-center gap-1.5">
+            {Array.from({ length: maxIndex + 1 }).map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setStartIndex(i)}
+                className={`h-1.5 rounded-full transition-all duration-200 cursor-pointer ${
+                  i === safeIndex
+                    ? 'w-4 bg-foreground'
+                    : 'w-1.5 bg-border hover:bg-muted-foreground'
+                }`}
+                aria-label={`Go to slide ${i + 1}`}
+              />
+            ))}
+          </div>
+
+          <button
+            onClick={next}
+            disabled={safeIndex === maxIndex}
+            className="p-1.5 rounded-md text-muted-foreground hover:text-foreground disabled:opacity-30 transition-colors cursor-pointer disabled:cursor-default"
+            aria-label="Next"
+          >
+            <ChevronRight className="w-4 h-4" />
+          </button>
         </div>
       </div>
     </section>
