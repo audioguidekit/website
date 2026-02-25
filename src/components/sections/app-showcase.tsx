@@ -78,7 +78,7 @@ export function AppShowcase() {
                   <img
                     src={isDarkMode ? feature.darkImage : feature.lightImage}
                     alt={feature.title}
-                    className="w-full h-auto"
+                    className="w-full h-auto block"
                   />
                 </PhoneFrame>
               </div>
