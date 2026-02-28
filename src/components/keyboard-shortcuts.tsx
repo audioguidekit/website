@@ -23,6 +23,14 @@ export function KeyboardShortcuts() {
         window.location.href = '/docs';
       }
 
+      if (event.key.toLowerCase() === 'u') {
+        window.location.href = '/updates';
+      }
+
+      if (event.key.toLowerCase() === 'n') {
+        window.location.href = '/notes';
+      }
+
       if (event.key.toLowerCase() === 'c') {
         navigator.clipboard.writeText('npx create-audioguidekit-player my-project');
         toast.success('Command copied to clipboard');
