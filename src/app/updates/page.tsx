@@ -87,7 +87,16 @@ export default function UpdatesPage() {
             </div>
             <h1 className="text-4xl sm:text-5xl font-bold text-foreground tracking-tight mb-6">Development updates</h1>
             <p className="text-[18px] text-muted-foreground leading-relaxed">
-              Updates on what we’re building and where it’s heading.
+              Updates on what we’re building and where it’s heading.{' '}
+              <a
+                href="https://docs.google.com/spreadsheets/d/17VvcMKVEXHMuCPpiul2ugfMSrXd8Xbj6V98JvUUYFpM/edit?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:text-foreground transition-colors"
+              >
+                See the full roadmap spreadsheet
+              </a>{' '}
+              — feel free to leave comments there.
             </p>
           </header>
 
