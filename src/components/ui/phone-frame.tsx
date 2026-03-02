@@ -9,7 +9,7 @@ interface PhoneFrameProps {
 
 export function PhoneFrame({ children, className, priority = false }: PhoneFrameProps) {
   return (
-    <div className={cn("relative mx-auto isolate rounded-[2.5rem] overflow-hidden", className)}>
+    <div className={cn("relative mx-auto isolate rounded-[2.5rem] overflow-hidden bg-primary", className)}>
       {/* Outer frame */}
       <div className="relative p-[10px] rounded-[2.5rem] bg-primary w-full">
         {/* Physical buttons - Left */}
