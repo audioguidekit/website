@@ -20,7 +20,7 @@ export function PhoneFrame({ children, className, priority = false }: PhoneFrame
         <div className="absolute right-[-2px] top-32 w-[3px] h-20 bg-primary rounded-r-md border-r border-white/10" />
 
         {/* Inner Screen Container */}
-        <div className="relative w-full aspect-[375/812] bg-black overflow-hidden rounded-[30px]">
+        <div className="relative w-full aspect-[375/812] bg-white overflow-hidden rounded-[30px]">
           {/* Content */}
           {children}
 
