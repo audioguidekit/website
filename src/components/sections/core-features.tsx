@@ -1,25 +1,30 @@
-import React from 'react';
+import React from "react";
 
 const steps = [
   {
     title: "Batteries included",
-    description: "Clone, install, run. A working app in under 2 minutes with docs, tests, and examples included.",
+    description:
+      "Clone, install, run. A working app in under 2 minutes with docs, tests, and examples included.",
   },
   {
     title: "Zero-config deployment",
-    description: "Static JSON files. No database, no backend, no vendor lock-in. Deploy to any host.",
+    description:
+      "Static JSON files. No database, no backend, no vendor lock-in. Deploy to any host.",
   },
   {
     title: "Online + Offline",
-    description: "Service workers cache audio and metadata. Works in airplane mode, underground, or on spotty networks.",
+    description:
+      "Service workers cache audio and metadata. Works in airplane mode, underground, or on spotty networks.",
   },
   {
     title: "Designed for movement",
-    description: "Large touch targets, glanceable progress, minimal cognitive load. Built for walking, not desks.",
+    description:
+      "Large touch targets, glanceable progress, minimal cognitive load. Built for walking, not desks.",
   },
   {
     title: "White-label ready",
-    description: "Customize colors and branding through simple config changes without touching source code.",
+    description:
+      "Customize colors and branding through simple config changes without touching source code.",
   },
 ];
 
@@ -31,15 +36,20 @@ export function CoreFeatures() {
           <span className="inline-flex items-center px-2 py-0.5 text-[10px] font-mono font-medium tracking-widest text-muted-foreground bg-secondary uppercase border border-border rounded">
             CORE_FEATURES
           </span>
-          <h2 className="mt-6 text-[32px] font-bold text-foreground tracking-tight">Built for production use.</h2>
+          <h2 className="mt-6 text-[32px] font-bold text-foreground tracking-tight">
+            Built for production use.
+          </h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-border border border-border rounded-xl overflow-hidden shadow-soft">
           {steps.map((step, index) => (
-            <div key={index} className="bg-background p-8 group hover:bg-secondary transition-colors duration-200">
+            <div
+              key={index}
+              className="bg-background p-8 group hover:bg-secondary transition-colors duration-200"
+            >
               <div className="mb-6 flex items-center justify-between">
                 <span className="text-[12px] font-mono font-bold text-muted-foreground opacity-30 group-hover:opacity-100 transition-opacity">
-                  {(index + 1).toString().padStart(2, '0')}
+                  {(index + 1).toString().padStart(2, "0")}
                 </span>
                 <div className="w-1.5 h-1.5 bg-primary/20 rounded-full group-hover:bg-primary transition-colors" />
               </div>
@@ -53,22 +63,21 @@ export function CoreFeatures() {
           ))}
           {/* Empty technical filler card */}
           <div className="bg-secondary/50 p-8 flex items-center justify-center opacity-30">
-            <span className="font-mono text-[10px] tracking-widest uppercase">END_OF_LIST</span>
+            <span className="font-mono text-[10px] tracking-widest uppercase">
+              END_OF_LIST
+            </span>
           </div>
         </div>
 
-        {/* Non-goals */}
+        {/* Integrations */}
         <div className="mt-20 flex flex-col items-center">
           <h3 className="text-[13px] font-mono font-bold text-muted-foreground mb-4 uppercase tracking-[0.2em]">
-            OUT_OF_SCOPE
+            INTEGRATIONS
           </h3>
           <p className="text-[18px] md:text-[17px] text-muted-foreground text-center max-w-[700px] font-normal leading-relaxed">
-            {[
-              "content management",
-              "audio & image hosting",
-              "analytics",
-              "payments"
-            ].join(", ")}
+            Host audio on your CDN (R2, S3, Cloudflare). Track with your
+            analytics (GA, Plausible). Accept payments through your processor
+            (Stripe). Everything integrates with what you already use.
           </p>
         </div>
       </div>

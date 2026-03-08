@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const steps = [
   {
@@ -13,8 +13,8 @@ const steps = [
   },
   {
     number: "3.",
-    title: "Configure theme and languages",
-    description: "Set up your theme and supported languages",
+    title: "Customize main config and theme",
+    description: "If you don't like the default settings, customize them",
   },
   {
     number: "4.",
