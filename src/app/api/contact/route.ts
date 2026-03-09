@@ -12,6 +12,15 @@ export async function POST(request: Request) {
       );
     }
 
+    // Check if access key is configured
+    if (!process.env.WEB3FORMS_ACCESS_KEY) {
+      console.error('WEB3FORMS_ACCESS_KEY is not configured');
+      return NextResponse.json(
+        { error: 'Email service not configured' },
+        { status: 500 }
+      );
+    }
+
     // Send email via Web3Forms
     const response = await fetch('https://api.web3forms.com/submit', {
       method: 'POST',
@@ -34,9 +43,13 @@ ${message}
     const data = await response.json();
 
     if (!response.ok || !data.success) {
-      console.error('Web3Forms error:', data);
+      console.error('Web3Forms error:', {
+        status: response.status,
+        statusText: response.statusText,
+        data,
+      });
       return NextResponse.json(
-        { error: 'Failed to send message' },
+        { error: 'Failed to send message', details: data },
         { status: 500 }
       );
     }

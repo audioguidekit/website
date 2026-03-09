@@ -64,8 +64,57 @@ export function CostComparison() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Commercial Platforms */}
-          <div className="bg-white border border-border rounded-xl p-8">
+          {/* AudioGuideKit - first on mobile, second (right) on desktop */}
+          <div className="bg-white border-2 border-primary/20 rounded-xl p-8 relative overflow-hidden md:order-2">
+            <div className="absolute top-0 right-0 px-3 py-1 rounded-bl-xl  bg-primary text-primary-foreground text-[10px] font-mono font-bold uppercase tracking-widest">
+              Open Source
+            </div>
+
+            <div className="flex items-start justify-between mb-6 mt-4">
+              <h3 className="text-[18px] font-bold text-foreground">
+                AudioGuideKit
+              </h3>
+            </div>
+
+            <div className="space-y-4 mb-6">
+              <div className="flex items-baseline gap-2">
+                <span className="text-[36px] font-bold text-foreground">
+                  {formatPrice(0)}
+                </span>
+                <span className="text-[16px] text-muted-foreground">
+                  software
+                </span>
+              </div>
+              <p className="text-[14px] text-muted-foreground">
+                Only pay for hosting (typically {formatPrice(0)}-
+                {formatPrice(10)}/month for static sites)
+              </p>
+            </div>
+
+            <div className="space-y-3 pt-6 border-t border-border">
+              <div className="flex items-center gap-3 group">
+                <Check className="mt-0.5 w-4 h-4 text-emerald-500/70 shrink-0 group-hover:scale-110" />
+                <span className="text-[18px] md:text-[17px] text-muted-foreground hover:text-foreground transition-colors leading-relaxed">
+                  You own all content and code
+                </span>
+              </div>
+              <div className="flex items-center gap-3 group">
+                <Check className="mt-0.5 w-4 h-4 text-emerald-500/70 shrink-0 group-hover:scale-110" />
+                <span className="text-[18px] md:text-[17px] text-muted-foreground hover:text-foreground transition-colors leading-relaxed">
+                  Fully customizable and white-label
+                </span>
+              </div>
+              <div className="flex items-center gap-3 group">
+                <Check className="mt-0.5 w-4 h-4 text-emerald-500/70 shrink-0 group-hover:scale-110" />
+                <span className="text-[18px] md:text-[17px] text-muted-foreground hover:text-foreground transition-colors leading-relaxed">
+                  Works forever, no subscription required
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Commercial Platforms - second on mobile, first (left) on desktop */}
+          <div className="bg-white border border-border rounded-xl p-8 md:order-1">
             <div className="flex items-start justify-between mb-6">
               <h3 className="text-[18px] font-bold text-foreground">
                 Commercial platforms
@@ -109,55 +158,6 @@ export function CostComparison() {
                 <X className="mt-0.5 w-4 h-4 text-muted-foreground opacity-30 shrink-0" />
                 <span className="text-[15px] text-muted-foreground leading-relaxed">
                   Stops working if you stop paying
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* AudioGuideKit */}
-          <div className="bg-white border-2 border-primary/20 rounded-xl p-8 relative overflow-hidden">
-            <div className="absolute top-0 right-0 px-3 py-1 rounded-bl-xl  bg-primary text-primary-foreground text-[10px] font-mono font-bold uppercase tracking-widest">
-              Open Source
-            </div>
-
-            <div className="flex items-start justify-between mb-6 mt-4">
-              <h3 className="text-[18px] font-bold text-foreground">
-                AudioGuideKit
-              </h3>
-            </div>
-
-            <div className="space-y-4 mb-6">
-              <div className="flex items-baseline gap-2">
-                <span className="text-[36px] font-bold text-foreground">
-                  {formatPrice(0)}
-                </span>
-                <span className="text-[16px] text-muted-foreground">
-                  software
-                </span>
-              </div>
-              <p className="text-[14px] text-muted-foreground">
-                Only pay for hosting (typically {formatPrice(0)}-
-                {formatPrice(10)}/month for static sites)
-              </p>
-            </div>
-
-            <div className="space-y-3 pt-6 border-t border-border">
-              <div className="flex items-center gap-3 group">
-                <Check className="mt-0.5 w-4 h-4 text-emerald-500/70 shrink-0 group-hover:scale-110" />
-                <span className="text-[18px] md:text-[17px] text-muted-foreground hover:text-foreground transition-colors leading-relaxed">
-                  You own all content and code
-                </span>
-              </div>
-              <div className="flex items-center gap-3 group">
-                <Check className="mt-0.5 w-4 h-4 text-emerald-500/70 shrink-0 group-hover:scale-110" />
-                <span className="text-[18px] md:text-[17px] text-muted-foreground hover:text-foreground transition-colors leading-relaxed">
-                  Fully customizable and white-label
-                </span>
-              </div>
-              <div className="flex items-center gap-3 group">
-                <Check className="mt-0.5 w-4 h-4 text-emerald-500/70 shrink-0 group-hover:scale-110" />
-                <span className="text-[18px] md:text-[17px] text-muted-foreground hover:text-foreground transition-colors leading-relaxed">
-                  Works forever, no subscription required
                 </span>
               </div>
             </div>
