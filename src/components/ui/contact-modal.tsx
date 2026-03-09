@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { X } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 
 interface ContactModalProps {
   isOpen: boolean;
@@ -64,30 +65,25 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
     }
   };
 
-  if (!isOpen) return null;
-
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50"
-      onClick={onClose}
-    >
-      <div
-        className="bg-background border border-border rounded-xl max-w-md w-full max-h-[90vh] overflow-y-auto shadow-2xl"
-        onClick={(e) => e.stopPropagation()}
+    <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
+      <DialogContent 
+        showCloseButton={false} 
+        className="p-0 gap-0 border-border rounded-xl max-w-md w-full max-h-[90vh] overflow-y-auto shadow-2xl !block"
       >
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-border">
-          <div>
-            <h2 className="text-[20px] font-bold text-foreground">
+          <DialogHeader className="gap-1 flex-1 sm:text-left">
+            <DialogTitle className="text-[20px] font-bold text-foreground leading-tight">
               Get in touch
-            </h2>
-            <p className="text-[14px] text-muted-foreground mt-1">
+            </DialogTitle>
+            <DialogDescription className="text-[14px] text-muted-foreground mt-1">
               Have questions or need help? Contact us below.
-            </p>
-          </div>
+            </DialogDescription>
+          </DialogHeader>
           <button
             onClick={onClose}
-            className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+            className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer self-start"
             aria-label="Close"
           >
             <X className="w-5 h-5" />
@@ -197,7 +193,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                 : "Send message"}
           </button>
         </form>
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   );
 }

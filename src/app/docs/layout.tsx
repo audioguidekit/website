@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Navigation } from '@/components/sections/navigation';
 import { Sidebar, MobileSidebar } from '@/components/docs/sidebar';
 import { PanelRightClose } from 'lucide-react';
+import { SimpleFooter } from '@/components/sections/simple-footer';
 
 export default function DocsLayout({
   children,
@@ -33,17 +34,7 @@ export default function DocsLayout({
             <main className="flex-1" data-pagefind-body>
               {children}
             </main>
-            <footer className="max-w-3xl border-t border-border mt-8 py-12 flex flex-col items-center gap-6">
-              <nav className="flex flex-wrap justify-center gap-4 md:gap-8">
-                <a href="/notes" className="font-mono text-[12px] text-muted-foreground hover:text-foreground transition-colors uppercase tracking-widest">Notes</a>
-                <a href="/updates" className="font-mono text-[12px] text-muted-foreground hover:text-foreground transition-colors uppercase tracking-widest">Updates</a>
-                <a href="/docs" className="font-mono text-[12px] text-muted-foreground hover:text-foreground transition-colors uppercase tracking-widest">Documentation</a>
-                <a href="https://github.com/nicobrinkkemper/audioguide-demo-react" className="font-mono text-[12px] text-muted-foreground hover:text-foreground transition-colors uppercase tracking-widest">Github</a>
-              </nav>
-              <p className="font-mono text-[10px] text-muted-foreground uppercase tracking-[0.2em] text-center">
-                © {new Date().getFullYear()} AudioGuideKit • MIT License • <a href="/llms.txt" className="hover:text-foreground transition-colors">LLMs.txt</a>
-              </p>
-            </footer>
+            <SimpleFooter />
           </div>
         </div>
       </div>

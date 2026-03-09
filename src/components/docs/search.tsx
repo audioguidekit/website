@@ -193,7 +193,7 @@ export function DocSearch({ onNavigate }: { onNavigate?: () => void }) {
 
           {results.map((result, i) => (
             <button
-              key={result.id}
+              key={`${result.id}-${result.url}-${i}`}
               onClick={() => navigate(result.url)}
               onMouseEnter={() => setActiveIndex(i)}
               className={`w-full text-left px-3 py-2.5 border-b border-border last:border-b-0 transition-colors ${
