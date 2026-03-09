@@ -56,7 +56,10 @@ const HowItWorks = () => {
                   </div>
                 </div>
               ))}
-              <div className="mt-12 pt-8 border-t border-border">
+              <div className="mt-12 pt-8 border-t border-border space-y-4">
+                <p className="text-[16px] md:text-[15px] text-muted-foreground">
+                  <span className="font-semibold text-foreground">Timeline:</span> Initial setup takes 15-20 minutes. Adding your content depends on your audio preparation—typically 1-2 weeks including recording and metadata.
+                </p>
                 <p className="text-[16px] md:text-[15px] text-muted-foreground">
                   Fully static. No servers, no databases, no maintenance.
                 </p>

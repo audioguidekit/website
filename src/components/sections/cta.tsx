@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -16,14 +16,19 @@ export function CTA() {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'd' && !e.metaKey && !e.ctrlKey && !e.altKey) {
+      if (e.key === "d" && !e.metaKey && !e.ctrlKey && !e.altKey) {
         const tag = (e.target as HTMLElement)?.tagName;
-        if (tag === 'INPUT' || tag === 'TEXTAREA' || (e.target as HTMLElement)?.isContentEditable) return;
-        router.push('/docs');
+        if (
+          tag === "INPUT" ||
+          tag === "TEXTAREA" ||
+          (e.target as HTMLElement)?.isContentEditable
+        )
+          return;
+        router.push("/docs");
       }
     };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, [router]);
 
   return (
@@ -50,7 +55,7 @@ export function CTA() {
             ))}
           </div>
 
-          <div className="inline-flex items-center gap-4 px-5 py-2 bg-foreground/[0.03] border border-foreground/10 rounded-md hover:border-foreground/20 transition-colors mb-8">
+          <div className="inline-flex items-center gap-4 px-5 py-2 bg-white border border-foreground/10 rounded-md hover:border-foreground/20 transition-colors mb-8">
             <TerminalCopy
               command="npx create-audioguidekit-player my-project"
               className="text-[14px] sm:text-[15px]"

@@ -2,29 +2,29 @@ import React from "react";
 
 const steps = [
   {
-    title: "Batteries included",
+    title: "Works out of the box",
     description:
-      "Clone, install, run. A working app in under 2 minutes with docs, tests, and examples included.",
+      "Complete and ready to deploy. Everything you need is included—just add your audio files and go.",
   },
   {
-    title: "Zero-config deployment",
+    title: "Deploy anywhere",
     description:
-      "Static JSON files. No database, no backend, no vendor lock-in. Deploy to any host.",
+      "Host it anywhere. No database, no monthly fees, switch providers anytime.",
   },
   {
     title: "Online + Offline",
     description:
-      "Service workers cache audio and metadata. Works in airplane mode, underground, or on spotty networks.",
+      "Works without internet. Perfect for museums with weak WiFi or underground exhibits",
   },
   {
-    title: "Designed for movement",
+    title: "Built for visitors on the move",
     description:
-      "Large touch targets, glanceable progress, minimal cognitive load. Built for walking, not desks.",
+      "Large buttons, clear progress, easy to use while standing. Designed for people walking through exhibits, not sitting at desks.",
   },
   {
-    title: "White-label ready",
+    title: "Match your brand",
     description:
-      "Customize colors and branding through simple config changes without touching source code.",
+      "Add your logo and colors through simple settings. No coding required, but full source access if you need it.",
   },
 ];
 
@@ -37,7 +37,7 @@ export function CoreFeatures() {
             CORE_FEATURES
           </span>
           <h2 className="mt-6 text-[32px] font-bold text-foreground tracking-tight">
-            Built for production use.
+            Everything you need to launch
           </h2>
         </div>
 
@@ -45,7 +45,7 @@ export function CoreFeatures() {
           {steps.map((step, index) => (
             <div
               key={index}
-              className="bg-background p-8 group hover:bg-secondary transition-colors duration-200"
+              className="bg-white p-8 group hover:bg-secondary transition-colors duration-200"
             >
               <div className="mb-6 flex items-center justify-between">
                 <span className="text-[12px] font-mono font-bold text-muted-foreground opacity-30 group-hover:opacity-100 transition-opacity">
@@ -75,9 +75,8 @@ export function CoreFeatures() {
             INTEGRATIONS
           </h3>
           <p className="text-[18px] md:text-[17px] text-muted-foreground text-center max-w-[700px] font-normal leading-relaxed">
-            Host audio on your CDN (R2, S3, Cloudflare). Track with your
-            analytics (GA, Plausible). Accept payments through your processor
-            (Stripe). Everything integrates with what you already use.
+            Use your existing tools—host audio on any CDN, track visitors with
+            your analytics platform, process payments through your provider.
           </p>
         </div>
       </div>

@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import React, { useEffect, useState } from 'react';
-import { GitCommit } from 'lucide-react';
-import { formatRelativeTime } from '@/lib/utils';
+import React, { useEffect, useState } from "react";
+import { GitCommit } from "lucide-react";
+import { formatRelativeTime } from "@/lib/utils";
 
 interface GitHubCommit {
   sha: string;
@@ -18,13 +18,13 @@ export function ProjectStatusShowcase() {
   useEffect(() => {
     async function fetchCommit() {
       try {
-        const response = await fetch('/api/github/latest-commit');
+        const response = await fetch("/api/github/latest-commit");
         if (response.ok) {
           const data = await response.json();
           setCommit(data);
         }
       } catch (error) {
-        console.error('Failed to fetch commit:', error);
+        console.error("Failed to fetch commit:", error);
       } finally {
         setLoading(false);
       }
@@ -56,7 +56,7 @@ export function ProjectStatusShowcase() {
         href="/docs"
         className="text-muted-foreground hover:text-primary transition-colors underline decoration-border hover:decoration-primary/30 underline-offset-4"
       >
-        See documentation
+        Getting started
       </a>
     </div>
   );

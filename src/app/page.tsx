@@ -3,6 +3,7 @@ import { Navigation } from "@/components/sections/navigation";
 import { Hero } from "@/components/sections/hero";
 import { CoreFeatures } from "@/components/sections/core-features";
 import { WhoItIsFor } from "@/components/sections/who-it-is-for";
+import { CostComparison } from "@/components/sections/cost-comparison";
 import { EditingExperience } from "@/components/sections/editing-experience";
 import { Philosophy } from "@/components/sections/philosophy";
 import { CTA } from "@/components/sections/cta";
@@ -20,6 +21,7 @@ export default function LandingPage() {
         <Hero />
         <CoreFeatures />
         <WhoItIsFor />
+        <CostComparison />
         <AppShowcase />
         <TryPlayer />
         <HowItWorks />

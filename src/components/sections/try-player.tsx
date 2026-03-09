@@ -1,5 +1,5 @@
-import React from 'react';
-import Image from 'next/image';
+import React from "react";
+import Image from "next/image";
 
 export function TryPlayer() {
   return (
@@ -12,8 +12,9 @@ export function TryPlayer() {
               <h2 className="text-[32px] font-bold text-foreground tracking-tight mb-4">
                 Test the player now
               </h2>
-              <p className="text-[16px] text-muted-foreground leading-relaxed max-w-md">
-                Experience our player on your own in seconds by scanning this QR code or clicking the button below.
+              <p className="text-[16px] text-muted-foreground leading-relaxed max-w-md text-balance">
+                Experience our player on your own in seconds by scanning this QR
+                code or clicking the button below.
               </p>
               <a
                 href="https://audioguidekit.vercel.app/"

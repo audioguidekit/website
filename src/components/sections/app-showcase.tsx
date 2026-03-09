@@ -1,41 +1,43 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect, useRef } from 'react';
-import { Sun, Moon, ChevronLeft, ChevronRight } from 'lucide-react';
-import { PhoneFrame } from '@/components/ui/phone-frame';
-import { useIsMobile } from '@/hooks/use-mobile';
+import React, { useState, useEffect, useRef } from "react";
+import { Sun, Moon, ChevronLeft, ChevronRight } from "lucide-react";
+import { PhoneFrame } from "@/components/ui/phone-frame";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const features = [
   {
     title: "Quick overview",
-    description: "Get a clear overview of the guide and use it online or offline.",
+    description:
+      "Get a clear overview of the guide and use it online or offline.",
     lightImage: "/screenshots/audioguidekit-tour-start-screen-light.png",
-    darkImage: "/screenshots/audioguidekit-tour-start-screen-dark.png"
+    darkImage: "/screenshots/audioguidekit-tour-start-screen-dark.png",
   },
   {
     title: "Simple audio guide",
-    description: "All stops in one place, with a simple audio player and transcript support.",
+    description:
+      "All stops in one place, with a simple audio player and transcript support.",
     lightImage: "/screenshots/audioguidekit-tour-tracklist-progress-light.png",
-    darkImage: "/screenshots/audioguidekit-tour-tracklist-progress-dark.png"
+    darkImage: "/screenshots/audioguidekit-tour-tracklist-progress-dark.png",
   },
   {
     title: "Full transcripts",
     description: "Follow along with complete transcripts for every audio stop.",
     lightImage: "/screenshots/audioguidekit-tour-transcript-light.png",
-    darkImage: "/screenshots/audioguidekit-tour-transcript-dark.png"
+    darkImage: "/screenshots/audioguidekit-tour-transcript-dark.png",
   },
   {
     title: "Fullscreen player",
     description: "An immersive fullscreen experience for focused listening.",
     lightImage: "/screenshots/audioguidekit-tour-player-fullscreen-light.png",
-    darkImage: "/screenshots/audioguidekit-tour-player-fullscreen-dark.png"
+    darkImage: "/screenshots/audioguidekit-tour-player-fullscreen-dark.png",
   },
   {
     title: "Visitor feedback",
     description: "Collect visitor feedback once the guide is complete.",
     lightImage: "/screenshots/audioguidekit-tour-rating-feedback-light.png",
-    darkImage: "/screenshots/audioguidekit-tour-rating-feedback-dark.png"
-  }
+    darkImage: "/screenshots/audioguidekit-tour-rating-feedback-dark.png",
+  },
 ];
 
 export function AppShowcase() {
@@ -49,14 +51,16 @@ export function AppShowcase() {
 
   // Clamp index when visible count changes (e.g. on resize)
   useEffect(() => {
-    setStartIndex(i => Math.min(i, maxIndex));
+    setStartIndex((i) => Math.min(i, maxIndex));
   }, [maxIndex]);
 
-  const prev = () => setStartIndex(i => Math.max(0, i - 1));
-  const next = () => setStartIndex(i => Math.min(maxIndex, i + 1));
+  const prev = () => setStartIndex((i) => Math.max(0, i - 1));
+  const next = () => setStartIndex((i) => Math.min(maxIndex, i + 1));
 
   const touchStartX = useRef<number | null>(null);
-  const onTouchStart = (e: React.TouchEvent) => { touchStartX.current = e.touches[0].clientX; };
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
   const onTouchEnd = (e: React.TouchEvent) => {
     if (touchStartX.current === null) return;
     const delta = touchStartX.current - e.changedTouches[0].clientX;
@@ -76,18 +80,20 @@ export function AppShowcase() {
               <h2 className="text-[32px] font-bold text-foreground tracking-tight">
                 Designed for the modern visitor
               </h2>
-              <p className="mt-2 text-[15px] text-muted-foreground">
-                Comes with light and dark themes, both easily customisable to match your brand.
+              <p className="mt-2 text-[15px] text-muted-foreground text-pretty">
+                Light and dark themes included. Easily customizable to match
+                your brand.
               </p>
             </div>
 
             <div className="flex items-center bg-secondary border border-border rounded-md p-0.5 w-fit">
               <button
                 onClick={() => setIsDarkMode(false)}
-                className={`flex items-center gap-1.5 px-3 py-1.5 text-[12px] font-mono font-medium rounded transition-colors cursor-pointer ${!isDarkMode
-                  ? 'bg-background text-foreground shadow-sm'
-                  : 'text-muted-foreground hover:text-foreground'
-                  }`}
+                className={`flex items-center gap-1.5 px-3 py-1.5 text-[12px] font-mono font-medium rounded transition-colors cursor-pointer ${
+                  !isDarkMode
+                    ? "bg-background text-foreground shadow-sm"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
                 aria-label="Light mode preview"
               >
                 <Sun className="w-3.5 h-3.5" />
@@ -95,10 +101,11 @@ export function AppShowcase() {
               </button>
               <button
                 onClick={() => setIsDarkMode(true)}
-                className={`flex items-center gap-1.5 px-3 py-1.5 text-[12px] font-mono font-medium rounded transition-colors cursor-pointer ${isDarkMode
-                  ? 'bg-background text-foreground shadow-sm'
-                  : 'text-muted-foreground hover:text-foreground'
-                  }`}
+                className={`flex items-center gap-1.5 px-3 py-1.5 text-[12px] font-mono font-medium rounded transition-colors cursor-pointer ${
+                  isDarkMode
+                    ? "bg-background text-foreground shadow-sm"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
                 aria-label="Dark mode preview"
               >
                 <Moon className="w-3.5 h-3.5" />
@@ -109,10 +116,16 @@ export function AppShowcase() {
         </div>
 
         {/* Carousel track */}
-        <div className="overflow-hidden" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+        <div
+          className="overflow-hidden"
+          onTouchStart={onTouchStart}
+          onTouchEnd={onTouchEnd}
+        >
           <div
             className="flex transition-transform duration-300 ease-in-out"
-            style={{ transform: `translateX(-${safeIndex * (100 / visible)}%)` }}
+            style={{
+              transform: `translateX(-${safeIndex * (100 / visible)}%)`,
+            }}
           >
             {features.map((feature, index) => (
               <div
@@ -161,8 +174,8 @@ export function AppShowcase() {
                 onClick={() => setStartIndex(i)}
                 className={`h-1.5 rounded-full transition-all duration-200 cursor-pointer ${
                   i === safeIndex
-                    ? 'w-4 bg-foreground'
-                    : 'w-1.5 bg-border hover:bg-muted-foreground'
+                    ? "w-4 bg-foreground"
+                    : "w-1.5 bg-border hover:bg-muted-foreground"
                 }`}
                 aria-label={`Go to slide ${i + 1}`}
               />

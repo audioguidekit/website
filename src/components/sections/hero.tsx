@@ -1,31 +1,31 @@
-'use client';
+"use client";
 
-import React from 'react';
-import dynamic from 'next/dynamic';
-import { PhoneFrame } from '@/components/ui/phone-frame';
-import { Typewriter } from '@/components/ui/typewriter';
-import { TerminalCopy } from '@/components/ui/terminal-copy';
-import { ProjectStatusShowcase } from './project-status-showcase';
+import React from "react";
+import dynamic from "next/dynamic";
+import { PhoneFrame } from "@/components/ui/phone-frame";
+import { Typewriter } from "@/components/ui/typewriter";
+import { TerminalCopy } from "@/components/ui/terminal-copy";
+import { ProjectStatusShowcase } from "./project-status-showcase";
 
 // Dynamic import for motion components - reduces initial bundle
 const MotionDiv = dynamic(
-  () => import('framer-motion').then((mod) => mod.motion.div),
-  { ssr: false }
+  () => import("framer-motion").then((mod) => mod.motion.div),
+  { ssr: false },
 );
 
 const MotionH1 = dynamic(
-  () => import('framer-motion').then((mod) => mod.motion.h1),
-  { ssr: false }
+  () => import("framer-motion").then((mod) => mod.motion.h1),
+  { ssr: false },
 );
 
 const MotionP = dynamic(
-  () => import('framer-motion').then((mod) => mod.motion.p),
-  { ssr: false }
+  () => import("framer-motion").then((mod) => mod.motion.p),
+  { ssr: false },
 );
 
 const MotionSpan = dynamic(
-  () => import('framer-motion').then((mod) => mod.motion.span),
-  { ssr: false }
+  () => import("framer-motion").then((mod) => mod.motion.span),
+  { ssr: false },
 );
 
 // Static badge element - hoisted to module scope
@@ -40,7 +40,6 @@ export function Hero() {
     <section className="relative min-h-[90vh] flex items-center bg-white border-b border-border">
       <div className="max-w-[1000px] mx-auto px-4 sm:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-16 lg:gap-8 items-center py-20">
-
           <div className="relative z-40">
             {/* Supporting Note */}
             <MotionDiv
@@ -60,18 +59,35 @@ export function Hero() {
             >
               An open-source <br />
               <span className="text-muted-foreground">audio guide player</span>
-              <br className="hidden md:block" />{' '}
-              <span className="whitespace-nowrap">for <span className="relative inline-block"><span className="invisible">cultural institutions_</span><span className="absolute left-0 top-0 whitespace-nowrap"><Typewriter words={['museums', 'galleries', 'cities', 'tourism boards', 'cultural institutions']} /><MotionSpan
-                animate={{ opacity: [1, 0] }}
-                transition={{
-                  duration: 1,
-                  repeat: Infinity,
-                  ease: (v) => v < 0.5 ? 0 : 1
-                }}
-                className="inline-block"
-              >
-                _
-              </MotionSpan></span></span></span>
+              <br className="hidden md:block" />{" "}
+              <span className="whitespace-nowrap">
+                for{" "}
+                <span className="relative inline-block">
+                  <span className="invisible">cultural institutions_</span>
+                  <span className="absolute left-0 top-0 whitespace-nowrap">
+                    <Typewriter
+                      words={[
+                        "museums",
+                        "galleries",
+                        "cities",
+                        "tourism boards",
+                        "cultural institutions",
+                      ]}
+                    />
+                    <MotionSpan
+                      animate={{ opacity: [1, 0] }}
+                      transition={{
+                        duration: 1,
+                        repeat: Infinity,
+                        ease: (v) => (v < 0.5 ? 0 : 1),
+                      }}
+                      className="inline-block"
+                    >
+                      _
+                    </MotionSpan>
+                  </span>
+                </span>
+              </span>
             </MotionH1>
 
             {/* Subheadline */}
@@ -81,7 +97,9 @@ export function Hero() {
               transition={{ delay: 0.2 }}
               className="text-[18px] sm:text-[20px] text-muted-foreground leading-relaxed mb-6 text-balance lg:max-w-[640px]"
             >
-              A lightweight audio guide player built in React for the web. Runs online and offline as a PWA, self-hosted by default, with customizable branding and no platform lock-in.
+              A modern web-based audio guide that works on any device. Works
+              online and offline, hosts on your own servers, and lets you
+              customize colors and branding. No vendor fees or contracts.
             </MotionP>
 
             {/* Primary CTA - Terminal + Status */}
@@ -91,15 +109,17 @@ export function Hero() {
               transition={{ delay: 0.3 }}
               className="inline-flex flex-col items-center"
             >
-              <div className="inline-flex items-center gap-4 px-5 py-2 bg-foreground/[0.03] border border-foreground/10 rounded-md hover:border-foreground/20 transition-colors">
-                <TerminalCopy command="npx create-audioguidekit-player my-project" className="text-[15px] sm:text-[17px]" />
+              <div className="inline-flex items-center gap-4 px-5 py-2 bg-white border border-foreground/10 rounded-md hover:border-foreground/20 transition-colors">
+                <TerminalCopy
+                  command="npx create-audioguidekit-player my-project"
+                  className="text-[15px] sm:text-[17px]"
+                />
               </div>
               <div className="pt-4">
                 <ProjectStatusShowcase />
               </div>
             </MotionDiv>
           </div>
-
 
           <div className="relative flex justify-center lg:justify-start py-8">
             <MotionDiv
@@ -108,13 +128,13 @@ export function Hero() {
                 opacity: 1,
                 scale: 1,
                 rotate: [-6, -4, -6],
-                y: [0, -15, 0]
+                y: [0, -15, 0],
               }}
               transition={{
                 opacity: { duration: 0.8 },
                 scale: { duration: 0.8 },
                 rotate: { duration: 6, repeat: Infinity, ease: "easeInOut" },
-                y: { duration: 6, repeat: Infinity, ease: "easeInOut" }
+                y: { duration: 6, repeat: Infinity, ease: "easeInOut" },
               }}
               className="relative z-30 lg:-ml-16"
             >

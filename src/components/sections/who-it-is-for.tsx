@@ -1,10 +1,10 @@
-import React from 'react';
-import { Check } from 'lucide-react';
+import React from "react";
+import { Check } from "lucide-react";
 
 const users = [
   "Museums, galleries, cities and cultural institutions",
   "Developers building audio guides and self-guided tours",
-  "Agencies and tourism boards delivering exhibition and cultural projects"
+  "Agencies and tourism boards delivering exhibition and cultural projects",
 ];
 
 export function WhoItIsFor() {
@@ -17,12 +17,14 @@ export function WhoItIsFor() {
           </span>
         </div>
 
-        <h2 className="text-[28px] font-bold text-foreground mb-10 tracking-tight">Who is it for?</h2>
+        <h2 className="text-[28px] font-bold text-foreground mb-10 tracking-tight">
+          Who is it for?
+        </h2>
 
         <div className="space-y-3">
           {users.map((user, i) => (
             <div key={i} className="flex items-start gap-4 group">
-              <Check className="mt-1 w-4 h-4 text-primary shrink-0 group-hover:scale-110 transition-transform" />
+              <Check className="mt-1 w-4 h-4 text-emerald-500/70 shrink-0 group-hover:scale-110 transition-transform" />
               <p className="text-[18px] md:text-[17px] text-muted-foreground group-hover:text-foreground transition-colors leading-relaxed">
                 {user}
               </p>

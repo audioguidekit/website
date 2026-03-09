@@ -1,27 +1,11 @@
-import React from 'react';
-import type { Metadata } from 'next';
-import { Navigation } from '@/components/sections/navigation';
+'use client';
 
-const siteUrl = 'https://audioguidekit.org';
-const defaultOgImage = `${siteUrl}/og-image.png`;
-
-export const metadata: Metadata = {
-  title: 'Updates - Changelog & roadmap',
-  description: 'Latest updates, changelog, and roadmap for AudioGuideKit. See what we are working on and what is coming next.',
-  openGraph: {
-    title: 'Updates - AudioGuideKit changelog & roadmap',
-    description: 'Latest updates and roadmap for AudioGuideKit open-source audio guide player.',
-    url: `${siteUrl}/updates`,
-    images: [{ url: defaultOgImage, width: 1200, height: 630, alt: 'AudioGuideKit' }],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    images: [defaultOgImage],
-  },
-};
-import { Github, Rocket, Wrench, Sparkles } from 'lucide-react';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
+import React, { useState } from "react";
+import { Navigation } from "@/components/sections/navigation";
+import { Github, Rocket, Wrench, Sparkles } from "lucide-react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { ContactModal } from "@/components/ui/contact-modal";
 
 type RoadmapItem = {
   id: string;
@@ -30,24 +14,41 @@ type RoadmapItem = {
 };
 
 const plannedItems: RoadmapItem[] = [
-  { id: 'p1', title: 'Multiple guides support in one app', quarter: 'Q1/2026' },
-  { id: 'p1', title: 'Generate tour files from Google Sheets', quarter: 'Q1/2026' },
-  { id: 'p3', title: 'More sample themes for the app', quarter: 'Q2/2026' },
-  { id: 'p4', title: 'Support for more languages on UI', quarter: 'Q2/2026' },
-  { id: 'p5', title: 'Outdoor guides support', quarter: 'Q2/2026' },
-  { id: 'p6', title: 'Accessibility options', quarter: 'Q2/2026' },
-  { id: 'p7', title: 'Search (keyword, stop number)', quarter: 'Q2/2026' },
-  { id: 'p7', title: 'Tabbed navigation', quarter: 'Q2/2026' },
+  { id: "p1", title: "Multiple guides support in one app", quarter: "Q1/2026" },
+  {
+    id: "p2",
+    title: "Generate tour files from Google Sheets",
+    quarter: "Q1/2026",
+  },
+  { id: "p3", title: "More sample themes for the app", quarter: "Q2/2026" },
+  { id: "p4", title: "Support for more languages on UI", quarter: "Q2/2026" },
+  { id: "p5", title: "Outdoor guides support", quarter: "Q2/2026" },
+  { id: "p6", title: "Accessibility options", quarter: "Q2/2026" },
+  { id: "p7", title: "Search (keyword, stop number)", quarter: "Q2/2026" },
+  { id: "p8", title: "Tabbed navigation", quarter: "Q2/2026" },
 ];
 
 const inProgressItems: RoadmapItem[] = [
-  { id: 'i2', title: <>More stop types than audio as revealed <Link href="/docs/content/stop-types" className="underline hover:text-amber-600">in documentation</Link></> },
-  { id: 'i2', title: 'Headless content management system (MVP)' },
-  { id: 'i3', title: 'Tool for making screenshots from your audio guide' },
+  {
+    id: "i1",
+    title: (
+      <>
+        More stop types than audio as revealed{" "}
+        <Link
+          href="/docs/content/stop-types"
+          className="underline hover:text-amber-600"
+        >
+          in documentation
+        </Link>
+      </>
+    ),
+  },
+  { id: "i2", title: "Headless content management system (MVP)" },
+  { id: "i3", title: "Tool for making screenshots from your audio guide" },
 ];
 
-const owner = process.env.GITHUB_OWNER || 'audioguidekit';
-const repo = process.env.GITHUB_REPO || 'player-react';
+const owner = process.env.GITHUB_OWNER || "audioguidekit";
+const repo = process.env.GITHUB_REPO || "player-react";
 
 type DeliveredItem = {
   id: string;
@@ -56,13 +57,19 @@ type DeliveredItem = {
 };
 
 const deliveredItems: DeliveredItem[] = [
-  { id: '3', title: 'Alternative layout for the main UI and player', date: '02/2026' },
-  { id: '4', title: 'Better support for offline playback', date: '02/2026' },
-  { id: '2', title: 'Light and dark theme', date: '02/2026' },
-  { id: '1', title: 'Released v1.0.0', date: '02/2026' },
+  {
+    id: "3",
+    title: "Alternative layout for the main UI and player",
+    date: "02/2026",
+  },
+  { id: "4", title: "Better support for offline playback", date: "02/2026" },
+  { id: "2", title: "Light and dark theme", date: "02/2026" },
+  { id: "1", title: "Released v1.0.0", date: "02/2026" },
 ];
 
 export default function UpdatesPage() {
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-background flex flex-col items-center">
       <Navigation />
@@ -85,9 +92,11 @@ export default function UpdatesPage() {
                 PAST + FUTURE
               </span>
             </div>
-            <h1 className="text-4xl sm:text-5xl font-bold text-foreground tracking-tight mb-6">Development updates</h1>
+            <h1 className="text-4xl sm:text-5xl font-bold text-foreground tracking-tight mb-6">
+              Development updates
+            </h1>
             <p className="text-[18px] text-muted-foreground leading-relaxed">
-              Updates on what we’re building and where it’s heading.{' '}
+              Updates on what we’re building and where it’s heading.{" "}
               <a
                 href="https://docs.google.com/spreadsheets/d/17VvcMKVEXHMuCPpiul2ugfMSrXd8Xbj6V98JvUUYFpM/edit?usp=sharing"
                 target="_blank"
@@ -95,7 +104,7 @@ export default function UpdatesPage() {
                 className="underline hover:text-foreground transition-colors"
               >
                 See the full roadmap spreadsheet
-              </a>{' '}
+              </a>{" "}
               — feel free to leave comments there.
             </p>
           </header>
@@ -116,12 +125,16 @@ export default function UpdatesPage() {
                   {plannedItems.map((item, index) => (
                     <div
                       key={item.id}
-                      className={`flex items-center gap-3 py-3 px-4 ${index !== 0 ? 'border-t border-amber-500/10' : ''}`}
+                      className={`flex items-center gap-3 py-3 px-4 ${index !== 0 ? "border-t border-amber-500/10" : ""}`}
                     >
                       <Rocket className="w-4 h-4 text-amber-500/60 shrink-0" />
-                      <span className="text-[15px] text-foreground">{item.title}</span>
+                      <span className="text-[15px] text-foreground">
+                        {item.title}
+                      </span>
                       {item.quarter && (
-                        <span className="ml-auto text-[12px] font-mono text-amber-800/60 uppercase">{item.quarter}</span>
+                        <span className="ml-auto text-[12px] font-mono text-amber-800/60 uppercase">
+                          {item.quarter}
+                        </span>
                       )}
                     </div>
                   ))}
@@ -139,11 +152,15 @@ export default function UpdatesPage() {
                   {inProgressItems.map((item, index) => (
                     <div
                       key={item.id}
-                      className={`flex items-center gap-3 py-3 px-4 ${index !== 0 ? 'border-t border-blue-500/10' : ''}`}
+                      className={`flex items-center gap-3 py-3 px-4 ${index !== 0 ? "border-t border-blue-500/10" : ""}`}
                     >
                       <Wrench className="w-4 h-4 text-blue-500/80 shrink-0" />
-                      <span className="text-[15px] text-foreground">{item.title}</span>
-                      <span className="ml-auto text-[12px] font-mono text-blue-500 uppercase tracking-wider">Building</span>
+                      <span className="text-[15px] text-foreground">
+                        {item.title}
+                      </span>
+                      <span className="ml-auto text-[12px] font-mono text-blue-500 uppercase tracking-wider">
+                        Building
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -160,20 +177,29 @@ export default function UpdatesPage() {
                   {deliveredItems.map((item, index) => (
                     <div
                       key={item.id}
-                      className={`flex items-center gap-3 py-3 px-4 ${index !== 0 ? 'border-t border-emerald-500/10' : ''}`}
+                      className={`flex items-center gap-3 py-3 px-4 ${index !== 0 ? "border-t border-emerald-500/10" : ""}`}
                     >
                       <Sparkles className="w-4 h-4 text-emerald-500/70 shrink-0" />
-                      <span className="text-[15px] text-foreground">{item.title}</span>
-                      <span className="ml-auto text-[12px] font-mono text-emerald-700/60 uppercase">{item.date}</span>
+                      <span className="text-[15px] text-foreground">
+                        {item.title}
+                      </span>
+                      <span className="ml-auto text-[12px] font-mono text-emerald-700/60 uppercase">
+                        {item.date}
+                      </span>
                     </div>
                   ))}
                 </div>
               </div>
 
               <div className="pt-8 pl-8">
-                <Button variant="outline" size="sm" asChild className="font-mono text-[11px] uppercase tracking-wider h-9">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  asChild
+                  className="font-mono text-[11px] uppercase tracking-wider h-9"
+                >
                   <a
-                    href={`https://github.com/${owner}/${repo}`}
+                    href={`https://github.com/${owner}/${repo}/commits/main/`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-2"
@@ -189,17 +215,58 @@ export default function UpdatesPage() {
           {/* Footer */}
           <footer className="border-t border-border mt-32 py-12 flex flex-col items-center gap-6">
             <nav className="flex flex-wrap justify-center gap-4 md:gap-8">
-              <a href="/notes" className="font-mono text-[12px] text-muted-foreground hover:text-foreground transition-colors uppercase tracking-widest">Notes</a>
-              <a href="/updates" className="font-mono text-[12px] text-muted-foreground hover:text-foreground transition-colors uppercase tracking-widest">Updates</a>
-              <a href="/docs" className="font-mono text-[12px] text-muted-foreground hover:text-foreground transition-colors uppercase tracking-widest">Documentation</a>
-              <a href="https://github.com/nicobrinkkemper/audioguide-demo-react" className="font-mono text-[12px] text-muted-foreground hover:text-foreground transition-colors uppercase tracking-widest">Github</a>
+              <a
+                href="/notes"
+                className="font-mono text-[12px] text-muted-foreground hover:text-foreground transition-colors uppercase tracking-widest"
+              >
+                Notes
+              </a>
+              <a
+                href="/updates"
+                className="font-mono text-[12px] text-muted-foreground hover:text-foreground transition-colors uppercase tracking-widest"
+              >
+                Updates
+              </a>
+              <a
+                href="/docs"
+                className="font-mono text-[12px] text-muted-foreground hover:text-foreground transition-colors uppercase tracking-widest"
+              >
+                Documentation
+              </a>
+              <a
+                href="https://github.com/audioguidekit/player-react"
+                className="font-mono text-[12px] text-muted-foreground hover:text-foreground transition-colors uppercase tracking-widest"
+              >
+                Github
+              </a>
+              <a
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsContactModalOpen(true);
+                }}
+                className="font-mono text-[12px] text-muted-foreground hover:text-foreground transition-colors uppercase tracking-widest cursor-pointer"
+              >
+                Contact
+              </a>
             </nav>
             <p className="font-mono text-[10px] text-muted-foreground uppercase tracking-[0.2em] text-center">
-              © {new Date().getFullYear()} AudioGuideKit • MIT License • <a href="/llms.txt" className="hover:text-foreground transition-colors">LLMs.txt</a>
+              © {new Date().getFullYear()} AudioGuideKit • MIT License •{" "}
+              <a
+                href="/llms.txt"
+                className="hover:text-foreground transition-colors"
+              >
+                LLMs.txt
+              </a>
             </p>
           </footer>
         </div>
       </main>
+
+      <ContactModal
+        isOpen={isContactModalOpen}
+        onClose={() => setIsContactModalOpen(false)}
+      />
     </div>
   );
 }

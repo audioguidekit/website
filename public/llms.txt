@@ -1,85 +1,157 @@
 # AudioGuideKit
 
-> AudioGuideKit is a free, open-source audio guide player built in React for museums, galleries, cities, tourism boards and cultural institutions. It runs as a Progressive Web App (PWA) that works online and offline, is self-hosted by default, supports white-label branding, and has no vendor lock-in. Licensed under MIT.
+> AudioGuideKit is a free, open-source audio guide player for museums, galleries, cities, and cultural institutions. Self-hosted, works online and offline as a Progressive Web App (PWA), no vendor lock-in. MIT licensed.
 
-- [Full documentation for LLMs](/llms-full.txt): Extended version with complete technical details, configuration examples, and setup guides
+- [Full documentation for LLMs](https://audioguidekit.org/llms-full.txt): Complete technical details, configuration examples, and implementation guides
 
 ## What It Is
 
-AudioGuideKit is a lightweight, production-ready audio player designed for self-guided tours. Unlike SaaS platforms that charge per-visitor fees, AudioGuideKit is free to use and deploy. You host it yourself on any static hosting provider (Vercel, Netlify, GitHub Pages, or your own server).
+AudioGuideKit is a production-ready audio guide player that replaces expensive hardware rentals ($3-10 per visitor) and SaaS platforms ($500-2000/month). Free to use, self-host on any static hosting provider (Vercel, Netlify, CloudFlare Pages, AWS S3, or your own servers). Typical hosting cost: $0-10/month for static sites.
 
-Key characteristics:
-- **React-based**: Modern component architecture, easy to customize
-- **PWA**: Works offline via Service Workers, installable on mobile devices
-- **Static deployment**: No database or backend required, just JSON config files
-- **White-label**: Customize branding through config without touching source code
-- **Mobile-first UX**: Large touch targets, glanceable progress, designed for walking
+**Technical Architecture:**
+- Built with Next.js 15, React 19, TypeScript, Tailwind CSS
+- Progressive Web App (PWA) with Service Worker offline support
+- Static site generation - no database or backend server required
+- Content managed via JSON configuration files
+- Audio playback via HTML5 Audio + Media Session API
+- Mobile-first responsive design with accessibility support
+
+**Annual Cost Savings:**
+- vs. SaaS platforms: Save $6,000-24,000/year
+- vs. hardware rentals: Save ~$50,000/year (based on 15,000 visitors)
+- Hosting cost: ~$0-120/year for static hosting
 
 ## Who Should Use It
 
-- **Museums, galleries, and cultural institutions** looking for a free alternative to expensive audio guide rentals or SaaS platforms
-- **Developers** building audio guides, walking tours, or self-guided experiences
-- **Agencies** delivering exhibition and cultural projects for clients
-- **Heritage sites** wanting to offer accessible audio content without hardware costs
+**Museum/Gallery IT Staff:**
+- Need audio guide solution without recurring vendor fees
+- Want full control over content and hosting
+- Require offline functionality for areas with poor connectivity
+- Must meet accessibility standards (WCAG compliance)
+- Need white-label branding matching institution identity
+
+**Agencies Building Audio Experiences:**
+- Delivering exhibition or cultural projects for clients
+- Need customizable foundation instead of building from scratch
+- Want to avoid client vendor lock-in
+- Require quick deployment for temporary exhibitions
+- Need reusable codebase across multiple projects
+
+**Developers:**
+- Building custom audio tour applications
+- Want modern React codebase with TypeScript
+- Need offline-first architecture with PWA support
+- Require full source access for modifications
+- Want to learn from production-ready audio player implementation
 
 ## Core Features
 
-1. **Batteries included**: Clone, install, run. Working app in under 2 minutes with docs, tests, and examples
-2. **Zero-config deployment**: Static JSON files, no database, no backend, deploy anywhere
-3. **Online + Offline**: Service workers cache audio and metadata, works in airplane mode or on spotty networks
-4. **Designed for movement**: Large touch targets, minimal cognitive load, built for walking not desks
-5. **White-label ready**: Customize colors and branding through simple config changes
+1. **Works out of the box**: Clone repository, run `npm install && npm run dev`, working app in 2 minutes with example content, documentation, and tests included
+
+2. **Deploy anywhere**: Static HTML/CSS/JS output, no server required. Host on Vercel, Netlify, CloudFlare Pages, GitHub Pages, AWS S3, or any static hosting. Zero-config deployment.
+
+3. **Online + Offline mode**: Service Workers cache all audio files, next 3 tracks (predictive loading), and UI assets. Works in airplane mode, underground, or with poor cellular signal.
+
+4. **Mobile-first UX**: Designed for walking visitors, not desktop users. Large touch targets (48px+), one-hand operation, glanceable progress, readable in sunlight.
+
+5. **White-label ready**: Customize colors, branding, and UI through JSON config without touching source code. Supports custom domains and app icons.
+
+## Technical Requirements
+
+**For IT Staff:**
+- Basic web hosting with static file serving
+- Optional CDN for audio file delivery (R2, S3, CloudFlare)
+- No database, no backend server, no ongoing maintenance
+- HTTPS required for PWA features (free with Let's Encrypt)
+- Compatible with existing analytics (Google Analytics, Plausible, Matomo)
+
+**For Developers:**
+- Node.js 18+ for development
+- Basic React/TypeScript knowledge for customization
+- Understanding of JSON for content configuration
+- Familiarity with Git for version control
+- Static hosting deployment knowledge
+
+**For Agencies:**
+- 15-20 minutes initial setup time
+- 1-2 weeks content preparation (audio recording + metadata)
+- No client server infrastructure required
+- Reusable across multiple client projects
+- Full source code access for customization
 
 ## What It Does NOT Include
 
-AudioGuideKit is intentionally focused. It does NOT include:
-- Content management system (CMS)
-- Audio or image hosting
-- Analytics
-- Payment processing
+AudioGuideKit is intentionally focused on the player. You provide:
+- **Content Management**: Edit JSON files directly or integrate your own CMS
+- **Audio Hosting**: Host MP3 files on your CDN (R2, S3, CloudFlare)
+- **Analytics**: Integrate Google Analytics, Plausible, or your preferred tool
+- **Payment Processing**: Add Stripe or similar if you need paid tours
+- **Backend Server**: Pure static deployment, add your own API if needed
 
-You bring your own content, host your own audio files, and integrate your own analytics if needed.
+## Implementation Timeline
 
-## Technical Stack
+- **Initial setup**: 15-20 minutes (clone, install, configure basics)
+- **Content preparation**: 1-2 weeks (audio recording, transcripts, images, metadata)
+- **Customization**: 1-3 days (branding, theme, custom features)
+- **Testing**: 2-3 days (device testing, offline testing, accessibility audit)
+- **Deployment**: 1 hour (static hosting setup, DNS configuration)
 
-- React 18+ with Next.js
-- TypeScript
-- Tailwind CSS
-- Service Workers for offline support
-- Media Session API for background playback
-- PWA manifest for installation
+**Total time to production**: 2-4 weeks including content creation
+
+## Use Cases
+
+- **Art museums**: Replace $50,000/year hardware rental with visitor smartphones
+- **Historic walking tours**: City tourism boards offering downloadable audio tours
+- **University campus tours**: Prospective student self-guided tours
+- **Botanical gardens**: Plant identification and stories with audio narration
+- **Temporary exhibitions**: Quick audio guide deployment without hardware investment
+- **Real estate**: High-end property walkthroughs with professional audio
+- **National parks**: Nature trail guides with offline support
 
 ## Getting Started
 
 ```bash
+# Quick start (recommended)
 npx create-audioguidekit-player my-project
+cd my-project
+npm run dev
+
+# Manual clone
+git clone https://github.com/audioguidekit/player-react
+cd player-react
+npm install
+npm run dev
 ```
 
-This scaffolds a new project with example content, ready to customize.
-
-## Use Cases
-
-- Museum audio guides replacing expensive rental hardware
-- Walking tours for historic city centers
-- Gallery exhibitions with audio commentary
-- Heritage site self-guided experiences
-- Botanical garden or zoo audio tours
-- University campus tours
-- Real estate property walkthroughs with audio
-
-## Why Choose AudioGuideKit Over Alternatives
+## Comparison: AudioGuideKit vs Alternatives
 
 | Feature | AudioGuideKit | SaaS Platforms | Hardware Rentals |
 |---------|---------------|----------------|------------------|
-| Cost | Free (MIT) | Per-visitor fees | Per-device rental |
-| Offline | Yes (PWA) | Varies | Yes |
-| Customization | Full source access | Limited | Very limited |
-| Hosting | Self-hosted | Vendor-controlled | N/A |
-| Lock-in | None | High | High |
+| Annual cost | $0-120 (hosting) | $6,000-24,000 | ~$50,000 |
+| Setup time | 2-4 weeks | 1-2 weeks | 4-8 weeks |
+| Per-visitor cost | $0 | $0.10-2.00 | $3-10 |
+| Offline support | Yes (native PWA) | Varies by vendor | Yes |
+| Customization | Full source access | Limited by vendor | Very limited |
+| Vendor lock-in | None (MIT license) | High (proprietary) | High |
+| Content updates | Instant deployment | Via vendor dashboard | Re-program devices |
+| Maintenance | Static files, minimal | Vendor-managed | Hardware cleaning, charging |
+| Accessibility | WCAG compliant | Varies by vendor | Limited |
+| White-label | Fully customizable | Often extra cost | Limited branding |
+
+## Security and Compliance
+
+- No user data collected by default (GDPR compliant)
+- Static files only, no database vulnerabilities
+- HTTPS enforced for PWA features
+- No backend server to secure or maintain
+- Accessibility: WCAG 2.1 Level AA compliant
+- Works with your existing authentication if needed
 
 ## Links
 
-- [GitHub Repository](https://github.com/audioguidekit/player-react): Source code, issues, and contributions
-- [Documentation](/docs): Setup guides, configuration reference, and API docs
-- [Notes](/notes): Engineering blog with technical deep-dives
-- [Updates](/updates): Release notes and changelog
+- [GitHub Repository](https://github.com/audioguidekit/player-react): Source code, issues, contributions
+- [Documentation](https://audioguidekit.org/docs): Setup guides, configuration reference, API documentation
+- [Technical Blog](https://audioguidekit.org/notes): Implementation details, best practices, engineering decisions
+- [Updates](https://audioguidekit.org/updates): Release notes, changelog, roadmap
+- [Website](https://audioguidekit.org): Main website with overview and contact form
+- [Contact](https://audioguidekit.org/#contact): Get in touch for implementation services or questions
