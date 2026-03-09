@@ -26,16 +26,25 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
     setErrorMessage("");
 
     try {
-      const response = await fetch("/api/contact", {
+      const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Accept": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          access_key: "07dbf778-f3e4-46d7-b1e4-7be06abea5ee",
+          name: formData.name,
+          email: formData.email,
+          subject: `Contact Form: ${formData.name}${formData.organization ? ` from ${formData.organization}` : ""}`,
+          message: `Organization: ${formData.organization || "Not provided"}\n\n${formData.message}`,
+        }),
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to send message");
+      const data = await response.json();
+
+      if (!data.success) {
+        throw new Error(data.message || "Failed to send message");
       }
 
       setStatus("success");
@@ -47,6 +56,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
         setStatus("idle");
       }, 2000);
     } catch (error) {
+      console.error(error);
       setStatus("error");
       setErrorMessage(
         "Failed to send message. Please try again or email us directly.",
