@@ -21,9 +21,11 @@ The PWA manifest requires icons in multiple sizes:
 |------|------|---------|
 | `icon-72x72.png` | 72×72 | Android legacy devices |
 | `icon-96x96.png` | 96×96 | Android legacy devices |
+| `icon-120x120.png` | 120×120 | iOS legacy devices |
 | `icon-128x128.png` | 128×128 | Chrome Web Store |
 | `icon-144x144.png` | 144×144 | Android legacy devices |
 | `icon-152x152.png` | 152×152 | iOS devices |
+| `apple-touch-icon-180x180.png` | 180×180 | iOS home screen (Add to Home Screen) |
 | `icon-192x192.png` | 192×192 | Android / iOS |
 | `icon-384x384.png` | 384×384 | Android splash screen |
 | `icon-512x512.png` | 512×512 | Android maskable icon |
@@ -49,10 +51,12 @@ The easiest way is to replace the source SVG and regenerate all PNG sizes:
     Run this command (requires [ImageMagick](https://imagemagick.org/)):
     ```bash
     cd public/icons
-    for size in 72 96 128 144 152 192 384 512; do
+    for size in 72 96 120 128 144 152 192 384 512; do
       magick -background none -density 300 ../favicon.svg \
         -resize ${size}x${size} icon-${size}x${size}.png
     done
+    magick -background none -density 300 ../favicon.svg \
+      -resize 180x180 apple-touch-icon-180x180.png
     ```
   </Step>
 </Steps>

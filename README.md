@@ -18,6 +18,8 @@ The player component is available at [@audioguidekit/react-player](https://githu
 npm install
 npm run dev
 ```
+## Deployment
+Auto-deploy to Vercel once the code is pushed ti Guthub. 
 
 ## License
 

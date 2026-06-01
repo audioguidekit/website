@@ -52,6 +52,7 @@ export const docsNavigation: NavGroup[] = [
       { title: "Offline support", href: "/docs/features/offline" },
       { title: "Deep linking", href: "/docs/features/deeplinking" },
       { title: "Feedback collection", href: "/docs/features/feedback" },
+      { title: "Map view", href: "/docs/features/map" },
     ],
   },
   {

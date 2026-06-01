@@ -1,0 +1,259 @@
+---
+title: "Map view"
+description: "Show an interactive map alongside your tour stops"
+---
+
+AudioGuideKit can show an interactive map tab on the tour screen. Visitors switch between the stop list and the map with a single tap — stops appear as numbered markers, and a route line can guide them between each one.
+
+The map is completely optional. Without a single setting change everything works exactly as before.
+
+## Enabling the map
+
+Add `mapView: true` to your `metadata.json`:
+
+```json metadata.json
+{
+  "mapView": true,
+  "mapProvider": "openstreetmap"
+}
+```
+
+The tour will open in map view by default. Without this setting the map tab stays hidden.
+
+## Adding coordinates to stops
+
+Only audio stops appear on the map. Add a `location` field to each stop you want to pin:
+
+```json en.json
+{
+  "id": "1",
+  "type": "audio",
+  "title": "Plaça Catalunya",
+  "location": { "lat": 41.3851, "lng": 2.1734 }
+}
+```
+
+Stops without a `location` are silently skipped — no marker is rendered, no errors.
+
+<Note>
+All map fields (`mapView`, `mapProvider`, `location`, `mapMarkerIcon`, etc.) are listed with descriptions in the [Creating your tour](/docs/content/creating-guide) reference — alongside every other `metadata.json` and stop field.
+</Note>
+
+## Tile providers
+
+AudioGuideKit supports five map tile providers. OpenStreetMap and CARTO work out of the box with no account or API key. The others need a key set as an environment variable.
+
+| Provider | Key needed? | `mapProvider` value |
+|----------|-------------|---------------------|
+| OpenStreetMap | No | `"openstreetmap"` |
+| CARTO | No | `"carto"` |
+| Mapbox | Yes | `"mapbox"` |
+| Jawg Maps | Yes | `"jawg"` |
+| MapTiler | Yes | `"maptiler"` |
+
+### OpenStreetMap (default)
+
+No setup needed. Free for typical usage.
+
+```json metadata.json
+{
+  "mapProvider": "openstreetmap"
+}
+```
+
+### CARTO
+
+No API key required. Four clean styles to choose from:
+
+| Style | `mapStyleId` |
+|-------|-------------|
+| Voyager (default) | `rastertiles/voyager` |
+| Positron (light) | `light_all` |
+| Dark Matter | `dark_all` |
+| Positron no labels | `light_nolabels` |
+
+```json metadata.json
+{
+  "mapProvider": "carto",
+  "mapStyleId": "dark_all"
+}
+```
+
+### Mapbox, Jawg, and MapTiler
+
+Copy `.env` to `.env.local` and add your key:
+
+```bash .env.local
+VITE_MAPBOX_API_KEY=pk.eyJ1...
+VITE_JAWG_API_KEY=your-jawg-token
+VITE_MAPTILER_API_KEY=your-maptiler-key
+```
+
+<Warning>
+Never put API keys in `metadata.json`. Use `.env.local` — it's gitignored and kept off your public repo.
+</Warning>
+
+Then set the provider:
+
+```json metadata.json
+{
+  "mapProvider": "maptiler",
+  "mapStyleId": "topo-v2"
+}
+```
+
+Each provider has a default style that works great out of the box. Use `mapStyleId` to pick a different one.
+
+**Mapbox** default: `mapbox/outdoors-v12`. Custom Mapbox Studio styles use `"yourname/cl9abc1234def"` format.
+
+**Jawg** built-in styles: `jawg-streets`, `jawg-terrain`, `jawg-sunny`, `jawg-lagoon`, `jawg-dark`, `jawg-light`. Default: `jawg-terrain`.
+
+**MapTiler** default: `outdoor-v2`. Any MapTiler map ID works.
+
+## Customizing the map view
+
+### Starting position
+
+By default the map fits all stops into view automatically. Use `mapCenter` and `mapZoom` to set a fixed starting position instead:
+
+```json metadata.json
+{
+  "mapCenter": { "lat": 41.3851, "lng": 2.1734 },
+  "mapZoom": 13
+}
+```
+
+| Combination | Behaviour |
+|-------------|-----------|
+| Neither set | Fits all stops in view |
+| `mapCenter` only | Centers there at zoom 13 |
+| `mapCenter` + `mapZoom` | Centers there at the given zoom |
+| `mapZoom` only | Fits all stops, then overrides the zoom level |
+
+### Marker numbers
+
+Stop numbers are shown on markers by default. Set `mapMarkerNumber: false` to render plain dots:
+
+```json metadata.json
+{
+  "mapMarkerNumber": false
+}
+```
+
+Completed stops always show a checkmark regardless of this setting.
+
+### Custom marker icons
+
+Replace the numbered circles with your own image at the tour level:
+
+```json metadata.json
+{
+  "mapMarkerCustomIcon": "https://api.iconify.design/ph/map-pin-duotone.svg"
+}
+```
+
+Or override a single stop's marker in the language file:
+
+```json en.json
+{
+  "id": "3",
+  "type": "audio",
+  "mapMarkerIcon": "https://api.iconify.design/ph/map-pin-plus-bold.svg"
+}
+```
+
+Stop-level icons take priority over the tour-level icon. Cluster icons are unaffected.
+
+Icons are displayed at 32 × 32 px inside a 44 × 44 px tap target.
+
+### Marker clustering
+
+When stops are close together, AudioGuideKit can group them into cluster bubbles that expand as visitors zoom in:
+
+```json metadata.json
+{
+  "mapCluster": {
+    "disableClusteringAtZoom": 16,
+    "spiderfyOnMaxZoom": true
+  }
+}
+```
+
+| Field | Default | Description |
+|-------|---------|-------------|
+| `disableClusteringAtZoom` | — | Zoom level where clustering stops |
+| `spiderfyOnMaxZoom` | `true` | Fan out overlapping markers at max zoom |
+
+## Route line
+
+An optional polyline connects stops in sequence. It splits into two visual segments: solid for visited stops, dashed for stops still ahead — a progress indicator along the route.
+
+The line only appears at street-level zoom (configurable via `minZoom`) and hides on overview zoom, keeping the map uncluttered.
+
+### Straight-line route
+
+```json metadata.json
+{
+  "mapRoute": true
+}
+```
+
+Draws straight lines between stop coordinates. Good for most situations.
+
+### Street-accurate route with GeoJSON
+
+For tours where visitors walk along real streets, provide a GeoJSON file that follows the actual path:
+
+```json metadata.json
+{
+  "mapRoute": {
+    "geoJSON": "./route.geojson"
+  }
+}
+```
+
+Place the file next to `metadata.json`:
+
+```
+src/data/tour/
+  my-tour/
+    metadata.json
+    route.geojson
+    en.json
+```
+
+<Note>
+GeoJSON coordinates use `[longitude, latitude]` order — the reverse of the `{ lat, lng }` objects used elsewhere. This is the GeoJSON standard, not a quirk.
+</Note>
+
+**Generating the file:** Export a GPX track from Komoot, Google Maps, Strava, or any walking app, then convert it to GeoJSON at [geojson.io](https://geojson.io).
+
+### Route configuration
+
+| Field | Default | Description |
+|-------|---------|-------------|
+| `geoJSON` | — | Relative path to a GeoJSON file |
+| `minZoom` | `13` | Hide the line below this zoom level |
+
+Route colors and line styling are set via `mapMarkers.route` in your theme. See [Theming](/branding/reference) for the full reference.
+
+## All metadata.json map fields
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `mapView` | boolean | `false` | Show the map tab |
+| `mapProvider` | string | `"openstreetmap"` | Tile provider |
+| `mapStyleId` | string | — | Provider-specific style ID |
+| `mapCenter` | `{ lat, lng }` | — | Fixed starting center |
+| `mapZoom` | number | — | Fixed starting zoom (0–23) |
+| `mapMarkerCustomIcon` | `false` \| string | `false` | Custom icon URL for all markers |
+| `mapMarkerNumber` | boolean | `true` | Show stop number on markers |
+| `mapCluster` | object | — | Clustering behaviour |
+| `mapRoute` | boolean \| object | `false` | Route polyline with progress |
+| `mapLocateButton` | boolean | `true` | Show the locate-me button |
+
+## Offline behaviour
+
+Map tiles require an internet connection. When the device is offline, the map is replaced with an "unavailable offline" message and a **View list** button.
+
+Stop data, GPS coordinates, and audio files remain fully accessible offline — visitors can still navigate through the stop list.

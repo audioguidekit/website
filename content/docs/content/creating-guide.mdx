@@ -42,11 +42,26 @@ Create `src/data/tour/metadata.json`:
 | `transcriptAvailable` | No | Show transcription toggle when `true` |
 | `collectFeedback` | No | Show rating button when `true` |
 | `showLanguageLabel` | No | Show language name next to flag (default: `true`) |
+| `hapticsEnabled` | No | Enable haptic feedback on stop taps — Android uses the Vibration API, iOS triggers the Taptic Engine (default: `true`) |
 | `image` | No | Default tour cover image URL |
+| `mapView` | No | Show an interactive map tab when `true` |
+| `mapProvider` | No | Tile provider: `"openstreetmap"` (default), `"carto"`, `"mapbox"`, `"jawg"`, `"maptiler"` |
+| `mapStyleId` | No | Provider-specific style ID (each provider has a sensible default) |
+| `mapCenter` | No | Fixed starting map center: `{ "lat": 51.5, "lng": -0.1 }` |
+| `mapZoom` | No | Fixed starting zoom level (0–23); defaults to fitting all stops |
+| `mapMarkerCustomIcon` | No | URL to a custom marker image used for all stops |
+| `mapMarkerNumber` | No | Show stop number on markers (default: `true`) |
+| `mapCluster` | No | Cluster nearby markers — `{ "disableClusteringAtZoom": 16 }` |
+| `mapRoute` | No | Draw a route line between stops: `true` for straight lines, or `{ "geoJSON": "./route.geojson" }` for street-accurate paths |
+| `mapLocateButton` | No | Show the locate-me button on the map (default: `true`) |
 
 <Tip>
 Start with just `id` and add other settings as needed. Every field except `id` has sensible defaults.
 </Tip>
+
+<Note>
+Map fields are covered in detail — providers, API keys, route lines, and theming — in the [Map view](/docs/features/map) guide.
+</Note>
 
 ## The language file
 
@@ -118,6 +133,8 @@ Each item in the `stops` array represents one tour stop:
 | `image` | Yes | Stop image URL |
 | `audioFile` | For audio | Audio file URL (MP3 or M4A) |
 | `transcription` | No | Text transcription of the audio |
+| `location` | No | GPS coordinates for the map pin: `{ "lat": 51.5007, "lng": -0.1246 }` — audio stops only |
+| `mapMarkerIcon` | No | Custom marker image URL for this stop only (overrides tour-level `mapMarkerCustomIcon`) |
 
 <Warning>
 Stop IDs must be unique within a tour and consistent across all language files. If English stop `"3"` is about the cathedral, Spanish stop `"3"` must also be about the cathedral.
@@ -136,7 +153,10 @@ Let's build a real tour from scratch.
   "themeId": "default-light",
   "transcriptAvailable": true,
   "collectFeedback": true,
-  "image": "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=1000"
+  "image": "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=1000",
+  "mapView": true,
+  "mapProvider": "openstreetmap",
+  "mapRoute": true
 }
 ```
 
@@ -158,7 +178,8 @@ Let's build a real tour from scratch.
       "duration": "8 min audio",
       "image": "https://images.unsplash.com/photo-1529655683826-aba9b3e77383?w=800",
       "audioFile": "https://your-storage.com/london/01-big-ben.mp3",
-      "transcription": "Welcome to Westminster! Standing before you is the Elizabeth Tower, home to Big Ben..."
+      "transcription": "Welcome to Westminster! Standing before you is the Elizabeth Tower, home to Big Ben...",
+      "location": { "lat": 51.5007, "lng": -0.1246 }
     },
     {
       "id": "2",
@@ -166,7 +187,8 @@ Let's build a real tour from scratch.
       "title": "Westminster Abbey",
       "duration": "10 min audio",
       "image": "https://images.unsplash.com/photo-1520986606214-8b456906c813?w=800",
-      "audioFile": "https://your-storage.com/london/02-abbey.mp3"
+      "audioFile": "https://your-storage.com/london/02-abbey.mp3",
+      "location": { "lat": 51.4994, "lng": -0.1273 }
     },
     {
       "id": "3",
@@ -174,7 +196,8 @@ Let's build a real tour from scratch.
       "title": "London Eye",
       "duration": "6 min audio",
       "image": "https://images.unsplash.com/photo-1567157577867-05ccb1388e66?w=800",
-      "audioFile": "https://your-storage.com/london/03-eye.mp3"
+      "audioFile": "https://your-storage.com/london/03-eye.mp3",
+      "location": { "lat": 51.5033, "lng": -0.1195 }
     },
     {
       "id": "4",
@@ -182,7 +205,8 @@ Let's build a real tour from scratch.
       "title": "Tower Bridge",
       "duration": "7 min audio",
       "image": "https://images.unsplash.com/photo-1461949814715-0e9ad3b9e75a?w=800",
-      "audioFile": "https://your-storage.com/london/04-bridge.mp3"
+      "audioFile": "https://your-storage.com/london/04-bridge.mp3",
+      "location": { "lat": 51.5055, "lng": -0.0754 }
     }
   ]
 }

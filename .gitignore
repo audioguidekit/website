@@ -41,6 +41,7 @@ tasks.md
 **/CLAUDE.md
 **/claude.md
 .private
+**/DEVLOG.md
 
 # debug
 npm-debug.log*

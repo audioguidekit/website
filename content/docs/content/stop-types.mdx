@@ -16,6 +16,9 @@ At the moment only audio stops are fully supported and tested. Other stop types 
 | `audio` | Audio playback with optional transcription | Main tour content |
 | `text` | Rich text content | Detailed information |
 | `image-text` | Image with accompanying text | Photo essays |
+| `image-gallery` | Swipeable horizontal image gallery | Photo collections |
+| `image-comparison` | Before/after drag slider | Historical then-and-now |
+| `image-hotspot` | Image with tappable annotation pins | Diagrams, maps, artwork |
 | `video` | Video playback | Demonstrations, intros |
 | `3d-object` | Interactive 3D model viewer | Artifacts, architecture |
 | `headline` | Large text header | Section dividers |
@@ -245,6 +248,118 @@ Collect email addresses for newsletters or follow-up communication.
 Email collection requires backend integration to actually store emails. The stop type provides the UI, but you'll need to connect it to your email service.
 </Warning>
 
+## Image gallery stops
+
+A swipeable horizontal gallery. Good for showing multiple photos of the same location — inside and outside a building, a collection of artifacts, or before/after a restoration.
+
+```json
+{
+  "id": "10",
+  "type": "image-gallery",
+  "images": [
+    { "url": "https://images.unsplash.com/photo-aaa", "caption": "View from the east entrance" },
+    { "url": "https://images.unsplash.com/photo-bbb", "caption": "Interior courtyard", "credit": "© City Museum" },
+    { "url": "https://images.unsplash.com/photo-ccc" }
+  ],
+  "caption": "The museum's three main spaces"
+}
+```
+
+### Image gallery fields
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `id` | Yes | Unique stop identifier |
+| `type` | Yes | Must be `"image-gallery"` |
+| `images` | Yes | Array of image objects (see below) |
+| `caption` | No | Caption shown below the gallery |
+
+**Each image object:**
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `url` | Yes | Image URL |
+| `alt` | No | Accessibility alt text |
+| `caption` | No | Per-image caption |
+| `credit` | No | Per-image photo credit |
+
+---
+
+## Image comparison stops
+
+A before/after drag slider comparing two images. Great for showing historical change — an old photo next to today, or a building before and after renovation.
+
+```json
+{
+  "id": "11",
+  "type": "image-comparison",
+  "before": "https://images.unsplash.com/photo-1960",
+  "after": "https://images.unsplash.com/photo-2024",
+  "beforeLabel": "1960",
+  "afterLabel": "Today",
+  "caption": "The square before and after the 2019 renovation"
+}
+```
+
+### Image comparison fields
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `id` | Yes | Unique stop identifier |
+| `type` | Yes | Must be `"image-comparison"` |
+| `before` | Yes | "Before" image URL |
+| `after` | Yes | "After" image URL |
+| `beforeLabel` | No | Label on the before side (default: `"Before"`) |
+| `afterLabel` | No | Label on the after side (default: `"After"`) |
+| `caption` | No | Caption below the slider |
+
+---
+
+## Image hotspot stops
+
+An image with tappable annotation pins. Visitors tap a pin to reveal a title and description. Good for diagrams, floor plans, detailed artwork, or any image where specific points need explanation.
+
+```json
+{
+  "id": "12",
+  "type": "image-hotspot",
+  "image": "https://images.unsplash.com/photo-cathedral",
+  "imageAlt": "Cathedral facade with architectural details",
+  "hotspots": [
+    { "x": 42, "y": 18, "title": "Rose window", "description": "Installed in 1386, the 12-metre rose window depicts the Last Judgement." },
+    { "x": 65, "y": 70, "title": "Main entrance" },
+    { "x": 20, "y": 55, "title": "Bell tower", "description": "Added in 1492. The bells still ring every hour." }
+  ],
+  "caption": "Tap the pins to explore the facade"
+}
+```
+
+### Image hotspot fields
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `id` | Yes | Unique stop identifier |
+| `type` | Yes | Must be `"image-hotspot"` |
+| `image` | Yes | Image URL |
+| `hotspots` | Yes | Array of pin objects (see below) |
+| `imageAlt` | No | Accessibility alt text |
+| `caption` | No | Caption below the image |
+
+**Each hotspot:**
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `x` | Yes | Horizontal pin position as a percentage (0–100) |
+| `y` | Yes | Vertical pin position as a percentage (0–100) |
+| `title` | Yes | Pin label shown when tapped |
+| `description` | No | Expanded text shown below the title |
+
+<Tip>
+To find the right x/y values, open the image in a browser and inspect the pixel position of each point you want to pin. Divide by image width/height and multiply by 100.
+</Tip>
+
+---
+
 ## Mixing stop types
 
 A typical tour might look like this:
@@ -253,9 +368,12 @@ A typical tour might look like this:
 "stops": [
   { "type": "audio", "title": "Welcome" },
   { "type": "audio", "title": "First Stop" },
+  { "type": "image-gallery", "title": "Photo Collection" },
   { "type": "audio", "title": "Second Stop" },
   { "type": "headline", "title": "Part 2: The Old Town" },
   { "type": "audio", "title": "Third Stop" },
+  { "type": "image-hotspot", "title": "Explore the Facade" },
+  { "type": "image-comparison", "title": "Then and Now" },
   { "type": "quote", "title": "Historical Quote" },
   { "type": "audio", "title": "Fourth Stop" },
   { "type": "rating", "title": "Rate Your Experience" },
@@ -270,4 +388,5 @@ A typical tour might look like this:
 3. **Place feedback at the end** - After visitors have context
 4. **Keep videos short** - 2 minutes max for mobile attention spans
 5. **Test 3D on mobile** - Performance varies by device
+6. **Test hotspot pins on small screens** - Pins positioned near edges can be hard to tap
 
