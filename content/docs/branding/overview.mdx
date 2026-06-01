@@ -45,7 +45,7 @@ Themes control colors, fonts, and visual styling — but several **layout and UI
 | `showProgressBar` | `boolean` | Show/hide the playback progress bar |
 | `showLanguageLabel` | `boolean` | Show/hide the language name next to the flag in the language selector |
 | `fullscreenPlayer` | `boolean` | Enable the fullscreen overlay player (slides up over the stop list) |
-| `backgroundColor` | `string` | Background color of the TourStart screen and its status bar area |
+| `imageColor` | `string` | Background color of the TourStart screen and its status bar area (used when there's no cover image) |
 
 These work alongside your theme — you can define card colors in the theme while controlling whether cards show images or render as a plain list via `showStopImage` in metadata.
 
@@ -55,14 +55,14 @@ The narrow safe-area region at the very top of the screen (behind the iOS clock,
 
 | Screen | Color source |
 |--------|-------------|
-| **TourStart** | `backgroundColor` in `metadata.json` |
+| **TourStart** | `imageColor` in `metadata.json` |
 | **TourDetail** | `header.backgroundColor` from the active theme |
 
-Add `backgroundColor` to your `metadata.json` to control the TourStart status bar:
+Add `imageColor` to your `metadata.json` to control the TourStart status bar:
 
 ```json
 {
-  "backgroundColor": "#1A2634"
+  "imageColor": "#1A2634"
 }
 ```
 

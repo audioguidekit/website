@@ -14,18 +14,17 @@ type RoadmapItem = {
 };
 
 const plannedItems: RoadmapItem[] = [
-  { id: "p1", title: "Multiple guides support in one app", quarter: "Q1/2026" },
+  { id: "p1", title: "Multiple guides support in one app", quarter: "Q2/2026" },
   {
     id: "p2",
     title: "Generate tour files from Google Sheets",
-    quarter: "Q1/2026",
+    quarter: "Q2/2026",
   },
-  { id: "p3", title: "More sample themes for the app", quarter: "Q2/2026" },
-  { id: "p4", title: "Support for more languages on UI", quarter: "Q2/2026" },
-  { id: "p5", title: "Outdoor guides support", quarter: "Q2/2026" },
-  { id: "p6", title: "Accessibility options", quarter: "Q2/2026" },
-  { id: "p7", title: "Search (keyword, stop number)", quarter: "Q2/2026" },
-  { id: "p8", title: "Tabbed navigation", quarter: "Q2/2026" },
+  { id: "p3", title: "More sample themes for the app", quarter: "Q3/2026" },
+  { id: "p4", title: "Support for more languages on UI", quarter: "Q3/2026" },
+  { id: "p6", title: "Accessibility options", quarter: "Q3/2026" },
+  { id: "p7", title: "Search (keyword, stop number)", quarter: "Q3/2026" },
+  { id: "p8", title: "Tabbed navigation", quarter: "Q3/2026" },
 ];
 
 const inProgressItems: RoadmapItem[] = [
@@ -57,6 +56,7 @@ type DeliveredItem = {
 };
 
 const deliveredItems: DeliveredItem[] = [
+  { id: "5", title: "Outdoor guides support with maps", date: "06/2026" },
   {
     id: "3",
     title: "Alternative layout for the main UI and player",

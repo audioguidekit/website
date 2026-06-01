@@ -38,6 +38,12 @@ const features = [
     lightImage: "/screenshots/audioguidekit-tour-rating-feedback-light.png",
     darkImage: "/screenshots/audioguidekit-tour-rating-feedback-dark.png",
   },
+  {
+    title: "Interactive map",
+    description: "Optional map view showing all points of interest at a glance.",
+    lightImage: "/screenshots/audioguidekit-tour-map-light.png",
+    darkImage: "/screenshots/audioguidekit-tour-map-dark.png",
+  },
 ];
 
 export function AppShowcase() {
