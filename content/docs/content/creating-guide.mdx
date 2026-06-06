@@ -45,12 +45,13 @@ Create `src/data/tour/metadata.json`:
 | `hapticsEnabled` | No | Enable haptic feedback on stop taps — Android uses the Vibration API, iOS triggers the Taptic Engine (default: `true`) |
 | `image` | No | Default tour cover image URL |
 | `mapView` | No | Show an interactive map tab when `true` |
+| `listView` | No | Show the stop list tab (default: `true`); set `false` with `mapView: true` for a map-only tour |
 | `mapProvider` | No | Tile provider: `"openstreetmap"` (default), `"carto"`, `"mapbox"`, `"jawg"`, `"maptiler"` |
 | `mapStyleId` | No | Provider-specific style ID (each provider has a sensible default) |
 | `mapCenter` | No | Fixed starting map center: `{ "lat": 51.5, "lng": -0.1 }` |
 | `mapZoom` | No | Fixed starting zoom level (0–23); defaults to fitting all stops |
-| `mapMarkerCustomIcon` | No | URL to a custom marker image used for all stops |
-| `mapMarkerNumber` | No | Show stop number on markers (default: `true`) |
+| `mapMarker` | No | Default marker style: `"number"` (default), `"image"` (stop photo), or `"empty"` |
+| `mapMarkerIcon` | No | URL to a custom marker image used for all stops; overrides `mapMarker` |
 | `mapCluster` | No | Cluster nearby markers — `{ "disableClusteringAtZoom": 16 }` |
 | `mapRoute` | No | Draw a route line between stops: `true` for straight lines, or `{ "geoJSON": "./route.geojson" }` for street-accurate paths |
 | `mapLocateButton` | No | Show the locate-me button on the map (default: `true`) |
@@ -134,7 +135,7 @@ Each item in the `stops` array represents one tour stop:
 | `audioFile` | For audio | Audio file URL (MP3 or M4A) |
 | `transcription` | No | Text transcription of the audio |
 | `location` | No | GPS coordinates for the map pin: `{ "lat": 51.5007, "lng": -0.1246 }` — audio stops only |
-| `mapMarkerIcon` | No | Custom marker image URL for this stop only (overrides tour-level `mapMarkerCustomIcon`) |
+| `mapMarkerIcon` | No | Custom marker image URL for this stop only (overrides the tour-level `mapMarkerIcon` and any `mapMarker` mode) |
 
 <Warning>
 Stop IDs must be unique within a tour and consistent across all language files. If English stop `"3"` is about the cathedral, Spanish stop `"3"` must also be about the cathedral.

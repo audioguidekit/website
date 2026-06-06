@@ -20,6 +20,30 @@ Add `mapView: true` to your `metadata.json`:
 
 The tour will open in map view by default. Without this setting the map tab stays hidden.
 
+## View modes
+
+A tour screen has two views — **map** and **list** — controlled by two independent flags:
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `mapView` | boolean | `false` | Enable the map view |
+| `listView` | boolean | `true` | Enable the list view |
+
+The header shows a map/list toggle **only when both are enabled**. With a single view enabled there's no toggle — the tour opens directly into that view.
+
+| `mapView` | `listView` | Result |
+|-----------|------------|--------|
+| `true` | `true` (or omitted) | **Both** — toggle shown, opens on the map |
+| `true` | `false` | **Map only** — no toggle |
+| `false` (or omitted) | `true` (or omitted) | **List only** — no toggle (the default) |
+| `false` | `false` | Falls back to the list |
+
+Because `listView` defaults to `true`, existing tours are unaffected: omit it to keep the list, set `mapView: true` to add the map alongside it, or set `listView: false` (with `mapView: true`) for a map-only tour.
+
+<Note>
+On a map-only tour (`listView: false`) the offline placeholder's **View list** button is hidden automatically — there's no list to fall back to.
+</Note>
+
 ## Adding coordinates to stops
 
 Only audio stops appear on the map. Add a `location` field to each stop you want to pin:
@@ -131,25 +155,44 @@ By default the map fits all stops into view automatically. Use `mapCenter` and `
 | `mapCenter` + `mapZoom` | Centers there at the given zoom |
 | `mapZoom` only | Fits all stops, then overrides the zoom level |
 
-### Marker numbers
+### Marker styles
 
-Stop numbers are shown on markers by default. Set `mapMarkerNumber: false` to render plain dots:
+By default each audio stop is a small circle showing its **stop number**, switching to a **checkmark** once completed. The `mapMarker` field sets the default style for the whole tour:
 
 ```json metadata.json
 {
-  "mapMarkerNumber": false
+  "mapMarker": "image"
 }
 ```
 
-Completed stops always show a checkmark regardless of this setting.
+| Mode | Marker | Notes |
+|------|--------|-------|
+| `"number"` (default) | Numbered circle; checkmark when completed | The original behaviour |
+| `"image"` | The stop's own photo, cropped into the circle | See below |
+| `"empty"` | Plain circle; checkmark still shown when completed | Like `number` with the number hidden |
+
+#### Image markers
+
+With `mapMarker: "image"`, each marker shows that stop's `image` — the same photo used in the list — cropped into a 32 × 32 px circle. State is conveyed with a colored ring instead of a number:
+
+| State | Appearance |
+|-------|------------|
+| Active (current stop) | Photo with a ring in `mapMarkers.active.outlineColor` |
+| Completed | Photo with a ring in `mapMarkers.completed.backgroundColor` |
+| Neither | Photo, no ring |
+| Stop has no `image` | Empty circle — never a broken image |
+
+<Note>
+In the default themes the active and completed ring colors are both green (`#459825`), so they look identical until you give them distinct values in your theme.
+</Note>
 
 ### Custom marker icons
 
-Replace the numbered circles with your own image at the tour level:
+Custom icons replace the circle entirely with your own image — no circle, ring, number, or checkmark. Set one for the whole tour with `mapMarkerIcon` in `metadata.json`:
 
 ```json metadata.json
 {
-  "mapMarkerCustomIcon": "https://api.iconify.design/ph/map-pin-duotone.svg"
+  "mapMarkerIcon": "https://api.iconify.design/ph/map-pin-duotone.svg"
 }
 ```
 
@@ -163,9 +206,17 @@ Or override a single stop's marker in the language file:
 }
 ```
 
-Stop-level icons take priority over the tour-level icon. Cluster icons are unaffected.
+Icons are displayed at 32 × 32 px (`object-fit: contain`) inside a 44 × 44 px tap target.
 
-Icons are displayed at 32 × 32 px inside a 44 × 44 px tap target.
+#### Precedence
+
+For each stop the marker is chosen in this order — first match wins:
+
+1. **`mapMarkerIcon`** on the stop — stop-level custom icon
+2. **`mapMarkerIcon`** in `metadata.json` — tour-level custom icon
+3. **`mapMarker`** mode — `image` / `number` / `empty`
+
+Cluster icons are always unaffected.
 
 ### Marker clustering
 
@@ -243,12 +294,13 @@ Route colors and line styling are set via `mapMarkers.route` in your theme. See 
 | Field | Type | Default | Description |
 |-------|------|---------|-------------|
 | `mapView` | boolean | `false` | Show the map tab |
+| `listView` | boolean | `true` | Show the list tab |
 | `mapProvider` | string | `"openstreetmap"` | Tile provider |
 | `mapStyleId` | string | — | Provider-specific style ID |
 | `mapCenter` | `{ lat, lng }` | — | Fixed starting center |
 | `mapZoom` | number | — | Fixed starting zoom (0–23) |
-| `mapMarkerCustomIcon` | `false` \| string | `false` | Custom icon URL for all markers |
-| `mapMarkerNumber` | boolean | `true` | Show stop number on markers |
+| `mapMarker` | `"number"` \| `"image"` \| `"empty"` | `"number"` | Default marker style for the tour |
+| `mapMarkerIcon` | string | — | Custom icon URL for all markers; overrides `mapMarker` |
 | `mapCluster` | object | — | Clustering behaviour |
 | `mapRoute` | boolean \| object | `false` | Route polyline with progress |
 | `mapLocateButton` | boolean | `true` | Show the locate-me button |

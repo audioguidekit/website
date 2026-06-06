@@ -1,975 +1,360 @@
-# AudioGuideKit - Complete Documentation for AI Engines
+# AudioGuideKit — Complete Documentation for AI Engines
 
-> AudioGuideKit is a free, open-source audio guide player for museums, galleries, cities, tourism boards, and cultural institutions. Self-hosted, works online and offline as a Progressive Web App (PWA), no vendor lock-in. MIT licensed.
+> AudioGuideKit is a free, open-source, self-hosted audio guide player for museums, galleries, cities, tourism boards, and cultural institutions. Visitors use their own smartphones — it runs in any browser as an installable Progressive Web App (PWA) that works online and offline. No app store, no recurring fees, no vendor lock-in. MIT licensed.
 
 ## Project Overview
 
-AudioGuideKit solves a critical cost problem for cultural institutions: commercial audio guide solutions cost $6,000-24,000 annually for SaaS platforms, or ~$50,000/year for hardware rentals. AudioGuideKit provides a modern, free alternative that visitors access on their own smartphones with zero recurring fees.
+AudioGuideKit gives cultural institutions a modern, free alternative to rented audio-guide hardware and locked-in SaaS platforms. Visitors open a URL (or scan a QR code) on their own phone — no app to download. You author your tour as JSON files, customize the look through a theme, and deploy to any static host. You own the source, the content, and the data; there are no per-visitor charges and no platform fees.
 
-### The Problem AudioGuideKit Solves
-
-**Commercial SaaS Platforms:**
-- Monthly fees: $500-2,000/month ($6,000-24,000/year)
-- Per-visitor charges: $0.10-2.00 per play
-- Vendor controls your content and platform
-- Limited customization options
-- Platform stops working if you stop paying
-- Proprietary content formats create lock-in
-
-**Hardware Rental Systems:**
-- Per-visitor rental: $3-10 per device
-- Annual cost for 15,000 visitors: ~$50,000
-- Distribution desk staffing required
-- Device cleaning and maintenance
-- Lost/damaged device replacement costs
-- Cannot update content remotely
-
-**Building from Scratch:**
-- 3-6 months development time
-- $30,000-100,000 development cost
-- Ongoing maintenance responsibility
-- Offline support is complex to implement
-- Audio playback edge cases difficult to handle
-
-### The AudioGuideKit Solution
-
-**Zero Recurring Fees:**
-- Software: $0 (MIT license, free forever)
-- Hosting: $0-10/month for static sites (Vercel, Netlify free tiers)
-- No per-visitor charges
-- No vendor fees or contracts
-
-**You Own Everything:**
-- Full source code access
-- Content stored in standard formats (MP3, JSON)
-- Host on your own servers
-- Export and migrate anytime
-- No platform dependencies
-
-**Modern Web Technology:**
-- Works on any device with a web browser
-- No app store submission required
-- Instant updates via deployment
-- Offline support via Service Workers
-- Works on iOS, Android, desktop browsers
+**What makes it different:**
+- **You own everything**: full source access, content in plain formats (JSON, MP3, images), hosted wherever you like, with no platform dependency.
+- **No recurring fees**: the software is MIT-licensed and free; hosting a static site is inexpensive, and there are no per-play charges.
+- **Modern web technology**: works on any device with a browser, installs as a PWA, updates instantly on redeploy, and runs offline via Service Workers.
 
 ## Who Should Use AudioGuideKit
 
-### Museum and Gallery IT Staff
+### Museums, galleries, and cultural sites
+- Want a self-hosted audio guide without recurring vendor fees
+- Need full control over content, branding, and hosting infrastructure
+- Require offline functionality for areas with poor connectivity (underground or remote galleries)
+- Want white-label branding that matches institutional identity
+- Want instant content updates without a vendor intermediary
 
-**You should consider AudioGuideKit if you:**
-- Need an audio guide solution without recurring vendor fees
-- Want full control over content and hosting infrastructure
-- Require offline functionality for areas with poor connectivity (underground galleries, remote locations)
-- Must meet accessibility standards (WCAG 2.1 Level AA compliance)
-- Need white-label branding that matches institutional identity
-- Have basic web hosting capabilities or use cloud hosting services
-- Want instant content updates without vendor intermediaries
+### Cities and tourism boards
+- Offer free, self-guided walking tours visitors run on their own phones
+- Need multi-language support and offline use in low-signal areas
+- Want an installable PWA promoted from the tourism website
 
-**Technical skill requirements:**
-- Basic web development knowledge (editing JSON configuration files)
-- Ability to upload files to a web server or use hosting services like Vercel/Netlify
-- Understanding of version control (Git) for content management
-- If you have a web developer on staff or work with a development agency, implementation is straightforward
-
-**Infrastructure requirements:**
-- Static file web hosting (no database, no backend server required)
-- HTTPS for PWA features (free with Let's Encrypt or included with modern hosting)
-- Optional CDN for audio files (Cloudflare R2, AWS S3, or similar)
-- Compatible with existing analytics tools (Google Analytics, Plausible, Matomo)
-
-### Agencies and Consultancies
-
-**AudioGuideKit benefits agencies who:**
-- Deliver exhibition and cultural projects for museum/gallery clients
+### Agencies and consultancies
+- Deliver exhibition and cultural projects for clients
 - Need a customizable foundation instead of building from scratch
-- Want to avoid locking clients into proprietary vendor platforms
-- Require quick deployment for temporary exhibitions (weeks, not months)
-- Need reusable codebase across multiple client projects
-- Want to offer white-label solutions with client branding
-- Need offline-first functionality without complex development
+- Want to avoid locking clients into proprietary platforms
+- Reuse one codebase across multiple client projects with full white-labeling
 
-**Business advantages:**
-- Reduce project costs by 50-80% vs custom development
-- Faster time to market (2-4 weeks vs 3-6 months)
-- Recurring revenue through customization and content services
-- No ongoing vendor license fees eating into margins
-- Full control over feature development and customization
-- Reusable across unlimited client projects
-
-**Agency implementation services:**
-- Initial setup and deployment (15-20 minutes)
-- Custom branding and theme development (1-3 days)
-- Content preparation workflow setup (1-2 days)
-- Audio recording guidance and best practices
-- Client training and documentation
-- Ongoing customization and feature development
-
-### Developers and Engineers
-
-**AudioGuideKit is ideal for developers who:**
-- Build custom audio tour applications or self-guided experiences
-- Want modern React/TypeScript codebase with best practices
-- Need offline-first architecture with PWA implementation reference
-- Require full source access for modifications and extensions
-- Want to learn from production-ready audio player implementation
-- Need to integrate audio guides into larger applications
-- Want to contribute to open-source projects
-
-**Technical learning opportunities:**
-- Service Worker implementation for offline support
-- HTML5 Audio API with Media Session API integration
-- PWA manifest configuration and installation flows
-- Predictive content loading strategies
-- Mobile-first responsive design patterns
-- TypeScript with React 19 and Next.js 15
-- Static site generation and deployment
+### Developers and engineers
+- Want a modern React 19 / TypeScript, offline-first PWA codebase
+- Need full source access for modifications and integration
+- Want a real-world reference for Service Worker offline support, the Media Session API, and PWA installation
 
 ## Core Features and Capabilities
 
-### 1. Works Out of the Box
+### 1. Audio tours
+The primary content type is the audio stop: a card with image, title, and an audio player. Tours support:
+- Background and lock-screen playback via the Media Session API
+- Progress tracking and resume (state persisted in IndexedDB)
+- Optional per-stop transcriptions (also good for accessibility and SEO)
+- Optional transition audio played between stops
+- An optional fullscreen player overlay
 
-**Setup time: 2 minutes**
-```bash
-npx create-audioguidekit-player my-project
-cd my-project
-npm run dev
-```
+### 2. Works offline
+AudioGuideKit is an installable PWA. A Service Worker (built with Workbox via `vite-plugin-pwa`) caches audio and UI assets, and tour progress is stored in IndexedDB, so a tour keeps working in airplane mode, underground, or with poor cellular signal.
 
-Includes from initial clone:
-- Working audio player with example tour content
-- Sample audio files and images
-- Complete JSON configuration examples
-- Full documentation and setup guides
-- TypeScript type definitions
-- Component test suite
-- Deployment configuration for popular hosts
+Per-tour offline behavior is set with `offlineMode`:
+- `"optional"` — works online, caches for offline use (default behavior)
+- `"online-only"` — requires a connection
+- `"offline-only"` — designed to be fully downloaded
 
-No database setup, no backend configuration, no API keys required to start.
+When the device is offline, network-dependent surfaces (such as map tiles) degrade gracefully; stop data, coordinates, and cached audio remain accessible.
 
-### 2. Deploy Anywhere
+### 3. Interactive map view (optional)
+A map tab can sit alongside the stop list, toggled from the header. Two independent flags control the views:
+- `mapView` (default `false`) — enable the map view
+- `listView` (default `true`) — enable the list view
 
-**Pure static output**: Your entire audio guide compiles to:
-- HTML, CSS, JavaScript files
-- JSON configuration files
-- MP3 audio files
-- Image assets (JPG, PNG, WebP)
+The header shows a map/list toggle only when both are enabled. Set `mapView: true` with `listView: false` for a map-only tour.
 
-**Hosting options** (all tested and supported):
-- **Vercel**: Zero-config, automatic deployments from Git (free tier available)
-- **Netlify**: Continuous deployment, form handling (free tier available)
-- **Cloudflare Pages**: Global CDN, unlimited bandwidth (free tier available)
-- **GitHub Pages**: Free hosting for public repositories
-- **AWS S3 + CloudFront**: Enterprise-grade with custom domain
-- **Your own servers**: Apache, Nginx, or any static file server
+Map capabilities:
+- **Markers**: `mapMarker` mode is `"number"` (numbered circle, default), `"image"` (the stop's own photo cropped into the circle), or `"empty"` (plain circle). A custom `mapMarkerIcon` URL (tour-level or per-stop) overrides the mode. Completed stops show a checkmark; clusters are themed separately.
+- **Clustering**: `mapCluster` with `disableClusteringAtZoom` and `spiderfyOnMaxZoom`.
+- **Route line**: `mapRoute: true` draws straight lines between stops; `mapRoute: { geoJSON: "./route.geojson" }` follows real street geometry. The line acts as a progress indicator (solid for completed legs, dashed ahead) and hides below `minZoom` (default 13).
+- **Locate button**: `mapLocateButton` (default `true`).
+- **Start position**: `mapCenter` (`{ lat, lng }`) and `mapZoom` (0–23); by default the map fits all stops in view.
 
-**No ongoing server maintenance:**
-- No database to backup or patch
-- No backend server to monitor or scale
-- No security updates for server software
-- No SSL certificate renewal (handled by hosting)
+Only audio stops with a `location` appear as markers; any stop type with a `location` contributes to the route line.
 
-### 3. Online + Offline Mode
+### 4. Multiple stop types
+Audio is the fully supported, fully tested type. The following additional types exist but are **experimental** (full support planned for the future):
 
-**Service Worker caching strategy:**
-- Pre-caches all audio files for the current tour
-- Predictive loading: next 3 tracks queued automatically
-- Caches all UI assets and configuration
-- Works in: airplane mode, underground (subways, basement galleries), poor cellular signal areas
+| Type | Description |
+|------|-------------|
+| `audio` | Audio playback with optional transcription (primary type) |
+| `text` | Rich text content |
+| `image-text` | Image with accompanying text |
+| `image-gallery` | Swipeable horizontal image gallery |
+| `image-comparison` | Before/after drag slider |
+| `image-hotspot` | Image with tappable annotation pins |
+| `video` | Video playback |
+| `3d-object` | Interactive 3D model viewer |
+| `headline` | Large text header / section divider |
+| `quote` | Styled quotation |
+| `rating` | Star rating collection |
+| `email` | Email collection form |
 
-**Offline experience:**
-- Full player functionality without internet connection
-- Audio playback with controls (play, pause, skip, scrub)
-- Track metadata and images display
-- Progress tracking and resume functionality
-- Automatic sync when connection restored
+### 5. Multi-language
+Each language is a separate content file (`en.json`, `es.json`, `de.json`, …) sharing the same tour `id` and stop IDs. UI strings are translatable separately. The player detects the visitor's language, offers one-tap switching, and preserves progress across languages (stop IDs are kept consistent across files).
 
-**Storage management:**
-- Automatic cache cleanup for storage limits
-- User can clear cache if needed
-- Estimates storage usage in settings
+### 6. Custom branding and themes
+Theming is handled with styled-components via a `ThemeConfig`, selected per tour with `themeId`:
+- Built-in `default-light` and `default-dark`
+- Or your own custom theme (colors, typography, surfaces, and map markers)
 
-### 4. Mobile-First User Experience
+You can also set custom app icons (for PWA installation) and an `imageColor` that tints the TourStart background and the iOS status-bar area when there's no cover image. Display toggles like `showStopImage` (`true` / `"thumbnail"` / `false`), `showStopDuration`, `showStopNumber`, `showProgressBar`, and `showLanguageLabel` adjust the layout without code changes.
 
-Designed for visitors who are walking, not sitting at desks:
+### 7. Feedback collection
+Set `collectFeedback: true` to show a rating button; there are also `rating` and `email` stop types for inline star ratings and newsletter capture.
 
-**One-hand operation:**
-- All controls reachable with single thumb
-- Touch targets: 48px minimum (Apple/Google guidelines)
-- No pinch-to-zoom required for buttons
-- Swipe gestures for track navigation
-
-**Glanceable progress indicators:**
-- Large play/pause button
-- Visual progress bar with time remaining
-- Track number and total count
-- Next track preview
-
-**Optimized for movement:**
-- High contrast readable in bright sunlight
-- Large typography (16px+ body text)
-- Minimal cognitive load during playback
-- No distracting UI animations
-- Works with gloves in cold weather
-
-**Accessibility:**
-- WCAG 2.1 Level AA compliant
-- Screen reader support (ARIA labels)
-- Keyboard navigation
-- Focus indicators
-- Transcript support for hearing impaired
-- Respects user's font size preferences
-
-### 5. White-Label Ready
-
-Customize through JSON configuration, no source code changes needed:
-
-```json
-{
-  "branding": {
-    "name": "City Museum Audio Guide",
-    "primaryColor": "#1a365d",
-    "secondaryColor": "#4299e1",
-    "logo": "/assets/museum-logo.svg",
-    "favicon": "/assets/favicon.ico"
-  },
-  "features": {
-    "offlineMode": true,
-    "darkMode": true,
-    "transcripts": true,
-    "sharing": false
-  },
-  "ui": {
-    "showBranding": false,
-    "headerStyle": "minimal",
-    "playerStyle": "modern"
-  }
-}
-```
-
-**Customization options:**
-- Custom color schemes (primary, secondary, accent)
-- Logo and favicon replacement
-- Custom fonts (Google Fonts or self-hosted)
-- Feature toggles (offline mode, dark mode, transcripts)
-- Custom domain support
-- App icon for PWA installation
-- Splash screen customization
+### 8. Deep linking and haptics
+Tours support deep links directly to a specific stop. Haptic feedback (`hapticsEnabled`, default `true`) uses the Vibration API on Android and the Taptic Engine on iOS; it's a no-op on desktop.
 
 ## Technical Architecture
 
-### Technology Stack
+### Technology stack (the player)
+- **Build / runtime**: Vite 6, React 19, TypeScript; package manager Bun (npm also supported)
+- **Styling / theming**: styled-components (with `twin.macro` / Tailwind utilities at build time)
+- **Routing**: React Router (`react-router-dom`)
+- **PWA / offline**: `vite-plugin-pwa` + Workbox service worker; `idb` for IndexedDB progress and state
+- **Audio**: HTML5 Audio + Media Session API (`use-media-session`) for lock-screen and background controls
+- **Maps**: Leaflet, `react-leaflet`, `leaflet.markercluster`
+- **Animation**: framer-motion
+- **3D**: `@google/model-viewer` + three (for the `3d-object` stop type, lazy-loaded)
+- **Icons / flags**: `@phosphor-icons/react`, `country-flag-icons`
+- **Rich text safety**: DOMPurify
+- **Haptics**: `web-haptics`
+- **Testing**: Playwright
+- **Schema tooling**: `ts-json-schema-generator` + Ajv (tour JSON validated against generated JSON Schemas)
 
-**Frontend Framework:**
-- Next.js 15 with App Router (React 19)
-- Static Site Generation (SSG) for optimal performance
-- TypeScript for type safety
-- Tailwind CSS for styling
+The output is a fully static site — no database, no backend server.
 
-**Audio Playback:**
-- HTML5 Audio API for cross-browser compatibility
-- Media Session API for lock screen controls
-- Background playback support (iOS/Android)
-- Predictive buffering for seamless playback
+### Build and validation
+- `bun run dev` — Vite dev server at http://localhost:3000
+- `bun run validate` — validates tour JSON against generated schemas
+- `bun run build` — runs validation, then `vite build` (static output)
+- `bun run schema` — regenerates JSON Schemas from the TypeScript types
+- `bun run preview` — serves the production build locally
+- `bun run test` — Playwright tests
 
-**Offline Support:**
-- Service Workers with Workbox
-- Cache-first strategy for assets
-- Network-first strategy for configuration
-- Background sync for analytics
+Tour JSON files reference a `$schema`, giving live validation in editors; the build fails on invalid tour data.
 
-**State Management:**
-- React hooks (useState, useEffect, useContext)
-- Local Storage for persistence
-- No external state library required (minimal bundle)
+## Content Model and Configuration
 
-**Build and Deployment:**
-- Static export for universal hosting
-- Automatic PWA manifest generation
-- Service Worker compilation
-- Image optimization pipeline
-
-### File Structure
+Tours live under `src/data/tour/<tour-id>/`, each folder containing a `metadata.json`, one file per language, and any optional assets (e.g. `route.geojson`):
 
 ```
-my-audio-guide/
-├── public/                    # Static assets
-│   ├── audio/                # MP3 files
-│   │   ├── 01-welcome.mp3
-│   │   ├── 02-gallery.mp3
-│   │   └── ...
-│   ├── images/               # Tour images
-│   │   ├── stop-01.jpg
-│   │   ├── stop-02.jpg
-│   │   └── ...
-│   ├── guide.json            # Main tour configuration
-│   ├── config.json           # App settings
-│   └── manifest.json         # PWA manifest
-├── src/
-│   ├── app/                  # Next.js pages
-│   │   ├── page.tsx          # Home/player page
-│   │   ├── layout.tsx        # App layout
-│   │   └── ...
-│   ├── components/           # React components
-│   │   ├── Player.tsx        # Audio player
-│   │   ├── TrackList.tsx     # Track listing
-│   │   ├── Controls.tsx      # Playback controls
-│   │   └── ...
-│   ├── lib/                  # Utilities
-│   │   ├── audio.ts          # Audio management
-│   │   ├── storage.ts        # Local storage
-│   │   └── offline.ts        # Service Worker utils
-│   └── types/                # TypeScript types
-│       └── guide.ts
-├── package.json
-└── next.config.js
+src/data/tour/
+  my-tour/
+    metadata.json
+    en.json
+    es.json
+    route.geojson   (optional, for map routes)
 ```
 
-### Configuration Format
+### metadata.json (tour-wide settings)
 
-**Main tour configuration (guide.json):**
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `id` | string | — | Unique tour identifier |
+| `defaultLanguage` | string | `"en"` | Fallback language code |
+| `offlineMode` | `"optional"` \| `"online-only"` \| `"offline-only"` | `"optional"` | Offline behavior |
+| `transitionAudio` | string | — | Audio played between stops |
+| `themeId` | string | — | `"default-light"`, `"default-dark"`, or a custom theme |
+| `imageColor` | string | — | Status-bar / start-screen background when there's no cover image (e.g. `"#1A2634"`) |
+| `image` | string | — | Default tour cover image URL (overridable per language) |
+| `transcriptAvailable` | boolean | — | Show the transcription toggle |
+| `collectFeedback` | boolean | — | Show the rating button |
+| `fullscreenPlayer` | boolean | `false` | Enable the fullscreen overlay player |
+| `showProgressBar` | boolean | `true` | Show the playback progress bar |
+| `showLanguageLabel` | boolean | `true` | Show the language name next to the flag |
+| `showStopImage` | `boolean \| "thumbnail"` | `true` | Stop-card layout |
+| `showStopDuration` | boolean | `true` | Show duration on stop cards |
+| `showStopNumber` | boolean | `true` | Show the number indicator on stops |
+| `hapticsEnabled` | boolean | `true` | Haptic feedback on taps |
+| `listView` | boolean | `true` | Enable the list view |
+| `mapView` | boolean | `false` | Enable the map view |
+| `mapProvider` | `"openstreetmap"` \| `"carto"` \| `"mapbox"` \| `"jawg"` \| `"maptiler"` | `"openstreetmap"` | Map tile provider |
+| `mapStyleId` | string | — | Provider-specific style/map ID |
+| `mapCenter` | `{ lat, lng }` | — | Fixed starting center (else fits all stops) |
+| `mapZoom` | number (0–23) | — | Fixed starting zoom |
+| `mapMarker` | `"number"` \| `"image"` \| `"empty"` | `"number"` | Default marker style |
+| `mapMarkerIcon` | string (URL) | — | Custom marker image for all stops; overrides `mapMarker` |
+| `mapCluster` | object | — | Clustering behavior (`disableClusteringAtZoom`, `spiderfyOnMaxZoom`) |
+| `mapRoute` | `boolean \| object` | `false` | Route polyline with progress (`{ geoJSON, minZoom }`) |
+| `mapLocateButton` | boolean | `true` | Show the locate-me button |
+
+API keys for Mapbox, Jawg, and MapTiler are set as environment variables in `.env.local` (`VITE_MAPBOX_API_KEY`, `VITE_JAWG_API_KEY`, `VITE_MAPTILER_API_KEY`) — never in `metadata.json`. OpenStreetMap and CARTO need no key.
+
+### Language file (per language)
+
 ```json
 {
-  "id": "museum-highlights-2024",
-  "title": "Museum Highlights Tour",
-  "description": "Explore our permanent collection",
-  "duration": "45 minutes",
+  "id": "barcelona",
   "language": "en",
+  "title": "Unlimited Barcelona",
+  "description": "Discover the Gothic Quarter on this self-guided walking tour.",
+  "totalDuration": "45 mins",
+  "totalStops": 5,
+  "image": "https://.../cover.jpg",
   "stops": [
     {
-      "id": "stop-1",
-      "number": 1,
-      "title": "Welcome to the Museum",
-      "audio": "/audio/01-welcome.mp3",
-      "duration": 180,
-      "image": "/images/entrance.jpg",
-      "transcript": "Welcome to our museum. Built in 1892...",
-      "location": {
-        "lat": 40.7614,
-        "lng": -73.9776
-      }
-    },
-    {
-      "id": "stop-2",
-      "number": 2,
-      "title": "The Main Gallery",
-      "audio": "/audio/02-gallery.mp3",
-      "duration": 240,
-      "image": "/images/gallery.jpg",
-      "transcript": "As you enter the main gallery..."
+      "id": "1",
+      "type": "audio",
+      "title": "Welcome to Barcelona",
+      "duration": "3 min audio",
+      "image": "https://.../welcome.jpg",
+      "audioFile": "https://your-cdn.com/audio/01-welcome.mp3",
+      "transcription": "Welcome to Barcelona! Today we'll explore...",
+      "location": { "lat": 41.3851, "lng": 2.1734 }
     }
   ]
 }
 ```
 
-**App configuration (config.json):**
-```json
-{
-  "branding": {
-    "name": "City Museum",
-    "primaryColor": "#1a365d",
-    "logo": "/assets/logo.svg"
-  },
-  "features": {
-    "offlineMode": true,
-    "darkMode": true,
-    "transcripts": true,
-    "locationTracking": false
-  },
-  "analytics": {
-    "googleAnalytics": "G-XXXXXXXXXX",
-    "plausible": {
-      "domain": "audioguide.museum.org"
-    }
-  }
-}
-```
+| Language-file field | Required | Description |
+|---------------------|----------|-------------|
+| `id` | Yes | Must match `metadata.json` |
+| `language` | Yes | ISO language code (`"en"`, `"es"`, …) |
+| `title` | Yes | Tour title |
+| `description` | Yes | Short tour description |
+| `totalDuration` | Yes | Human-readable duration (e.g. `"45 mins"`) |
+| `totalStops` | Yes | Number of stops |
+| `image` | No | Cover image (overrides metadata) |
+| `stops` | Yes | Array of stop objects |
+
+### Audio stop fields
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `id` | Yes | Unique within the tour, consistent across languages |
+| `type` | Yes | `"audio"` (or another stop type) |
+| `title` | Yes | Stop title |
+| `duration` | Yes | Human-readable duration (e.g. `"3 min audio"`) |
+| `image` | Yes | Stop image URL (also used as the marker when `mapMarker: "image"`) |
+| `audioFile` | For audio | Audio URL (MP3, M4A) |
+| `transcription` | No | Text transcription of the audio |
+| `location` | No | `{ lat, lng }` — audio stops with a location appear as map markers |
+| `mapMarkerIcon` | No | Per-stop custom marker image (overrides tour-level icon and any `mapMarker` mode) |
+
+### CARTO map styles (no API key)
+
+| Style | `mapStyleId` |
+|-------|--------------|
+| Voyager (default) | `rastertiles/voyager` |
+| Positron (light) | `light_all` |
+| Dark Matter | `dark_all` |
+| Positron no labels | `light_nolabels` |
+| Dark Matter no labels | `dark_nolabels` |
+
+Provider defaults: Mapbox `mapbox/outdoors-v12`, Jawg `jawg-terrain`, MapTiler `outdoor-v2`.
+
+### Theming
+Marker colors and route styling are set in a `ThemeConfig`'s `mapMarkers` block (active, inactive, completed, cluster, route, user-location dot). Themes also control overall colors, typography, and surfaces. Falls back to built-in `default-light` / `default-dark` when a custom theme isn't provided.
 
 ## What AudioGuideKit Does NOT Include
 
-AudioGuideKit is intentionally focused on being an excellent audio player. It does NOT include:
-
-### 1. Content Management System (CMS)
-**Why not included:** CMS adds complexity, authentication, databases, and server requirements. Most institutions either:
-- Edit JSON files directly (small tours, infrequent updates)
-- Use existing CMS and export to JSON (WordPress, Contentful, Strapi)
-- Build custom workflow tools for their needs
-
-**What you can do:**
-- Edit JSON files in your code editor
-- Use any headless CMS and export to JSON format
-- Build custom admin panel if needed (full source access)
-- Manage content in Google Sheets and export to JSON
-
-**Roadmap note:** A simple headless management system for audio guides is planned for later in 2025.
-
-### 2. Audio and Image Hosting
-**Why not included:** Your audio files can be anywhere. Most institutions already have:
-- Existing CDN infrastructure (CloudFlare, AWS CloudFront)
-- Object storage (AWS S3, Cloudflare R2, Backblaze B2)
-- In-house media servers
-
-**Recommended hosting:**
-- Cloudflare R2: $0.015/GB/month, free egress
-- AWS S3: $0.023/GB/month + bandwidth
-- Backblaze B2: $0.005/GB/month
-- Your own CDN or media server
-
-**Best practices:**
-- Use CDN for fast global delivery
-- Compress audio to 64-96 kbps for mobile
-- Provide multiple quality options if needed
-- Use WebP for images (smaller file size)
-
-### 3. Analytics and Tracking
-**Why not included:** Every institution has different privacy requirements and analytics needs.
-
-**Easy integration with:**
-- Google Analytics 4 (free, comprehensive)
-- Plausible Analytics (privacy-focused, $9/month)
-- Matomo (self-hosted, open source)
-- Custom analytics via API
-
-**What you can track:**
-- Page views and user sessions
-- Track completions and drop-off rates
-- Most/least popular tracks
-- Average listening time
-- Device and browser analytics
-- Geographic distribution
-
-### 4. Payment Processing
-**Why not included:** Most museum audio guides are free to visitors. For paid tours:
-
-**Integration options:**
-- Stripe: Credit card processing
-- PayPal: Alternative payment method
-- Apple Pay / Google Pay: Mobile wallets
-- Membership systems: Check existing credentials
-
-**Implementation approaches:**
-- Add authentication gate before player
-- Sell access codes at ticket counter
-- Integrate with existing ticketing system
-- Museum membership includes access
-
-### 5. Backend Server
-**Why not included:** Static hosting is cheaper, faster, and simpler.
-
-**When you might need a backend:**
-- User accounts and progress syncing
-- Payment processing
-- Real-time analytics dashboard
-- Content delivery based on location
-- Personalized recommendations
-
-**Easy to add:**
-- Next.js API routes (if needed)
-- Separate Node.js/Python backend
-- Serverless functions (Vercel, Netlify, CloudFlare Workers)
-- Existing museum API integration
-
-## Implementation Guide
-
-### For IT Staff: Step-by-Step Setup
-
-**Phase 1: Initial Setup (15-20 minutes)**
-1. Clone repository or use `npx create-audioguidekit-player`
-2. Install dependencies (`npm install`)
-3. Run development server (`npm run dev`)
-4. Review example content and configuration
-5. Test on multiple devices (phone, tablet, desktop)
-
-**Phase 2: Content Preparation (1-2 weeks)**
-1. **Audio recording:**
-   - Record narration (professional or in-house)
-   - Recommended: 64-96 kbps MP3, mono for voice
-   - Typical track length: 2-4 minutes
-   - Total tour: 30-60 minutes
-
-2. **Metadata creation:**
-   - Write transcripts for accessibility
-   - Create track titles and descriptions
-   - Prepare images (1200x800px recommended)
-   - Organize stops in logical sequence
-
-3. **Configuration:**
-   - Edit `guide.json` with track information
-   - Configure `config.json` with branding
-   - Update PWA manifest with app details
-   - Set up custom domain (optional)
-
-**Phase 3: Customization (1-3 days)**
-1. Apply institutional branding (colors, logo)
-2. Customize player UI if needed
-3. Configure feature toggles (offline, transcripts, etc.)
-4. Add analytics tracking codes
-5. Test offline functionality thoroughly
-
-**Phase 4: Testing (2-3 days)**
-1. **Device testing:**
-   - iOS Safari (iPhone, iPad)
-   - Android Chrome
-   - Desktop browsers (Chrome, Firefox, Safari, Edge)
-
-2. **Functional testing:**
-   - Audio playback on all devices
-   - Offline mode (toggle airplane mode)
-   - PWA installation
-   - Track navigation and scrubbing
-
-3. **Accessibility audit:**
-   - Screen reader compatibility
-   - Keyboard navigation
-   - Color contrast ratios
-   - Font size scaling
-
-**Phase 5: Deployment (1 hour)**
-1. Build production version (`npm run build`)
-2. Upload to hosting provider (Vercel/Netlify)
-3. Configure custom domain and SSL
-4. Test production deployment
-5. Monitor initial analytics
-
-**Total timeline: 2-4 weeks** (mostly content preparation time)
-
-### For Agencies: Client Delivery Workflow
-
-**Pre-engagement:**
-- Scope audio recording needs (professional studio vs in-house)
-- Estimate number of stops/tracks
-- Identify client branding assets needed
-- Discuss hosting preferences
-
-**Engagement phases:**
-1. **Discovery (1 week):**
-   - Content workshop with client
-   - Audio script development
-   - Visual asset requirements
-   - Technical requirements review
-
-2. **Production (2 weeks):**
-   - Audio recording and editing
-   - Image sourcing or photography
-   - Metadata and transcript creation
-   - Quality assurance review
-
-3. **Implementation (1 week):**
-   - AudioGuideKit setup and configuration
-   - Client branding application
-   - Content integration and testing
-   - Deployment to client's hosting
-
-4. **Launch (1 week):**
-   - Final client review and feedback
-   - Public launch preparation
-   - Analytics setup and verification
-   - Client training and documentation
-
-**Ongoing services:**
-- Content updates (seasonal exhibitions)
-- Analytics reporting and insights
-- Feature customization and development
-- Technical support and maintenance
-
-### For Developers: Customization Guide
-
-**Common customizations:**
-
-1. **Custom player controls:**
-   - Modify `src/components/Controls.tsx`
-   - Add playback speed control
-   - Implement skip forward/back buttons
-   - Add bookmark functionality
-
-2. **Theme system:**
-   - Extend Tailwind config for custom colors
-   - Create dark mode variants
-   - Add institutional brand colors
-   - Implement theme switching
-
-3. **Additional features:**
-   - Map integration (Google Maps, Mapbox)
-   - Multi-language support (i18n)
-   - Search and filtering
-   - Related content recommendations
-   - Social sharing
-
-4. **Third-party integrations:**
-   - Authentication (Auth0, Firebase)
-   - Analytics (Google Analytics, Segment)
-   - CMS (Contentful, Strapi, Sanity)
-   - Translation services (Weglot, Lokalise)
-
-**Development workflow:**
-```bash
-# Start development server
-npm run dev
-
-# Run type checking
-npm run type-check
-
-# Run linting
-npm run lint
-
-# Build for production
-npm run build
-
-# Test production build locally
-npm run start
-```
-
-## Cost Comparison and ROI
-
-### AudioGuideKit vs SaaS Platforms
-
-**SaaS Platform typical costs:**
-- Base subscription: $500-2,000/month
-- Annual cost: $6,000-24,000
-- Per-visitor fees: $0.10-2.00 per play
-- Setup fees: $1,000-5,000 one-time
-- Custom features: $500-2,000 each
-- White-label branding: Often extra $100-500/month
-
-**For 15,000 annual visitors:**
-- Base subscription: $12,000/year
-- Per-visitor fees: $1,500-30,000/year
-- **Total: $13,500-42,000/year**
-
-**AudioGuideKit costs:**
-- Software: $0 (MIT license)
-- Hosting: $0-120/year (Vercel/Netlify free tiers sufficient for most)
-- Audio CDN: $50-200/year depending on traffic
-- **Total: $50-320/year**
-
-**Annual savings: $13,180-41,680**
-
-### AudioGuideKit vs Hardware Rentals
-
-**Hardware rental typical costs:**
-- Device rental: $3-10 per visitor
-- For 15,000 visitors: $45,000-150,000/year
-- Staff for distribution desk: $25,000-40,000/year
-- Device maintenance/replacement: $5,000-10,000/year
-- **Total: $75,000-200,000/year**
-
-**AudioGuideKit costs:**
-- Total: $50-320/year (as above)
-
-**Annual savings: $74,680-199,680**
-
-### AudioGuideKit vs Custom Development
-
-**Custom development typical costs:**
-- Initial development: $30,000-100,000
-- Project timeline: 3-6 months
-- Annual maintenance: $10,000-20,000
-- Feature additions: $5,000-15,000 each
-
-**AudioGuideKit costs:**
-- Initial setup: 2-4 weeks (mostly content creation)
-- Customization: $0-5,000 (if hiring developer)
-- Annual hosting: $50-320/year
-- No maintenance costs (static files)
-
-**Time to market savings: 2-5 months**
-**Development cost savings: $30,000-100,000**
-
-## Security, Privacy, and Compliance
-
-### Security Features
-
-**No backend attack surface:**
-- Static files only, no database to compromise
-- No server-side code execution
-- No API endpoints to secure
-- No authentication system to maintain
-
-**HTTPS enforcement:**
-- Required for PWA features
-- Free with Let's Encrypt
-- Included with modern hosting platforms
-- Protects user privacy
-
-**Content security:**
-- Audio files served from CDN
-- No user-generated content storage
-- No file upload functionality
-- XSS protection via React framework
-
-### Privacy and GDPR Compliance
-
-**No user data collection by default:**
-- No registration or login required
-- No cookies for tracking
-- No personal information stored
-- No user behavior tracking
-
-**GDPR compliant out of the box:**
-- No data processing agreements needed
-- No user consent forms required
-- No data retention policies needed
-- No right to access/deletion needed
-
-**Optional analytics:**
-- If you add analytics, you control the data
-- Easy to implement cookie consent if needed
-- Privacy-focused options available (Plausible)
-- Self-hosted analytics possible (Matomo)
-
-### Accessibility Compliance
-
-**WCAG 2.1 Level AA compliant:**
-- Semantic HTML structure
-- ARIA labels for screen readers
-- Keyboard navigation support
-- Color contrast ratios meet standards
-- Focus indicators visible
-- Transcripts for audio content
-- Captions support ready
-
-**Assistive technology support:**
-- Screen reader tested (NVDA, JAWS, VoiceOver)
-- Voice control compatible
-- Switch control support
-- Magnification support
-- High contrast mode
-
-## Frequently Asked Questions
-
-### For IT Staff
-
-**Q: What technical skills do I need?**
-A: Basic web development knowledge is helpful: editing JSON configuration files, uploading files to a server, and using version control (Git). If you have a web developer on staff or work with a development agency, they'll find this straightforward to implement.
-
-**Q: What infrastructure do I need?**
-A: Just static file web hosting with HTTPS. No database, no backend server. Vercel, Netlify, and Cloudflare Pages all have free tiers that work well. You'll also want a CDN for audio files (R2, S3, or similar).
-
-**Q: How do I update content?**
-A: Edit the JSON configuration file and redeploy. With platforms like Vercel or Netlify, this happens automatically when you push to Git. Updates are live in 1-2 minutes.
-
-**Q: What about support?**
-A: The documentation covers step-by-step setup and common scenarios. For technical questions or community support, open a GitHub issue. We also provide paid consulting for setup, content migration, customization, and training.
-
-**Q: Can we use our existing analytics?**
-A: Yes. AudioGuideKit works with Google Analytics, Plausible, Matomo, or any analytics platform. You add the tracking code to the configuration.
-
-**Q: What about offline support in underground galleries?**
-A: Service Workers cache all audio files and UI assets automatically. Visitors can use the guide in airplane mode, underground, or with poor cellular signal. The offline mode is built-in and requires no additional setup.
-
-### For Agencies
-
-**Q: Can we white-label this for clients?**
-A: Yes, completely. Customize colors, logo, branding, and domain through JSON configuration. Remove all AudioGuideKit branding. It's MIT licensed with no attribution requirement.
-
-**Q: Can we charge clients for implementation?**
-A: Yes. You can charge for setup, customization, content production, and ongoing services. There are no vendor fees or licenses that limit your pricing.
-
-**Q: How do we handle multiple clients?**
-A: Each client gets their own repository and deployment. You can reuse your customizations across projects. No per-project licensing fees.
-
-**Q: What about client support?**
-A: You provide support to your clients. We provide documentation and community support for technical implementation questions via GitHub.
-
-**Q: Can we add custom features?**
-A: Yes. You have full source code access. Add any features you need: authentication, payment processing, CMS integration, custom analytics, etc.
-
-### For Developers
-
-**Q: Can I use this commercially?**
-A: Yes. MIT license allows commercial use without restrictions.
-
-**Q: Can I modify the source code?**
-A: Yes. Full source access with no limitations. Modify anything, add features, remove features.
-
-**Q: How do I contribute back?**
-A: Bug reports and feature requests via GitHub Issues. Pull requests for code improvements welcome. Documentation improvements appreciated.
-
-**Q: Is there a roadmap?**
-A: Yes. We maintain an active roadmap based on our own requirements and user feedback. Check the /updates page for current progress, or submit feature requests via GitHub.
-
-**Q: What about TypeScript support?**
-A: Fully written in TypeScript with comprehensive type definitions included.
-
-**Q: How do I integrate with my existing app?**
-A: AudioGuideKit can be embedded as a component in larger Next.js/React applications, or run standalone and integrate via iframe or custom routing.
-
-## Use Cases and Examples
-
-### Art Museum: Permanent Collection Tour
-
-**Challenge:** Museum paying $50,000/year for hardware rental devices. Distribution desk requires staff time. Content updates require re-programming all devices.
-
-**AudioGuideKit solution:**
-- Visitors use their own smartphones (no hardware)
-- QR code at entrance links to audio guide
-- Works offline in underground galleries
-- Update content instantly via redeployment
-- Accessible to visitors with disabilities
-
-**Results:**
-- Save $50,000/year on hardware rental
-- Eliminate distribution desk staffing
-- Update content in minutes, not weeks
-- Better accessibility compliance
-- Higher visitor satisfaction (own device)
-
-### Historic District: Walking Tour
-
-**Challenge:** Tourism board wants audio walking tour for historic city center. Need offline support for areas with poor cellular coverage. Multi-language support required.
-
-**AudioGuideKit solution:**
-- PWA installable from tourism board website
-- Works offline after initial install
-- Multi-language via separate JSON configs
-- Map integration shows tour route
-- Free for tourists (city-funded)
-
-**Results:**
-- Increase tourist engagement
-- Available 24/7 without staff
-- Support 5+ languages
-- Analytics show popular stops
-- City branding throughout
-
-### Botanical Garden: Plant Identification Tour
-
-**Challenge:** Large outdoor garden needs audio guide for plant tours. Cellular signal spotty in remote areas. Different tours by season.
-
-**AudioGuideKit solution:**
-- Seasonal tour configs (spring, summer, fall, winter)
-- Location-based track suggestions
-- Plant images and scientific names
-- Works fully offline
-- Easy content updates for new plantings
-
-**Results:**
-- Engage visitors with audio + visual
-- No cellular coverage issues
-- Easy seasonal content swaps
-- Educational transcripts included
-- Accessibility compliant
-
-### University: Campus Tour
-
-**Challenge:** University gives campus tours to prospective students. Need scalable solution for self-guided tours during peak application season.
-
-**AudioGuideKit solution:**
-- Self-guided tour available 24/7
-- Student testimonials as audio content
-- Building history and campus highlights
-- Works during campus events (peak traffic)
-- No tour guide scheduling needed
-
-**Results:**
-- Scale to thousands of visitors
-- Consistent information delivery
-- Available during non-business hours
-- Reduce tour guide staffing needs
-- Track popular stops for improvements
-
-### Real Estate: Luxury Property Tours
-
-**Challenge:** High-end real estate agency wants audio-guided property walkthroughs. Need professional, branded experience. Quick deployment for new listings.
-
-**AudioGuideKit solution:**
-- Branded to agency identity
-- Professional voiceover narration
-- Room-by-room audio descriptions
-- Property photos and details
-- Quick setup for new listings
-
-**Results:**
-- Professional presentation
-- Self-serve open houses
-- Reduce agent time on-site
-- Consistent messaging
-- Track visitor engagement
+AudioGuideKit is intentionally focused on being an excellent player. It does not include:
+
+- **Content Management System** — edit JSON directly, or export from a headless CMS (WordPress, Contentful, Strapi, Sanity) to JSON.
+- **Audio and image hosting** — host media on your own CDN or object storage (Cloudflare R2, AWS S3, Backblaze B2). Compress audio (~64–96 kbps for voice) and prefer WebP for images.
+- **Analytics** — integrate Google Analytics, Plausible, Matomo, or a custom solution.
+- **Payment / access control** — add your own gate, access codes, or ticketing integration if you sell tours.
+- **Backend server** — pure static deployment; add Next.js API routes, serverless functions, or a separate service only if you need one.
 
 ## Getting Started
 
-### Quick Start (Recommended)
+### Prerequisites
+- **Bun** (recommended) or **Node.js 18+**
+- **git**
 
+Install Bun: `curl -fsSL https://bun.sh/install | bash` (macOS/Linux) or `powershell -c "irm bun.sh/install.ps1 | iex"` (Windows). To use Node instead, replace `bun` with `npm` in the commands below.
+
+### Install and run
 ```bash
-# Create new project using CLI
-npx create-audioguidekit-player my-audio-guide
-
-# Navigate to project
-cd my-audio-guide
-
-# Install dependencies
-npm install
-
-# Start development server
-npm run dev
-```
-
-Open http://localhost:3000 to see the example tour.
-
-### Manual Setup
-
-```bash
-# Clone repository
 git clone https://github.com/audioguidekit/player-react.git
 cd player-react
 
-# Install dependencies
-npm install
-
-# Start development server
-npm run dev
+bun install      # or: npm install
+bun run dev      # or: npm run dev
 ```
 
-### Next Steps
+Open http://localhost:3000 to see the demo tour.
 
-1. **Review example content:**
-   - Example audio files in `/public/audio`
-   - Example configuration in `/public/guide.json`
-   - Example images in `/public/images`
+### Project layout
+| Folder | Purpose |
+|--------|---------|
+| `src/data/tour/` | Your tour JSON files (one folder per tour) |
+| `src/` | Application source code |
+| `components/` | React components |
+| `hooks/` | Custom React hooks |
+| `docs/` | Additional documentation |
 
-2. **Customize configuration:**
-   - Edit `/public/config.json` for branding
-   - Edit `/public/guide.json` for tour content
-   - Add your audio files to `/public/audio`
+### Add your content
+1. Create a tour folder under `src/data/tour/` with a `metadata.json` and a language file (e.g. `en.json`).
+2. Add your stops (audio URL, image, title, transcription, optional `location`).
+3. Pick a `themeId` and adjust display toggles and map settings.
+4. Run `bun run validate` to check the JSON against the schema.
 
-3. **Test on devices:**
-   - Open on iPhone/iPad (Safari)
-   - Open on Android phone (Chrome)
-   - Test offline mode (airplane mode)
-   - Test PWA installation
+## Deployment
 
-4. **Deploy:**
-   ```bash
-   npm run build
-   # Deploy /out folder to Vercel, Netlify, or your host
-   ```
+```bash
+bun run build   # validates tour JSON, then runs the Vite build
+```
+
+The build emits a static site you can deploy to:
+- **Vercel** — zero-config Git deploys (free tier)
+- **Netlify** — continuous deployment (free tier)
+- **Cloudflare Pages** — global CDN (free tier)
+- **GitHub Pages** — free for public repos
+- **AWS S3 + CloudFront** — custom domain
+- **Your own server** — Apache, Nginx, or any static file host
+
+HTTPS is required for PWA features (free with Let's Encrypt or included with modern hosts). Host audio/image media separately on a CDN or object storage and reference the URLs in your tour JSON.
+
+## Security, Privacy, and Accessibility
+
+- **No backend attack surface**: static files only — no database, no server-side code, no API to secure.
+- **HTTPS** enforced for PWA features.
+- **Privacy**: no accounts and no personal data collected by default (GDPR-friendly). If you add analytics, you control the data and can choose privacy-focused or self-hosted options.
+- **Accessibility-conscious**: transcriptions for audio, large touch targets, high-contrast theming, semantic markup, and respect for user font-size preferences.
+
+## Frequently Asked Questions
+
+**What technical skills do I need?**
+Basic comfort editing JSON files and using git. If you have a developer or agency, setup is straightforward.
+
+**What infrastructure do I need?**
+Static file hosting with HTTPS. No database or backend. A CDN or object storage for your audio/image files.
+
+**How do I update content?**
+Edit the JSON and redeploy. With Vercel/Netlify/Cloudflare Pages this happens automatically on git push, live in a minute or two.
+
+**Can I white-label it for clients?**
+Yes — colors, typography, logo/app icons, and domain are fully customizable, and the MIT license has no attribution requirement.
+
+**Can I use it commercially / modify the source?**
+Yes. MIT-licensed with full source access and no restrictions.
+
+**Does it work offline in underground galleries?**
+Yes. The Service Worker caches audio and assets, and progress is stored in IndexedDB, so tours work in airplane mode or low-signal areas.
+
+**Which map providers are supported?**
+OpenStreetMap and CARTO (no key), plus Mapbox, Jawg, and MapTiler (API key set via environment variables).
+
+## Use Cases
+
+- **Art museums**: replace rented hardware with visitors' own phones; works offline in underground galleries; update content instantly via redeploy.
+- **Historic walking tours**: an installable PWA from a tourism site, offline-capable, with multi-language support and an optional map route.
+- **Botanical gardens / nature trails**: seasonal tours with images and transcripts that work where cellular coverage is spotty.
+- **University campus tours**: self-guided, available 24/7, scalable to many visitors at once.
+- **Temporary exhibitions**: quick, branded deployment without hardware investment.
 
 ## Links and Resources
 
-- **GitHub Repository**: https://github.com/audioguidekit/player-react - Source code, issues, contributions
-- **Documentation**: https://audioguidekit.org/docs - Setup guides, configuration reference, API documentation
-- **Technical Blog**: https://audioguidekit.org/notes - Implementation details, best practices, engineering decisions
-- **Updates**: https://audioguidekit.org/updates - Release notes, changelog, roadmap
-- **Website**: https://audioguidekit.org - Main website with overview and contact form
-- **Contact**: https://audioguidekit.org/#contact - Implementation services, consulting, questions
+- **GitHub Repository**: https://github.com/audioguidekit/player-react — source code, issues, contributions
+- **Documentation**: https://audioguidekit.org/docs — setup guides and configuration reference
+- **Notes / Blog**: https://audioguidekit.org/notes — implementation details and engineering decisions
+- **Updates**: https://audioguidekit.org/updates — release notes, changelog, roadmap
+- **Website**: https://audioguidekit.org — overview and contact
+- **Contact**: https://audioguidekit.org/#contact — implementation services and questions
 
 ## License
 
-MIT License - Free for commercial and personal use. No attribution required (but appreciated).
-
-## Contact and Support
-
-**Community support:**
-- GitHub Issues: Bug reports, feature requests, technical questions
-- GitHub Discussions: Community help, showcase projects, ideas
-
-**Professional services:**
-We provide paid consulting for:
-- Initial setup and deployment
-- Content migration from existing systems
-- Custom feature development
-- Branding and design customization
-- Staff training and documentation
-- Ongoing maintenance and support
-
-Contact via website for consulting inquiries.
+MIT License — free for commercial and personal use. No attribution required (but appreciated).
