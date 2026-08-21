@@ -3,6 +3,7 @@
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { TerminalCopy } from "@/components/ui/terminal-copy";
+import { AgentPromptCopy } from "@/components/ui/agent-prompt-copy";
 
 const FEATURES = [
   "5 minute setup",
@@ -55,10 +56,11 @@ export function CTA() {
             ))}
           </div>
 
-          <div className="inline-flex items-center gap-4 px-5 py-2 bg-white border border-foreground/10 rounded-md hover:border-foreground/20 transition-colors mb-8">
+          <div className="grid gap-3 mb-8">
+            <AgentPromptCopy className="px-5 py-2 bg-white border border-foreground/10 rounded-md hover:border-foreground/20 transition-colors text-[14px] sm:text-[15px]" />
             <TerminalCopy
               command="npx create-audioguidekit-player my-project"
-              className="text-[14px] sm:text-[15px]"
+              className="px-5 py-2 bg-white border border-foreground/10 rounded-md hover:border-foreground/20 transition-colors text-[14px] sm:text-[15px]"
             />
           </div>
 

@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import { PhoneFrame } from "@/components/ui/phone-frame";
 import { Typewriter } from "@/components/ui/typewriter";
 import { TerminalCopy } from "@/components/ui/terminal-copy";
+import { AgentPromptCopy } from "@/components/ui/agent-prompt-copy";
 import { ProjectStatusShowcase } from "./project-status-showcase";
 
 // Dynamic import for motion components - reduces initial bundle
@@ -109,10 +110,11 @@ export function Hero() {
               transition={{ delay: 0.3 }}
               className="inline-flex flex-col items-center"
             >
-              <div className="inline-flex items-center gap-4 px-5 py-2 bg-white border border-foreground/10 rounded-md hover:border-foreground/20 transition-colors">
+              <div className="grid gap-3">
+                <AgentPromptCopy className="px-5 py-2 bg-white border border-foreground/10 rounded-md hover:border-foreground/20 transition-colors text-[15px] sm:text-[17px]" />
                 <TerminalCopy
                   command="npx create-audioguidekit-player my-project"
-                  className="text-[15px] sm:text-[17px]"
+                  className="px-5 py-2 bg-white border border-foreground/10 rounded-md hover:border-foreground/20 transition-colors text-[15px] sm:text-[17px]"
                 />
               </div>
               <div className="pt-4">

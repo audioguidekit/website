@@ -70,7 +70,7 @@ export function TerminalCopy({ command, className }: TerminalCopyProps) {
       ref={buttonRef}
       onClick={copyToClipboard}
     className={cn(
-      "group relative flex items-center gap-3 cursor-copy font-mono text-[13px] text-muted-foreground hover:text-foreground transition-colors py-1",
+      "group flex items-center justify-center gap-3 cursor-copy font-mono text-[13px] text-muted-foreground hover:text-foreground transition-colors",
       className
     )}
     aria-label={`Copy ${command} command. Press C to copy.`}
