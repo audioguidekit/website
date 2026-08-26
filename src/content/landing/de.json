@@ -6,7 +6,7 @@
     "ogDescription": "Erstellen Sie Audioguides für Museen und kulturelle Einrichtungen. Kostenlos, selbst gehostet, funktioniert offline. Keine Bindung an einen Anbieter."
   },
   "common": {
-    "tagline": "Ein moderner, webbasierter Audioguide, der auf jedem Gerät funktioniert. Er läuft sowohl online als auch offline, wird auf Ihren eigenen Servern gehostet und lässt sich in Bezug auf Farben und Branding individuell anpassen. Keine Anbietergebühren und keine Verträge."
+    "tagline": "Ein moderner, webbasierter Audioguide, der auf jedem Gerät funktioniert. Er ist sowohl online als auch offline nutzbar, wird auf Ihren eigenen Servern gehostet und ermöglicht es Ihnen, Farben und das Branding individuell anzupassen. Keine Anbietergebühren und keine Verträge."
   },
   "nav": {
     "home": "Startseite der Audioführung",
@@ -26,12 +26,12 @@
       "Galerien",
       "Städte",
       "Tourismusverbände",
-      "Kultureinrichtungen"
+      "kulturelle Einrichtungen"
     ],
     "phoneAlt": "Benutzeroberfläche des AudioGuideKit-Players"
   },
   "status": {
-    "loading": "Aktuelle Daten abrufen...",
+    "loading": "Aktuelle Daten werden abgerufen...",
     "updated": "Aktualisiert",
     "updatedToday": "Heute aktualisiert",
     "gettingStarted": "Erste Schritte"
@@ -41,40 +41,40 @@
     "items": [
       {
         "title": "Funktioniert sofort nach dem Auspacken",
-        "description": "Komplett und einsatzbereit. Alles, was Sie brauchen, ist enthalten – fügen Sie einfach Ihre Audiodateien hinzu und los geht’s."
+        "description": "Komplett und einsatzbereit. Alles, was Sie benötigen, ist bereits enthalten – fügen Sie einfach Ihre Audiodateien hinzu und legen Sie los."
       },
       {
         "title": "Überall bereitstellen",
-        "description": "Hosten Sie es überall. Keine Datenbank, keine monatlichen Gebühren, jederzeiter Anbieterwechsel möglich."
+        "description": "Hosten Sie es an einem beliebigen Ort. Keine Datenbank, keine monatlichen Gebühren, jederzeiter Anbieterwechsel möglich."
       },
       {
-        "title": "Online + Offline",
-        "description": "Funktioniert ohne Internet. Ideal für Museen mit schwachem WLAN oder Ausstellungen unterirdisch"
+        "title": "Funktioniert online und offline",
+        "description": "Funktioniert ohne Internetverbindung. Ideal für Museen mit schwachem WLAN oder Ausstellungen im Untergeschoss."
       },
       {
         "title": "Entwickelt für Besucher, die viel unterwegs sind",
-        "description": "Große Tasten, übersichtliche Fortschrittsanzeige, einfache Bedienung im Stehen. Entwickelt für Menschen, die durch Ausstellungen gehen und nicht am Schreibtisch sitzen."
+        "description": "Große Tasten, übersichtliche Fortschrittsanzeige, einfache Bedienung im Stehen. Entwickelt für Personen, die durch Ausstellungen gehen und nicht am Schreibtisch sitzen."
       },
       {
         "title": "Passen Sie es an Ihre Marke an",
         "description": "Fügen Sie Ihr Logo und Ihre Farben über einfache Einstellungen hinzu. Es sind keine Programmierkenntnisse erforderlich, Sie haben jedoch bei Bedarf vollen Zugriff auf den Quellcode."
       }
     ],
-    "integrations": "Nutzen Sie Ihre vorhandenen Tools – hosten Sie Audioinhalte auf einem beliebigen CDN, erfassen Sie Besucherzahlen über Ihre Analyseplattform und wickeln Sie Zahlungen über Ihren Anbieter ab."
+    "integrations": "Nutzen Sie Ihre vorhandenen Tools – hosten Sie Audioinhalte auf einem beliebigen CDN, erfassen Sie Besucherzahlen mit Ihrer Analyseplattform und wickeln Sie Zahlungen über Ihren Anbieter ab."
   },
   "whoItIsFor": {
     "heading": "Für wen ist es gedacht?",
     "items": [
       "Museen, Galerien, Städte und kulturelle Einrichtungen",
       "Entwickler, die Audioguides und selbstgeführte Touren erstellen",
-      "Agenturen und Tourismusverbände, die Messe- und Kulturprojekte durchführen"
+      "Agenturen und Tourismusverbände, die Ausstellungs- und Kulturprojekte durchführen"
     ]
   },
   "appShowcase": {
-    "heading": "Entwickelt für den modernen Besucher",
+    "heading": "Entworfen für den modernen Besucher",
     "subheading": "Helle und dunkle Designs sind enthalten. Lässt sich ganz einfach an Ihr Markenbild anpassen.",
-    "light": "Licht",
-    "dark": "Dunkel",
+    "light": "Helles Design",
+    "dark": "Dunkles Design",
     "lightAria": "Vorschau im hellen Modus",
     "darkAria": "Vorschau des Dunkelmodus",
     "prev": "Zurück",
@@ -87,19 +87,19 @@
       },
       {
         "title": "Einfacher Audioguide",
-        "description": "Alles an einem Ort, mit einem einfachen Audio-Player und der Möglichkeit, Transkripte anzuzeigen."
+        "description": "Alle Stationen der Führung an einem Ort, mit einem einfachen Audio-Player und der Möglichkeit, Transkripte abzurufen."
       },
       {
         "title": "Vollständige Transkripte",
-        "description": "Verfolgen Sie den Inhalt anhand der vollständigen Transkripte zu jedem Audioausschnitt."
+        "description": "Verfolgen Sie den Verlauf anhand der vollständigen Transkripte zu jedem Audioausschnitt."
       },
       {
         "title": "Vollbild-Player",
-        "description": "Ein fesselndes Vollbild-Erlebnis für konzentriertes Hören."
+        "description": "Ein fesselndes Vollbild-Erlebnis für konzentriertes Zuhören."
       },
       {
-        "title": "Besucherrückmeldungen",
-        "description": "Sammeln Sie nach Fertigstellung des Leitfadens Feedback von den Besuchern."
+        "title": "Besucherfeedback",
+        "description": "Sammeln Sie das Feedback der Besucher, sobald der Leitfaden fertiggestellt ist."
       },
       {
         "title": "Interaktive Karte",
@@ -109,7 +109,7 @@
   },
   "tryPlayer": {
     "heading": "Testen Sie den Player jetzt",
-    "body": "Probieren Sie unseren Player in wenigen Sekunden selbst aus, indem Sie diesen QR-Code scannen oder auf die Schaltfläche unten klicken.",
+    "body": "Erleben Sie unseren Player in wenigen Sekunden ganz einfach selbst, indem Sie diesen QR-Code scannen oder auf die Schaltfläche unten klicken.",
     "cta": "Probieren Sie den Player aus",
     "qrAlt": "QR-Code zum Testen des Audioguide-Players"
   },
@@ -121,31 +121,31 @@
       },
       {
         "title": "Audioinhalte hinzufügen",
-        "description": "Lokale Dateien oder über ein CDN gehostete Ressourcen verwenden"
+        "description": "Verwenden Sie lokale Dateien oder über ein CDN gehostete Ressourcen"
       },
       {
         "title": "Hauptkonfiguration und Design anpassen",
-        "description": "Wenn dir die Standardeinstellungen nicht gefallen, passe sie an."
+        "description": "Sollten Ihnen die Standardeinstellungen nicht gefallen, passen Sie diese bitte an."
       },
       {
-        "title": "Die App bereitstellen",
-        "description": "Auf einem beliebigen Server hosten, der statische Dateien bereitstellt"
+        "title": "Stellen Sie die App bereit",
+        "description": "Hosten Sie die Seite auf einem beliebigen Server, der statische Dateien bereitstellt"
       }
     ],
     "timelineLabel": "Zeitleiste:",
-    "timeline": "Die Ersteinrichtung dauert 15 bis 20 Minuten. Wie lange das Hinzufügen Ihrer Inhalte dauert, hängt davon ab, wie gut Ihre Audioaufnahmen vorbereitet sind – in der Regel 1 bis 2 Wochen, einschließlich Aufnahme und Metadaten.",
+    "timeline": "Die Ersteinrichtung dauert 15 bis 20 Minuten. Die Dauer für das Hinzufügen Ihrer Inhalte hängt von Ihrer Audio-Vorbereitung ab – in der Regel 1 bis 2 Wochen, einschließlich Aufnahme und Metadaten.",
     "static": "Vollständig statisch. Keine Server, keine Datenbanken, kein Wartungsaufwand."
   },
   "editing": {
     "headingA": "Ein entwicklerfreundlicher Arbeitsablauf",
-    "headingB": "Alles befindet sich in deinem Git-Repo",
+    "headingB": "Alles befindet sich in Ihrem Git-Repo",
     "block1Title": "1. Bearbeitung von Leitfadeninhalten",
-    "block1Body": "Die Inhalte sind in einer einfachen JSON-Datei gespeichert. Bearbeiten Sie Pausen, Metadaten und Audio-Links direkt und ordnen Sie den Programmführer neu an, indem Sie die Reihenfolge der Einträge ändern.",
+    "block1Body": "Die Inhalte sind in einer einfachen JSON-Datei gespeichert. Sie können die Stationen der Führung, die Metadaten und die Audio-Links direkt bearbeiten und die Reihenfolge der Elemente ändern, um die Führung neu zu ordnen.",
     "block2Title": "2. Anpassung der App-Funktionen und des Layouts",
-    "block2Body": "Steuern Sie jeden Aspekt des Verhaltens und des Erscheinungsbilds Ihres Guides. Konfigurieren Sie die Sichtbarkeit und den Stil von UI-Elementen, die Themenauswahl, den Offline-Modus und vieles mehr. Alles über dieselbe JSON-Konfigurationsdatei.",
-    "block3Title": "3. Das Design anpassen",
-    "block3Body": "Passen Sie das Erscheinungsbild mithilfe einer einzigen TypeScript-Konfiguration an, falls die integrierten Designs nicht Ihren Anforderungen entsprechen. Passen Sie Farben, Schriftart und Abstände an, ohne den Kerncode zu verändern.",
-    "block4Title": "4. Mehrsprachenunterstützung",
+    "block2Body": "Steuern Sie jeden Aspekt des Verhaltens und des Erscheinungsbilds Ihres Leitfadens. Konfigurieren Sie die Sichtbarkeit und den Stil von Benutzeroberflächenelementen, die Auswahl des Designs, den Offline-Modus und vieles mehr. All dies über dieselbe JSON-Konfigurationsdatei.",
+    "block3Title": "3. Anpassung des Designs",
+    "block3Body": "Passen Sie das Erscheinungsbild mithilfe einer einzigen TypeScript-Konfiguration an, falls die integrierten Designs Ihren Anforderungen nicht entsprechen. Passen Sie Farben, Typografie und Abstände an, ohne den Kerncode zu verändern.",
+    "block4Title": "4. Mehrsprachige Unterstützung",
     "block4Body": "Die Benutzeroberfläche unterstützt nun <a href=\"#langs\">6 Sprachen</a>. Weitere Sprachen können über einfache Übersetzungsdateien hinzugefügt werden und sind sofort einsatzbereit.",
     "block4Tooltip": "Englisch, Deutsch, Italienisch, Französisch, Spanisch, Tschechisch"
   },
@@ -153,27 +153,27 @@
     "items": [
       {
         "q": "Warum ein Audioguide-Player?",
-        "a": "Wir haben dieses Produkt entwickelt, um unseren eigenen Bedarf an Audioguides zu decken (<a href=\"/notes/why\">lesen Sie die ganze Geschichte</a>). Nachdem wir bestehende Lösungen geprüft hatten, stellten wir fest, dass es sich bei den meisten entweder um teure, an einen Anbieter gebundene Plattformen oder um umständliche Leihgeräte handelte. Dies ist eine moderne Alternative, die Ihnen tatsächlich gehört."
+        "a": "Wir haben dieses Produkt entwickelt, um unseren eigenen Bedarf an Audioguides zu decken (<a href=\"/notes/why\">lesen Sie die ganze Geschichte</a>). Nach einer Bewertung bestehender Lösungen stellten wir fest, dass es sich bei den meisten entweder um teure, an einen Anbieter gebundene Plattformen oder um umständliche Mietgeräte handelte. Dies ist eine moderne Alternative, die Ihnen tatsächlich gehört."
       },
       {
-        "q": "Warum ist das Open Source?",
-        "a": "Die Audiowiedergabe sollte Sie nicht an einen bestimmten Anbieter binden (was leider nur allzu oft der Fall ist). Open Source bedeutet, dass Sie genau sehen, was läuft, keine Abhängigkeit von einem Anbieter haben und alle von den Verbesserungen profitieren."
+        "q": "Warum ist dies Open Source?",
+        "a": "Die Audiowiedergabe sollte Sie nicht an einen Anbieter binden (was leider nur allzu oft der Fall ist). Open Source bedeutet, dass Sie genau sehen, was läuft, eine Abhängigkeit von Anbietern vermeiden und alle von den Verbesserungen profitieren."
       },
       {
-        "q": "Darf ich das kommerziell nutzen?",
-        "a": "Ja. Dieses Projekt ist Open Source und steht unter einer MIT-Lizenz, die eine kommerzielle Nutzung ohne Einschränkungen erlaubt."
+        "q": "Darf ich dies kommerziell nutzen?",
+        "a": "Ja. Dieses Projekt ist Open Source und unterliegt einer MIT-Lizenz, die eine kommerzielle Nutzung ohne Einschränkungen erlaubt."
       },
       {
-        "q": "Funktioniert das nur für Audioguides?",
-        "a": "Nein. Das Programm wurde zwar für Museen und Galerien entwickelt, lässt sich aber an jede audiobasierte Anwendung anpassen. Audioguides für kulturelle Einrichtungen stehen für uns weiterhin im Vordergrund, daher werden wir die Entwicklung in dieser Richtung fortsetzen."
+        "q": "Gilt dies ausschließlich für Audioguides?",
+        "a": "Nein. Das System wurde zwar für Museen und Galerien entwickelt, lässt sich jedoch an jede audiobasierte Anwendung anpassen. Audioguides für kulturelle Einrichtungen stehen weiterhin im Mittelpunkt unserer Arbeit, sodass Sie mit einer fortlaufenden Weiterentwicklung in dieser Richtung rechnen können."
       },
       {
         "q": "Warum ist hier kein CMS enthalten?",
-        "a": "Ein CMS macht aus einem Player eine Plattform. Authentifizierung, Berechtigungen, Medienverwaltung – das ist eine ganz andere Dimension. Wir konzentrieren uns bewusst auf den Player selbst. Ein einfaches, headless Managementsystem für Audioguides ist jedoch für später im Jahr 2026 <a href=\"/updates\">in Planung</a>."
+        "a": "Ein CMS verwandelt einen Player in eine Plattform. Authentifizierung, Berechtigungen, Medienverwaltung – das ist ein ganz anderer Anwendungsbereich. Wir konzentrieren uns bewusst auf den Player selbst. Ein einfaches, headless Verwaltungssystem für Audioguides ist jedoch für den späteren Verlauf des Jahres 2026 <a href=\"/updates\">in unserer Roadmap vorgesehen</a>."
       },
       {
-        "q": "Wie stelle ich das eigentlich „ein“?",
-        "a": "Es handelt sich um eine Standard-Website, die Sie auf jedem beliebigen Webserver hosten können. Beliebte Optionen sind beispielsweise Vercel, Netlify oder Ihre eigene Infrastruktur. Es sind weder eine Datenbank noch ein Backend-Server erforderlich. Wenn Sie Dateien auf einen Webhost hochladen können, können Sie diese Website bereitstellen."
+        "q": "Wie kann ich das nun konkret „implementieren“?",
+        "a": "Es handelt sich um eine Standard-Website, die Sie auf jedem beliebigen Webserver hosten können. Zu den gängigen Optionen zählen Vercel, Netlify oder Ihre eigene Infrastruktur. Es sind weder eine Datenbank noch ein Backend-Server erforderlich. Wenn Sie Dateien auf einen Webhost hochladen können, können Sie diese Website bereitstellen."
       },
       {
         "q": "Wo ist der Haken?",
@@ -181,19 +181,19 @@
       },
       {
         "q": "Welche technischen Kenntnisse benötige ich?",
-        "a": "Grundkenntnisse in der Webentwicklung sind hilfreich: Bearbeiten von Konfigurationsdateien (JSON), Hochladen von Dateien auf einen Server und die Verwendung von Versionsverwaltung. Wenn Sie einen Webentwickler in Ihrem Team haben oder mit einer Entwicklungsagentur zusammenarbeiten, wird die Umsetzung für diese kein Problem darstellen."
+        "a": "Grundkenntnisse in der Webentwicklung sind von Vorteil: Bearbeiten von Konfigurationsdateien (JSON), Hochladen von Dateien auf einen Server und die Verwendung von Versionskontrollsystemen. Falls Sie einen Webentwickler in Ihrem Team haben oder mit einer Entwicklungsagentur zusammenarbeiten, wird die Umsetzung für diese kein Problem darstellen."
       },
       {
-        "q": "Wo kann ich Hilfe bekommen?",
-        "a": "Die <a href=\"/docs\">Dokumentation</a> behandelt die Schritt-für-Schritt-Einrichtung sowie gängige Anwendungsfälle. Bei technischen Fragen oder wenn Sie Unterstützung durch die Community benötigen, <a href=\"#issue\">eröffnen Sie bitte ein GitHub-Issue</a>."
+        "q": "Wo kann ich Hilfe erhalten?",
+        "a": "Die <a href=\"/docs\">Dokumentation</a> behandelt die schrittweise Einrichtung sowie gängige Anwendungsszenarien. Bei technischen Fragen oder für Unterstützung durch die Community <a href=\"#issue\">eröffnen Sie bitte ein GitHub-Issue</a>."
       },
       {
         "q": "Bieten Sie Implementierungsdienstleistungen an?",
-        "a": "Ja. Wir bieten kostenpflichtige Beratungsleistungen für die Einrichtung, die Migration von Inhalten, die Anpassung und Schulungen an. Ganz gleich, ob Sie eine vollständige Implementierung oder nur eine erste Einweisung benötigen – wir helfen Ihnen gerne weiter. <a href=\"#contact\">Kontaktieren Sie uns</a>, um Ihre Anforderungen zu besprechen."
+        "a": "Ja. Wir bieten kostenpflichtige Beratungsleistungen für die Einrichtung, die Datenmigration, die Anpassung und Schulungen an. Ganz gleich, ob Sie eine vollständige Implementierung oder lediglich eine erste Einweisung benötigen – wir können Ihnen helfen. <a href=\"#contact\">Kontaktieren Sie uns</a>, um Ihre Anforderungen zu besprechen."
       },
       {
-        "q": "Gibt es einen Fahrplan?",
-        "a": "Ja. Wir pflegen eine aktive Roadmap, die auf unseren eigenen Anforderungen und dem Feedback unserer Nutzer basiert. Auf der <a href=\"/updates\">Seite „Updates“</a> können Sie sich über den aktuellen Stand informieren oder über GitHub <a href=\"#feature\">Feature-Anfragen einreichen</a>."
+        "q": "Gibt es eine öffentlich zugängliche Roadmap?",
+        "a": "Ja. Wir pflegen eine aktive Roadmap, die auf unseren eigenen Anforderungen und dem Feedback unserer Nutzer basiert. Auf der <a href=\"/updates\">Seite „Updates“</a> können Sie sich über den aktuellen Stand informieren oder über GitHub <a href=\"#feature\">Funktionswünsche einreichen</a>."
       }
     ],
     "end": "Ende der FAQs"
@@ -202,10 +202,10 @@
     "items": [
       {
         "title": "Eine Sache, gut gemacht",
-        "desc": "Löse ein einzelnes Problem, ohne dass es zu einer schleichenden Funktionsausweitung kommt."
+        "desc": "Lösen Sie ein einzelnes Problem, ohne dass es zu einer schleichenden Ausweitung des Funktionsumfangs kommt."
       },
       {
-        "title": "Mit freundlichen Grüßen",
+        "title": "Es gehört Ihnen",
         "desc": "Ihre Daten, Ihre Infrastruktur. Keine Bindung."
       },
       {
@@ -237,16 +237,16 @@
   },
   "copy": {
     "commandCopied": "Befehl in die Zwischenablage kopiert",
-    "commandFailed": "Befehl „Kopieren“ fehlgeschlagen",
+    "commandFailed": "Befehl konnte nicht kopiert werden",
     "commandAria": "Kopieren Sie den Installationsbefehl. Drücken Sie C, um ihn zu kopieren.",
-    "agentLabel": "Anweisungen für den Copy AI-Agenten",
+    "agentLabel": "Anweisungen für den Copy-AI-Agenten kopieren",
     "agentCopied": "Agentenaufforderung in die Zwischenablage kopiert",
     "agentFailed": "Das Kopieren der Eingabeaufforderung ist fehlgeschlagen",
-    "agentAria": "Kopieren Sie die AI-Agent-Eingabeaufforderung, um das Repo zu klonen und einzurichten. Drücken Sie P, um den Text zu kopieren."
+    "agentAria": "Kopieren Sie die Eingabeaufforderung des AI-Agenten, um das Repository zu klonen und einzurichten. Drücken Sie die Taste „P“, um den Text zu kopieren."
   },
   "contact": {
-    "title": "Kontaktieren Sie uns",
-    "description": "Haben Sie Fragen oder benötigen Sie Hilfe? Kontaktieren Sie uns über das untenstehende Formular.",
+    "title": "Nehmen Sie Kontakt mit uns auf",
+    "description": "Haben Sie Fragen oder benötigen Sie Hilfe? Kontaktieren Sie uns bitte über das untenstehende Formular.",
     "close": "Schließen",
     "name": "Name *",
     "namePlaceholder": "Ihr Name",
@@ -255,7 +255,7 @@
     "organization": "Organisation",
     "organizationPlaceholder": "Name der Organisation",
     "message": "Nachricht *",
-    "messagePlaceholder": "Erzählen Sie uns etwas über Ihr Projekt und Ihre Anforderungen...",
+    "messagePlaceholder": "Erzählen Sie uns von Ihrem Projekt und Ihren Anforderungen…",
     "sending": "Wird gesendet...",
     "sent": "Gesendet!",
     "send": "Nachricht senden",

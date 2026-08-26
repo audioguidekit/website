@@ -48,8 +48,8 @@
         "description": "Host it anywhere. No database, no monthly fees, switch providers anytime."
       },
       {
-        "title": "Online + Offline",
-        "description": "Works without internet. Perfect for museums with weak WiFi or underground exhibits"
+        "title": "Works online and offline",
+        "description": "Works without internet. Perfect for museums with weak WiFi or exhibits below ground."
       },
       {
         "title": "Built for visitors on the move",
@@ -73,8 +73,8 @@
   "appShowcase": {
     "heading": "Designed for the modern visitor",
     "subheading": "Light and dark themes included. Easily customizable to match your brand.",
-    "light": "Light",
-    "dark": "Dark",
+    "light": "Light theme",
+    "dark": "Dark theme",
     "lightAria": "Light mode preview",
     "darkAria": "Dark mode preview",
     "prev": "Previous",
@@ -87,7 +87,7 @@
       },
       {
         "title": "Simple audio guide",
-        "description": "All stops in one place, with a simple audio player and transcript support."
+        "description": "All tour stops in one place, with a simple audio player and transcript support."
       },
       {
         "title": "Full transcripts",
@@ -140,7 +140,7 @@
     "headingA": "A developer-friendly workflow",
     "headingB": "Everything lives in your git repo",
     "block1Title": "1. Editing guide content",
-    "block1Body": "Content lives in a simple JSON file. Edit stops, metadata, and audio links directly, and reorder the guide by changing the item order.",
+    "block1Body": "Content lives in a simple JSON file. Edit tour stops, metadata, and audio links directly, and reorder the guide by changing the item order.",
     "block2Title": "2. Customizing the app features and layout",
     "block2Body": "Control every aspect of your guide's behavior and appearance. Configure UI elements visibility and style, theme selection, offline mode and more. All from the same JSON configuration file.",
     "block3Title": "3. Customizing the theme",
@@ -192,7 +192,7 @@
         "a": "Yes. We provide paid consulting for setup, content migration, customization, and training. Whether you need full implementation or just initial guidance, we can help. <a href=\"#contact\">Contact us</a> to discuss your requirements."
       },
       {
-        "q": "Is there a roadmap?",
+        "q": "Is there a public roadmap?",
         "a": "Yes. We maintain an active roadmap based on our own requirements and user feedback. Check the <a href=\"/updates\">updates page</a> for current progress, or <a href=\"#feature\">submit feature requests</a> via GitHub."
       }
     ],
@@ -205,7 +205,7 @@
         "desc": "Solve a single problem without feature creep."
       },
       {
-        "title": "Fully yours",
+        "title": "You own it",
         "desc": "Your data, your infrastructure. No lock-in."
       },
       {

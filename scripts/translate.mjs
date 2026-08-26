@@ -75,6 +75,9 @@ async function deepl(key, texts, target, html) {
         // Only the strings carrying <a> anchors get HTML parsing; plain prose
         // stays plain so DeepL never entity-escapes an ampersand.
         ...(html ? { tag_handling: "html" } : {}),
+        // German drifts between "Sie" and "du" per-sentence without this;
+        // pin it formal so the whole page reads consistently.
+        ...(target === "de" ? { formality: "more" } : {}),
       }),
     });
 
