@@ -1,29 +1,8 @@
 import React from "react";
+import en from "@/content/landing/en.json";
+import type { Dict } from "@/content/landing";
 
-const steps = [
-  {
-    number: "1.",
-    title: "Clone the repository",
-    description: "Access the player source code",
-  },
-  {
-    number: "2.",
-    title: "Add audio content",
-    description: "Use local files or CDN-hosted assets",
-  },
-  {
-    number: "3.",
-    title: "Customize main config and theme",
-    description: "If you don't like the default settings, customize them",
-  },
-  {
-    number: "4.",
-    title: "Deploy the app",
-    description: "Host anywhere that serves static files",
-  },
-];
-
-const HowItWorks = () => {
+const HowItWorks = ({ t = en.howItWorks }: { t?: Dict["howItWorks"] }) => {
   return (
     <section className="w-full py-16 sm:py-20 bg-background border-b border-border">
       <div className="max-w-[1000px] mx-auto px-4 sm:px-8">
@@ -38,11 +17,11 @@ const HowItWorks = () => {
 
             {/* Numbered List of Steps */}
             <div className="space-y-10">
-              {steps.map((step, index) => (
+              {t.steps.map((step, index) => (
                 <div key={index} className="flex items-start gap-4">
                   {/* Step Number */}
                   <span className="text-sm font-mono text-muted-foreground pt-1 min-w-[24px]">
-                    {step.number}
+                    {index + 1}.
                   </span>
 
                   {/* Step Content */}
@@ -58,10 +37,10 @@ const HowItWorks = () => {
               ))}
               <div className="mt-12 pt-8 border-t border-border space-y-4">
                 <p className="text-[16px] md:text-[15px] text-muted-foreground">
-                  <span className="font-semibold text-foreground">Timeline:</span> Initial setup takes 15-20 minutes. Adding your content depends on your audio preparation—typically 1-2 weeks including recording and metadata.
+                  <span className="font-semibold text-foreground">{t.timelineLabel}</span> {t.timeline}
                 </p>
                 <p className="text-[16px] md:text-[15px] text-muted-foreground">
-                  Fully static. No servers, no databases, no maintenance.
+                  {t.static}
                 </p>
               </div>
             </div>

@@ -3,6 +3,8 @@
 import React, { useEffect, useState } from "react";
 import { GitCommit } from "lucide-react";
 import { formatRelativeTime } from "@/lib/utils";
+import en from "@/content/landing/en.json";
+import type { Dict } from "@/content/landing";
 
 interface GitHubCommit {
   sha: string;
@@ -11,7 +13,7 @@ interface GitHubCommit {
   url: string;
 }
 
-export function ProjectStatusShowcase() {
+export function ProjectStatusShowcase({ t = en.status }: { t?: Dict["status"] }) {
   const [commit, setCommit] = useState<GitHubCommit | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -41,11 +43,11 @@ export function ProjectStatusShowcase() {
         <GitCommit className="w-4 h-4 text-emerald-500/70" />
         <span>
           {loading ? (
-            <span className="animate-pulse">Fetching latest pulse...</span>
+            <span className="animate-pulse">{t.loading}</span>
           ) : commit ? (
-            <>Updated {formatRelativeTime(commit.date)}</>
+            <>{t.updated} {formatRelativeTime(commit.date)}</>
           ) : (
-            <span>Updated today</span>
+            <span>{t.updatedToday}</span>
           )}
         </span>
       </a>
@@ -56,7 +58,7 @@ export function ProjectStatusShowcase() {
         href="/docs"
         className="text-muted-foreground hover:text-primary transition-colors underline decoration-border hover:decoration-primary/30 underline-offset-4"
       >
-        Getting started
+        {t.gettingStarted}
       </a>
     </div>
   );

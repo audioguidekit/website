@@ -6,6 +6,8 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { Logo } from '@/components/ui/logo';
+import en from '@/content/landing/en.json';
+import type { Dict } from '@/content/landing';
 
 function GitHubIcon({ className }: { className?: string }) {
   return (
@@ -15,22 +17,20 @@ function GitHubIcon({ className }: { className?: string }) {
   );
 }
 
-// Navigation links hoisted to module scope to avoid recreation on each render
-const navLinks = [
-  { name: 'Notes', href: '/notes' },
-  { name: 'Updates', href: '/updates' },
-  { name: 'Documentation', href: '/docs', kbd: 'D' },
-] as const;
-
-export function Navigation() {
+export function Navigation({ t = en.nav }: { t?: Dict['nav'] }) {
   const pathname = usePathname();
+  const navLinks = [
+    { name: t.notes, href: '/notes' },
+    { name: t.updates, href: '/updates' },
+    { name: t.docs, href: '/docs', kbd: 'D' },
+  ];
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 flex justify-center pointer-events-none">
       <div className="w-full max-w-[1400px] bg-background/20 backdrop-blur-md border-b border-x border-border h-16 md:h-22 flex items-center justify-between px-4 sm:px-16 pointer-events-auto relative">
 
-        <Link href="/" className="flex items-center group shrink-0" aria-label="Audio Tour Home">
+        <Link href="/" className="flex items-center group shrink-0" aria-label={t.home}>
           <Logo className="transition-transform group-hover:scale-105" />
         </Link>
 
@@ -48,7 +48,7 @@ export function Navigation() {
                 )}
               >
                 {link.name}
-                {link.kbd && (
+                {'kbd' in link && link.kbd && (
                   <kbd className="hidden md:inline-flex items-center justify-center size-5 text-[10px] font-mono font-bold bg-foreground/5 text-muted-foreground rounded border border-border ml-2 group-hover:text-foreground transition-colors">
                     {link.kbd}
                   </kbd>
@@ -78,7 +78,7 @@ export function Navigation() {
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           className="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-lg bg-foreground/5 hover:bg-foreground/10 transition-colors"
-          aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+          aria-label={mobileMenuOpen ? t.closeMenu : t.openMenu}
         >
           {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
         </button>

@@ -7,6 +7,8 @@ import confetti from "canvas-confetti";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { ClaudeAvatar, CodexAvatar, CursorAvatar, LovableAvatar, V0Avatar } from "./agent-avatars";
+import en from "@/content/landing/en.json";
+import type { Dict } from "@/content/landing";
 
 export const AGENT_PROMPT = `Clone the AudioGuideKit player and help me set it up:
 
@@ -19,9 +21,10 @@ Read docs/adding-tours.md and docs/themes.md, then help me add my first tour and
 
 interface AgentPromptCopyProps {
   className?: string;
+  t?: Dict["copy"];
 }
 
-export function AgentPromptCopy({ className }: AgentPromptCopyProps) {
+export function AgentPromptCopy({ className, t = en.copy }: AgentPromptCopyProps) {
   const [copied, setCopied] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
@@ -49,9 +52,9 @@ export function AgentPromptCopy({ className }: AgentPromptCopyProps) {
       await navigator.clipboard.writeText(AGENT_PROMPT);
       showCopiedState();
       fireConfetti();
-      toast.success("Agent prompt copied to clipboard");
+      toast.success(t.agentCopied);
     } catch {
-      toast.error("Failed to copy prompt");
+      toast.error(t.agentFailed);
     }
   };
 
@@ -75,7 +78,7 @@ export function AgentPromptCopy({ className }: AgentPromptCopyProps) {
         "group flex items-center justify-center gap-3 cursor-copy font-mono text-[13px] text-muted-foreground hover:text-foreground transition-colors",
         className,
       )}
-      aria-label="Copy AI agent prompt to clone and set up the repo. Press P to copy."
+      aria-label={t.agentAria}
     >
       {/* Fixed-width stack sized to the resting (overlapped) layout, so the
           default look is unchanged. The rightmost avatar (nearest the label)
@@ -99,7 +102,7 @@ export function AgentPromptCopy({ className }: AgentPromptCopyProps) {
         </div>
       </div>
 
-      <span>Copy AI agent instructions</span>
+      <span>{t.agentLabel}</span>
 
       <div className="relative flex items-center justify-center w-5 h-5">
         <AnimatePresence mode="wait">

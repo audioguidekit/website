@@ -6,13 +6,16 @@ import { Copy, Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import confetti from 'canvas-confetti';
+import en from '@/content/landing/en.json';
+import type { Dict } from '@/content/landing';
 
 interface TerminalCopyProps {
   command: string;
   className?: string;
+  t?: Dict['copy'];
 }
 
-export function TerminalCopy({ command, className }: TerminalCopyProps) {
+export function TerminalCopy({ command, className, t = en.copy }: TerminalCopyProps) {
   const [copied, setCopied] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
@@ -40,9 +43,9 @@ export function TerminalCopy({ command, className }: TerminalCopyProps) {
       await navigator.clipboard.writeText(command);
       showCopiedState();
       fireConfetti();
-      toast.success('Command copied to clipboard');
+      toast.success(t.commandCopied);
     } catch (err) {
-      toast.error('Failed to copy command');
+      toast.error(t.commandFailed);
     }
   };
 
@@ -73,7 +76,7 @@ export function TerminalCopy({ command, className }: TerminalCopyProps) {
       "group flex items-center justify-center gap-3 cursor-copy font-mono text-[13px] text-muted-foreground hover:text-foreground transition-colors",
       className
     )}
-    aria-label={`Copy ${command} command. Press C to copy.`}
+    aria-label={t.commandAria}
   >
     <div className="flex items-center gap-2">
       <span className="text-foreground/30 font-bold">$</span>

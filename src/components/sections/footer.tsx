@@ -3,17 +3,31 @@
 import React, { useState } from 'react';
 import { Logo } from '@/components/ui/logo';
 import { ContactModal } from '@/components/ui/contact-modal';
+import { LanguageSwitcher } from '@/components/language-switcher';
+import en from '@/content/landing/en.json';
+import type { Dict, Lang } from '@/content/landing';
 
-export function Footer() {
+export function Footer({
+  t = en.footer,
+  tagline = en.common.tagline,
+  tContact = en.contact,
+  lang,
+}: {
+  t?: Dict['footer'];
+  tagline?: string;
+  tContact?: Dict['contact'];
+  /** Omit to hide the language switcher (e.g. on the 404 page). */
+  lang?: Lang;
+}) {
   const currentYear = new Date().getFullYear();
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 
   const footerLinks = [
-    { label: 'Notes', href: '/notes' },
-    { label: 'Updates', href: '/updates' },
-    { label: 'Documentation', href: '/docs' },
-    { label: 'Github', href: 'https://github.com/audioguidekit/player-react' },
-    { label: 'Contact', href: '#', onClick: () => setIsContactModalOpen(true) },
+    { label: t.notes, href: '/notes' },
+    { label: t.updates, href: '/updates' },
+    { label: t.docs, href: '/docs' },
+    { label: t.github, href: 'https://github.com/audioguidekit/player-react' },
+    { label: t.contact, href: '#', onClick: () => setIsContactModalOpen(true) },
   ];
 
   return (
@@ -23,7 +37,7 @@ export function Footer() {
           <div className="space-y-4 flex flex-col items-center">
             <Logo className="w-[100px] sm:w-[140px]" />
             <p className="text-muted-foreground text-[14px] leading-relaxed max-w-[500px] text-center">
-              A modern web-based audio guide that works on any device. Works online and offline, hosts on your own servers, and lets you customize colors and branding. No vendor fees or contracts.
+              {tagline}
             </p>
           </div>
 
@@ -50,14 +64,21 @@ export function Footer() {
           <p className="font-mono text-[10px] text-muted-foreground uppercase tracking-[0.2em] text-center">
             © {currentYear} AudioGuideKit • MIT LICENSE • <a href="/llms.txt" className="hover:text-foreground transition-colors">LLMs.txt</a>
           </p>
-          <div className="flex items-center gap-4">
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
             <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
             <span className="font-mono text-[10px] text-muted-foreground uppercase tracking-widest">System_Online</span>
+            {lang && (
+              <>
+                <span className="font-mono text-[10px] text-border">•</span>
+                <LanguageSwitcher current={lang} />
+              </>
+            )}
           </div>
         </div>
       </div>
 
       <ContactModal
+        t={tContact}
         isOpen={isContactModalOpen}
         onClose={() => setIsContactModalOpen(false)}
       />

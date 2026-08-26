@@ -1,6 +1,7 @@
 import { MetadataRoute } from 'next';
 import { getAllDocSlugs } from '@/lib/docs/mdx';
 import { getSortedPostsData } from '@/lib/notes';
+import { LANGS } from '@/content/landing/langs';
 
 const siteUrl = 'https://audioguidekit.org';
 
@@ -13,6 +14,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'weekly',
       priority: 1.0,
     },
+    ...LANGS.map((lang) => ({
+      url: `${siteUrl}/${lang}`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.9,
+    })),
     {
       url: `${siteUrl}/notes`,
       lastModified: new Date(),

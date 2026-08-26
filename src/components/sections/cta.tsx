@@ -4,15 +4,16 @@ import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { TerminalCopy } from "@/components/ui/terminal-copy";
 import { AgentPromptCopy } from "@/components/ui/agent-prompt-copy";
+import en from "@/content/landing/en.json";
+import type { Dict } from "@/content/landing";
 
-const FEATURES = [
-  "5 minute setup",
-  "Free forever",
-  "No lock-in",
-  "Open source",
-];
-
-export function CTA() {
+export function CTA({
+  t = en.cta,
+  tCopy = en.copy,
+}: {
+  t?: Dict["cta"];
+  tCopy?: Dict["copy"];
+}) {
   const router = useRouter();
 
   useEffect(() => {
@@ -41,11 +42,11 @@ export function CTA() {
           </span>
 
           <h2 className="text-[32px] sm:text-[40px] md:text-[56px] font-bold text-foreground tracking-tight leading-[1.05] mb-6">
-            Get the player
+            {t.heading}
           </h2>
 
           <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 mb-10">
-            {FEATURES.map((feature) => (
+            {t.features.map((feature) => (
               <span
                 key={feature}
                 className="inline-flex items-center gap-1.5 text-[14px] text-muted-foreground"
@@ -57,8 +58,12 @@ export function CTA() {
           </div>
 
           <div className="grid gap-3 mb-8">
-            <AgentPromptCopy className="px-5 py-2 bg-white border border-foreground/10 rounded-md hover:border-foreground/20 transition-colors text-[14px] sm:text-[15px]" />
+            <AgentPromptCopy
+              t={tCopy}
+              className="px-5 py-2 bg-white border border-foreground/10 rounded-md hover:border-foreground/20 transition-colors text-[14px] sm:text-[15px]"
+            />
             <TerminalCopy
+              t={tCopy}
               command="npx create-audioguidekit-player my-project"
               className="px-5 py-2 bg-white border border-foreground/10 rounded-md hover:border-foreground/20 transition-colors text-[14px] sm:text-[15px]"
             />
@@ -68,7 +73,7 @@ export function CTA() {
             href="/docs"
             className="group inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground hover:opacity-90 font-medium h-12 px-6 rounded-full transition-all text-[15px]"
           >
-            Read documentation
+            {t.docsButton}
             <kbd className="hidden md:inline-flex items-center justify-center size-5 text-[10px] font-mono font-bold bg-primary-foreground/20 text-primary-foreground rounded border border-primary-foreground/20">
               D
             </kbd>

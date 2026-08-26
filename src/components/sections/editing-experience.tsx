@@ -5,8 +5,11 @@ import {
   TooltipTrigger,
   TooltipContent,
 } from "@/components/ui/tooltip";
+import { RichText } from "@/components/rich-text";
+import en from "@/content/landing/en.json";
+import type { Dict } from "@/content/landing";
 
-export function EditingExperience() {
+export function EditingExperience({ t = en.editing }: { t?: Dict["editing"] }) {
   return (
     <section className="relative py-32 bg-background border-b border-border overflow-hidden">
       <div className="max-w-[1000px] mx-auto px-4 sm:px-8">
@@ -18,10 +21,10 @@ export function EditingExperience() {
                 CONFIGURABILITY
               </span>
               <h2 className="mt-6 text-[32px] sm:text-[48px] font-bold text-foreground tracking-tight leading-tight">
-                A developer-friendly workflow
+                {t.headingA}
                 <br />
                 <span className="text-muted-foreground text-[28px] sm:text-[36px]">
-                  Everything lives in your git repo
+                  {t.headingB}
                 </span>
               </h2>
             </div>
@@ -31,12 +34,10 @@ export function EditingExperience() {
           <div className="flex flex-col items-start lg:items-center">
             <div className="w-full max-w-[800px] mb-12">
               <h3 className="text-[24px] font-bold mb-4 tracking-tight">
-                1. Editing guide content
+                {t.block1Title}
               </h3>
               <p className="text-muted-foreground text-[18px] leading-relaxed">
-                Content lives in a simple JSON file. Edit stops, metadata, and
-                audio links directly, and reorder the guide by changing the item
-                order.
+                {t.block1Body}
               </p>
             </div>
             <div className="w-full relative">
@@ -120,13 +121,10 @@ export function EditingExperience() {
           <div className="flex flex-col items-start lg:items-center">
             <div className="w-full max-w-[800px] mb-12">
               <h3 className="text-[24px] font-bold mb-4 tracking-tight">
-                2. Customizing the app features &amp; layout
+                {t.block2Title}
               </h3>
               <p className="text-muted-foreground text-[18px] leading-relaxed">
-                Control every aspect of your guide's behavior and appearance.
-                Configure UI elements visibility and style, theme selection,
-                offline mode and more. All from the same JSON configuration
-                file.
+                {t.block2Body}
               </p>
             </div>
             <div className="w-full relative">
@@ -201,13 +199,10 @@ export function EditingExperience() {
           <div className="flex flex-col items-start lg:items-center">
             <div className="w-full max-w-[800px] mb-12">
               <h3 className="text-[24px] font-bold mb-4 tracking-tight">
-                3. Customizing the theme
+                {t.block3Title}
               </h3>
               <p className="text-muted-foreground text-[18px] leading-relaxed">
-                Fine-tune the look and feel using a single TypeScript
-                configuration if the built-in themes don’t fit your needs.
-                Adjust colors, typography, and spacing without touching the core
-                code.
+                {t.block3Body}
               </p>
             </div>
             <div className="w-full relative">
@@ -276,22 +271,24 @@ export function EditingExperience() {
           <div className="flex flex-col items-start lg:items-center">
             <div className="w-full max-w-[800px] mb-12">
               <h3 className="text-[24px] font-bold mb-4 tracking-tight">
-                4. Multi-language support
+                {t.block4Title}
               </h3>
               <p className="text-muted-foreground text-[18px] leading-relaxed">
-                The UI now supports{" "}
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <span className="underline decoration-dotted underline-offset-6 decoration-muted-foreground/40 cursor-help">
-                      6 languages
-                    </span>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    English, German, Italian, French, Spanish, Czech
-                  </TooltipContent>
-                </Tooltip>
-                . Additional languages can be added through simple translation
-                files and they will work out of the box.
+                <RichText
+                  text={t.block4Body}
+                  links={{
+                    "#langs": (children) => (
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <span className="underline decoration-dotted underline-offset-6 decoration-muted-foreground/40 cursor-help">
+                            {children}
+                          </span>
+                        </TooltipTrigger>
+                        <TooltipContent>{t.block4Tooltip}</TooltipContent>
+                      </Tooltip>
+                    ),
+                  }}
+                />
               </p>
             </div>
             <div className="w-full relative">

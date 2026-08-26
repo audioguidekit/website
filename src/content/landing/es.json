@@ -1,0 +1,268 @@
+{
+  "meta": {
+    "title": "AudioGuideKit: reproductor de audioguías de código abierto en React",
+    "description": "Reproductor de audioguías gratuito y de código abierto para museos, galerías, ciudades, organismos de turismo e instituciones culturales. Aplicación web progresiva (PWA) autohospedada que funciona sin conexión. Sin dependencia de un proveedor concreto ni cuotas por visitante.",
+    "ogTitle": "AudioGuideKit: reproductor de audioguías de código abierto desarrollado con React",
+    "ogDescription": "Crea audioguías para museos e instituciones culturales. Gratis, con alojamiento propio, funciona sin conexión. Sin dependencia de un proveedor concreto."
+  },
+  "common": {
+    "tagline": "Una moderna audioguía basada en la web que funciona en cualquier dispositivo. Funciona tanto en línea como sin conexión, se aloja en tus propios servidores y te permite personalizar los colores y la imagen de marca. Sin comisiones ni contratos con el proveedor."
+  },
+  "nav": {
+    "home": "Inicio de la visita guiada con audio",
+    "notes": "Notas",
+    "updates": "Actualizaciones",
+    "docs": "Documentación",
+    "openMenu": "Abrir menú",
+    "closeMenu": "Cerrar menú"
+  },
+  "hero": {
+    "badge": "Código abierto • Licencia MIT",
+    "headlineA": "Código abierto",
+    "headlineB": "reproductor de audioguías",
+    "headlineFor": "para",
+    "typewriter": [
+      "museos",
+      "galerías",
+      "ciudades",
+      "oficinas de turismo",
+      "instituciones culturales"
+    ],
+    "phoneAlt": "Interfaz del reproductor de AudioGuideKit"
+  },
+  "status": {
+    "loading": "Recuperando los datos más recientes...",
+    "updated": "Actualizado",
+    "updatedToday": "Actualizado hoy",
+    "gettingStarted": "Primeros pasos"
+  },
+  "coreFeatures": {
+    "heading": "Todo lo que necesitas para empezar",
+    "items": [
+      {
+        "title": "Funciona nada más sacarlo de la caja",
+        "description": "Completo y listo para usar. Incluye todo lo necesario: solo tienes que añadir tus archivos de audio y ya está."
+      },
+      {
+        "title": "Implementa en cualquier lugar",
+        "description": "Aloja tu sitio web donde quieras. Sin base de datos, sin cuotas mensuales y con la posibilidad de cambiar de proveedor en cualquier momento."
+      },
+      {
+        "title": "En línea + Presencial",
+        "description": "Funciona sin conexión a Internet. Perfecto para museos con una red wifi débil o exposiciones subterráneas."
+      },
+      {
+        "title": "Diseñado para los visitantes que están siempre en movimiento",
+        "description": "Botones grandes, indicación clara del progreso y fácil de usar estando de pie. Diseñado para personas que recorren las exposiciones, no para quienes están sentados en un escritorio."
+      },
+      {
+        "title": "Adáptalo a tu marca",
+        "description": "Añade tu logotipo y tus colores mediante unos sencillos ajustes. No hace falta saber programar, pero tienes acceso completo al código fuente si lo necesitas."
+      }
+    ],
+    "integrations": "Utiliza las herramientas con las que ya cuentas: aloja el audio en cualquier CDN, realiza un seguimiento de los visitantes con tu plataforma de análisis y gestiona los pagos a través de tu proveedor."
+  },
+  "whoItIsFor": {
+    "heading": "¿A quién va dirigido?",
+    "items": [
+      "Museos, galerías, ciudades e instituciones culturales",
+      "Desarrolladores que crean audioguías y recorridos autoguiados",
+      "Agencias y organismos de turismo que organizan proyectos expositivos y culturales"
+    ]
+  },
+  "appShowcase": {
+    "heading": "Diseñado para el visitante moderno",
+    "subheading": "Incluye temas claros y oscuros. Fácilmente personalizable para adaptarlo a tu marca.",
+    "light": "Luz",
+    "dark": "Oscuro",
+    "lightAria": "Vista previa del modo claro",
+    "darkAria": "Vista previa del modo oscuro",
+    "prev": "Anterior",
+    "next": "Siguiente",
+    "goToSlide": "Ir a la diapositiva",
+    "items": [
+      {
+        "title": "Resumen rápido",
+        "description": "Obtén una visión general clara de la guía y utilízala tanto en línea como sin conexión."
+      },
+      {
+        "title": "Guía de audio sencilla",
+        "description": "Todo en un solo sitio, con un reproductor de audio sencillo y la posibilidad de ver la transcripción."
+      },
+      {
+        "title": "Transcripciones completas",
+        "description": "Sigue el desarrollo con las transcripciones completas de cada fragmento de audio."
+      },
+      {
+        "title": "Reproductor a pantalla completa",
+        "description": "Una experiencia envolvente a pantalla completa para escuchar con atención."
+      },
+      {
+        "title": "Opiniones de los visitantes",
+        "description": "Recoge las opiniones de los visitantes una vez que la guía esté terminada."
+      },
+      {
+        "title": "Mapa interactivo",
+        "description": "Vista opcional del mapa que muestra todos los puntos de interés de un solo vistazo."
+      }
+    ]
+  },
+  "tryPlayer": {
+    "heading": "Prueba el reproductor ahora",
+    "body": "Prueba nuestro reproductor por ti mismo en cuestión de segundos escaneando este código QR o haciendo clic en el botón de abajo.",
+    "cta": "Prueba el reproductor",
+    "qrAlt": "Código QR para probar el reproductor de la audioguía"
+  },
+  "howItWorks": {
+    "steps": [
+      {
+        "title": "Clona el repositorio",
+        "description": "Acceder al código fuente del reproductor"
+      },
+      {
+        "title": "Añadir contenido de audio",
+        "description": "Utilizar archivos locales o recursos alojados en una CDN"
+      },
+      {
+        "title": "Personalizar la configuración principal y el tema",
+        "description": "Si no te gustan los ajustes predeterminados, personalízalos."
+      },
+      {
+        "title": "Implementar la aplicación",
+        "description": "Aloja tu sitio web en cualquier servidor que ofrezca archivos estáticos"
+      }
+    ],
+    "timelineLabel": "Cronología:",
+    "timeline": "La configuración inicial dura entre 15 y 20 minutos. El tiempo que se tarda en añadir tu contenido depende de cómo tengas preparado el audio; por lo general, entre 1 y 2 semanas, incluyendo la grabación y los metadatos.",
+    "static": "Totalmente estático. Sin servidores, sin bases de datos, sin mantenimiento."
+  },
+  "editing": {
+    "headingA": "Un flujo de trabajo adaptado a las necesidades de los desarrolladores",
+    "headingB": "Todo está en tu repositorio de Git",
+    "block1Title": "1. Edición del contenido de la guía",
+    "block1Body": "El contenido se almacena en un sencillo archivo JSON. Edita directamente las pausas, los metadatos y los enlaces de audio, y reordena la guía cambiando el orden de los elementos.",
+    "block2Title": "2. Personalización de las funciones y el diseño de la aplicación",
+    "block2Body": "Controla todos los aspectos del comportamiento y la apariencia de tu guía. Configura la visibilidad y el estilo de los elementos de la interfaz de usuario, la selección de temas, el modo sin conexión y mucho más. Todo desde el mismo archivo de configuración JSON.",
+    "block3Title": "3. Personalización del tema",
+    "block3Body": "Si los temas integrados no se ajustan a tus necesidades, puedes personalizar el aspecto y el estilo mediante una única configuración de TypeScript. Ajusta los colores, la tipografía y el espaciado sin modificar el código principal.",
+    "block4Title": "4. Compatibilidad con varios idiomas",
+    "block4Body": "La interfaz de usuario ahora está disponible en <a href=\"#langs\">seis idiomas</a>. Se pueden añadir idiomas adicionales mediante sencillos archivos de traducción y funcionarán de inmediato.",
+    "block4Tooltip": "Inglés, alemán, italiano, francés, español, checo"
+  },
+  "faq": {
+    "items": [
+      {
+        "q": "¿Por qué un reproductor de audioguía?",
+        "a": "Creamos esto para dar respuesta a nuestras propias necesidades en materia de audioguías (<a href=\"/notes/why\">lee la historia completa</a>). Tras evaluar las soluciones existentes, nos dimos cuenta de que la mayoría eran plataformas caras y cerradas o alquileres de hardware poco prácticos. Esta es una alternativa moderna de la que realmente eres propietario."
+      },
+      {
+        "q": "¿Por qué es de código abierto?",
+        "a": "La reproducción de audio no debería obligarte a depender de un proveedor concreto (algo que ocurre con mucha frecuencia). El código abierto te permite ver exactamente qué es lo que se ejecuta, evitar la dependencia de un proveedor y que todo el mundo se beneficie de las mejoras."
+      },
+      {
+        "q": "¿Puedo utilizar esto con fines comerciales?",
+        "a": "Sí. Este proyecto es de código abierto y cuenta con una licencia MIT, que permite su uso comercial sin restricciones."
+      },
+      {
+        "q": "¿Funciona solo con las audioguías?",
+        "a": "No. Aunque está diseñado para museos y galerías, puedes adaptarlo a cualquier aplicación basada en audio. Las audioguías para instituciones culturales siguen siendo nuestro principal objetivo, por lo que seguiremos desarrollando el producto en esa dirección."
+      },
+      {
+        "q": "¿Por qué no incluye un CMS?",
+        "a": "Un CMS convierte un reproductor en una plataforma. La autenticación, los permisos y la gestión de contenidos multimedia... eso es algo totalmente distinto. Nos centramos deliberadamente en el propio reproductor. Sin embargo, tenemos <a href=\"/updates\">previsto implementar</a> un sencillo sistema de gestión «headless» para audioguías a lo largo de 2026."
+      },
+      {
+        "q": "¿Cómo se «implementa» esto en realidad?",
+        "a": "Es una página web estándar que puedes alojar en cualquier servidor web. Entre las opciones más populares se encuentran Vercel, Netlify o tu propia infraestructura. No se necesita ninguna base de datos ni servidor backend. Si puedes subir archivos a un alojamiento web, puedes implementar esto."
+      },
+      {
+        "q": "¿Cuál es el truco?",
+        "a": "Tendrás que dedicarle algo de tiempo, sobre todo si tu experiencia técnica es limitada. Te encargarás de actualizar los archivos de configuración y de gestionar el contenido de tu guía. Con unos conocimientos técnicos básicos y nuestra <a href=\"/docs\">documentación paso a paso</a>, la mayoría de los equipos pueden llevar a cabo esta implementación con éxito."
+      },
+      {
+        "q": "¿Qué conocimientos técnicos necesito?",
+        "a": "Es útil tener conocimientos básicos de desarrollo web: editar archivos de configuración (JSON), subir archivos a un servidor y utilizar sistemas de control de versiones. Si cuentas con un desarrollador web en tu plantilla o colaboras con una agencia de desarrollo, les resultará muy sencillo ponerlo en práctica."
+      },
+      {
+        "q": "¿Dónde puedo pedir ayuda?",
+        "a": "La <a href=\"/docs\">documentación</a> incluye instrucciones paso a paso para la configuración y situaciones habituales. Si tienes preguntas técnicas o necesitas ayuda de la comunidad, <a href=\"#issue\">abre una incidencia en GitHub</a>."
+      },
+      {
+        "q": "¿Ofrecéis servicios de implementación?",
+        "a": "Sí. Ofrecemos servicios de consultoría de pago para la configuración, la migración de contenidos, la personalización y la formación. Tanto si necesitas una implementación completa como si solo necesitas orientación inicial, podemos ayudarte. <a href=\"#contact\">Ponte en contacto con nosotros</a> para comentarnos tus necesidades."
+      },
+      {
+        "q": "¿Hay algún plan de acción?",
+        "a": "Sí. Mantenemos una hoja de ruta activa basada en nuestros propios requisitos y en los comentarios de los usuarios. Consulta la <a href=\"/updates\">página de actualizaciones</a> para ver el progreso actual o <a href=\"#feature\">envía solicitudes de nuevas funciones</a> a través de GitHub."
+      }
+    ],
+    "end": "Fin de las preguntas frecuentes"
+  },
+  "philosophy": {
+    "items": [
+      {
+        "title": "Una cosa, bien hecha",
+        "desc": "Resuelve un único problema sin que se produzca una «deriva de funcionalidades»."
+      },
+      {
+        "title": "Atentamente",
+        "desc": "Tus datos, tu infraestructura. Sin dependencia de un proveedor."
+      },
+      {
+        "title": "Diseño sencillo",
+        "desc": "Cuantas menos piezas móviles haya, menos sorpresas habrá."
+      },
+      {
+        "title": "Excelente DX y UX",
+        "desc": "Claro para los desarrolladores. Fluido para los visitantes."
+      }
+    ]
+  },
+  "cta": {
+    "heading": "Descarga el reproductor",
+    "features": [
+      "Instalación en 5 minutos",
+      "Gratis para siempre",
+      "Sin compromiso de permanencia",
+      "Código abierto"
+    ],
+    "docsButton": "Leer la documentación"
+  },
+  "footer": {
+    "notes": "Notas",
+    "updates": "Actualizaciones",
+    "docs": "Documentación",
+    "github": "GitHub",
+    "contact": "Contacto"
+  },
+  "copy": {
+    "commandCopied": "Comando copiado en el portapapeles",
+    "commandFailed": "Error al copiar el comando",
+    "commandAria": "Copia el comando de instalación. Pulsa C para copiarlo.",
+    "agentLabel": "Copiar las instrucciones del agente de IA",
+    "agentCopied": "El mensaje del agente se ha copiado en el portapapeles",
+    "agentFailed": "No se ha podido copiar el mensaje",
+    "agentAria": "Copia el comando del agente de AI para clonar y configurar el repositorio. Pulsa P para copiarlo."
+  },
+  "contact": {
+    "title": "Ponte en contacto con nosotros",
+    "description": "¿Tienes alguna pregunta o necesitas ayuda? Ponte en contacto con nosotros a través de los datos que figuran a continuación.",
+    "close": "Cerrar",
+    "name": "Nombre *",
+    "namePlaceholder": "Tu nombre",
+    "email": "Correo electrónico *",
+    "emailPlaceholder": "you@example.com",
+    "organization": "Organización",
+    "organizationPlaceholder": "Nombre de la organización",
+    "message": "Mensaje *",
+    "messagePlaceholder": "Cuéntanos en qué consiste tu proyecto y cuáles son tus necesidades...",
+    "sending": "Enviando...",
+    "sent": "¡Enviado!",
+    "send": "Enviar mensaje",
+    "success": "¡Mensaje enviado correctamente!",
+    "failed": "No se ha podido enviar el mensaje. Inténtalo de nuevo o envíanos un correo electrónico directamente."
+  },
+  "switcher": {
+    "label": "Idioma"
+  }
+}

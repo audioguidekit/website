@@ -1,0 +1,268 @@
+{
+  "meta": {
+    "title": "AudioGuideKit - open-source audio guide player in React",
+    "description": "Free, open-source audio guide player for museums, galleries, cities, tourism boards and cultural institutions. Self-hosted PWA that works offline. No vendor lock-in, no per-visitor fees.",
+    "ogTitle": "AudioGuideKit - open-source audio guide player in React",
+    "ogDescription": "Build audio guides for museums and cultural institutions. Free, self-hosted, works offline. No vendor lock-in."
+  },
+  "common": {
+    "tagline": "A modern web-based audio guide that works on any device. Works online and offline, hosts on your own servers, and lets you customize colors and branding. No vendor fees or contracts."
+  },
+  "nav": {
+    "home": "Audio Tour Home",
+    "notes": "Notes",
+    "updates": "Updates",
+    "docs": "Documentation",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  },
+  "hero": {
+    "badge": "Open Source • MIT License",
+    "headlineA": "Open source",
+    "headlineB": "audio guide player",
+    "headlineFor": "for",
+    "typewriter": [
+      "museums",
+      "galleries",
+      "cities",
+      "tourism boards",
+      "cultural institutions"
+    ],
+    "phoneAlt": "AudioGuideKit player interface"
+  },
+  "status": {
+    "loading": "Fetching latest pulse...",
+    "updated": "Updated",
+    "updatedToday": "Updated today",
+    "gettingStarted": "Getting started"
+  },
+  "coreFeatures": {
+    "heading": "Everything you need to launch",
+    "items": [
+      {
+        "title": "Works out of the box",
+        "description": "Complete and ready to deploy. Everything you need is included—just add your audio files and go."
+      },
+      {
+        "title": "Deploy anywhere",
+        "description": "Host it anywhere. No database, no monthly fees, switch providers anytime."
+      },
+      {
+        "title": "Online + Offline",
+        "description": "Works without internet. Perfect for museums with weak WiFi or underground exhibits"
+      },
+      {
+        "title": "Built for visitors on the move",
+        "description": "Large buttons, clear progress, easy to use while standing. Designed for people walking through exhibits, not sitting at desks."
+      },
+      {
+        "title": "Match your brand",
+        "description": "Add your logo and colors through simple settings. No coding required, but full source access if you need it."
+      }
+    ],
+    "integrations": "Use your existing tools—host audio on any CDN, track visitors with your analytics platform, process payments through your provider."
+  },
+  "whoItIsFor": {
+    "heading": "Who is it for?",
+    "items": [
+      "Museums, galleries, cities and cultural institutions",
+      "Developers building audio guides and self-guided tours",
+      "Agencies and tourism boards delivering exhibition and cultural projects"
+    ]
+  },
+  "appShowcase": {
+    "heading": "Designed for the modern visitor",
+    "subheading": "Light and dark themes included. Easily customizable to match your brand.",
+    "light": "Light",
+    "dark": "Dark",
+    "lightAria": "Light mode preview",
+    "darkAria": "Dark mode preview",
+    "prev": "Previous",
+    "next": "Next",
+    "goToSlide": "Go to slide",
+    "items": [
+      {
+        "title": "Quick overview",
+        "description": "Get a clear overview of the guide and use it online or offline."
+      },
+      {
+        "title": "Simple audio guide",
+        "description": "All stops in one place, with a simple audio player and transcript support."
+      },
+      {
+        "title": "Full transcripts",
+        "description": "Follow along with complete transcripts for every audio stop."
+      },
+      {
+        "title": "Fullscreen player",
+        "description": "An immersive fullscreen experience for focused listening."
+      },
+      {
+        "title": "Visitor feedback",
+        "description": "Collect visitor feedback once the guide is complete."
+      },
+      {
+        "title": "Interactive map",
+        "description": "Optional map view showing all points of interest at a glance."
+      }
+    ]
+  },
+  "tryPlayer": {
+    "heading": "Test the player now",
+    "body": "Experience our player on your own in seconds by scanning this QR code or clicking the button below.",
+    "cta": "Try the player",
+    "qrAlt": "QR code to test the audio guide player"
+  },
+  "howItWorks": {
+    "steps": [
+      {
+        "title": "Clone the repository",
+        "description": "Access the player source code"
+      },
+      {
+        "title": "Add audio content",
+        "description": "Use local files or CDN-hosted assets"
+      },
+      {
+        "title": "Customize main config and theme",
+        "description": "If you don't like the default settings, customize them"
+      },
+      {
+        "title": "Deploy the app",
+        "description": "Host anywhere that serves static files"
+      }
+    ],
+    "timelineLabel": "Timeline:",
+    "timeline": "Initial setup takes 15-20 minutes. Adding your content depends on your audio preparation—typically 1-2 weeks including recording and metadata.",
+    "static": "Fully static. No servers, no databases, no maintenance."
+  },
+  "editing": {
+    "headingA": "A developer-friendly workflow",
+    "headingB": "Everything lives in your git repo",
+    "block1Title": "1. Editing guide content",
+    "block1Body": "Content lives in a simple JSON file. Edit stops, metadata, and audio links directly, and reorder the guide by changing the item order.",
+    "block2Title": "2. Customizing the app features and layout",
+    "block2Body": "Control every aspect of your guide's behavior and appearance. Configure UI elements visibility and style, theme selection, offline mode and more. All from the same JSON configuration file.",
+    "block3Title": "3. Customizing the theme",
+    "block3Body": "Fine-tune the look and feel using a single TypeScript configuration if the built-in themes don't fit your needs. Adjust colors, typography, and spacing without touching the core code.",
+    "block4Title": "4. Multi-language support",
+    "block4Body": "The UI now supports <a href=\"#langs\">6 languages</a>. Additional languages can be added through simple translation files and they will work out of the box.",
+    "block4Tooltip": "English, German, Italian, French, Spanish, Czech"
+  },
+  "faq": {
+    "items": [
+      {
+        "q": "Why audio guide player?",
+        "a": "We built this to solve our own audio guide needs (<a href=\"/notes/why\">read the full story</a>). After evaluating existing solutions, we found most were either expensive locked-in platforms or clunky hardware rentals. This is a modern alternative you actually own."
+      },
+      {
+        "q": "Why is this open source?",
+        "a": "Audio playback shouldn't lock you into a vendor (it happens more often than not). Open source means you see exactly what runs, avoid vendor dependency, and everyone benefits from improvements."
+      },
+      {
+        "q": "Can I use this commercially?",
+        "a": "Yes. This project is open-source with an MIT license, which allows commercial use without restrictions."
+      },
+      {
+        "q": "Does it work only for audio guides?",
+        "a": "No. While it's designed for museums and galleries, you can adapt it for any audio-based application. Audio guides for cultural institutions remain our primary focus, so expect continued development in that direction."
+      },
+      {
+        "q": "Why doesn't this include a CMS?",
+        "a": "A CMS turns a player into a platform. Authentication, permissions, media management—that's a different scope entirely. We deliberately focus on the player itself. However, a simple headless management system for audio guides is <a href=\"/updates\">on the roadmap</a> for later in 2026."
+      },
+      {
+        "q": "How do I actually 'deploy' this?",
+        "a": "It's a standard website that you can host on any web server. Popular options include Vercel, Netlify, or your own infrastructure. No database, no backend server required. If you can upload files to a web host, you can deploy this."
+      },
+      {
+        "q": "What's the catch?",
+        "a": "You need to invest some time, especially if you have limited technical experience. You'll handle updating configuration files and managing your guide content. With basic technical knowledge and our <a href=\"/docs\">step-by-step documentation</a>, most teams can successfully implement this."
+      },
+      {
+        "q": "What technical skills do I need?",
+        "a": "Basic web development knowledge is helpful: editing configuration files (JSON), uploading files to a server, and using version control. If you have a web developer on staff or work with a development agency, they'll find this straightforward to implement."
+      },
+      {
+        "q": "Where can I get help?",
+        "a": "The <a href=\"/docs\">documentation</a> covers step-by-step setup and common scenarios. For technical questions or community support, <a href=\"#issue\">open a GitHub issue</a>."
+      },
+      {
+        "q": "Do you offer implementation services?",
+        "a": "Yes. We provide paid consulting for setup, content migration, customization, and training. Whether you need full implementation or just initial guidance, we can help. <a href=\"#contact\">Contact us</a> to discuss your requirements."
+      },
+      {
+        "q": "Is there a roadmap?",
+        "a": "Yes. We maintain an active roadmap based on our own requirements and user feedback. Check the <a href=\"/updates\">updates page</a> for current progress, or <a href=\"#feature\">submit feature requests</a> via GitHub."
+      }
+    ],
+    "end": "End of FAQs"
+  },
+  "philosophy": {
+    "items": [
+      {
+        "title": "One thing, done well",
+        "desc": "Solve a single problem without feature creep."
+      },
+      {
+        "title": "Fully yours",
+        "desc": "Your data, your infrastructure. No lock-in."
+      },
+      {
+        "title": "Simple by design",
+        "desc": "Fewer moving parts mean fewer surprises."
+      },
+      {
+        "title": "Great DX and UX",
+        "desc": "Clear for developers. Smooth for visitors."
+      }
+    ]
+  },
+  "cta": {
+    "heading": "Get the player",
+    "features": [
+      "5 minute setup",
+      "Free forever",
+      "No lock-in",
+      "Open source"
+    ],
+    "docsButton": "Read documentation"
+  },
+  "footer": {
+    "notes": "Notes",
+    "updates": "Updates",
+    "docs": "Documentation",
+    "github": "Github",
+    "contact": "Contact"
+  },
+  "copy": {
+    "commandCopied": "Command copied to clipboard",
+    "commandFailed": "Failed to copy command",
+    "commandAria": "Copy the install command. Press C to copy.",
+    "agentLabel": "Copy AI agent instructions",
+    "agentCopied": "Agent prompt copied to clipboard",
+    "agentFailed": "Failed to copy prompt",
+    "agentAria": "Copy AI agent prompt to clone and set up the repo. Press P to copy."
+  },
+  "contact": {
+    "title": "Get in touch",
+    "description": "Have questions or need help? Contact us below.",
+    "close": "Close",
+    "name": "Name *",
+    "namePlaceholder": "Your name",
+    "email": "Email *",
+    "emailPlaceholder": "you@example.com",
+    "organization": "Organization",
+    "organizationPlaceholder": "Organization name",
+    "message": "Message *",
+    "messagePlaceholder": "Tell us about your project and requirements...",
+    "sending": "Sending...",
+    "sent": "Sent!",
+    "send": "Send message",
+    "success": "Message sent successfully!",
+    "failed": "Failed to send message. Please try again or email us directly."
+  },
+  "switcher": {
+    "label": "Language"
+  }
+}

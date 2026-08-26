@@ -4,55 +4,43 @@ import React, { useState, useEffect, useRef } from "react";
 import { Sun, Moon, ChevronLeft, ChevronRight } from "lucide-react";
 import { PhoneFrame } from "@/components/ui/phone-frame";
 import { useIsMobile } from "@/hooks/use-mobile";
+import en from "@/content/landing/en.json";
+import type { Dict } from "@/content/landing";
 
-const features = [
+const SCREENSHOTS = [
   {
-    title: "Quick overview",
-    description:
-      "Get a clear overview of the guide and use it online or offline.",
     lightImage: "/screenshots/audioguidekit-tour-start-screen-light.png",
     darkImage: "/screenshots/audioguidekit-tour-start-screen-dark.png",
   },
   {
-    title: "Simple audio guide",
-    description:
-      "All stops in one place, with a simple audio player and transcript support.",
     lightImage: "/screenshots/audioguidekit-tour-tracklist-progress-light.png",
     darkImage: "/screenshots/audioguidekit-tour-tracklist-progress-dark.png",
   },
   {
-    title: "Full transcripts",
-    description: "Follow along with complete transcripts for every audio stop.",
     lightImage: "/screenshots/audioguidekit-tour-transcript-light.png",
     darkImage: "/screenshots/audioguidekit-tour-transcript-dark.png",
   },
   {
-    title: "Fullscreen player",
-    description: "An immersive fullscreen experience for focused listening.",
     lightImage: "/screenshots/audioguidekit-tour-player-fullscreen-light.png",
     darkImage: "/screenshots/audioguidekit-tour-player-fullscreen-dark.png",
   },
   {
-    title: "Visitor feedback",
-    description: "Collect visitor feedback once the guide is complete.",
     lightImage: "/screenshots/audioguidekit-tour-rating-feedback-light.png",
     darkImage: "/screenshots/audioguidekit-tour-rating-feedback-dark.png",
   },
   {
-    title: "Interactive map",
-    description: "Optional map view showing all points of interest at a glance.",
     lightImage: "/screenshots/audioguidekit-tour-map-light.png",
     darkImage: "/screenshots/audioguidekit-tour-map-dark.png",
   },
 ];
 
-export function AppShowcase() {
+export function AppShowcase({ t = en.appShowcase }: { t?: Dict["appShowcase"] }) {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [startIndex, setStartIndex] = useState(0);
   const isMobile = useIsMobile();
 
   const visible = isMobile ? 1 : 3;
-  const maxIndex = features.length - visible;
+  const maxIndex = SCREENSHOTS.length - visible;
   const safeIndex = Math.min(startIndex, maxIndex);
 
   // Clamp index when visible count changes (e.g. on resize)
@@ -84,11 +72,10 @@ export function AppShowcase() {
           <div className="mt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
               <h2 className="text-[32px] font-bold text-foreground tracking-tight">
-                Designed for the modern visitor
+                {t.heading}
               </h2>
               <p className="mt-2 text-[15px] text-muted-foreground text-pretty">
-                Light and dark themes included. Easily customizable to match
-                your brand.
+                {t.subheading}
               </p>
             </div>
 
@@ -100,10 +87,10 @@ export function AppShowcase() {
                     ? "bg-background text-foreground shadow-sm"
                     : "text-muted-foreground hover:text-foreground"
                 }`}
-                aria-label="Light mode preview"
+                aria-label={t.lightAria}
               >
                 <Sun className="w-3.5 h-3.5" />
-                <span>Light</span>
+                <span>{t.light}</span>
               </button>
               <button
                 onClick={() => setIsDarkMode(true)}
@@ -112,10 +99,10 @@ export function AppShowcase() {
                     ? "bg-background text-foreground shadow-sm"
                     : "text-muted-foreground hover:text-foreground"
                 }`}
-                aria-label="Dark mode preview"
+                aria-label={t.darkAria}
               >
                 <Moon className="w-3.5 h-3.5" />
-                <span>Dark</span>
+                <span>{t.dark}</span>
               </button>
             </div>
           </div>
@@ -133,7 +120,7 @@ export function AppShowcase() {
               transform: `translateX(-${safeIndex * (100 / visible)}%)`,
             }}
           >
-            {features.map((feature, index) => (
+            {t.items.map((feature, index) => (
               <div
                 key={index}
                 className="flex-shrink-0 flex flex-col items-center px-6"
@@ -142,7 +129,7 @@ export function AppShowcase() {
                 <div className="mb-10 w-full">
                   <PhoneFrame className="w-full max-w-[260px] mockup-shadow">
                     <img
-                      src={isDarkMode ? feature.darkImage : feature.lightImage}
+                      src={isDarkMode ? SCREENSHOTS[index].darkImage : SCREENSHOTS[index].lightImage}
                       alt={feature.title}
                       className="w-full h-auto block"
                     />
@@ -168,7 +155,7 @@ export function AppShowcase() {
             onClick={prev}
             disabled={safeIndex === 0}
             className="p-1.5 rounded-md text-muted-foreground hover:text-foreground disabled:opacity-30 transition-colors cursor-pointer disabled:cursor-default"
-            aria-label="Previous"
+            aria-label={t.prev}
           >
             <ChevronLeft className="w-4 h-4" />
           </button>
@@ -183,7 +170,7 @@ export function AppShowcase() {
                     ? "w-4 bg-foreground"
                     : "w-1.5 bg-border hover:bg-muted-foreground"
                 }`}
-                aria-label={`Go to slide ${i + 1}`}
+                aria-label={`${t.goToSlide} ${i + 1}`}
               />
             ))}
           </div>
@@ -192,7 +179,7 @@ export function AppShowcase() {
             onClick={next}
             disabled={safeIndex === maxIndex}
             className="p-1.5 rounded-md text-muted-foreground hover:text-foreground disabled:opacity-30 transition-colors cursor-pointer disabled:cursor-default"
-            aria-label="Next"
+            aria-label={t.next}
           >
             <ChevronRight className="w-4 h-4" />
           </button>

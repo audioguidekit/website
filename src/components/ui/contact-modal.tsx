@@ -3,13 +3,16 @@
 import React, { useState } from "react";
 import { X } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import en from "@/content/landing/en.json";
+import type { Dict } from "@/content/landing";
 
 interface ContactModalProps {
   isOpen: boolean;
   onClose: () => void;
+  t?: Dict["contact"];
 }
 
-export function ContactModal({ isOpen, onClose }: ContactModalProps) {
+export function ContactModal({ isOpen, onClose, t = en.contact }: ContactModalProps) {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -59,9 +62,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
     } catch (error) {
       console.error(error);
       setStatus("error");
-      setErrorMessage(
-        "Failed to send message. Please try again or email us directly.",
-      );
+      setErrorMessage(t.failed);
     }
   };
 
@@ -75,16 +76,16 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
         <div className="flex items-center justify-between p-6 border-b border-border">
           <DialogHeader className="gap-1 flex-1 sm:text-left">
             <DialogTitle className="text-[20px] font-bold text-foreground leading-tight">
-              Get in touch
+              {t.title}
             </DialogTitle>
             <DialogDescription className="text-[14px] text-muted-foreground mt-1">
-              Have questions or need help? Contact us below.
+              {t.description}
             </DialogDescription>
           </DialogHeader>
           <button
             onClick={onClose}
             className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer self-start"
-            aria-label="Close"
+            aria-label={t.close}
           >
             <X className="w-5 h-5" />
           </button>
@@ -97,7 +98,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
               htmlFor="name"
               className="block text-[14px] font-medium text-foreground mb-2"
             >
-              Name *
+              {t.name}
             </label>
             <input
               type="text"
@@ -108,7 +109,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                 setFormData({ ...formData, name: e.target.value })
               }
               className="w-full px-3 py-2 text-[15px] bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
-              placeholder="Your name"
+              placeholder={t.namePlaceholder}
             />
           </div>
 
@@ -117,7 +118,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
               htmlFor="email"
               className="block text-[14px] font-medium text-foreground mb-2"
             >
-              Email *
+              {t.email}
             </label>
             <input
               type="email"
@@ -128,7 +129,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                 setFormData({ ...formData, email: e.target.value })
               }
               className="w-full px-3 py-2 text-[15px] bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
-              placeholder="you@example.com"
+              placeholder={t.emailPlaceholder}
             />
           </div>
 
@@ -137,7 +138,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
               htmlFor="organization"
               className="block text-[14px] font-medium text-foreground mb-2"
             >
-              Organization
+              {t.organization}
             </label>
             <input
               type="text"
@@ -147,7 +148,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                 setFormData({ ...formData, organization: e.target.value })
               }
               className="w-full px-3 py-2 text-[15px] bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
-              placeholder="Organization name"
+              placeholder={t.organizationPlaceholder}
             />
           </div>
 
@@ -156,7 +157,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
               htmlFor="message"
               className="block text-[14px] font-medium text-foreground mb-2"
             >
-              Message *
+              {t.message}
             </label>
             <textarea
               id="message"
@@ -167,7 +168,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                 setFormData({ ...formData, message: e.target.value })
               }
               className="w-full px-3 py-2 text-[15px] bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all resize-none"
-              placeholder="Tell us about your project and requirements..."
+              placeholder={t.messagePlaceholder}
             />
           </div>
 
@@ -177,7 +178,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
 
           {status === "success" && (
             <p className="text-[14px] text-green-600">
-              Message sent successfully!
+              {t.success}
             </p>
           )}
 
@@ -187,10 +188,10 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
             className="w-full bg-primary text-primary-foreground hover:opacity-90 font-medium h-11 px-6 rounded-full transition-all text-[15px] disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
           >
             {status === "sending"
-              ? "Sending..."
+              ? t.sending
               : status === "success"
-                ? "Sent!"
-                : "Send message"}
+                ? t.sent
+                : t.send}
           </button>
         </form>
       </DialogContent>

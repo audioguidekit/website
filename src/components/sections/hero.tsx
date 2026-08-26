@@ -7,6 +7,8 @@ import { Typewriter } from "@/components/ui/typewriter";
 import { TerminalCopy } from "@/components/ui/terminal-copy";
 import { AgentPromptCopy } from "@/components/ui/agent-prompt-copy";
 import { ProjectStatusShowcase } from "./project-status-showcase";
+import en from "@/content/landing/en.json";
+import type { Dict } from "@/content/landing";
 
 // Dynamic import for motion components - reduces initial bundle
 const MotionDiv = dynamic(
@@ -29,14 +31,21 @@ const MotionSpan = dynamic(
   { ssr: false },
 );
 
-// Static badge element - hoisted to module scope
-const OpenSourceBadge = (
-  <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-medium bg-secondary text-muted-foreground border border-border uppercase tracking-widest">
-    Open Source • MIT License
-  </span>
-);
+export function Hero({
+  t = en.hero,
+  tagline = en.common.tagline,
+  tStatus = en.status,
+  tCopy = en.copy,
+}: {
+  t?: Dict["hero"];
+  tagline?: string;
+  tStatus?: Dict["status"];
+  tCopy?: Dict["copy"];
+}) {
+  // Sizes the invisible spacer below to the longest word the typewriter will
+  // cycle through, so the headline doesn't reflow — per locale, not per English.
+  const longestWord = t.typewriter.reduce((a, b) => (b.length > a.length ? b : a));
 
-export function Hero() {
   return (
     <section className="relative min-h-[90vh] flex items-center bg-white border-b border-border">
       <div className="max-w-[1000px] mx-auto px-4 sm:px-8 relative z-10">
@@ -48,7 +57,9 @@ export function Hero() {
               animate={{ opacity: 1, y: 0 }}
               className="mb-8"
             >
-              {OpenSourceBadge}
+              <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-medium bg-secondary text-muted-foreground border border-border uppercase tracking-widest">
+                {t.badge}
+              </span>
             </MotionDiv>
 
             {/* Headline */}
@@ -58,23 +69,15 @@ export function Hero() {
               transition={{ delay: 0.1 }}
               className="text-[32px] sm:text-[40px] md:text-[64px] font-bold text-foreground tracking-tight leading-[1] mb-6"
             >
-              An open-source <br />
-              <span className="text-muted-foreground">audio guide player</span>
+              {t.headlineA} <br />
+              <span className="text-muted-foreground">{t.headlineB}</span>
               <br className="hidden md:block" />{" "}
               <span className="whitespace-nowrap">
-                for{" "}
+                {t.headlineFor}{" "}
                 <span className="relative inline-block">
-                  <span className="invisible">cultural institutions_</span>
+                  <span className="invisible">{longestWord}_</span>
                   <span className="absolute left-0 top-0 whitespace-nowrap">
-                    <Typewriter
-                      words={[
-                        "museums",
-                        "galleries",
-                        "cities",
-                        "tourism boards",
-                        "cultural institutions",
-                      ]}
-                    />
+                    <Typewriter words={t.typewriter} />
                     <MotionSpan
                       animate={{ opacity: [1, 0] }}
                       transition={{
@@ -98,9 +101,7 @@ export function Hero() {
               transition={{ delay: 0.2 }}
               className="text-[18px] sm:text-[20px] text-muted-foreground leading-relaxed mb-6 text-balance lg:max-w-[640px]"
             >
-              A modern web-based audio guide that works on any device. Works
-              online and offline, hosts on your own servers, and lets you
-              customize colors and branding. No vendor fees or contracts.
+              {tagline}
             </MotionP>
 
             {/* Primary CTA - Terminal + Status */}
@@ -111,14 +112,15 @@ export function Hero() {
               className="inline-flex flex-col items-center"
             >
               <div className="grid gap-3">
-                <AgentPromptCopy className="px-5 py-2 bg-white border border-foreground/10 rounded-md hover:border-foreground/20 transition-colors text-[15px] sm:text-[17px]" />
+                <AgentPromptCopy t={tCopy} className="px-5 py-2 bg-white border border-foreground/10 rounded-md hover:border-foreground/20 transition-colors text-[15px] sm:text-[17px]" />
                 <TerminalCopy
+                  t={tCopy}
                   command="npx create-audioguidekit-player my-project"
                   className="px-5 py-2 bg-white border border-foreground/10 rounded-md hover:border-foreground/20 transition-colors text-[15px] sm:text-[17px]"
                 />
               </div>
               <div className="pt-4">
-                <ProjectStatusShowcase />
+                <ProjectStatusShowcase t={tStatus} />
               </div>
             </MotionDiv>
           </div>
@@ -143,7 +145,7 @@ export function Hero() {
               <PhoneFrame className="w-[280px] sm:w-[320px] shrink-0 mockup-shadow">
                 <img
                   src="/screenshots/audioguidekit-tour-tracklist-playing-light.png"
-                  alt="AudioGuideKit player interface"
+                  alt={t.phoneAlt}
                   className="w-full h-auto"
                 />
               </PhoneFrame>
