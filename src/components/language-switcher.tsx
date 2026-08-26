@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect } from "react";
-import Link from "next/link";
 import { cn } from "@/lib/utils";
 import type { Lang } from "@/content/landing";
 
@@ -32,7 +31,13 @@ export function LanguageSwitcher({ current }: { current: Lang }) {
   return (
     <span className="flex items-center gap-3">
       {OPTIONS.map((option) => (
-        <Link
+        // Deliberately <a>, not <Link>. next/link prefetches `/` the moment this
+        // row scrolls into view — before any cookie exists — so middleware
+        // redirected the prefetch and the router cached "/ = the German payload",
+        // making a click on English render German at `/`. A plain anchor does no
+        // prefetching and does a real navigation, so the cookie set just above is
+        // already in place when middleware runs.
+        <a
           key={option.lang}
           href={option.href}
           hrefLang={option.lang}
@@ -46,7 +51,7 @@ export function LanguageSwitcher({ current }: { current: Lang }) {
           )}
         >
           {option.label}
-        </Link>
+        </a>
       ))}
     </span>
   );

@@ -18,7 +18,7 @@ export function Landing({ lang }: { lang: Lang }) {
 
   return (
     <div className="min-h-screen bg-background flex flex-col items-center">
-      <Navigation t={t.nav} />
+      <Navigation t={t.nav} lang={lang} />
       <main className="w-full max-w-[1400px] border-x border-border relative pt-16 md:pt-22 bg-background">
         <Hero t={t.hero} tagline={t.common.tagline} tStatus={t.status} tCopy={t.copy} />
         <CoreFeatures t={t.coreFeatures} />

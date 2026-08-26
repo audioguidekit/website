@@ -17,6 +17,16 @@ because a script doesn't re-run on client-side navigation between /de and /es.
 Switcher sits in the footer's `System_Online` row; `Footer` renders it only when given a `lang`
 prop, so the 404 page (which also uses `Footer`) doesn't get one.
 
+**Follow-up bug — switching /de → English still showed German.** `next/link` prefetches `/` as soon
+as the footer switcher scrolls into view, before any `lang` cookie exists, so middleware redirected
+the *prefetch* and Next's router cached "/ = the German payload"; the later click just replayed it.
+Trying to skip prefetches in middleware is a dead end: Next 15.5 strips `RSC` and
+`Next-Router-Prefetch` before middleware runs (it sees only accept, accept-language, host,
+user-agent, x-forwarded-*, confirmed by echoing the header keys back on the redirect). Fixed on the
+client instead — the switcher uses a plain `<a>` (no prefetch, real navigation, so the cookie set in
+the same click is already there when middleware runs), and the nav logo now points at the current
+locale's home rather than always `/`.
+
 → *Memory saved: `landing-i18n-deepl.md`*
 
 ## 2026-06-06

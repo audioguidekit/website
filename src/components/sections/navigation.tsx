@@ -7,7 +7,7 @@ import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { Logo } from '@/components/ui/logo';
 import en from '@/content/landing/en.json';
-import type { Dict } from '@/content/landing';
+import type { Dict, Lang } from '@/content/landing';
 
 function GitHubIcon({ className }: { className?: string }) {
   return (
@@ -17,7 +17,7 @@ function GitHubIcon({ className }: { className?: string }) {
   );
 }
 
-export function Navigation({ t = en.nav }: { t?: Dict['nav'] }) {
+export function Navigation({ t = en.nav, lang = 'en' }: { t?: Dict['nav']; lang?: Lang }) {
   const pathname = usePathname();
   const navLinks = [
     { name: t.notes, href: '/notes' },
@@ -30,7 +30,7 @@ export function Navigation({ t = en.nav }: { t?: Dict['nav'] }) {
     <nav className="fixed top-0 left-0 right-0 z-50 flex justify-center pointer-events-none">
       <div className="w-full max-w-[1400px] bg-background/20 backdrop-blur-md border-b border-x border-border h-16 md:h-22 flex items-center justify-between px-4 sm:px-16 pointer-events-auto relative">
 
-        <Link href="/" className="flex items-center group shrink-0" aria-label={t.home}>
+        <Link href={lang === 'en' ? '/' : `/${lang}`} className="flex items-center group shrink-0" aria-label={t.home}>
           <Logo className="transition-transform group-hover:scale-105" />
         </Link>
 
