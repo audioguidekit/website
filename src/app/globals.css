@@ -114,6 +114,7 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
+    scrollbar-gutter: stable;
   }
 
   body {
@@ -122,6 +123,11 @@
     color: var(--foreground);
     line-height: 1.6;
     overflow-x: hidden;
+    /* scrollbar-gutter: stable on html already reserves this space, so Radix's
+       scroll-lock compensation (inline margin/padding-right) is never needed
+       and only pushes content further off — cancel it. */
+    margin-right: 0 !important;
+    padding-right: 0 !important;
   }
 
   h1, h2, h3, h4, h5, h6 {

@@ -1,5 +1,12 @@
 ## 2026-09-13
 
+### Fixed contact modal shifting page content left
+Opening the "Get in touch" modal (`src/components/ui/contact-modal.tsx`, built on shadcn's Radix-based `Dialog`) shifted the page's main content left relative to the header, breaking alignment while the dialog was open.
+
+**Root cause / approach:** Radix's `Dialog` locks body scroll while open and adds an inline `margin-right` to `<body>` sized to `window.innerWidth - document.documentElement.clientWidth`, to compensate for the vertical scrollbar disappearing. First attempt — `scrollbar-gutter: stable` on `html` alone — looked fixed in a quick screenshot but wasn't: `getComputedStyle` while the dialog was open still showed a nonzero `margin-right`, because Radix measures that gap unconditionally, and with the gutter always reserved the "fix" becomes a pure overcorrection. Actually fixed by also forcing `margin-right: 0 !important; padding-right: 0 !important` on `body` in `src/app/globals.css`, cancelling Radix's inline compensation outright (`!important` needed since it's an inline style).
+
+→ *Memory saved: `radix-dialog-scrollbar-shift.md`*
+
 ### Doc pass: getting-started, content overview, multi-tour, and map pages
 Applied a round of review notes across six docs pages: dropped Images from the getting-started "Requirements" list (stop `image` is optional per `types.ts`) and moved it to "Nice to have"; added VS Code + Zed editor links; removed the redundant "How tours are structured" section from "Before you begin"; linked "quotes, ratings, 3D objects" to the stop-types page in "First run"; added Offline support/Deep linking/Feedback collection cards to "Next steps"; clarified the confusing "both directories must stay in sync" warning in content/overview (it meant `src/data/tour/` → `public/data/tour/`, which is automatic, not a manual chore); on multi-tour.mdx, folded the single-tour cross-link into prose instead of a boxed Note, dropped the museum-specific wording on the splash feature, and deleted the whole "Behavior notes" section (including the adjacent rebuild-after-editing Warning) as unnecessary for this audience; on map.mdx, linked every tile provider to its homepage, documented OpenFreeMap's 5 built-in styles (previously undocumented despite being the default provider), trimmed CARTO's style table and merged its API-key setup into one combined section with Mapbox/Jawg/MapTiler, and added a note that full offline map tile support is planned.
 
