@@ -1,0 +1,150 @@
+---
+title: "Multiple tours"
+description: "Bundle several tours in one deployment with a selection screen"
+---
+
+A single AudioGuideKit deployment can host **more than one tour** — perfect for a venue that offers several walking routes, or a museum with a different guide per wing. When more than one tour is present, the app opens on a **tour-selection screen**: a scrollable list of cards the visitor picks from.
+
+With a single tour the picker is skipped entirely and that tour opens directly, so existing single-tour deployments are completely unaffected.
+
+<Tip>
+See it running: the [New York example](/demo/new-york) bundles two tours — New York and Lower Manhattan — behind a themed selection screen.
+</Tip>
+
+<Note>
+This page covers the **multi-tour layout** and the app-level `app.json` that themes and authors the selection screen. For a single tour's content — `metadata.json`, language files, and stops — see [Creating your tour](/docs/content/creating-guide).
+</Note>
+
+## File structure
+
+Each tour lives in its own subfolder under `src/data/tour/`. The optional `app.json` sits at the root, alongside the tour folders:
+
+```
+src/data/tour/
+├── app.json              # App-level config for the selection screen (optional)
+├── new-york/
+│   ├── metadata.json     # Shared per-tour properties
+│   ├── en.json           # English content
+│   └── route.geojson
+└── lower-manhattan/
+    ├── metadata.json
+    ├── en.json
+    ├── de.json
+    └── route.geojson
+```
+
+Tours are discovered by their internal `id` / `language` fields, not by filename or folder name — but one folder per tour keeps things tidy.
+
+<Note>
+Files are mirrored to `public/data/tour/` by Vite for test HTTP access. Only maintain the `src/` version.
+</Note>
+
+## Theming the selection screen
+
+Without `app.json`, the picker borrows the **first tour's** `themeId` and shows a built-in, translated title and subtitle. Add `app.json` to take control of the theme, copy, logo, hero backdrop, and card layout.
+
+```json app.json
+{
+  "$schema": "../../schema/app-config.schema.json",
+  "themeId": "default-light",
+  "defaultLanguage": "en",
+  "title":    { "en": "Discover New York", "de": "Entdecke New York" },
+  "subtitle": { "en": "Pick a walking tour to begin", "de": "Wähle eine Tour zum Starten" },
+  "logo": "https://your-storage.com/logo.svg",
+  "hero": "https://your-storage.com/cover.webp",
+  "tourOrder": ["new-york", "lower-manhattan"],
+  "tourCard": {
+    "showImage": true,
+    "showDescription": true,
+    "showMeta": true
+  }
+}
+```
+
+Every field is optional. Omitting the file — or any individual field — keeps the previous default behavior.
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `themeId` | string | first tour's theme, else `"default-light"` | Theme for the selection screen. References a registered theme (`"default-light"` / `"default-dark"`); see [Custom themes](/docs/branding/custom). |
+| `defaultLanguage` | string | first tour's `defaultLanguage`, else `"en"` | Preferred language before the user picks one. Takes priority over per-tour `metadata.json`. |
+| `title` | `LocalizedString` | built-in "Choose a tour" | Landing heading. Per-language map; missing languages fall back to the built-in translation. |
+| `subtitle` | `LocalizedString` | built-in "Select a tour to begin your visit" | Landing subheading. Same fallback as `title`. |
+| `logo` | string | — | Image URL shown above the title in the header (rendered ~32px tall). Tapping it re-opens the `splash` if one is set. |
+| `hero` | string | — | Image URL used as a **full-screen backdrop** behind all content (lowest layer, `object-fit: cover`). The header and card list have no background of their own, so it shows through behind the logo, title and subtitle and around the cards — pick something light enough for the header text to stay readable, or pre-wash the image. |
+| `splash` | string | — | Image **or video** URL for a full-screen branding intro shown over the picker — see below. |
+| `splashArrowColor` | string | `"#FFFFFF"` | Color (hex) of the splash's arrow hint button (its circle border and the arrow inside). Set it so the hint stays visible — white is invisible on a light splash. |
+| `statusBarColor` | string | theme header color | Color (hex) for the iOS status bar / browser chrome (`theme-color`) **while the splash is shown**. Set it to match your splash. |
+| `tourOrder` | string[] | discovery order | Tour `id`s in display order. Listed ids come first; remaining tours are appended. Unknown ids are ignored. |
+| `tourCard` | `TourCardConfig` | all shown | What every tour card displays — see below. |
+
+### Where the images live
+
+`logo`, `hero` and `splash` take any URL. For assets that ship with the app, put the file in `public/` and reference it root-relative — `"/images/app/logo.webp"` resolves to `public/images/app/logo.webp`, is copied to the build untouched, and works offline. Remote URLs (R2, S3, a CDN) are equally valid and keep the bundle small.
+
+### Localized strings
+
+`title` and `subtitle` are maps of `languageCode → string`:
+
+```json app.json
+"title": { "en": "Discover New York", "de": "Entdecke New York" }
+```
+
+The current language is looked up by code. If a language is missing, the value falls back to the built-in translation, which is already provided in all supported locales — see [Translations overview](/docs/translations/overview).
+
+### Splash / intro screen
+
+A branding option for museums: a **full-screen image or video** shown over the selection screen until the visitor taps to continue. The selection screen is functional and hard to brand; the splash gives you a clean, full-bleed canvas first.
+
+```json app.json
+"splash": "https://your-storage.com/intro.mp4"
+```
+
+- **Image or video** — videos (`.mp4`, `.webm`, `.ogg`, `.mov`) autoplay muted and loop; anything else is treated as an image. Both fill the frame (`object-fit: cover`).
+- A **pulsing arrow button** hints that swiping continues to the picker. Swiping left or tapping anywhere slides the splash off (with haptic feedback) to reveal the list. Color it with `splashArrowColor` (defaults to white) so it stays visible against your splash.
+- Shown **once per visit** — it does not reappear when returning to the picker from a tour. Omit it or set `""` to disable.
+- **Re-open from the logo** — if both `logo` and `splash` are set, tapping the logo in the selection header brings the splash back (e.g. to replay branding).
+
+<Tip>
+Set `statusBarColor` to match your splash so the browser chrome blends into the full-screen intro instead of flashing the theme color.
+</Tip>
+
+### Tour card layout
+
+`tourCard` controls which elements render on **every** card in the list. The **title is always shown**. These flags are app-wide — there is no per-tour override.
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `showImage` | boolean | `true` | Cover image (16:9 thumbnail at the top of the card) |
+| `showDescription` | boolean | `true` | Description text |
+| `showMeta` | boolean | `true` | Meta row: total duration (minutes) and stop count |
+
+| `showImage` | `showDescription` | `showMeta` | Result |
+|-------|----------|--------|--------|
+| `true` | `true` | `true` | Full card (default): image, title, description, meta |
+| `true` | `false` | `false` | Image + title only |
+| `false` | `true` | `true` | Title, description, meta — no image |
+| `false` | `false` | `false` | Title only |
+
+The card cover uses a **16:9** aspect ratio — supply source images at ~16:9 (e.g. 800×450). Tapping a card scales it down slightly as a single press effect.
+
+## Behavior notes
+
+- **Single tour** → the selection screen is skipped and the tour opens directly, so `title`, `subtitle`, `logo`, `hero` and `tourCard` never render. `splash` is the exception: it plays over the tour on first load too — which also means it appears over a deep link straight into a tour (`/tour/<id>`) in multi-tour apps.
+- **Themes stay in code.** `app.json` references a registered `themeId`; it cannot define a new theme inline. To add a new look, create a theme in `src/theme/themes/` — see [Custom themes](/docs/branding/custom).
+- **No per-tour override for `tourCard`** — card layout is intentionally uniform across the list.
+- A **"Back to tours"** button appears on each tour's start screen (multi-tour deployments only), returning the visitor to the picker with a native iOS-style slide.
+
+<Warning>
+**Rebuild after editing `app.json`.** It is bundled into the app at build time (via `import.meta.glob`), so changes require a dev-server reload or a rebuild to take effect.
+</Warning>
+
+## Validation
+
+`app.json` is validated against a generated JSON Schema on every build:
+
+```bash
+bun run validate     # checks app.json, metadata.json and language files
+bun run build        # runs validate, then builds
+```
+
+The schema is generated from `types.ts`. If you change `AppConfig`, re-run `bun run schema`. Editor validation is wired up via `.vscode/settings.json`.

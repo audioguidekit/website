@@ -11,7 +11,7 @@
   "nav": {
     "home": "Startseite der Audioführung",
     "notes": "Anmerkungen",
-    "updates": "Aktualisierungen",
+    "updates": "Changelog",
     "docs": "Dokumentation",
     "openMenu": "Menü öffnen",
     "closeMenu": "Menü schließen"
@@ -230,7 +230,7 @@
   },
   "footer": {
     "notes": "Anmerkungen",
-    "updates": "Aktualisierungen",
+    "updates": "Changelog",
     "docs": "Dokumentation",
     "github": "GitHub",
     "contact": "Kontakt"

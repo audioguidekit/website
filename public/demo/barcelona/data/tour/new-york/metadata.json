@@ -1,0 +1,44 @@
+{
+  "id": "new-york",
+  "defaultLanguage": "en",
+  "offlineMode": "online-only",
+  "hapticsEnabled": true,
+  "transitionAudio": "https://pub-f2d1a02a5dea4125b3453ea5789cc9b1.r2.dev/audio/end.m4a",
+  "themeId": "default-light",
+  "transcriptAvailable": true,
+  "collectFeedback": true,
+  "showLanguageLabel": false,
+  "showStopImage": true,
+  "showStopDuration": true,
+  "showStopNumber": true,
+  "fullscreenPlayer": true,
+  "showProgressBar": true,
+  "mapView": true,
+  "mapProvider": "openfreemap",
+  "mapStyleId": "bright",
+  "mapCenter": {
+    "lat": 40.7855,
+    "lng": -73.9595
+  },
+  "mapZoom": 14,
+  "mapCluster": {
+    "disableClusteringAtZoom": 10,
+    "spiderfyOnMaxZoom": true
+  },
+  "mapMarker": "number",
+  "mapMarkerColors": {
+    "active": "#CB2826",
+    "completed": "#CB2826",
+    "upcoming": "#030A16"
+  },
+  "mapRoute": {
+    "geoJSON": "./route.geojson",
+    "completedColor": "#CB2826",
+    "upcomingColor": "#030A16",
+    "weight": 4,
+    "dashArray": "2 6"
+  },
+  "mapLocateButton": true,
+  "imageColor": "#1A2634",
+  "image": "/images/tours/new-york/cover.webp"
+}

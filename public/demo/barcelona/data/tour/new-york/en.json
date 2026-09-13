@@ -1,0 +1,150 @@
+{
+  "id": "new-york",
+  "language": "en",
+  "title": "Central Park East Side Discovery Walk",
+  "description": "A one-way walk down the eastern edge of Central Park, from Harlem Meer at 110th Street down to the model boat pond at 74th, past the gardens, museums and landmarks that line Fifth Avenue.",
+  "totalDuration": "65 minutes",
+  "totalStops": 10,
+  "stops": [
+    {
+      "id": "1",
+      "type": "audio",
+      "image": "/images/tours/new-york/1.webp",
+      "title": "Harlem Meer",
+      "duration": "2:00 mins",
+      "audioFile": "https://pub-f2d1a02a5dea4125b3453ea5789cc9b1.r2.dev/audio/demo-tour-1.mp3",
+      "location": {
+        "lat": 40.7972,
+        "lng": -73.9545
+      },
+      "transcription": "Welcome to Harlem Meer, the eleven-acre lake at the north-eastern corner of Central Park. Its name comes from the Dutch word for a small sea, a nod to the Dutch settlers who farmed this part of Manhattan. The shoreline was rebuilt in the 1990s with gentle, planted banks, and today you will see herons, turtles and catch-and-release anglers rather than the concrete edge that was here before. Start walking south with the water on your right.",
+      "imageCredit": "Photo: Jakub Hałun / Wikimedia Commons (CC BY 4.0)"
+    },
+    {
+      "id": "2",
+      "type": "audio",
+      "image": "/images/tours/new-york/2.webp",
+      "title": "Charles A. Dana Discovery Center",
+      "duration": "2:00 mins",
+      "audioFile": "https://pub-f2d1a02a5dea4125b3453ea5789cc9b1.r2.dev/audio/demo-tour-2.mp3",
+      "location": {
+        "lat": 40.7964,
+        "lng": -73.9514
+      },
+      "transcription": "The low building on the north-eastern shore is the Charles A. Dana Discovery Center, opened in 1993 as the park's northern visitor centre. It lends out fishing poles in summer, runs free family programmes, and hosts exhibitions about the park's ecology. It is also the quietest visitor centre in Central Park, because most tourists never walk this far north.",
+      "imageCredit": "Photo: CastIronSeasoner / Wikimedia Commons (CC BY 4.0)"
+    },
+    {
+      "id": "3",
+      "type": "audio",
+      "image": "/images/tours/new-york/3.webp",
+      "title": "Conservatory Garden and the Vanderbilt Gate",
+      "duration": "3:00 mins",
+      "audioFile": "https://pub-f2d1a02a5dea4125b3453ea5789cc9b1.r2.dev/audio/demo-tour-3.mp3",
+      "location": {
+        "lat": 40.7937,
+        "lng": -73.9519
+      },
+      "transcription": "At Fifth Avenue and 105th Street you reach the Vanderbilt Gate, the ornate iron gate that once stood outside the Vanderbilt mansion at Fifth Avenue and 58th Street. It was moved here in 1939 and now forms the entrance to the Conservatory Garden, the only formal garden in Central Park. Inside are three gardens in three styles: Italian in the centre, French to the north, English to the south. It is the park's designated quiet zone, so the noise drops as soon as you step through the gate.",
+      "imageCredit": "Photo: Martin Furtschegger / Wikimedia Commons (CC BY 3.0)"
+    },
+    {
+      "id": "4",
+      "type": "audio",
+      "image": "/images/tours/new-york/4.webp",
+      "title": "Museum of the City of New York",
+      "duration": "2:30 mins",
+      "audioFile": "https://pub-f2d1a02a5dea4125b3453ea5789cc9b1.r2.dev/audio/demo-tour-4.mp3",
+      "location": {
+        "lat": 40.7915,
+        "lng": -73.9532
+      },
+      "transcription": "Across Fifth Avenue at 103rd Street stands the Museum of the City of New York, a red-brick Georgian Revival building from 1932. This is the northern end of Museum Mile, the stretch of Fifth Avenue that holds nine museums in around a mile. The museum tells the story of the city itself, from the Dutch trading post to the present day.",
+      "imageCredit": "Photo: Beyond My Ken / Wikimedia Commons (CC BY-SA 4.0)"
+    },
+    {
+      "id": "5",
+      "type": "audio",
+      "image": "/images/tours/new-york/5.webp",
+      "title": "Jacqueline Kennedy Onassis Reservoir",
+      "duration": "3:00 mins",
+      "audioFile": "https://pub-f2d1a02a5dea4125b3453ea5789cc9b1.r2.dev/audio/demo-tour-5.mp3",
+      "location": {
+        "lat": 40.7862,
+        "lng": -73.9575
+      },
+      "transcription": "The water ahead is the Jacqueline Kennedy Onassis Reservoir, a billion gallons covering roughly an eighth of the park. It was built in the 1860s as part of the Croton water system and was taken out of service in 1993. The 1.58-mile cinder track around it is one of the most famous running loops in the world, and it was renamed in 1994 for the former First Lady, who lived nearby and ran here often. The skyline reflected in the water is the classic Upper East Side view.",
+      "imageCredit": "Photo: Jakub Hałun / Wikimedia Commons (CC BY 4.0)"
+    },
+    {
+      "id": "6",
+      "type": "audio",
+      "image": "/images/tours/new-york/6.webp",
+      "title": "Engineers' Gate",
+      "duration": "2:30 mins",
+      "audioFile": "https://pub-f2d1a02a5dea4125b3453ea5789cc9b1.r2.dev/audio/demo-tour-6.mp3",
+      "location": {
+        "lat": 40.78416,
+        "lng": -73.95874
+      },
+      "transcription": "Engineers' Gate at 90th Street is the busiest entrance on the east side of the park, and the traditional starting point for runners. Just inside stands the bronze bust of John Ericsson, the Swedish-American engineer who designed the ironclad USS Monitor. Central Park's twenty gates were all named in 1862 for the trades and groups the park was meant to serve.",
+      "imageCredit": "Photo: Deansfa / Wikimedia Commons (CC BY-SA 4.0)"
+    },
+    {
+      "id": "7",
+      "type": "audio",
+      "image": "/images/tours/new-york/7.webp",
+      "title": "Solomon R. Guggenheim Museum",
+      "duration": "2:30 mins",
+      "audioFile": "https://pub-f2d1a02a5dea4125b3453ea5789cc9b1.r2.dev/audio/demo-tour-7.mp3",
+      "location": {
+        "lat": 40.7822,
+        "lng": -73.9596
+      },
+      "transcription": "On the far side of Fifth Avenue at 89th Street is Frank Lloyd Wright's Guggenheim Museum, finished in 1959, six months after the architect's death. Wright turned the gallery inside out: visitors take a lift to the top and walk down a single continuous spiral ramp. When it opened, twenty-one artists signed a letter protesting that the building would overwhelm the art. It is now a UNESCO World Heritage Site.",
+      "imageCredit": "Photo: Upstateherd / Wikimedia Commons (CC BY-SA 4.0)"
+    },
+    {
+      "id": "8",
+      "type": "audio",
+      "image": "/images/tours/new-york/8.webp",
+      "title": "The Metropolitan Museum of Art",
+      "duration": "3:00 mins",
+      "audioFile": "https://pub-f2d1a02a5dea4125b3453ea5789cc9b1.r2.dev/audio/demo-tour-8.mp3",
+      "location": {
+        "lat": 40.7794,
+        "lng": -73.9632
+      },
+      "transcription": "The Met is the largest art museum in the Americas, holding more than one and a half million works. It is also the only building allowed to occupy part of Central Park itself, sitting on parkland between 80th and 84th Streets. The Beaux-Arts facade you see from Fifth Avenue was added in 1902; the original 1880 red-brick building is still inside, visible from the Robert Lehman Wing. The steps have been the city's best free seat for well over a century.",
+      "imageCredit": "Photo: Jakub Hałun / Wikimedia Commons (CC BY 4.0)"
+    },
+    {
+      "id": "9",
+      "type": "audio",
+      "image": "/images/tours/new-york/9.webp",
+      "title": "Cleopatra's Needle",
+      "duration": "3:00 mins",
+      "audioFile": "https://pub-f2d1a02a5dea4125b3453ea5789cc9b1.r2.dev/audio/demo-tour-9.mp3",
+      "location": {
+        "lat": 40.78,
+        "lng": -73.966
+      },
+      "transcription": "Behind the Met stands the oldest object in New York City: a granite obelisk carved in Heliopolis around 1450 BC for Pharaoh Thutmose the Third. Egypt gave it to the United States in 1877, and moving it here took nineteen months, a purpose-built ship and a rail track laid across the park. Its twin stands on the Thames in London, and both picked up the nickname Cleopatra's Needle even though they predate Cleopatra by about fourteen centuries.",
+      "imageCredit": "Photo: Photograph by Mike Peel (www.mikepeel.net). / Wikimedia Commons (CC BY-SA 4.0)"
+    },
+    {
+      "id": "10",
+      "type": "audio",
+      "image": "/images/tours/new-york/10.webp",
+      "title": "Conservatory Water and the Kerbs Boathouse",
+      "duration": "2:30 mins",
+      "audioFile": "https://pub-f2d1a02a5dea4125b3453ea5789cc9b1.r2.dev/audio/demo-tour-10.mp3",
+      "location": {
+        "lat": 40.7745,
+        "lng": -73.9663
+      },
+      "transcription": "Your walk ends at Conservatory Water, the model boat pond modelled on the ponds of Paris. Sailors have raced miniature yachts here since the 1870s, and the Kerbs Memorial Boathouse on the eastern shore still rents them out in season. The pond is the setting for E. B. White's Stuart Little, and the Alice in Wonderland and Hans Christian Andersen statues stand a few steps away. From here the Pond, Gapstow Bridge and the 59th Street exit are a fifteen-minute walk south.",
+      "imageCredit": "Photo: Ajay Suresh from New York, NY, USA / Wikimedia Commons (CC BY 2.0)"
+    }
+  ]
+}

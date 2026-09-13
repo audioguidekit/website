@@ -64,9 +64,10 @@ A map tab can sit alongside the stop list, toggled from the header. Two independ
 The header shows a map/list toggle only when both are enabled. Set `mapView: true` with `listView: false` for a map-only tour.
 
 Map capabilities:
-- **Markers**: `mapMarker` mode is `"number"` (numbered circle, default), `"image"` (the stop's own photo cropped into the circle), or `"empty"` (plain circle). A custom `mapMarkerIcon` URL (tour-level or per-stop) overrides the mode. Completed stops show a checkmark; clusters are themed separately.
+- **Tile provider**: `mapProvider` defaults to `"openfreemap"` — keyless vector tiles rendered via MapLibre GL, no API key or usage quota. Also supported: `"openstreetmap"` (no key, raster), `"mapbox"`, `"jawg"`, `"maptiler"`, and `"carto"` (all require an API key). `mapStyle` takes any MapLibre style.json URL, overriding `mapProvider` entirely for a fully custom vector basemap.
+- **Markers**: `mapMarker` mode is `"number"` (numbered circle, default), `"image"` (the stop's own photo cropped into the circle), or `"empty"` (plain circle). A custom `mapMarkerIcon` URL (tour-level or per-stop) overrides the mode. Completed stops show a checkmark; clusters are themed separately. `mapMarkerColors` lets a tour override the theme's marker background colors per state (`active`, `upcoming`, `completed`, `cluster`).
 - **Clustering**: `mapCluster` with `disableClusteringAtZoom` and `spiderfyOnMaxZoom`.
-- **Route line**: `mapRoute: true` draws straight lines between stops; `mapRoute: { geoJSON: "./route.geojson" }` follows real street geometry. The line acts as a progress indicator (solid for completed legs, dashed ahead) and hides below `minZoom` (default 13).
+- **Route line**: `mapRoute: true` draws straight lines between stops; `mapRoute: { geoJSON: "./route.geojson" }` follows real street geometry. The line acts as a progress indicator (solid for completed legs, dashed ahead) and hides below `minZoom` (default 13). Per-tour `completedColor`, `upcomingColor`, `weight`, `opacity`, and `dashArray` override the theme's defaults, useful when a tour's basemap needs a different route color.
 - **Locate button**: `mapLocateButton` (default `true`).
 - **Start position**: `mapCenter` (`{ lat, lng }`) and `mapZoom` (0–23); by default the map fits all stops in view.
 
@@ -106,6 +107,9 @@ Set `collectFeedback: true` to show a rating button; there are also `rating` and
 ### 8. Deep linking and haptics
 Tours support deep links directly to a specific stop. Haptic feedback (`hapticsEnabled`, default `true`) uses the Vibration API on Android and the Taptic Engine on iOS; it's a no-op on desktop.
 
+### 9. Multiple tours
+One deployment can host several tours — a venue with multiple walking routes, or a museum with a guide per wing. Each tour lives in its own folder under `src/data/tour/<tour-id>/`. With more than one tour the app opens on a tour-selection screen (a list of cards) and offers a "Back to tours" button on each tour; navigation between the picker and a tour uses a native iOS-style push/pop slide with an interactive edge-swipe back gesture. A single tour skips the picker and opens directly, so single-tour deployments are unaffected. The selection screen is themed by an optional app-level `app.json` (see Content Model).
+
 ## Technical Architecture
 
 ### Technology stack (the player)
@@ -114,7 +118,7 @@ Tours support deep links directly to a specific stop. Haptic feedback (`hapticsE
 - **Routing**: React Router (`react-router-dom`)
 - **PWA / offline**: `vite-plugin-pwa` + Workbox service worker; `idb` for IndexedDB progress and state
 - **Audio**: HTML5 Audio + Media Session API (`use-media-session`) for lock-screen and background controls
-- **Maps**: Leaflet, `react-leaflet`, `leaflet.markercluster`
+- **Maps**: Leaflet, `react-leaflet`, `leaflet.markercluster` for raster tiles; MapLibre GL (via `@maplibre/maplibre-gl-leaflet`) for vector tiles (OpenFreeMap default, or a custom style URL)
 - **Animation**: framer-motion
 - **3D**: `@google/model-viewer` + three (for the `3d-object` stop type, lazy-loaded)
 - **Icons / flags**: `@phosphor-icons/react`, `country-flag-icons`
@@ -141,11 +145,15 @@ Tours live under `src/data/tour/<tour-id>/`, each folder containing a `metadata.
 
 ```
 src/data/tour/
+  app.json          (optional, multi-tour selection screen)
   my-tour/
     metadata.json
     en.json
     es.json
     route.geojson   (optional, for map routes)
+  another-tour/
+    metadata.json
+    en.json
 ```
 
 ### metadata.json (tour-wide settings)
@@ -170,17 +178,19 @@ src/data/tour/
 | `hapticsEnabled` | boolean | `true` | Haptic feedback on taps |
 | `listView` | boolean | `true` | Enable the list view |
 | `mapView` | boolean | `false` | Enable the map view |
-| `mapProvider` | `"openstreetmap"` \| `"carto"` \| `"mapbox"` \| `"jawg"` \| `"maptiler"` | `"openstreetmap"` | Map tile provider |
+| `mapProvider` | `"openfreemap"` \| `"openstreetmap"` \| `"carto"` \| `"mapbox"` \| `"jawg"` \| `"maptiler"` | `"openfreemap"` | Map tile provider |
+| `mapStyle` | string (URL) | — | MapLibre style.json URL; overrides `mapProvider` entirely for a custom vector basemap |
 | `mapStyleId` | string | — | Provider-specific style/map ID |
 | `mapCenter` | `{ lat, lng }` | — | Fixed starting center (else fits all stops) |
 | `mapZoom` | number (0–23) | — | Fixed starting zoom |
 | `mapMarker` | `"number"` \| `"image"` \| `"empty"` | `"number"` | Default marker style |
 | `mapMarkerIcon` | string (URL) | — | Custom marker image for all stops; overrides `mapMarker` |
+| `mapMarkerColors` | object | — | Per-tour marker background colors by state (`active`, `upcoming`, `completed`, `cluster`); falls back to the theme |
 | `mapCluster` | object | — | Clustering behavior (`disableClusteringAtZoom`, `spiderfyOnMaxZoom`) |
-| `mapRoute` | `boolean \| object` | `false` | Route polyline with progress (`{ geoJSON, minZoom }`) |
+| `mapRoute` | `boolean \| object` | `false` | Route polyline with progress (`{ geoJSON, minZoom, completedColor, upcomingColor, weight, opacity, dashArray }`) |
 | `mapLocateButton` | boolean | `true` | Show the locate-me button |
 
-API keys for Mapbox, Jawg, and MapTiler are set as environment variables in `.env.local` (`VITE_MAPBOX_API_KEY`, `VITE_JAWG_API_KEY`, `VITE_MAPTILER_API_KEY`) — never in `metadata.json`. OpenStreetMap and CARTO need no key.
+API keys for Mapbox, Jawg, MapTiler, and CARTO are set as environment variables in `.env.local` (`VITE_MAPBOX_API_KEY`, `VITE_JAWG_API_KEY`, `VITE_MAPTILER_API_KEY`, `VITE_CARTO_API_KEY`) — never in `metadata.json`. OpenFreeMap and OpenStreetMap need no key. CARTO retired its free tiles; without a key, `mapProvider: "carto"` falls back to OpenStreetMap.
 
 ### Language file (per language)
 
@@ -233,7 +243,7 @@ API keys for Mapbox, Jawg, and MapTiler are set as environment variables in `.en
 | `location` | No | `{ lat, lng }` — audio stops with a location appear as map markers |
 | `mapMarkerIcon` | No | Per-stop custom marker image (overrides tour-level icon and any `mapMarker` mode) |
 
-### CARTO map styles (no API key)
+### CARTO map styles (API key required)
 
 | Style | `mapStyleId` |
 |-------|--------------|
@@ -243,10 +253,30 @@ API keys for Mapbox, Jawg, and MapTiler are set as environment variables in `.en
 | Positron no labels | `light_nolabels` |
 | Dark Matter no labels | `dark_nolabels` |
 
-Provider defaults: Mapbox `mapbox/outdoors-v12`, Jawg `jawg-terrain`, MapTiler `outdoor-v2`.
+Provider defaults: Mapbox `mapbox/outdoors-v12`, Jawg `jawg-terrain`, MapTiler `outdoor-v2`, OpenFreeMap `bright`.
 
 ### Theming
 Marker colors and route styling are set in a `ThemeConfig`'s `mapMarkers` block (active, inactive, completed, cluster, route, user-location dot). Themes also control overall colors, typography, and surfaces. Falls back to built-in `default-light` / `default-dark` when a custom theme isn't provided.
+
+### app.json (multi-tour selection screen)
+
+Optional file at the `src/data/tour/` root that themes and authors the tour-selection landing screen. Only used when 2+ tours are present; every field is optional and falls back to the first tour's theme plus built-in translated copy.
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `themeId` | string | first tour's theme, else `"default-light"` | Theme for the selection screen (a registered theme) |
+| `defaultLanguage` | string | first tour's `defaultLanguage`, else `"en"` | Preferred language before the user picks one |
+| `title` | `LocalizedString` | built-in "Choose a tour" | Landing heading (per-language map) |
+| `subtitle` | `LocalizedString` | built-in copy | Landing subheading (per-language map) |
+| `logo` | string (URL) | — | Logo image shown in the header |
+| `hero` | string (URL) | — | Full-screen backdrop behind the content |
+| `splash` | string (URL) | — | Full-screen image/video intro shown once per visit; tap/swipe to continue |
+| `splashArrowColor` | string (hex) | `"#FFFFFF"` | Color of the splash's double-arrow hint button (border + chevrons) |
+| `statusBarColor` | string (hex) | theme header color | Browser chrome / iOS status bar color while the splash is shown |
+| `tourOrder` | string[] | discovery order | Tour `id`s in display order; unlisted tours appended |
+| `tourCard` | object | all shown | Card layout: `showImage`, `showDescription`, `showMeta` (each boolean, default `true`; title always shown) |
+
+`app.json` is bundled at build time, so changes require a rebuild/reload. It carries a `$schema` reference and is validated by `bun run validate` against a schema generated from `types.ts`.
 
 ## What AudioGuideKit Does NOT Include
 
@@ -336,7 +366,7 @@ Yes. MIT-licensed with full source access and no restrictions.
 Yes. The Service Worker caches audio and assets, and progress is stored in IndexedDB, so tours work in airplane mode or low-signal areas.
 
 **Which map providers are supported?**
-OpenStreetMap and CARTO (no key), plus Mapbox, Jawg, and MapTiler (API key set via environment variables).
+OpenFreeMap (default, keyless vector tiles) and OpenStreetMap (no key), plus Mapbox, Jawg, MapTiler, and CARTO (API key set via environment variables). You can also bring your own MapLibre style URL for a fully custom vector basemap.
 
 ## Use Cases
 

@@ -1,0 +1,27 @@
+{
+  "$schema": "../../../src/schema/app-config.schema.json",
+  "themeId": "default-light",
+  "defaultLanguage": "en",
+  "title": {
+    "en": "Discover New York",
+    "de": "Entdecke New York"
+  },
+  "subtitle": {
+    "en": "Pick a walking tour to begin",
+    "de": "Wähle eine Tour zum Starten"
+  },
+  "logo": "/images/app/logo.webp",
+  "hero": "/images/app/hero.webp",
+  "splash": "/images/app/splash.webp",
+  "splashArrowColor": "#FFFFFF",
+  "statusBarColor": "#FFFFFF",
+  "tourOrder": [
+    "new-york",
+    "lower-manhattan"
+  ],
+  "tourCard": {
+    "showImage": true,
+    "showDescription": true,
+    "showMeta": false
+  }
+}

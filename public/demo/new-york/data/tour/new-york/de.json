@@ -1,0 +1,150 @@
+{
+  "id": "new-york",
+  "language": "de",
+  "title": "Central Park: Entdeckungstour an der Ostseite",
+  "description": "Ein Spaziergang entlang der Ostseite des Central Park, vom Harlem Meer an der 110. Straße hinunter zum Modellbootteich an der 74. – vorbei an den Gärten, Museen und Wahrzeichen der Fifth Avenue.",
+  "totalDuration": "65 Minuten",
+  "totalStops": 10,
+  "stops": [
+    {
+      "id": "1",
+      "type": "audio",
+      "image": "/demo/new-york/images/tours/new-york/1.webp",
+      "title": "Harlem Meer",
+      "duration": "2:00 Min.",
+      "audioFile": "https://pub-f2d1a02a5dea4125b3453ea5789cc9b1.r2.dev/audio/demo-tour-1.mp3",
+      "location": {
+        "lat": 40.7972,
+        "lng": -73.9545
+      },
+      "transcription": "Willkommen am Harlem Meer, dem rund viereinhalb Hektar großen See in der Nordostecke des Central Park. Der Name stammt aus dem Niederländischen und bedeutet schlicht „kleines Meer“ – eine Erinnerung an die niederländischen Siedler, die hier einst Landwirtschaft betrieben. In den 1990er-Jahren wurde das Ufer neu bepflanzt und naturnah gestaltet; statt einer Betonkante sehen Sie heute Reiher, Schildkröten und Angler. Gehen Sie nun nach Süden, das Wasser zu Ihrer Rechten.",
+      "imageCredit": "Foto: Jakub Hałun / Wikimedia Commons (CC BY 4.0)"
+    },
+    {
+      "id": "2",
+      "type": "audio",
+      "image": "/demo/new-york/images/tours/new-york/2.webp",
+      "title": "Charles A. Dana Discovery Center",
+      "duration": "2:00 Min.",
+      "audioFile": "https://pub-f2d1a02a5dea4125b3453ea5789cc9b1.r2.dev/audio/demo-tour-2.mp3",
+      "location": {
+        "lat": 40.7964,
+        "lng": -73.9514
+      },
+      "transcription": "Das flache Gebäude am Nordostufer ist das Charles A. Dana Discovery Center, 1993 als nördliches Besucherzentrum des Parks eröffnet. Im Sommer werden hier kostenlos Angelruten verliehen, dazu gibt es Familienprogramme und Ausstellungen zur Ökologie des Parks. Es ist zugleich das ruhigste Besucherzentrum des Central Park, denn die meisten Gäste kommen nie so weit in den Norden.",
+      "imageCredit": "Foto: CastIronSeasoner / Wikimedia Commons (CC BY 4.0)"
+    },
+    {
+      "id": "3",
+      "type": "audio",
+      "image": "/demo/new-york/images/tours/new-york/3.webp",
+      "title": "Conservatory Garden und das Vanderbilt-Tor",
+      "duration": "3:00 Min.",
+      "audioFile": "https://pub-f2d1a02a5dea4125b3453ea5789cc9b1.r2.dev/audio/demo-tour-3.mp3",
+      "location": {
+        "lat": 40.7937,
+        "lng": -73.9519
+      },
+      "transcription": "An der Fifth Avenue Ecke 105. Straße steht das Vanderbilt-Tor, ein kunstvolles Eisentor, das einst vor der Vanderbilt-Villa an der Fifth Avenue Ecke 58. Straße stand. 1939 wurde es hierher versetzt und bildet heute den Eingang zum Conservatory Garden, dem einzigen formalen Garten des Central Park. Dahinter liegen drei Gärten in drei Stilen: italienisch in der Mitte, französisch im Norden, englisch im Süden. Der Garten ist offizielle Ruhezone – der Lärm der Stadt verschwindet, sobald Sie durch das Tor treten.",
+      "imageCredit": "Foto: Martin Furtschegger / Wikimedia Commons (CC BY 3.0)"
+    },
+    {
+      "id": "4",
+      "type": "audio",
+      "image": "/demo/new-york/images/tours/new-york/4.webp",
+      "title": "Museum of the City of New York",
+      "duration": "2:30 Min.",
+      "audioFile": "https://pub-f2d1a02a5dea4125b3453ea5789cc9b1.r2.dev/audio/demo-tour-4.mp3",
+      "location": {
+        "lat": 40.7915,
+        "lng": -73.9532
+      },
+      "transcription": "Gegenüber, an der Fifth Avenue Ecke 103. Straße, steht das Museum of the City of New York, ein Backsteinbau im Georgian-Revival-Stil von 1932. Hier beginnt die Museum Mile: Auf gut anderthalb Kilometern reihen sich neun Museen entlang der Fifth Avenue. Das Museum erzählt die Geschichte der Stadt selbst – vom niederländischen Handelsposten bis in die Gegenwart.",
+      "imageCredit": "Foto: Beyond My Ken / Wikimedia Commons (CC BY-SA 4.0)"
+    },
+    {
+      "id": "5",
+      "type": "audio",
+      "image": "/demo/new-york/images/tours/new-york/5.webp",
+      "title": "Jacqueline Kennedy Onassis Reservoir",
+      "duration": "3:00 Min.",
+      "audioFile": "https://pub-f2d1a02a5dea4125b3453ea5789cc9b1.r2.dev/audio/demo-tour-5.mp3",
+      "location": {
+        "lat": 40.7862,
+        "lng": -73.9575
+      },
+      "transcription": "Vor Ihnen liegt das Jacqueline Kennedy Onassis Reservoir mit rund vier Milliarden Litern Wasser – es nimmt etwa ein Achtel der Parkfläche ein. Gebaut wurde es in den 1860er-Jahren als Teil des Croton-Wassersystems; seit 1993 ist es außer Betrieb. Der 2,5 Kilometer lange Aschenweg rundherum ist eine der berühmtesten Laufrunden der Welt. Benannt wurde das Reservoir 1994 nach der früheren First Lady, die ganz in der Nähe wohnte und hier oft lief.",
+      "imageCredit": "Foto: Jakub Hałun / Wikimedia Commons (CC BY 4.0)"
+    },
+    {
+      "id": "6",
+      "type": "audio",
+      "image": "/demo/new-york/images/tours/new-york/6.webp",
+      "title": "Engineers' Gate",
+      "duration": "2:30 Min.",
+      "audioFile": "https://pub-f2d1a02a5dea4125b3453ea5789cc9b1.r2.dev/audio/demo-tour-6.mp3",
+      "location": {
+        "lat": 40.78416,
+        "lng": -73.95874
+      },
+      "transcription": "Das Engineers' Gate an der 90. Straße ist der meistgenutzte Eingang an der Ostseite des Parks und traditioneller Startpunkt der Läuferinnen und Läufer. Gleich dahinter steht die Bronzebüste von John Ericsson, dem schwedisch-amerikanischen Ingenieur, der das Panzerschiff USS Monitor entwarf. Alle zwanzig Tore des Central Park erhielten 1862 Namen nach Berufsgruppen, denen der Park dienen sollte.",
+      "imageCredit": "Foto: Deansfa / Wikimedia Commons (CC BY-SA 4.0)"
+    },
+    {
+      "id": "7",
+      "type": "audio",
+      "image": "/demo/new-york/images/tours/new-york/7.webp",
+      "title": "Solomon R. Guggenheim Museum",
+      "duration": "2:30 Min.",
+      "audioFile": "https://pub-f2d1a02a5dea4125b3453ea5789cc9b1.r2.dev/audio/demo-tour-7.mp3",
+      "location": {
+        "lat": 40.7822,
+        "lng": -73.9596
+      },
+      "transcription": "Jenseits der Fifth Avenue, an der 89. Straße, steht Frank Lloyd Wrights Guggenheim-Museum, fertiggestellt 1959, ein halbes Jahr nach dem Tod des Architekten. Wright drehte das Museum gewissermaßen um: Man fährt mit dem Aufzug nach oben und geht eine einzige durchgehende Spiralrampe hinunter. Bei der Eröffnung protestierten einundzwanzig Künstler in einem offenen Brief, das Gebäude werde die Kunst erdrücken. Heute gehört es zum UNESCO-Welterbe.",
+      "imageCredit": "Foto: Upstateherd / Wikimedia Commons (CC BY-SA 4.0)"
+    },
+    {
+      "id": "8",
+      "type": "audio",
+      "image": "/demo/new-york/images/tours/new-york/8.webp",
+      "title": "The Metropolitan Museum of Art",
+      "duration": "3:00 Min.",
+      "audioFile": "https://pub-f2d1a02a5dea4125b3453ea5789cc9b1.r2.dev/audio/demo-tour-8.mp3",
+      "location": {
+        "lat": 40.7794,
+        "lng": -73.9632
+      },
+      "transcription": "Das Met ist das größte Kunstmuseum Amerikas mit über anderthalb Millionen Werken. Es ist zugleich das einzige Gebäude, das auf Parkgelände selbst stehen darf – zwischen der 80. und der 84. Straße. Die Beaux-Arts-Fassade zur Fifth Avenue entstand 1902; der ursprüngliche Backsteinbau von 1880 steckt noch immer darin und ist vom Robert Lehman Wing aus zu sehen. Die berühmte Freitreppe ist seit über einem Jahrhundert der beste kostenlose Sitzplatz der Stadt.",
+      "imageCredit": "Foto: Jakub Hałun / Wikimedia Commons (CC BY 4.0)"
+    },
+    {
+      "id": "9",
+      "type": "audio",
+      "image": "/demo/new-york/images/tours/new-york/9.webp",
+      "title": "Kleopatras Nadel",
+      "duration": "3:00 Min.",
+      "audioFile": "https://pub-f2d1a02a5dea4125b3453ea5789cc9b1.r2.dev/audio/demo-tour-9.mp3",
+      "location": {
+        "lat": 40.78,
+        "lng": -73.966
+      },
+      "transcription": "Hinter dem Met steht das älteste Objekt New Yorks: ein Granitobelisk, um 1450 vor Christus in Heliopolis für Pharao Thutmosis III. gehauen. Ägypten schenkte ihn 1877 den Vereinigten Staaten; der Transport hierher dauerte neunzehn Monate und erforderte ein eigens umgebautes Schiff sowie eine Schienenstrecke quer durch den Park. Sein Zwilling steht an der Themse in London. Beide tragen den Beinamen „Kleopatras Nadel“, obwohl sie rund vierzehn Jahrhunderte älter sind als Kleopatra.",
+      "imageCredit": "Foto: Photograph by Mike Peel (www.mikepeel.net). / Wikimedia Commons (CC BY-SA 4.0)"
+    },
+    {
+      "id": "10",
+      "type": "audio",
+      "image": "/demo/new-york/images/tours/new-york/10.webp",
+      "title": "Conservatory Water und das Kerbs-Bootshaus",
+      "duration": "2:30 Min.",
+      "audioFile": "https://pub-f2d1a02a5dea4125b3453ea5789cc9b1.r2.dev/audio/demo-tour-10.mp3",
+      "location": {
+        "lat": 40.7745,
+        "lng": -73.9663
+      },
+      "transcription": "Ihr Spaziergang endet am Conservatory Water, dem Modellbootteich nach Pariser Vorbild. Seit den 1870er-Jahren werden hier Miniaturyachten gesegelt, und das Kerbs Memorial Boathouse am Ostufer vermietet sie in der Saison noch immer. Der Teich ist Schauplatz von E. B. Whites „Stuart Little“; die Statuen von Alice im Wunderland und Hans Christian Andersen stehen nur wenige Schritte entfernt. Von hier sind es rund fünfzehn Minuten nach Süden zum Pond, zur Gapstow Bridge und zum Ausgang an der 59. Straße.",
+      "imageCredit": "Foto: Ajay Suresh from New York, NY, USA / Wikimedia Commons (CC BY 2.0)"
+    }
+  ]
+}

@@ -23,7 +23,7 @@ export function KeyboardShortcuts() {
         window.location.href = '/docs';
       }
 
-      if (event.key.toLowerCase() === 'u') {
+      if (event.key.toLowerCase() === 'l') {
         window.location.href = '/updates';
       }
 

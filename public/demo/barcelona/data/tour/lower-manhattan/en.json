@@ -1,0 +1,178 @@
+{
+  "id": "lower-manhattan",
+  "language": "en",
+  "title": "Lower Manhattan Waterfront Walk",
+  "description": "A loop around the southern tip of Manhattan, from Bowling Green out to the Battery and the harbour, up the East River to the South Street Seaport, and back through the oldest streets in the city.",
+  "totalDuration": "70 minutes",
+  "totalStops": 12,
+  "stops": [
+    {
+      "id": "1",
+      "type": "audio",
+      "image": "/images/tours/lower-manhattan/1.webp",
+      "title": "Bowling Green and the Charging Bull",
+      "duration": "2:30 mins",
+      "audioFile": "https://pub-f2d1a02a5dea4125b3453ea5789cc9b1.r2.dev/audio/demo-tour-1.mp3",
+      "location": {
+        "lat": 40.7056,
+        "lng": -74.0134
+      },
+      "transcription": "You are standing on the oldest public park in New York City. Bowling Green was leased to city residents in 1733 for one peppercorn a year, and the iron fence around it still dates from 1771 — look closely and you will see the posts were sawn off, because the crowns were pulled down during the Revolution. At the north end stands Arturo Di Modica's Charging Bull, installed without permission overnight in December 1989 and kept only because New Yorkers refused to let the city remove it.",
+      "imageCredit": "Photo: Tdorante10 / Wikimedia Commons (CC BY-SA 4.0)"
+    },
+    {
+      "id": "2",
+      "type": "audio",
+      "image": "/images/tours/lower-manhattan/2.webp",
+      "title": "Alexander Hamilton U.S. Custom House",
+      "duration": "2:30 mins",
+      "audioFile": "https://pub-f2d1a02a5dea4125b3453ea5789cc9b1.r2.dev/audio/demo-tour-2.mp3",
+      "location": {
+        "lat": 40.7043,
+        "lng": -74.0138
+      },
+      "transcription": "The vast Beaux-Arts building facing Bowling Green was completed in 1907 to collect customs duties, which at the time funded most of the federal government. The four sculptural groups on the facade are Daniel Chester French's Four Continents — Asia, America, Europe and Africa. Customs moved out in 1973; the building now holds the National Museum of the American Indian, free to enter, and the great oval rotunda inside is worth the detour.",
+      "imageCredit": "Photo: Adrianmoise / Wikimedia Commons (CC BY-SA 4.0)"
+    },
+    {
+      "id": "3",
+      "type": "audio",
+      "image": "/images/tours/lower-manhattan/3.webp",
+      "title": "Castle Clinton",
+      "duration": "3:00 mins",
+      "audioFile": "https://pub-f2d1a02a5dea4125b3453ea5789cc9b1.r2.dev/audio/demo-tour-3.mp3",
+      "location": {
+        "lat": 40.7036,
+        "lng": -74.0169
+      },
+      "transcription": "This circular sandstone fort was built in 1811 on an artificial island about ninety metres offshore, as a defence against the British. It never fired a shot. Landfill later joined it to Manhattan, and it has since been a concert hall where Jenny Lind sang for P. T. Barnum, the immigration station that processed eight million arrivals before Ellis Island opened, and the New York Aquarium. Today it is a national monument and the ticket office for the ferries to Liberty and Ellis Islands.",
+      "imageCredit": "Photo: Zipper2016 / Wikimedia Commons (CC BY-SA 4.0)"
+    },
+    {
+      "id": "4",
+      "type": "audio",
+      "image": "/images/tours/lower-manhattan/4.webp",
+      "title": "Pier A and the Hudson Shore",
+      "duration": "2:30 mins",
+      "audioFile": "https://pub-f2d1a02a5dea4125b3453ea5789cc9b1.r2.dev/audio/demo-tour-4.mp3",
+      "location": {
+        "lat": 40.7043,
+        "lng": -74.0181
+      },
+      "transcription": "Pier A, finished in 1886, is the last surviving historic pier in Manhattan. Its clock tower was erected in 1919 as the country's first memorial to the dead of the First World War, and for decades it struck ship's bells rather than the hour. From the railing you are looking down the Hudson to the Statue of Liberty, Ellis Island and, beyond them, the Verrazzano-Narrows Bridge at the mouth of the harbour.",
+      "imageCredit": "Photo: Tdorante10 / Wikimedia Commons (CC BY-SA 4.0)"
+    },
+    {
+      "id": "5",
+      "type": "audio",
+      "image": "/images/tours/lower-manhattan/5.webp",
+      "title": "The Battery and the SeaGlass Carousel",
+      "duration": "3:00 mins",
+      "audioFile": "https://pub-f2d1a02a5dea4125b3453ea5789cc9b1.r2.dev/audio/demo-tour-5.mp3",
+      "location": {
+        "lat": 40.7029,
+        "lng": -74.0159
+      },
+      "transcription": "The Battery takes its name from the artillery batteries that once lined this shore to protect the Dutch and later British settlement. Walk through the gardens and you pass the East Coast Memorial — eight granite pylons carrying the names of more than four thousand servicemen lost in the Atlantic in the Second World War — and the bronze eagle that faces the harbour. Near the centre of the park is the SeaGlass Carousel, opened in 2015: a nautilus-shaped pavilion where you ride inside luminous fibreglass fish rather than on horses, a nod to the New York Aquarium that stood here until 1941.",
+      "imageCredit": "Photo: Rhododendrites / Wikimedia Commons (CC BY-SA 4.0)"
+    },
+    {
+      "id": "6",
+      "type": "audio",
+      "image": "/images/tours/lower-manhattan/6.webp",
+      "title": "Staten Island Ferry Terminal",
+      "duration": "2:00 mins",
+      "audioFile": "https://pub-f2d1a02a5dea4125b3453ea5789cc9b1.r2.dev/audio/demo-tour-6.mp3",
+      "location": {
+        "lat": 40.7014,
+        "lng": -74.0132
+      },
+      "transcription": "The Whitehall Terminal handles about twenty million passengers a year on the Staten Island Ferry, which has been free since 1997. The twenty-five minute crossing gives you the best free view of the Statue of Liberty in the city. Ferries run around the clock, every fifteen to thirty minutes, and if you want that view, this is the place to break off the tour and come back.",
+      "imageCredit": "Photo: Kidfly182 / Wikimedia Commons (CC BY-SA 4.0)"
+    },
+    {
+      "id": "7",
+      "type": "audio",
+      "image": "/images/tours/lower-manhattan/7.webp",
+      "title": "Battery Maritime Building",
+      "duration": "2:00 mins",
+      "audioFile": "https://pub-f2d1a02a5dea4125b3453ea5789cc9b1.r2.dev/audio/demo-tour-7.mp3",
+      "location": {
+        "lat": 40.7017,
+        "lng": -74.0112
+      },
+      "transcription": "Next door stands a rare survivor: a 1909 ferry terminal built of green-painted cast iron and steel, in the Beaux-Arts style, when this stretch of shoreline held dozens of slips serving Brooklyn. Ferries to Governors Island still leave from here, a seven-minute crossing to a car-free island of parkland and old army quarters that is open to visitors in the warmer months.",
+      "imageCredit": "Photo: Kidfly182 / Wikimedia Commons (CC BY-SA 4.0)"
+    },
+    {
+      "id": "8",
+      "type": "audio",
+      "image": "/images/tours/lower-manhattan/8.webp",
+      "title": "Pier 15 and the East River Esplanade",
+      "duration": "2:30 mins",
+      "audioFile": "https://pub-f2d1a02a5dea4125b3453ea5789cc9b1.r2.dev/audio/demo-tour-8.mp3",
+      "location": {
+        "lat": 40.7043,
+        "lng": -74.0032
+      },
+      "transcription": "You are now walking north along the East River, under the elevated FDR Drive. Pier 15 was rebuilt in 2011 as a two-level public pier with lawns and an upper deck. From it you can see all three of the great East River bridges in order: the Brooklyn Bridge of 1883, the Manhattan Bridge of 1909, and the Williamsburg Bridge of 1903 further upriver. Strictly speaking, the East River is not a river at all but a tidal strait.",
+      "imageCredit": "Photo: Ingfbruno / Wikimedia Commons (CC BY-SA 3.0)"
+    },
+    {
+      "id": "9",
+      "type": "audio",
+      "image": "/images/tours/lower-manhattan/9.webp",
+      "title": "South Street Seaport and Pier 17",
+      "duration": "3:00 mins",
+      "audioFile": "https://pub-f2d1a02a5dea4125b3453ea5789cc9b1.r2.dev/audio/demo-tour-9.mp3",
+      "location": {
+        "lat": 40.706,
+        "lng": -74.0026
+      },
+      "transcription": "This was the centre of the port of New York in the age of sail, and the low brick counting houses along Schermerhorn Row date from 1811. Moored at Pier 16 is the Wavertree, an iron-hulled sailing ship of 1885, part of the South Street Seaport Museum's fleet. Look up Fulton Street and you will see how the neighbourhood's scale changes: four-storey warehouses in the foreground, the towers of the financial district directly behind them.",
+      "imageCredit": "Photo: passer-by from New York / Wikimedia Commons (CC BY-SA 2.0)"
+    },
+    {
+      "id": "10",
+      "type": "audio",
+      "image": "/images/tours/lower-manhattan/10.webp",
+      "title": "Fraunces Tavern",
+      "duration": "3:00 mins",
+      "audioFile": "https://pub-f2d1a02a5dea4125b3453ea5789cc9b1.r2.dev/audio/demo-tour-10.mp3",
+      "location": {
+        "lat": 40.7035,
+        "lng": -74.0113
+      },
+      "transcription": "The yellow brick building at Pearl and Broad Streets is the oldest surviving structure in Manhattan, built as a house in 1719 and opened as a tavern in 1762. On 4 December 1783, nine days after the British left New York, George Washington said farewell to the officers of the Continental Army in the Long Room upstairs. The building you see is a 1907 reconstruction of what the tavern was believed to have looked like; it holds a museum above a working restaurant.",
+      "imageCredit": "Photo: MainlyTwelve / Wikimedia Commons (CC BY-SA 4.0)"
+    },
+    {
+      "id": "11",
+      "type": "audio",
+      "image": "/images/tours/lower-manhattan/11.webp",
+      "title": "Stone Street",
+      "duration": "2:30 mins",
+      "audioFile": "https://pub-f2d1a02a5dea4125b3453ea5789cc9b1.r2.dev/audio/demo-tour-11.mp3",
+      "location": {
+        "lat": 40.7043,
+        "lng": -74.011
+      },
+      "transcription": "Stone Street follows a Dutch lane from the 1650s and was, according to local tradition, the first paved street in New Amsterdam — hence the name. The buildings on it went up quickly after the Great Fire of 1835, which destroyed almost everything south of Wall Street. The whole block is a landmarked historic district, closed to cars, and in summer the restaurants put their tables down the middle of the cobbles.",
+      "imageCredit": "Photo: Phillip Capper / Wikimedia Commons (CC BY 2.0)"
+    },
+    {
+      "id": "12",
+      "type": "audio",
+      "image": "/images/tours/lower-manhattan/12.webp",
+      "title": "Federal Hall and Wall Street",
+      "duration": "3:00 mins",
+      "audioFile": "https://pub-f2d1a02a5dea4125b3453ea5789cc9b1.r2.dev/audio/demo-tour-12.mp3",
+      "location": {
+        "lat": 40.7073,
+        "lng": -74.0102
+      },
+      "transcription": "Wall Street is named for the wooden palisade the Dutch built across the island in 1653. At the corner of Nassau Street stands Federal Hall, where George Washington was inaugurated as the first president in 1789 and where the Bill of Rights was passed — though that building was demolished in 1812, and the Greek Revival customs house you see replaced it in 1842. Across the street is the New York Stock Exchange, and one block west, Trinity Church closes the view down Wall Street. Your loop ends here, two hundred metres from where it began.",
+      "imageCredit": "Photo: Arild Vågen / Wikimedia Commons (CC BY-SA 4.0)"
+    }
+  ]
+}

@@ -23,7 +23,9 @@ export const docsNavigation: NavGroup[] = [
     title: "Content creation",
     items: [
       { title: "Overview", href: "/docs/content/overview" },
-      { title: "Creating a guide", href: "/docs/content/creating-guide" },
+      { title: "Creating a tour", href: "/docs/content/creating-guide" },
+      { title: "Multiple tours", href: "/docs/content/multi-tour" },
+      { title: "Map view", href: "/docs/content/map" },
       { title: "Media hosting", href: "/docs/content/media" },
       { title: "Media optimization", href: "/docs/content/optimization" },
       { title: "Stop types", href: "/docs/content/stop-types" },
@@ -52,7 +54,6 @@ export const docsNavigation: NavGroup[] = [
       { title: "Offline support", href: "/docs/features/offline" },
       { title: "Deep linking", href: "/docs/features/deeplinking" },
       { title: "Feedback collection", href: "/docs/features/feedback" },
-      { title: "Map view", href: "/docs/features/map" },
     ],
   },
   {

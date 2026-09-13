@@ -114,12 +114,15 @@ const iconMap: Record<string, LucideIcon> = {
   lightbulb: Lightbulb,
 };
 
+// Shared: tint inline <code> to match the callout's own color instead of the default grey.
+const calloutCodeTint = "[&_code]:bg-black/10 [&_code]:border-black/10 [&_code]:text-current dark:[&_code]:bg-white/10 dark:[&_code]:border-white/15";
+
 // Note component
 export function Note({ children }: { children: React.ReactNode }) {
   return (
     <div className="my-6 flex gap-3 rounded-lg border border-blue-200 bg-blue-50 p-4 dark:border-blue-900 dark:bg-blue-950">
       <Info className="h-5 w-5 shrink-0 text-blue-600 dark:text-blue-400" />
-      <div className="text-sm text-blue-800 dark:text-blue-200 [&>p]:m-0 [&_*]:!leading-[1.5]" style={{ lineHeight: 1.5 }}>{children}</div>
+      <div className={cn("text-sm text-blue-800 dark:text-blue-200 [&>p]:m-0 [&_*]:!leading-[1.5]", calloutCodeTint)} style={{ lineHeight: 1.5 }}>{children}</div>
     </div>
   );
 }
@@ -129,7 +132,7 @@ export function Warning({ children }: { children: React.ReactNode }) {
   return (
     <div className="my-6 flex gap-3 rounded-lg border border-amber-200 bg-amber-50 p-4 dark:border-amber-900 dark:bg-amber-950">
       <AlertTriangle className="h-5 w-5 shrink-0 text-amber-600 dark:text-amber-400" />
-      <div className="text-sm text-amber-800 dark:text-amber-200 [&>p]:m-0 [&_*]:!leading-[1.5]" style={{ lineHeight: 1.5 }}>{children}</div>
+      <div className={cn("text-sm text-amber-800 dark:text-amber-200 [&>p]:m-0 [&_*]:!leading-[1.5]", calloutCodeTint)} style={{ lineHeight: 1.5 }}>{children}</div>
     </div>
   );
 }
@@ -139,7 +142,27 @@ export function Tip({ children }: { children: React.ReactNode }) {
   return (
     <div className="my-6 flex gap-3 rounded-lg border border-green-200 bg-green-50 p-4 dark:border-green-900 dark:bg-green-950">
       <Lightbulb className="h-5 w-5 shrink-0 text-green-600 dark:text-green-400" />
-      <div className="text-sm text-green-800 dark:text-green-200 [&>p]:m-0 [&_*]:!leading-[1.5]" style={{ lineHeight: 1.5 }}>{children}</div>
+      <div className={cn("text-sm text-green-800 dark:text-green-200 [&>p]:m-0 [&_*]:!leading-[1.5]", calloutCodeTint)} style={{ lineHeight: 1.5 }}>{children}</div>
+    </div>
+  );
+}
+
+// Info component
+export function InfoCallout({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="my-6 flex gap-3 rounded-lg border border-slate-200 bg-slate-50 p-4 dark:border-slate-800 dark:bg-slate-900">
+      <Info className="h-5 w-5 shrink-0 text-slate-600 dark:text-slate-400" />
+      <div className={cn("text-sm text-slate-700 dark:text-slate-300 [&>p]:m-0 [&_*]:!leading-[1.5]", calloutCodeTint)} style={{ lineHeight: 1.5 }}>{children}</div>
+    </div>
+  );
+}
+
+// Check component
+export function CheckCallout({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="my-6 flex gap-3 rounded-lg border border-emerald-200 bg-emerald-50 p-4 dark:border-emerald-900 dark:bg-emerald-950">
+      <Check className="h-5 w-5 shrink-0 text-emerald-600 dark:text-emerald-400" />
+      <div className={cn("text-sm text-emerald-800 dark:text-emerald-200 [&>p]:m-0 [&_*]:!leading-[1.5]", calloutCodeTint)} style={{ lineHeight: 1.5 }}>{children}</div>
     </div>
   );
 }
@@ -315,6 +338,8 @@ export const mdxComponents = {
   Note,
   Warning,
   Tip,
+  Info: InfoCallout,
+  Check: CheckCallout,
   Steps,
   Step,
   Cards,

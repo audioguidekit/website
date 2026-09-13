@@ -1,70 +1,135 @@
 'use client';
 
-import React, { useState } from "react";
+import React from "react";
 import { Navigation } from "@/components/sections/navigation";
-import { Github, Rocket, Wrench, Sparkles } from "lucide-react";
+import { Github } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { SimpleFooter } from "@/components/sections/simple-footer";
 
-type RoadmapItem = {
+type ChangelogTag = "Release" | "New" | "Improved" | "Fixed";
+
+type ChangelogEntry = {
   id: string;
-  title: React.ReactNode;
-  quarter?: string;
+  date: string;
+  title: string;
+  tag: ChangelogTag;
+  description: React.ReactNode;
 };
-
-const plannedItems: RoadmapItem[] = [
-  { id: "p1", title: "Multiple guides support in one app", quarter: "Q2/2026" },
-  {
-    id: "p2",
-    title: "Generate tour files from Google Sheets",
-    quarter: "Q2/2026",
-  },
-  { id: "p3", title: "More sample themes for the app", quarter: "Q3/2026" },
-  { id: "p4", title: "Support for more languages on UI", quarter: "Q3/2026" },
-  { id: "p6", title: "Accessibility options", quarter: "Q3/2026" },
-  { id: "p7", title: "Search (keyword, stop number)", quarter: "Q3/2026" },
-  { id: "p8", title: "Tabbed navigation", quarter: "Q3/2026" },
-];
-
-const inProgressItems: RoadmapItem[] = [
-  {
-    id: "i1",
-    title: (
-      <>
-        More stop types than audio as revealed{" "}
-        <Link
-          href="/docs/content/stop-types"
-          className="underline hover:text-amber-600"
-        >
-          in documentation
-        </Link>
-      </>
-    ),
-  },
-  { id: "i2", title: "Headless content management system (MVP)" },
-  { id: "i3", title: "Tool for making screenshots from your audio guide" },
-];
 
 const owner = process.env.GITHUB_OWNER || "audioguidekit";
 const repo = process.env.GITHUB_REPO || "player-react";
 
-type DeliveredItem = {
-  id: string;
-  title: string;
-  date: string;
+const tagStyles: Record<ChangelogTag, string> = {
+  Release: "text-violet-700 dark:text-violet-400 bg-violet-500/10",
+  New: "text-emerald-700 dark:text-emerald-400 bg-emerald-500/10",
+  Improved: "text-blue-700 dark:text-blue-400 bg-blue-500/10",
+  Fixed: "text-amber-700 dark:text-amber-400 bg-amber-500/10",
 };
 
-const deliveredItems: DeliveredItem[] = [
-  { id: "5", title: "Outdoor guides support with maps", date: "06/2026" },
+function groupByDate(entries: ChangelogEntry[]) {
+  const groups: { date: string; entries: ChangelogEntry[] }[] = [];
+  for (const entry of entries) {
+    const lastGroup = groups[groups.length - 1];
+    if (lastGroup && lastGroup.date === entry.date) {
+      lastGroup.entries.push(entry);
+    } else {
+      groups.push({ date: entry.date, entries: [entry] });
+    }
+  }
+  return groups;
+}
+
+// Newest first.
+const changelog: ChangelogEntry[] = [
   {
-    id: "3",
-    title: "Alternative layout for the main UI and player",
-    date: "02/2026",
+    id: "multi-tour",
+    date: "Sep 12, 2026",
+    title: "Multiple tours in one app",
+    tag: "New",
+    description: (
+      <>
+        Ship several tours from a single deployment. Visitors get a themeable tour-selection screen with app-level branding (logo, hero, splash), and each tour keeps its own map, marker, and route configuration.
+        Read the{" "}
+        <Link href="/docs/content/multi-tour" className="underline hover:text-foreground transition-colors">
+          docs
+        </Link>{" "}
+        or try the{" "}
+        <a
+          href="/demo/new-york"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline hover:text-foreground transition-colors"
+        >
+          New York demo
+        </a>
+        .
+      </>
+    ),
   },
-  { id: "4", title: "Better support for offline playback", date: "02/2026" },
-  { id: "2", title: "Light and dark theme", date: "02/2026" },
-  { id: "1", title: "Released v1.0.0", date: "02/2026" },
+  {
+    id: "map-marker-route-colors",
+    date: "Sep 12, 2026",
+    title: "Per-tour map marker and route colors",
+    tag: "New",
+    description:
+      "With the introduction of multiple tours in one app, we added supprot for per-tour marker overrides (color, weight, opacity, dash pattern) – this lets you restyle a tour's markers and route line to match its own basemap or branding – no new theme required.",
+  },
+  {
+    id: "default-basemap",
+    date: "Sep 12, 2026",
+    title: "OpenFreeMap replaces Carto as default provider",
+    tag: "Improved",
+    description:
+      "The map now defaults to OpenFreeMap, so map view renders out of the box with no API key or usage quota to configure.",
+  },
+  {
+    id: "custom-map-style",
+    date: "Sep 12, 2026",
+    title: "Bring your own vector map style",
+    tag: "New",
+    description:
+      "The map now renders vector tiles natively alongside the existing raster providers. Bring your own map style as style.json file to render a fully custom vector basemap, crisp at every zoom level, with no tile server of your own to run.",
+  },
+  {
+    id: "outdoor-maps",
+    date: "Jun 6, 2026",
+    title: "Outdoor guides with map view",
+    tag: "New",
+    description:
+      "Outdoor tours are now supported with a full map view, marker styles, and list/map combination modes.",
+  },
+  {
+    id: "offline-playback",
+    date: "Feb 2026",
+    title: "Better offline playback",
+    tag: "Improved",
+    description:
+      "Improved reliability of offline audio playback so guides keep working without a connection once downloaded.",
+  },
+  {
+    id: "alt-layout",
+    date: "Feb 2026",
+    title: "Customizable layout options",
+    tag: "New",
+    description:
+      "Added support for different layout options for the main UI and player, selectable per deployment.",
+  },
+  {
+    id: "themes",
+    date: "Feb 2026",
+    title: "Themes support",
+    tag: "New",
+    description:
+      "The player enables you to define your own theme and branding. By default, it ships with customizable light and dark themes out of the box.",
+  },
+  {
+    id: "v1",
+    date: "Feb 2026",
+    title: "Released v1.0.0",
+    tag: "Release",
+    description: "First stable release of the audio guide player.",
+  },
 ];
 
 export default function UpdatesPage() {
@@ -84,129 +149,80 @@ export default function UpdatesPage() {
         </div>
 
         <div className="max-w-[672px] mx-auto px-4 sm:px-8 relative z-10">
-          <header className="mb-20">
+          <header className="mb-16">
             <div className="mb-6">
               <span className="inline-flex items-center px-2 py-0.5 text-[11px] font-mono font-medium tracking-widest text-muted-foreground bg-secondary uppercase border border-border rounded">
-                PAST + FUTURE
+                CHANGELOG
               </span>
             </div>
             <h1 className="text-4xl sm:text-5xl font-bold text-foreground tracking-tight mb-6">
-              Development updates
+              Changelog
             </h1>
             <p className="text-[18px] text-muted-foreground leading-relaxed">
-              Updates on what we’re building and where it’s heading.{" "}
+              What&apos;s shipped, as it ships.{" "}
               <a
                 href="https://docs.google.com/spreadsheets/d/17VvcMKVEXHMuCPpiul2ugfMSrXd8Xbj6V98JvUUYFpM/edit?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="underline hover:text-foreground transition-colors"
               >
-                See the full roadmap spreadsheet
+                See what&apos;s planned next
               </a>{" "}
-              — feel free to leave comments there.
+              in the roadmap spreadsheet — feel free to leave comments there.
             </p>
           </header>
 
           <div className="relative">
-            {/* Timeline vertical line */}
-            <div className="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-amber-500/50 via-blue-500/50 to-emerald-500/50 ml-[4px]" />
+            <div className="absolute left-[6px] top-2 bottom-2 w-px bg-border" />
 
-            <div className="space-y-4">
-              {/* PLANNED SECTION */}
-              <div className="relative pl-8">
-                <div className="absolute left-0 top-[6px] w-[9px] h-[9px] bg-amber-500/30 rounded-full border-2 border-amber-500/50 z-10" />
-                <span className="text-[12px] font-mono font-semibold text-amber-500 uppercase tracking-widest">
-                  FUTURE // PLANNED
-                </span>
+            <div className="space-y-10">
+              {groupByDate(changelog).map((group) => (
+                <div key={group.date} className="relative grid grid-cols-[110px_1fr] gap-6 sm:gap-8">
+                  <div className="absolute left-0 top-[6px] w-[13px] h-[13px] rounded-full bg-background border-2 border-muted-foreground/40" />
+                  <span className="pl-6 text-[13px] font-mono text-muted-foreground pt-px">
+                    {group.date}
+                  </span>
 
-                <div className="mt-4 rounded-xl border border-amber-500/10 bg-amber-500/5 overflow-hidden">
-                  {plannedItems.map((item, index) => (
-                    <div
-                      key={item.id}
-                      className={`flex items-center gap-3 py-3 px-4 ${index !== 0 ? "border-t border-amber-500/10" : ""}`}
-                    >
-                      <Rocket className="w-4 h-4 text-amber-500/60 shrink-0" />
-                      <span className="text-[15px] text-foreground">
-                        {item.title}
-                      </span>
-                      {item.quarter && (
-                        <span className="ml-auto text-[12px] font-mono text-amber-800/60 uppercase">
-                          {item.quarter}
-                        </span>
-                      )}
-                    </div>
-                  ))}
+                  <div className="space-y-8">
+                    {group.entries.map((entry) => (
+                      <div key={entry.id}>
+                        <div className="flex items-center gap-2 mb-3">
+                          <h2 className="text-[18px] font-semibold text-foreground">
+                            {entry.title}
+                          </h2>
+                          <span
+                            className={`px-2 py-0.5 text-[11px] font-mono font-medium tracking-wider uppercase rounded shrink-0 ${tagStyles[entry.tag]}`}
+                          >
+                            {entry.tag}
+                          </span>
+                        </div>
+                        <p className="text-[15px] text-muted-foreground leading-relaxed">
+                          {entry.description}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              ))}
+            </div>
 
-              {/* IN PROGRESS SECTION */}
-              <div className="relative pl-8 pt-8 pb-0">
-                <div className="absolute left-0 top-[38px] w-[9px] h-[9px] bg-blue-500/30 rounded-full border-2 border-blue-500/50 z-10 animate-pulse" />
-                <span className="text-[12px] font-mono font-semibold text-blue-500 uppercase tracking-widest">
-                  NOW // IN_PROGRESS
-                </span>
-
-                <div className="mt-4 rounded-xl border border-blue-500/10 bg-blue-500/5 overflow-hidden">
-                  {inProgressItems.map((item, index) => (
-                    <div
-                      key={item.id}
-                      className={`flex items-center gap-3 py-3 px-4 ${index !== 0 ? "border-t border-blue-500/10" : ""}`}
-                    >
-                      <Wrench className="w-4 h-4 text-blue-500/80 shrink-0" />
-                      <span className="text-[15px] text-foreground">
-                        {item.title}
-                      </span>
-                      <span className="ml-auto text-[12px] font-mono text-blue-500 uppercase tracking-wider">
-                        Building
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* DELIVERED SECTION */}
-              <div className="relative pl-8 pt-8 pb-0">
-                <div className="absolute left-0 top-[38px] w-[9px] h-[9px] bg-emerald-500 rounded-full border-2 border-background z-10" />
-                <span className="text-[12px] font-mono font-semibold text-emerald-500 uppercase tracking-widest">
-                  DELIVERED // SHIPPED
-                </span>
-
-                <div className="mt-4 rounded-xl border border-emerald-500/10 bg-emerald-500/5 overflow-hidden">
-                  {deliveredItems.map((item, index) => (
-                    <div
-                      key={item.id}
-                      className={`flex items-center gap-3 py-3 px-4 ${index !== 0 ? "border-t border-emerald-500/10" : ""}`}
-                    >
-                      <Sparkles className="w-4 h-4 text-emerald-500/70 shrink-0" />
-                      <span className="text-[15px] text-foreground">
-                        {item.title}
-                      </span>
-                      <span className="ml-auto text-[12px] font-mono text-emerald-700/60 uppercase">
-                        {item.date}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="pt-8 pl-8">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  asChild
-                  className="font-mono text-[11px] uppercase tracking-wider h-9"
+            <div className="pt-10 pl-8">
+              <Button
+                variant="outline"
+                size="sm"
+                asChild
+                className="font-mono text-[11px] uppercase tracking-wider h-9"
+              >
+                <a
+                  href={`https://github.com/${owner}/${repo}/commits/main/`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2"
                 >
-                  <a
-                    href={`https://github.com/${owner}/${repo}/commits/main/`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2"
-                  >
-                    <Github className="w-3.5 h-3.5" />
-                    View full history on GitHub
-                  </a>
-                </Button>
-              </div>
+                  <Github className="w-3.5 h-3.5" />
+                  View full history on GitHub
+                </a>
+              </Button>
             </div>
           </div>
 

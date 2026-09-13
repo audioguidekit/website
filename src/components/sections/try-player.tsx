@@ -3,7 +3,7 @@ import Image from "next/image";
 import en from "@/content/landing/en.json";
 import type { Dict } from "@/content/landing";
 
-const PLAYER_URL = "https://audioguidekit.vercel.app/";
+const PLAYER_URL = "/demo/barcelona";
 
 export function TryPlayer({ t = en.tryPlayer }: { t?: Dict["tryPlayer"] }) {
   return (

@@ -142,13 +142,21 @@ export function Hero({
               }}
               className="relative z-30 lg:-ml-16"
             >
-              <PhoneFrame className="w-[280px] sm:w-[320px] shrink-0 mockup-shadow">
-                <img
-                  src="/screenshots/audioguidekit-tour-tracklist-playing-light.png"
-                  alt={t.phoneAlt}
-                  className="w-full h-auto"
-                />
-              </PhoneFrame>
+              <a
+                href="/demo/barcelona"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group block"
+                aria-label={t.phoneAlt}
+              >
+                <PhoneFrame className="w-[280px] sm:w-[320px] shrink-0 mockup-shadow transition-shadow duration-300 group-hover:shadow-[0_40px_90px_rgba(0,0,0,0.2)]">
+                  <img
+                    src="/screenshots/audioguidekit-tour-tracklist-playing-light.png"
+                    alt={t.phoneAlt}
+                    className="w-full h-auto"
+                  />
+                </PhoneFrame>
+              </a>
             </MotionDiv>
 
             {/* Technical accents around the phone */}

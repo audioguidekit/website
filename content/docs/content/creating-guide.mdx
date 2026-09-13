@@ -5,6 +5,10 @@ description: "Complete guide to structuring your tour JSON files"
 
 This guide walks through every field in your tour JSON files. By the end, you'll have a complete, working tour.
 
+<Note>
+Bundling **more than one tour** in a single deployment? Put each tour in its own subfolder and add an app-level `app.json` to theme the selection screen. See [Multiple tours](/docs/content/multi-tour).
+</Note>
+
 ## Tour file structure
 
 AudioGuideKit uses two types of files:
@@ -46,14 +50,16 @@ Create `src/data/tour/metadata.json`:
 | `image` | No | Default tour cover image URL |
 | `mapView` | No | Show an interactive map tab when `true` |
 | `listView` | No | Show the stop list tab (default: `true`); set `false` with `mapView: true` for a map-only tour |
-| `mapProvider` | No | Tile provider: `"openstreetmap"` (default), `"carto"`, `"mapbox"`, `"jawg"`, `"maptiler"` |
+| `mapProvider` | No | Tile provider: `"openfreemap"` (default), `"openstreetmap"`, `"carto"`, `"mapbox"`, `"jawg"`, `"maptiler"` |
+| `mapStyle` | No | MapLibre style.json URL — overrides `mapProvider` entirely for a fully custom vector basemap |
 | `mapStyleId` | No | Provider-specific style ID (each provider has a sensible default) |
 | `mapCenter` | No | Fixed starting map center: `{ "lat": 51.5, "lng": -0.1 }` |
 | `mapZoom` | No | Fixed starting zoom level (0–23); defaults to fitting all stops |
 | `mapMarker` | No | Default marker style: `"number"` (default), `"image"` (stop photo), or `"empty"` |
 | `mapMarkerIcon` | No | URL to a custom marker image used for all stops; overrides `mapMarker` |
+| `mapMarkerColors` | No | Per-tour marker background colors by state — `{ "active": "#...", "upcoming": "#...", "completed": "#...", "cluster": "#..." }`; falls back to the theme |
 | `mapCluster` | No | Cluster nearby markers — `{ "disableClusteringAtZoom": 16 }` |
-| `mapRoute` | No | Draw a route line between stops: `true` for straight lines, or `{ "geoJSON": "./route.geojson" }` for street-accurate paths |
+| `mapRoute` | No | Draw a route line between stops: `true` for straight lines, or `{ "geoJSON": "./route.geojson" }` for street-accurate paths; also takes per-tour `completedColor`, `upcomingColor`, `weight`, `opacity`, `dashArray` overrides |
 | `mapLocateButton` | No | Show the locate-me button on the map (default: `true`) |
 
 <Tip>
@@ -61,7 +67,7 @@ Start with just `id` and add other settings as needed. Every field except `id` h
 </Tip>
 
 <Note>
-Map fields are covered in detail — providers, API keys, route lines, and theming — in the [Map view](/docs/features/map) guide.
+Map fields are covered in detail — providers, API keys, route lines, and theming — in the [Map view](/docs/content/map) guide.
 </Note>
 
 ## The language file
@@ -156,7 +162,6 @@ Let's build a real tour from scratch.
   "collectFeedback": true,
   "image": "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=1000",
   "mapView": true,
-  "mapProvider": "openstreetmap",
   "mapRoute": true
 }
 ```

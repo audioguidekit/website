@@ -11,7 +11,7 @@
   "nav": {
     "home": "Audio Tour Home",
     "notes": "Notes",
-    "updates": "Updates",
+    "updates": "Changelog",
     "docs": "Documentation",
     "openMenu": "Open menu",
     "closeMenu": "Close menu"
@@ -230,7 +230,7 @@
   },
   "footer": {
     "notes": "Notes",
-    "updates": "Updates",
+    "updates": "Changelog",
     "docs": "Documentation",
     "github": "Github",
     "contact": "Contact"

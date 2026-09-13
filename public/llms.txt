@@ -44,25 +44,28 @@ AudioGuideKit is a production-ready audio guide player that you host yourself. V
 
 2. **Works offline**: Service Worker caches audio and UI assets; progress is stored in IndexedDB. Tours keep working in airplane mode, underground, or with poor signal. Per-tour `offlineMode` (`optional` / `online-only` / `offline-only`).
 
-3. **Interactive map view** (optional): A map tab alongside the stop list, with numbered/photo/custom markers, clustering, a progress route line (straight or GeoJSON), and a locate-me button. Tile providers: OpenStreetMap and CARTO (no key), Mapbox, Jawg, and MapTiler (API key).
+3. **Interactive map view** (optional): A map tab alongside the stop list, with numbered/photo/custom markers (per-tour colors supported), clustering, a progress route line (straight or GeoJSON, with per-tour color/weight/style overrides), and a locate-me button. Defaults to OpenFreeMap — keyless vector tiles, no signup needed. Also supports OpenStreetMap (no key), Mapbox, Jawg, MapTiler, and CARTO (all require an API key), or any MapLibre style URL for a fully custom vector basemap.
 
 4. **Multiple stop types**: Audio is the primary, fully supported type. Additional experimental types let you mix in text, image + text, image galleries, before/after comparisons, image hotspots, video, 3D objects, headlines, quotes, ratings, and email capture.
 
-5. **Multi-language**: Separate content file per language plus translatable UI strings, automatic language detection, one-tap switching, and progress preserved across languages.
+5. **Multiple tours** (optional): Bundle several tours in one deployment. With more than one tour the app opens on a tour-selection screen, themeable via an app-level `app.json` (theme, title/subtitle, logo, hero, splash intro, tour order, card layout). A single tour skips the picker and opens directly.
 
-6. **Custom branding**: Themeable colors, typography, and map markers via `themeId` (built-in `default-light` / `default-dark` or your own theme), custom app icons, and status-bar color.
+6. **Multi-language**: Separate content file per language plus translatable UI strings, automatic language detection, one-tap switching, and progress preserved across languages.
 
-7. **Feedback collection**: Built-in star ratings and email collection.
+7. **Custom branding**: Themeable colors, typography, and map markers via `themeId` (built-in `default-light` / `default-dark` or your own theme), custom app icons, and status-bar color.
 
-8. **Deploy anywhere**: Pure static output — host on Vercel, Netlify, Cloudflare Pages, GitHub Pages, AWS S3, or any static server. Zero backend.
+8. **Feedback collection**: Built-in star ratings and email collection.
+
+9. **Deploy anywhere**: Pure static output — host on Vercel, Netlify, Cloudflare Pages, GitHub Pages, AWS S3, or any static server. Zero backend.
 
 ## Content Model
 
 Tours live in `src/data/tour/<tour-id>/`:
 
-- **`metadata.json`** — tour-wide settings: `id`, `themeId`, `offlineMode`, feature toggles (`transcriptAvailable`, `collectFeedback`, `fullscreenPlayer`, `showProgressBar`, `hapticsEnabled`, …), and map config (`mapView`, `listView`, `mapProvider`, `mapCenter`, `mapRoute`, …).
+- **`metadata.json`** — tour-wide settings: `id`, `themeId`, `offlineMode`, feature toggles (`transcriptAvailable`, `collectFeedback`, `fullscreenPlayer`, `showProgressBar`, `hapticsEnabled`, …), and map config (`mapView`, `listView`, `mapProvider`, `mapStyle`, `mapCenter`, `mapRoute`, `mapMarkerColors`, …).
 - **Language files** (`en.json`, `es.json`, …) — `title`, `description`, `totalDuration`, `totalStops`, cover `image`, and the `stops` array.
 - **Stops** — `id`, `type`, `title`, `duration`, `image`, `audioFile`, optional `transcription`, `location` (`{ lat, lng }`), and per-stop `mapMarkerIcon`.
+- **`app.json`** (optional, at `src/data/tour/` root) — themes the tour-selection screen for multi-tour deployments: `themeId`, `title`, `subtitle`, `logo`, `hero`, `splash`, `tourOrder`, and `tourCard` layout.
 
 JSON files carry a `$schema` reference for live editor validation, and `bun run validate` gates the build against the schema.
 

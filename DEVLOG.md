@@ -1,4 +1,31 @@
+## 2026-09-13
+
+### Added live player demos (Barcelona, New York) at /demo/*
+Built two real player-react deployments (the tracked `barcelona` demo tour, and the `new-york` tours-content deployment — a multi-tour bundle of "New York" + "Lower Manhattan") into static output and hosted them on this site at `/demo/barcelona` and `/demo/new-york` via a Next.js route handler (`src/app/demo/[deployment]/[[...slug]]/route.ts`) that SPA-falls-back to each build's `index.html`. Surfaced from three places only (no dedicated showcase page — tried a `/examples` page + nav/footer links first, reverted per feedback that it was more than asked for): the hero's floating phone mockup and the existing "Try the player" section now point at the local `/demo/barcelona` demo instead of the old `audioguidekit.vercel.app` hosted instance (with a hover-shadow affordance added to the phone mockup), and the `/updates` changelog's multi-tour entry links to both the docs page and the New York demo.
+
+**Root cause / approach:** Hosting an SPA build under a subpath of an already-running site (rather than its own domain root) hits two sharp edges neither obvious from player-react's own docs: (1) its `index.html` hardcodes `navigator.serviceWorker.register("/sw.js", { scope: "/" })` — registering that from `/demo/barcelona/` would hand a service worker control of the **entire parent origin**, silently hijacking every request the marketing site makes for any visitor who opens a demo page. Disabled for these builds only (temporary, uncommitted edit to player-react, reverted after each build). (2) `BrowserRouter` has no `basename`, so it always resolves from `/`. Fixed by passing Vite's `import.meta.env.BASE_URL` — but that constant always carries a trailing slash, while Next.js always strips the trailing slash from the served URL (`/demo/barcelona/` 308s to `/demo/barcelona`) — the mismatch makes every react-router route silently fail to match (blank page, no error, nothing in the console) because `"/demo/barcelona".startsWith("/demo/barcelona/")` is false. Fixed by stripping the trailing slash before passing it as `basename`. A third, data-only issue: `app.json`/`metadata.json` store image URLs as root-relative paths (`/images/app/hero.webp`), correct for a root deployment but 404-equivalent (broken `<img>`, black splash) under a subpath — fixed by rewriting those paths to `/demo/<name>/images/...` in the staged JSON before building, mirroring what player-react's own `--remote-assets` build flag already does for R2 URLs.
+
+Consolidated all of this into `scripts/build-demos.mjs` (`npm run demos:build`) — manual/on-demand only, never part of this site's own build, so the site never depends on a player-react checkout existing. Points at a sibling `../player-react` clone by default (`PLAYER_REPO_PATH` to override).
+
+→ *Memory saved: `player-react-subpath-hosting.md`*
+
+## 2026-09-12
+
+### Reworked /updates from a roadmap into a traditional changelog
+Replaced the 3-lane Planned/In Progress/Delivered roadmap (with quarter estimates) on `src/app/updates/page.tsx` with a single chronological timeline of shipped entries only — date, title, category tag, short description. Quarter estimates created false commitments for unshipped work and gave delivered items no room to explain what changed. The Google Sheet roadmap link moved into the intro paragraph, reframed as "what's planned next" rather than being enumerated on-page.
+
+**Root cause / approach:** Data model collapsed from `RoadmapItem`/`DeliveredItem` to one `ChangelogEntry[]` (date, title, tag, description), still hand-curated directly in the page file — no new content pipeline. Seeded from real shipped milestones already in this DEVLOG/repo history.
+
+→ *No new memory entries — a self-contained UI rewrite with no non-obvious gotchas.*
+
 ## 2026-08-26
+
+### Fixed DE/ES translation errors found in a full read-through review
+Read `de.json`/`es.json` end-to-end as landing copy (not string-by-string) and found DeepL had produced several real errors: "Fully yours" → literal letter sign-offs ("Mit freundlichen Grüßen"/"Atentamente") in both languages, ES "Online + Offline" → "En línea + Presencial" (in-person, the opposite of offline), "stops" (tour stops) → "pauses/breaks" in both languages, mismatched roadmap terminology between an FAQ question and its answer, and light/dark toggle labels that didn't match their own aria-label wording. Also found DE silently drifting between "Sie" and "du" mid-page.
+
+**Root cause / approach:** Fixed at the English source (ambiguous phrasing is what DeepL mistranslates) rather than hand-patching target files, then re-ran `npm run translate`. The Sie/du drift got a systemic fix: added `formality: "more"` to the DE DeepL call in `scripts/translate.mjs` — a per-call knob, not a per-string reword. A `--force` full retranslation (needed so formality applied everywhere) introduced 3 incidental wording regressions elsewhere in the file, caught by reviewing the full diff afterward and reverted individually.
+
+→ *No new memory entries — [[landing-i18n-deepl]] already covers the workflow; this was applying it, not learning something new about it.*
 
 ### Landing page i18n (DE + ES) with a DeepL sync script
 Extracted ~1,150 words of landing copy out of 13 section components into `src/content/landing/en.json`, added `/de` and `/es` as statically generated pages, an Accept-Language redirect on `/` with a cookie override, a bottom-of-page language switcher, and `npm run translate` — a deterministic script that sends only strings changed since the last successful run to DeepL. No i18n dependency added; every landing component takes an optional `t` prop defaulting to its English slice, so `/docs`, `/notes` and `not-found` (which also render `Navigation`/`Footer`) are untouched.
@@ -28,6 +55,24 @@ the same click is already there when middleware runs), and the nav logo now poin
 locale's home rather than always `/`.
 
 → *Memory saved: `landing-i18n-deepl.md`*
+
+## 2026-08-21
+
+### Added AGENTS.md to player-react so the doc pointer survives the copy-paste prompt
+`src/components/ui/agent-prompt-copy.tsx` ships a "Copy agent prompt" button whose text tells the agent to read `docs/adding-tours.md` and `docs/themes.md` after cloning player-react — but that instruction only existed in this one-off prompt, with nothing durable in the cloned repo itself for a later session (or a different agent) to rediscover. Added `player-react/AGENTS.md`: setup commands plus pointers to `docs/adding-tours.md`, `docs/themes.md`, `docs/README.md`, and `llms.txt`. Committed to `dev`, cherry-picked alone onto `main`, tagged/released as `player-react` `v1.1.0` (per user's choice — the other 7 unreleased `dev` commits, multi-tour/map/splash/etc., stay unreleased for now).
+
+**Root cause / approach:** Checked whether a `CLAUDE.md` would also help — player-react's own `.gitignore` excludes `CLAUDE.md`, so one would be invisible to every future clone; `AGENTS.md` is the file that actually ships. No file existed in either name before this.
+
+→ *No new memory entries — the "docs mirror player-react" fact this touches is already captured in `docs-sync-from-player-react.md`.*
+
+## 2026-06-09
+
+### Documented multi-tour support (selection screen + app.json)
+The player gained multi-tour support (player-react commit `5774613`): several tours per deployment, each in its own `src/data/tour/<id>/` folder, with a tour-selection screen themed by an optional app-level `app.json`. Added a new docs page `content/docs/content/multi-tour.mdx` (wired into `src/lib/docs/navigation.ts` under Content creation), cross-linked it from `creating-guide.mdx` and `content/overview.mdx`, and added the feature + `app.json` config to both `public/llms.txt` and `public/llms-full.txt`.
+
+**Root cause / approach:** The player-react `docs/multi-tour.md` is still uncommitted (working-tree only), so per the established rule I verified every `app.json` field against `player-react/types.ts` (`AppConfig` / `TourCardConfig`) and the generated `src/schema/app-config.schema.json` rather than trusting prose — they matched exactly. Build gotcha: the docs `CLAUDE.md` advertises `<Info>`/`<Check>` callouts but only `Note`/`Warning`/`Tip` are registered in `mdx-components.tsx`; `<Info>` compiled fine but broke static prerender. Swapped to `<Note>`.
+
+→ *Memory updated: `docs-sync-from-player-react.md`*
 
 ## 2026-06-06
 

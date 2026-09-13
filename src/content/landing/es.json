@@ -11,7 +11,7 @@
   "nav": {
     "home": "Inicio de la visita guiada con audio",
     "notes": "Notas",
-    "updates": "Actualizaciones",
+    "updates": "Changelog",
     "docs": "Documentación",
     "openMenu": "Abrir menú",
     "closeMenu": "Cerrar menú"
@@ -230,7 +230,7 @@
   },
   "footer": {
     "notes": "Notas",
-    "updates": "Actualizaciones",
+    "updates": "Changelog",
     "docs": "Documentación",
     "github": "GitHub",
     "contact": "Contacto"
