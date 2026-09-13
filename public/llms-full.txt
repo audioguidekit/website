@@ -237,7 +237,7 @@ API keys for Mapbox, Jawg, MapTiler, and CARTO are set as environment variables 
 | `type` | Yes | `"audio"` (or another stop type) |
 | `title` | Yes | Stop title |
 | `duration` | Yes | Human-readable duration (e.g. `"3 min audio"`) |
-| `image` | Yes | Stop image URL (also used as the marker when `mapMarker: "image"`) |
+| `image` | No | Stop image URL (also used as the marker when `mapMarker: "image"`) |
 | `audioFile` | For audio | Audio URL (MP3, M4A) |
 | `transcription` | No | Text transcription of the audio |
 | `location` | No | `{ lat, lng }` — audio stops with a location appear as map markers |
@@ -253,7 +253,7 @@ API keys for Mapbox, Jawg, MapTiler, and CARTO are set as environment variables 
 | Positron no labels | `light_nolabels` |
 | Dark Matter no labels | `dark_nolabels` |
 
-Provider defaults: Mapbox `mapbox/outdoors-v12`, Jawg `jawg-terrain`, MapTiler `outdoor-v2`, OpenFreeMap `bright`.
+Provider defaults: Mapbox `mapbox/outdoors-v12`, Jawg `jawg-terrain`, MapTiler `outdoor-v4`, OpenFreeMap `bright`.
 
 ### Theming
 Marker colors and route styling are set in a `ThemeConfig`'s `mapMarkers` block (active, inactive, completed, cluster, route, user-location dot). Themes also control overall colors, typography, and surfaces. Falls back to built-in `default-light` / `default-dark` when a custom theme isn't provided.

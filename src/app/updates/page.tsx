@@ -73,7 +73,7 @@ const changelog: ChangelogEntry[] = [
     title: "Per-tour map marker and route colors",
     tag: "New",
     description:
-      "With the introduction of multiple tours in one app, we added supprot for per-tour marker overrides (color, weight, opacity, dash pattern) – this lets you restyle a tour's markers and route line to match its own basemap or branding – no new theme required.",
+      "With the introduction of multiple tours in one app, we added support for per-tour marker overrides (color, weight, opacity, dash pattern) – this lets you restyle a tour's markers and route line to match its own basemap or branding – no new theme required.",
   },
   {
     id: "default-basemap",
