@@ -85,12 +85,7 @@ src/data/tour/
 └── de.json           # German tour content (optional)
 ```
 
-<Warning>
-Tour files also need to be copied to `src/data/tour/` for build-time discovery. Both directories must stay in sync. This is a technical requirement of how the app bundles content.
-</Warning>
-
 <Note>
-Running **several tours** from one deployment? Each tour gets its own subfolder and the app shows a selection screen. See [Multiple tours](/docs/content/multi-tour).
+Files are automatically mirrored to `public/data/tour/` by the build tooling for test HTTP access. Only maintain the `src/` version—the `public/` copy is generated for you.
 </Note>
-
 

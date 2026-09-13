@@ -68,12 +68,12 @@ AudioGuideKit supports six map tile providers, plus bringing your own custom vec
 
 | Provider | Key needed? | `mapProvider` value | Tiles |
 |----------|-------------|---------------------|-------|
-| OpenFreeMap | No | `"openfreemap"` (default) | Vector |
-| OpenStreetMap | No | `"openstreetmap"` | Raster |
-| CARTO | Yes | `"carto"` | Raster |
-| Mapbox | Yes | `"mapbox"` | Raster |
-| Jawg Maps | Yes | `"jawg"` | Raster |
-| MapTiler | Yes | `"maptiler"` | Raster |
+| [OpenFreeMap](https://openfreemap.org/) | No | `"openfreemap"` (default) | Vector |
+| [OpenStreetMap](https://www.openstreetmap.org/) | No | `"openstreetmap"` | Raster |
+| [MapTiler](https://www.maptiler.com/) | Yes | `"maptiler"` | Raster |
+| [Mapbox](https://www.mapbox.com/) | Yes | `"mapbox"` | Raster |
+| [CARTO](https://carto.com/) | Yes | `"carto"` | Raster |
+| [Jawg Maps](https://www.jawg.io/) | Yes | `"jawg"` | Raster |
 
 ### OpenFreeMap (default)
 
@@ -85,7 +85,22 @@ No setup needed, no account, no usage quota. Renders vector tiles via MapLibre G
 }
 ```
 
-Or simply omit `mapProvider` — this is the default.
+Or simply omit `mapProvider` — this is the default. Switch between the official styles with `mapStyleId`:
+
+| Style | `mapStyleId` |
+|-------|-------------|
+| Bright (default) | `bright` |
+| Liberty | `liberty` |
+| Positron (light) | `positron` |
+| Fiord | `fiord` |
+| Dark | `dark` |
+
+```json metadata.json
+{
+  "mapProvider": "openfreemap",
+  "mapStyleId": "dark"
+}
+```
 
 ### OpenStreetMap
 
@@ -97,37 +112,15 @@ No setup needed. Free for typical usage. Raster tiles.
 }
 ```
 
-### CARTO
+### MapTiler, Mapbox, CARTO, and Jawg
 
-Requires an API key — CARTO retired its free tier. Without a key, `mapProvider: "carto"` silently falls back to OpenStreetMap. Four clean styles to choose from:
-
-| Style | `mapStyleId` |
-|-------|-------------|
-| Voyager (default) | `rastertiles/voyager` |
-| Positron (light) | `light_all` |
-| Dark Matter | `dark_all` |
-| Positron no labels | `light_nolabels` |
-| Dark Matter no labels | `dark_nolabels` |
+These four require an API key. Copy `.env` to `.env.local` and add the key(s) you need:
 
 ```bash .env.local
-VITE_CARTO_API_KEY=your-carto-key
-```
-
-```json metadata.json
-{
-  "mapProvider": "carto",
-  "mapStyleId": "dark_all"
-}
-```
-
-### Mapbox, Jawg, and MapTiler
-
-Copy `.env` to `.env.local` and add your key:
-
-```bash .env.local
-VITE_MAPBOX_API_KEY=pk.eyJ1...
-VITE_JAWG_API_KEY=your-jawg-token
 VITE_MAPTILER_API_KEY=your-maptiler-key
+VITE_MAPBOX_API_KEY=pk.eyJ1...
+VITE_CARTO_API_KEY=your-carto-key
+VITE_JAWG_API_KEY=your-jawg-token
 ```
 
 <Warning>
@@ -139,17 +132,16 @@ Then set the provider:
 ```json metadata.json
 {
   "mapProvider": "maptiler",
-  "mapStyleId": "topo-v2"
+  "mapStyleId": "outdoor-v4"
 }
 ```
 
 Each provider has a default style that works great out of the box. Use `mapStyleId` to pick a different one.
 
-**Mapbox** default: `mapbox/outdoors-v12`. Custom Mapbox Studio styles use `"yourname/cl9abc1234def"` format.
-
-**Jawg** built-in styles: `jawg-streets`, `jawg-terrain`, `jawg-sunny`, `jawg-lagoon`, `jawg-dark`, `jawg-light`. Default: `jawg-terrain`.
-
-**MapTiler** default: `outdoor-v2`. Any MapTiler map ID works.
+- **[MapTiler](https://www.maptiler.com/)** default: `outdoor-v4`. Any MapTiler map ID works.
+- **[Mapbox](https://www.mapbox.com/)** default: `mapbox/outdoors-v12`. Custom Mapbox Studio styles use `"yourname/cl9abc1234def"` format.
+- **[CARTO](https://carto.com/)** — get a key at [carto.com/basemaps/apikey](https://carto.com/basemaps/apikey). CARTO retired its free tier—without a key, `mapProvider: "carto"` silently falls back to OpenStreetMap. Default style: `rastertiles/voyager`.
+- **[Jawg Maps](https://www.jawg.io/)** built-in styles: `jawg-streets`, `jawg-terrain`, `jawg-sunny`, `jawg-lagoon`, `jawg-dark`, `jawg-light`. Default: `jawg-terrain`.
 
 ### Bring your own vector style
 
@@ -372,3 +364,7 @@ Route colors and line styling normally come from `mapMarkers.route` in your them
 Map tiles require an internet connection. When the device is offline, the map is replaced with an "unavailable offline" message and a **View list** button.
 
 Stop data, GPS coordinates, and audio files remain fully accessible offline — visitors can still navigate through the stop list.
+
+<Note>
+We're working on full offline support for maps (cached tiles) in a future release.
+</Note>

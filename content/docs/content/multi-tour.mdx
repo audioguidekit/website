@@ -7,13 +7,11 @@ A single AudioGuideKit deployment can host **more than one tour** — perfect fo
 
 With a single tour the picker is skipped entirely and that tour opens directly, so existing single-tour deployments are completely unaffected.
 
+This page covers the multi-tour layout and the app-level `app.json` that themes and authors the selection screen. For a single tour's content — `metadata.json`, language files, and stops — see [Creating your tour](/docs/content/creating-guide).
+
 <Tip>
 See it running: the [New York example](/demo/new-york) bundles two tours — New York and Lower Manhattan — behind a themed selection screen.
 </Tip>
-
-<Note>
-This page covers the **multi-tour layout** and the app-level `app.json` that themes and authors the selection screen. For a single tour's content — `metadata.json`, language files, and stops — see [Creating your tour](/docs/content/creating-guide).
-</Note>
 
 ## File structure
 
@@ -93,7 +91,7 @@ The current language is looked up by code. If a language is missing, the value f
 
 ### Splash / intro screen
 
-A branding option for museums: a **full-screen image or video** shown over the selection screen until the visitor taps to continue. The selection screen is functional and hard to brand; the splash gives you a clean, full-bleed canvas first.
+A **full-screen image or video** shown over the selection screen until the visitor taps to continue. The selection screen is functional and hard to brand; the splash gives you a clean, full-bleed canvas first.
 
 ```json app.json
 "splash": "https://your-storage.com/intro.mp4"
@@ -126,17 +124,6 @@ Set `statusBarColor` to match your splash so the browser chrome blends into the 
 | `false` | `false` | `false` | Title only |
 
 The card cover uses a **16:9** aspect ratio — supply source images at ~16:9 (e.g. 800×450). Tapping a card scales it down slightly as a single press effect.
-
-## Behavior notes
-
-- **Single tour** → the selection screen is skipped and the tour opens directly, so `title`, `subtitle`, `logo`, `hero` and `tourCard` never render. `splash` is the exception: it plays over the tour on first load too — which also means it appears over a deep link straight into a tour (`/tour/<id>`) in multi-tour apps.
-- **Themes stay in code.** `app.json` references a registered `themeId`; it cannot define a new theme inline. To add a new look, create a theme in `src/theme/themes/` — see [Custom themes](/docs/branding/custom).
-- **No per-tour override for `tourCard`** — card layout is intentionally uniform across the list.
-- A **"Back to tours"** button appears on each tour's start screen (multi-tour deployments only), returning the visitor to the picker with a native iOS-style slide.
-
-<Warning>
-**Rebuild after editing `app.json`.** It is bundled into the app at build time (via `import.meta.glob`), so changes require a dev-server reload or a rebuild to take effect.
-</Warning>
 
 ## Validation
 
