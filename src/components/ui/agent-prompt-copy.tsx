@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Check, Copy } from "lucide-react";
 import confetti from "canvas-confetti";
 import { toast } from "sonner";
-import { cn } from "@/lib/utils";
+import { cn, copyText } from "@/lib/utils";
 import { ClaudeAvatar, CodexAvatar, CursorAvatar, LovableAvatar, V0Avatar } from "./agent-avatars";
 import en from "@/content/landing/en.json";
 import type { Dict } from "@/content/landing";
@@ -48,12 +48,11 @@ export function AgentPromptCopy({ className, t = en.copy }: AgentPromptCopyProps
   };
 
   const copyToClipboard = async () => {
-    try {
-      await navigator.clipboard.writeText(AGENT_PROMPT);
+    if (await copyText(AGENT_PROMPT)) {
       showCopiedState();
       fireConfetti();
       toast.success(t.agentCopied);
-    } catch {
+    } else {
       toast.error(t.agentFailed);
     }
   };
@@ -75,7 +74,7 @@ export function AgentPromptCopy({ className, t = en.copy }: AgentPromptCopyProps
       ref={buttonRef}
       onClick={copyToClipboard}
       className={cn(
-        "group flex items-center justify-center gap-3 cursor-copy font-mono text-[13px] text-muted-foreground hover:text-foreground transition-colors",
+        "group flex items-center justify-center gap-3 cursor-copy font-mono text-[13px] text-muted-foreground hover:text-foreground transition-[color,border-color,scale] duration-150 active:scale-[0.97]",
         className,
       )}
       aria-label={t.agentAria}
@@ -102,7 +101,7 @@ export function AgentPromptCopy({ className, t = en.copy }: AgentPromptCopyProps
         </div>
       </div>
 
-      <span className="min-w-0 flex-1 truncate text-left">{t.agentLabel}</span>
+      <span className="min-w-0 flex-1 truncate text-left sm:flex-none">{t.agentLabel}</span>
 
       <div className="relative flex items-center justify-center w-5 h-5">
         <AnimatePresence mode="wait">

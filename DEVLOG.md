@@ -1,3 +1,12 @@
+## 2026-09-14
+
+### Copy buttons silently dead on mobile over the LAN dev URL
+The hero/CTA "Copy AI agent prompt" and `npx create-...` buttons did nothing when tapped on a phone. Added a `copyText()` helper in `src/lib/utils.ts` with a `execCommand` fallback and routed all four clipboard call sites through it. Also restored the desktop label alignment and added an `active:scale-[0.97]` press effect to both buttons.
+
+**Root cause / approach:** `navigator.clipboard` is `undefined` outside a secure context — testing the dev server from a phone means `http://192.168.x.x:3000`, which is not secure, so `writeText` threw, the `catch` swallowed it, and nothing happened. Invisible because `<Toaster />` from `src/components/ui/sonner.tsx` is never mounted anywhere, so every `toast.success`/`toast.error` in the app is silently dropped (left as-is — the user did not want toasts). Two follow-on gotchas: tailwind-merge let the call sites' `transition-colors` override the component's transition class, and Tailwind v4 `scale-*` animates the CSS `scale` property, not `transform`, so `transition-[...,transform]` made the press snap instead of ease.
+
+→ *Memory saved: `clipboard-insecure-context.md`, `tailwind-v4-scale-transition.md`*
+
 ## 2026-09-13
 
 ### Fixed contact modal shifting page content left

@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { Check, Copy } from 'lucide-react';
+import { copyText } from '@/lib/utils';
 
 interface CopyButtonProps {
   getText: () => string;
@@ -12,7 +13,7 @@ export function CopyButton({ getText }: CopyButtonProps) {
 
   const handleCopy = async () => {
     const text = getText();
-    await navigator.clipboard.writeText(text);
+    if (!(await copyText(text))) return;
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };

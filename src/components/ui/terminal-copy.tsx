@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Copy, Check } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn, copyText } from '@/lib/utils';
 import { toast } from 'sonner';
 import confetti from 'canvas-confetti';
 import en from '@/content/landing/en.json';
@@ -39,12 +39,11 @@ export function TerminalCopy({ command, className, t = en.copy }: TerminalCopyPr
   };
 
   const copyToClipboard = async () => {
-    try {
-      await navigator.clipboard.writeText(command);
+    if (await copyText(command)) {
       showCopiedState();
       fireConfetti();
       toast.success(t.commandCopied);
-    } catch (err) {
+    } else {
       toast.error(t.commandFailed);
     }
   };
@@ -73,14 +72,14 @@ export function TerminalCopy({ command, className, t = en.copy }: TerminalCopyPr
       ref={buttonRef}
       onClick={copyToClipboard}
     className={cn(
-      "group flex items-center justify-center gap-3 cursor-copy font-mono text-[13px] text-muted-foreground hover:text-foreground transition-colors",
+      "group flex items-center justify-center gap-3 cursor-copy font-mono text-[13px] text-muted-foreground hover:text-foreground transition-[color,border-color,scale] duration-150 active:scale-[0.97]",
       className
     )}
     aria-label={t.commandAria}
   >
-    <div className="flex items-center gap-2 min-w-0 flex-1">
+    <div className="flex items-center gap-2 min-w-0 flex-1 sm:flex-none">
       <span className="text-foreground/30 font-bold shrink-0">$</span>
-      <span className="min-w-0 flex-1 truncate text-left">{command}</span>
+      <span className="min-w-0 flex-1 truncate text-left sm:flex-none">{command}</span>
     </div>
 
       <div className="relative flex items-center justify-center w-5 h-5">

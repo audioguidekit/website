@@ -60,12 +60,12 @@ export function CTA({
           <div className="grid gap-3 mb-8 w-full sm:w-auto">
             <AgentPromptCopy
               t={tCopy}
-              className="min-w-0 px-5 py-2 bg-white border border-foreground/10 rounded-md hover:border-foreground/20 transition-colors text-[14px] sm:text-[15px]"
+              className="min-w-0 px-5 py-2 bg-white border border-foreground/10 rounded-md hover:border-foreground/20 text-[14px] sm:text-[15px]"
             />
             <TerminalCopy
               t={tCopy}
               command="npx create-audioguidekit-player my-project"
-              className="min-w-0 px-5 py-2 bg-white border border-foreground/10 rounded-md hover:border-foreground/20 transition-colors text-[14px] sm:text-[15px]"
+              className="min-w-0 px-5 py-2 bg-white border border-foreground/10 rounded-md hover:border-foreground/20 text-[14px] sm:text-[15px]"
             />
           </div>
 

@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import { toast } from 'sonner';
+import { copyText } from '@/lib/utils';
 
 export function KeyboardShortcuts() {
   useEffect(() => {
@@ -32,7 +33,7 @@ export function KeyboardShortcuts() {
       }
 
       if (event.key.toLowerCase() === 'c') {
-        navigator.clipboard.writeText('npx create-audioguidekit-player my-project');
+        copyText('npx create-audioguidekit-player my-project');
         toast.success('Command copied to clipboard');
         window.dispatchEvent(new CustomEvent('terminal-copy'));
       }
