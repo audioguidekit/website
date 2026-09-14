@@ -78,9 +78,9 @@ export function TerminalCopy({ command, className, t = en.copy }: TerminalCopyPr
     )}
     aria-label={t.commandAria}
   >
-    <div className="flex items-center gap-2">
-      <span className="text-foreground/30 font-bold">$</span>
-      <span>{command}</span>
+    <div className="flex items-center gap-2 min-w-0 flex-1">
+      <span className="text-foreground/30 font-bold shrink-0">$</span>
+      <span className="min-w-0 flex-1 truncate text-left">{command}</span>
     </div>
 
       <div className="relative flex items-center justify-center w-5 h-5">

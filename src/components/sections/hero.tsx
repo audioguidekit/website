@@ -109,14 +109,14 @@ export function Hero({
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="inline-flex flex-col items-center"
+              className="flex flex-col items-center w-full sm:inline-flex sm:w-auto"
             >
-              <div className="grid gap-3">
-                <AgentPromptCopy t={tCopy} className="px-5 py-2 bg-white border border-foreground/10 rounded-md hover:border-foreground/20 transition-colors text-[15px] sm:text-[17px]" />
+              <div className="flex flex-row gap-3 w-full sm:grid sm:w-auto">
+                <AgentPromptCopy t={tCopy} className="flex-1 min-w-0 px-5 py-2 bg-white border border-foreground/10 rounded-md hover:border-foreground/20 transition-colors text-[15px] sm:text-[17px]" />
                 <TerminalCopy
                   t={tCopy}
                   command="npx create-audioguidekit-player my-project"
-                  className="px-5 py-2 bg-white border border-foreground/10 rounded-md hover:border-foreground/20 transition-colors text-[15px] sm:text-[17px]"
+                  className="flex-1 min-w-0 px-5 py-2 bg-white border border-foreground/10 rounded-md hover:border-foreground/20 transition-colors text-[15px] sm:text-[17px]"
                 />
               </div>
               <div className="pt-4">

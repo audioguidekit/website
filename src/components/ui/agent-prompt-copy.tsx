@@ -102,7 +102,7 @@ export function AgentPromptCopy({ className, t = en.copy }: AgentPromptCopyProps
         </div>
       </div>
 
-      <span>{t.agentLabel}</span>
+      <span className="min-w-0 flex-1 truncate text-left">{t.agentLabel}</span>
 
       <div className="relative flex items-center justify-center w-5 h-5">
         <AnimatePresence mode="wait">
