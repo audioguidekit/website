@@ -239,7 +239,7 @@
     "commandCopied": "Command copied to clipboard",
     "commandFailed": "Failed to copy command",
     "commandAria": "Copy the install command. Press C to copy.",
-    "agentLabel": "Copy AI agent instructions",
+    "agentLabel": "Copy AI agent prompt",
     "agentCopied": "Agent prompt copied to clipboard",
     "agentFailed": "Failed to copy prompt",
     "agentAria": "Copy AI agent prompt to clone and set up the repo. Press P to copy."

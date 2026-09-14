@@ -239,7 +239,7 @@
     "commandCopied": "Befehl in die Zwischenablage kopiert",
     "commandFailed": "Befehl konnte nicht kopiert werden",
     "commandAria": "Kopieren Sie den Installationsbefehl. Drücken Sie C, um ihn zu kopieren.",
-    "agentLabel": "Anweisungen für den Copy-AI-Agenten kopieren",
+    "agentLabel": "AI-Agenten-Prompt kopieren",
     "agentCopied": "Agentenaufforderung in die Zwischenablage kopiert",
     "agentFailed": "Das Kopieren der Eingabeaufforderung ist fehlgeschlagen",
     "agentAria": "Kopieren Sie die Eingabeaufforderung des AI-Agenten, um das Repository zu klonen und einzurichten. Drücken Sie die Taste „P“, um den Text zu kopieren."

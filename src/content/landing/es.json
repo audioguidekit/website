@@ -239,7 +239,7 @@
     "commandCopied": "Comando copiado al portapapeles",
     "commandFailed": "Error al copiar el comando",
     "commandAria": "Copia el comando de instalación. Pulsa C para copiarlo.",
-    "agentLabel": "Copiar las instrucciones del agente de IA",
+    "agentLabel": "Copiar el prompt del agente de IA",
     "agentCopied": "El mensaje del agente se ha copiado en el portapapeles",
     "agentFailed": "No se ha podido copiar el mensaje de solicitud",
     "agentAria": "Copia el comando del agente de AI para clonar y configurar el repositorio. Pulsa P para copiar."
