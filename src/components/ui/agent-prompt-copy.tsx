@@ -84,7 +84,7 @@ export function AgentPromptCopy({ className, t = en.copy }: AgentPromptCopyProps
           default look is unchanged. The rightmost avatar (nearest the label)
           stays anchored; the rest slide further left on hover to spread out —
           overflowing the box a little is fine, there's just page background there. */}
-      <div className="relative w-[104px] h-6 shrink-0 hidden sm:block">
+      <div className="relative w-[104px] h-6 shrink-0">
         <div className="absolute inset-y-0 left-0 group-hover:left-[-32px] transition-[left] duration-300 ease-out">
           <ClaudeAvatar />
         </div>
