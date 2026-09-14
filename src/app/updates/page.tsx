@@ -177,13 +177,13 @@ export default function UpdatesPage() {
 
             <div className="space-y-10">
               {groupByDate(changelog).map((group) => (
-                <div key={group.date} className="relative grid grid-cols-[110px_1fr] gap-6 sm:gap-8">
+                <div key={group.date} className="relative grid grid-cols-1 gap-3 sm:grid-cols-[110px_1fr] sm:gap-8">
                   <div className="absolute left-0 top-[6px] w-[13px] h-[13px] rounded-full bg-background border-2 border-muted-foreground/40" />
                   <span className="pl-6 text-[13px] font-mono text-muted-foreground pt-px">
                     {group.date}
                   </span>
 
-                  <div className="space-y-8">
+                  <div className="space-y-8 pl-6 sm:pl-0">
                     {group.entries.map((entry) => (
                       <div key={entry.id}>
                         <div className="flex items-center gap-2 mb-3">
