@@ -2,6 +2,18 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { LANGS } from "@/content/landing/langs";
 
+// Agents (Claude, ChatGPT, etc.) send `Accept: text/markdown` when they want
+// raw content instead of rendered HTML. Only /notes/<slug> and /docs/* have a
+// markdown/MDX source to serve — see src/app/api/markdown/[...path]/route.ts.
+const MARKDOWN_SECTIONS = ["/notes/", "/docs"];
+
+function wantsMarkdown(accept: string | null) {
+  if (!accept) return false;
+  return accept
+    .split(",")
+    .some((part) => part.trim().toLowerCase().startsWith("text/markdown"));
+}
+
 // ponytail: ignores Accept-Language q-values; browsers already send tags in
 // preference order. Sort by q if a real client ever gets this wrong.
 function pickLang(header: string | null) {
@@ -35,6 +47,21 @@ export function middleware(request: NextRequest) {
 
     // Fire and forget — no await, zero latency impact
     fetch(trackingUrl.toString()).catch(() => {});
+  }
+
+  const pathname = request.nextUrl.pathname;
+  const isMarkdownCapable = MARKDOWN_SECTIONS.some((s) => pathname.startsWith(s));
+
+  if (isMarkdownCapable && wantsMarkdown(request.headers.get("accept"))) {
+    return NextResponse.rewrite(new URL(`/api/markdown${pathname}`, request.url));
+  }
+
+  // Advertise the markdown alternate (RFC 8288) so agents that fetched the
+  // HTML can discover it without already knowing to send Accept: text/markdown.
+  if (isMarkdownCapable) {
+    const response = NextResponse.next();
+    response.headers.set("Link", `<${pathname}>; rel="alternate"; type="text/markdown"`);
+    return response;
   }
 
   // Send visitors to their language on `/` only. Visiting /de or /es directly

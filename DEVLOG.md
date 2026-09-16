@@ -1,3 +1,12 @@
+## 2026-09-16
+
+### Added AI/agent discoverability: markdown negotiation, Content Signals, Link headers
+Closed three isitagentready.com gaps: (1) `/notes/*` and `/docs/*` now serve raw markdown via `src/app/api/markdown/[...path]/route.ts` when a request sends `Accept: text/markdown`, routed there by `src/middleware.ts`; (2) `public/robots.txt` declares `Content-Signal: ai-train=yes, search=yes, ai-input=yes`; (3) `next.config.ts` sets a `Link: </docs>; rel="service-doc"` header on `/`, `/de`, `/es`. Followed up by advertising the markdown alternate on the HTML responses themselves: `src/middleware.ts` also sets `Link: <path>; rel="alternate"; type="text/markdown"` on `/notes/*` and `/docs/*` pages so an agent that already fetched the HTML can discover the markdown version without knowing the `Accept` convention in advance.
+
+**Root cause / approach:** Both `/notes` and `/docs` already store raw markdown/MDX source on disk (read by `src/lib/notes.ts` and `src/lib/docs/mdx.ts`), so no HTML→Markdown conversion library was needed — just serve the source with frontmatter title/description prepended. Landing page and `/updates` were deliberately skipped: no markdown source exists for them and converting their component-rendered HTML would require a new dependency. `next.config.ts`'s `headers()` can't interpolate the matched path into a header value, so the path-dependent `alternate` Link header had to live in middleware instead, while the path-independent `service-doc` header stayed in `next.config.ts`.
+
+→ *Memory saved: `ai-agent-discoverability.md`*
+
 ## 2026-09-14
 
 ### Copy buttons silently dead on mobile over the LAN dev URL

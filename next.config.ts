@@ -22,6 +22,16 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ['lucide-react', 'framer-motion', 'recharts'],
   },
+  async headers() {
+    return [
+      {
+        source: '/:locale(de|es)?',
+        headers: [
+          { key: 'Link', value: '</docs>; rel="service-doc"' },
+        ],
+      },
+    ];
+  },
 } as NextConfig;
 
 export default nextConfig;
