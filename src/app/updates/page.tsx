@@ -152,7 +152,7 @@ export default function UpdatesPage() {
           <header className="mb-16">
             <div className="mb-6">
               <span className="inline-flex items-center px-2 py-0.5 text-[11px] font-mono font-medium tracking-widest text-muted-foreground bg-secondary uppercase border border-border rounded">
-                CHANGELOG
+                RELEASE_HISTORY
               </span>
             </div>
             <h1 className="text-4xl sm:text-5xl font-bold text-foreground tracking-tight mb-6">
