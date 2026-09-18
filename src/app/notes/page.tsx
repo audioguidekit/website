@@ -1,5 +1,6 @@
 import React from 'react';
 import type { Metadata } from 'next';
+import { mdPath } from 'web-for-agents';
 import { Navigation } from '@/components/sections/navigation';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
@@ -14,6 +15,7 @@ const defaultOgImage = `${siteUrl}/og-image.png`;
 export const metadata: Metadata = {
   title: 'Notes - Engineering blog',
   description: 'Technical deep-dives, architectural decisions, and development updates from the AudioGuideKit project. Learn about building audio guides for museums.',
+  alternates: { canonical: `${siteUrl}/notes`, types: { 'text/markdown': mdPath('/notes') } },
   openGraph: {
     title: 'Notes - AudioGuideKit engineering blog',
     description: 'Technical deep-dives and development updates from the AudioGuideKit project.',

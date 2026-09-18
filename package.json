@@ -10,7 +10,7 @@
   "homepage": "https://github.com/audioguidekit/player-react",
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build && npx pagefind --site .next --output-path public/pagefind",
+    "build": "next build && npx pagefind --site .next --output-path public/pagefind && web-for-agents build .next/server/app --site https://audioguidekit.org --out public/md --base /md --no-llms",
     "start": "next start",
     "lint": "eslint",
     "generate:og": "node scripts/generate-og-image.mjs",
@@ -79,6 +79,7 @@
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.4.0",
     "vaul": "^1.1.2",
+    "web-for-agents": "file:vendor/web-for-agents-0.1.0.tgz",
     "zod": "^4.1.12"
   },
   "devDependencies": {

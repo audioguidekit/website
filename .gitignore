@@ -20,6 +20,9 @@
 # pagefind (generated at build time)
 /public/pagefind/
 
+# markdown for AI agents (generated at build time by web-for-agents)
+/public/md/
+
 # production
 /build
 

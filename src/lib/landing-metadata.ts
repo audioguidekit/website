@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { mdPath } from "web-for-agents";
 import { getDict, type Lang } from "@/content/landing";
 
 const siteUrl = "https://audioguidekit.org";
@@ -15,6 +16,7 @@ export function landingMetadata(lang: Lang): Metadata {
     description: t.description,
     alternates: {
       canonical: url,
+      types: { "text/markdown": mdPath(lang === "en" ? "/" : `/${lang}`) },
       languages: {
         en: siteUrl,
         de: `${siteUrl}/de`,

@@ -1,4 +1,5 @@
 import React from 'react';
+import { mdPath } from 'web-for-agents';
 import type { Metadata } from 'next';
 import { Navigation } from '@/components/sections/navigation';
 import Link from 'next/link';
@@ -28,7 +29,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     title: post.title,
     description: post.excerpt,
     authors: [{ name: post.author }],
-    alternates: { canonical: articleUrl },
+    alternates: { canonical: articleUrl, types: { 'text/markdown': mdPath(`/notes/${slug}`) } },
     openGraph: {
       title: post.title,
       description: post.excerpt,

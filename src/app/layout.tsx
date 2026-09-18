@@ -58,9 +58,6 @@ export const metadata: Metadata = {
     email: false,
     telephone: false,
   },
-  alternates: {
-    canonical: siteUrl,
-  },
   openGraph: {
     title: "AudioGuideKit - open-source audio guide player in React",
     description:

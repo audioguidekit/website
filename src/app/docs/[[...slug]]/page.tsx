@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { mdPath } from 'web-for-agents';
 import { notFound } from 'next/navigation';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import { getDocBySlug, getAllDocSlugs } from '@/lib/docs/mdx';
@@ -39,6 +40,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: doc.meta.title,
     description: doc.meta.description,
+    alternates: { canonical: url, types: { 'text/markdown': mdPath(pathname) } },
     openGraph: {
       title: doc.meta.title,
       description: doc.meta.description ?? undefined,

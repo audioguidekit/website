@@ -1,18 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { alternateLink, isPage, markdownRewrite } from "web-for-agents";
 import { LANGS } from "@/content/landing/langs";
-
-// Agents (Claude, ChatGPT, etc.) send `Accept: text/markdown` when they want
-// raw content instead of rendered HTML. Only /notes/<slug> and /docs/* have a
-// markdown/MDX source to serve — see src/app/api/markdown/[...path]/route.ts.
-const MARKDOWN_SECTIONS = ["/notes/", "/docs"];
-
-function wantsMarkdown(accept: string | null) {
-  if (!accept) return false;
-  return accept
-    .split(",")
-    .some((part) => part.trim().toLowerCase().startsWith("text/markdown"));
-}
 
 // ponytail: ignores Accept-Language q-values; browsers already send tags in
 // preference order. Sort by q if a real client ever gets this wrong.
@@ -49,18 +38,13 @@ export function middleware(request: NextRequest) {
     fetch(trackingUrl.toString()).catch(() => {});
   }
 
+  // Agents (Claude Code, Cursor, …) that send `Accept: text/markdown`, or ask for
+  // /page.md, get the markdown that `web-for-agents build` wrote to public/md.
   const pathname = request.nextUrl.pathname;
-  const isMarkdownCapable = MARKDOWN_SECTIONS.some((s) => pathname.startsWith(s));
-
-  if (isMarkdownCapable && wantsMarkdown(request.headers.get("accept"))) {
-    return NextResponse.rewrite(new URL(`/api/markdown${pathname}`, request.url));
-  }
-
-  // Advertise the markdown alternate (RFC 8288) so agents that fetched the
-  // HTML can discover it without already knowing to send Accept: text/markdown.
-  if (isMarkdownCapable) {
-    const response = NextResponse.next();
-    response.headers.set("Link", `<${pathname}>; rel="alternate"; type="text/markdown"`);
+  const md = markdownRewrite(request.nextUrl, request.headers.get("accept"), "/md");
+  if (md) {
+    const response = NextResponse.rewrite(new URL(md, request.url));
+    response.headers.set("Vary", "Accept");
     return response;
   }
 
@@ -75,7 +59,14 @@ export function middleware(request: NextRequest) {
     }
   }
 
-  return NextResponse.next();
+  // Advertise the markdown alternate (RFC 8288) so agents that fetched the
+  // HTML can discover it without already knowing to send Accept: text/markdown.
+  const response = NextResponse.next();
+  if (isPage(pathname)) {
+    response.headers.set("Link", alternateLink(pathname));
+    response.headers.set("Vary", "Accept");
+  }
+  return response;
 }
 
 export const config = {
@@ -85,6 +76,7 @@ export const config = {
     "/notes/:path*",
     "/docs/:path*",
     "/updates",
+    "/(.*\\.md)",
     "/robots.txt",
     "/sitemap.xml",
   ],

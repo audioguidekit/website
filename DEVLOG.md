@@ -1,3 +1,12 @@
+## 2026-09-18
+
+### Switched agent markdown to the web-for-agents library; every page now covered, canonical bug fixed
+Replaced the hand-written `/api/markdown` route (MDX source for /docs and /notes only) with `web-for-agents` (vendored as `vendor/web-for-agents-0.1.0.tgz`). `npm run build` now converts all prerendered `.next/server/app/*.html` into `public/md/` (32 pages, gitignored). `src/middleware.ts` uses `markdownRewrite`/`alternateLink`, so `Accept: text/markdown` and `/page.md` work on landing, /de, /es, /updates, /notes and /docs. Each page's metadata sets `alternates.types['text/markdown']` (the HTML `<link>` tag Codex reads) plus its own canonical. The root layout no longer sets `canonical: siteUrl`, which every docs page, /updates and /notes had inherited. Verified with `next start` + curl using Claude Code, Cursor and browser Accept headers. On branch `agent-markdown`, uncommitted and not deployed.
+
+**Root cause / approach:** Next merges `alternates` shallowly, so adding `types` to a page drops the inherited canonical. Every page therefore sets both, and the layout sets neither. `/updates` is a client component, so its metadata lives in a new `src/app/updates/layout.tsx`. Files written to `public/` after `next build` do deploy on Vercel (pagefind proves it). The library is vendored as a tarball because npm 11's allow-scripts can block a git dependency's `prepare`, and Vercel can't read a private repo.
+
+→ *Memory saved: `ai-agent-discoverability.md` (updated)*
+
 ## 2026-09-16
 
 ### Added AI/agent discoverability: markdown negotiation, Content Signals, Link headers
