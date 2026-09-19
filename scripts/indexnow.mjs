@@ -7,7 +7,7 @@
  *   npm run indexnow -- <url> # submit just one URL
  */
 const SITE = "https://audioguidekit.org";
-const KEY = "518b4f7fd0805578c139e46f2ec010be";
+const KEY = "bce09ff20c84335abf1e6afa5f5f7261";
 const KEY_LOCATION = `${SITE}/${KEY}.txt`;
 
 const arg = process.argv[2];
