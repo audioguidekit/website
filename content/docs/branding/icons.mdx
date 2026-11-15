@@ -19,13 +19,16 @@ The PWA manifest requires icons in multiple sizes:
 
 | File | Size | Purpose |
 |------|------|---------|
+| `icon-32x32.png` | 32×32 | Browser tab, when the source isn't an SVG |
 | `icon-72x72.png` | 72×72 | Android legacy devices |
 | `icon-96x96.png` | 96×96 | Android legacy devices |
 | `icon-120x120.png` | 120×120 | iOS legacy devices |
 | `icon-128x128.png` | 128×128 | Chrome Web Store |
 | `icon-144x144.png` | 144×144 | Android legacy devices |
 | `icon-152x152.png` | 152×152 | iOS devices |
-| `apple-touch-icon-180x180.png` | 180×180 | iOS home screen (Add to Home Screen) |
+| `icon-180x180.png` | 180×180 | iOS home screen (Add to Home Screen) |
+| `apple-touch-icon-180x180.png` | 180×180 | The same image, under the name `index.html` uses |
+| `../apple-touch-icon.png` | 180×180 | The same image again, at the site root |
 | `icon-192x192.png` | 192×192 | Android / iOS |
 | `icon-384x384.png` | 384×384 | Android splash screen |
 | `icon-512x512.png` | 512×512 | Android maskable icon |
@@ -51,7 +54,7 @@ The easiest way is to replace the source SVG and regenerate all PNG sizes:
     Run this command (requires [ImageMagick](https://imagemagick.org/)):
     ```bash
     cd public/icons
-    for size in 72 96 120 128 144 152 192 384 512; do
+    for size in 32 72 96 120 128 144 152 180 192 384 512; do
       magick -background none -density 300 ../favicon.svg \
         -resize ${size}x${size} icon-${size}x${size}.png
     done
@@ -122,6 +125,12 @@ manifest: {
 <Note>
 The `purpose: 'maskable'` on the 512×512 icon tells Android to apply adaptive icon masking.
 </Note>
+
+## App name and colours
+
+The installed app's name, short name, description, colours, display mode and orientation come from `src/data/tour/app.json` when you build. The same values go into the page title, description, `theme-color` and the name iOS shows under the home screen icon. Edit them in `app.json`; they apply on the next build. See [Multiple tours](/docs/content/multi-tour) for the fields.
+
+In [manifest mode](/docs/deployment/manifest-mode) the build contains no name or icons: your host serves them.
 
 ## Testing your icons
 

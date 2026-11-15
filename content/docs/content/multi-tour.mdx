@@ -74,6 +74,22 @@ Every field is optional. Omitting the file — or any individual field — keeps
 | `statusBarColor` | string | theme header color | Color (hex) for the iOS status bar / browser chrome (`theme-color`) **while the splash is shown**. Set it to match your splash. |
 | `tourOrder` | string[] | discovery order | Tour `id`s in display order. Listed ids come first; remaining tours are appended. Unknown ids are ignored. |
 | `tourCard` | `TourCardConfig` | all shown | What every tour card displays — see below. |
+| `embedAllowlist` | string[] | no limit | Hostnames that embed stops (of any type, including YouTube and Spotify) may show, such as `"maps.example.org"` or `"*.example.org"`. Other embeds are replaced by a neutral notice. See [Visitor features](/docs/features/visitor-features). |
+| `analytics` | boolean | on when the build has an endpoint | Set `false` to switch off anonymous analytics. See [Analytics](/docs/features/analytics). |
+
+### Installed-app name and colours
+
+These fields set how the app looks when a visitor adds it to the home screen. They are read when you build (in [manifest mode](/docs/deployment/manifest-mode), from the manifest's `app` object instead), so a change needs a new build. They apply with a single tour too. Without them the app installs as "AudioGuideKit".
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `name` | string | `"AudioGuideKit"` | App name on the home screen and in the install prompt. Also the browser tab title |
+| `shortName` | string | `name` | Shorter name where space is tight, such as under the home screen icon on iOS |
+| `description` | string | `"Open source audio guide player"` | Description in the install prompt and the page description |
+| `themeColor` | string | `"#ffffff"` | Colour of the browser and system bars around the app |
+| `backgroundColor` | string | `"#f3f4f6"` | Background of the splash screen while the installed app starts |
+| `display` | `"standalone"` \| `"minimal-ui"` \| `"browser"` \| `"fullscreen"` | `"standalone"` | How the installed app is framed. `standalone` shows no browser interface |
+| `orientation` | `"portrait"` \| `"landscape"` \| `"any"` | `"portrait"` | Which way the installed app is locked. `any` lets the phone rotate it |
 
 ### Where the images live
 

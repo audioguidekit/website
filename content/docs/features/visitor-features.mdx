@@ -1,0 +1,161 @@
+---
+title: "Visitor features"
+description: "Playback speed, stop search, text size, video subtitles, directions and the embed allowlist"
+---
+
+These are controls and behaviours for the people taking your tour. Each one has a sensible default. You switch it off, or tune it, with a tour setting in `metadata.json` (or a language file). The embed allowlist is the exception: it is an app setting in `app.json`.
+
+| Feature | Default | Setting | Where visitors see it |
+|---------|---------|---------|-----------------------|
+| Playback speed | On | tour `showPlaybackSpeed` | Expanded mini player, full player |
+| Stop search | From 9 stops | tour `stopSearchThreshold` (default `8`) | Above the stop list |
+| Text size | On | tour `showTextSize` | Above the stop list |
+| Video subtitles | None until you add them | stop `subtitles` | Video stops |
+| Directions | On | tour `showDirections` | Under stops with a `location` |
+| Embed allowlist | No limit | app `embedAllowlist` | Embed stops |
+
+A visitor's own choices (speed and text size) are saved on their device only, in `localStorage`. They are never sent anywhere and are not part of [analytics](/docs/features/analytics).
+
+The interface texts for these controls exist in all six built-in languages. You can change them like any other interface text, see [UI translations](/docs/translations/ui).
+
+## Playback speed
+
+A button in the expanded mini player and in the full player steps through **0.75×, 1×, 1.25×, 1.5× and 2×**, then back to the start.
+
+- The speed stays when the next stop loads.
+- The lock screen shows the right position for the chosen speed.
+- The transition sound between stops plays at the chosen speed too.
+- The choice is remembered on the device (`agk-playback-speed`).
+
+To remove the control:
+
+```json
+{
+  "showPlaybackSpeed": false
+}
+```
+
+With `false` the tour always plays at 1×, even if the visitor picked another speed in a different tour.
+
+## Stop search
+
+A search field appears above the stop list when the tour has **more than** `stopSearchThreshold` stops. The default is `8`, so tours with 9 or more stops get it.
+
+It filters as the visitor types. It looks through stop titles and text: body text, transcripts, headlines, quotes, captions and image descriptions. Case and accents do not matter, and every word typed must be found. The numbers on the stop cards keep their place in the tour.
+
+```json
+{
+  "stopSearchThreshold": 12
+}
+```
+
+| Value | Result |
+|-------|--------|
+| `8` (default) | Search from 9 stops |
+| `0` | Search on every tour |
+| A very large number, such as `1000` | Never show search |
+
+The field works with screen readers: it is a labelled search field, Escape clears it, and a status line announces results such as "3 stops found" or "No stops match your search."
+
+## Text size
+
+Three steps in a small group of buttons above the stop list:
+
+| Step | Size |
+|------|------|
+| Default | 1× |
+| Large | 1.15× |
+| Largest | 1.3× |
+
+The steps scale stop texts, captions, credits, transcripts, and the titles, headlines and quotes in the stop list. Controls, the header and the players keep their designed size.
+
+The step multiplies the device's own text size. The phone's or browser's text size setting still applies first. The choice is remembered on the device (`agk-text-size`).
+
+```json
+{
+  "showTextSize": false
+}
+```
+
+With `false` the control is gone and text is shown at the default step. Custom themes need no changes: titles use your theme's font sizes, multiplied.
+
+## Video subtitles
+
+A [video stop](/docs/content/stop-types) takes a list of WebVTT (`.vtt`) files. The browser's own captions menu offers them. None is switched on by default.
+
+```json
+{
+  "id": "6",
+  "type": "video",
+  "videoUrl": "https://example.com/videos/timelapse.mp4",
+  "subtitles": [
+    { "src": "https://example.com/videos/timelapse.en.vtt", "srclang": "en", "label": "English" },
+    { "src": "https://example.com/videos/timelapse.de.vtt", "srclang": "de", "label": "Deutsch" }
+  ]
+}
+```
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `src` | Yes | URL of the `.vtt` file, with no spaces |
+| `srclang` | Yes | Language code, such as `en` or `pt-BR` |
+| `label` | Yes | Name shown in the captions menu |
+
+<Warning>
+Serve the files as `text/vtt`. If they are on another domain than the player, they need CORS headers (`Access-Control-Allow-Origin`). The player then loads that video with `crossorigin="anonymous"`, so the **video** needs CORS headers too.
+</Warning>
+
+- **Offline:** "Download for offline" fetches the subtitle files together with the video. Keep the `.vtt` extension in the URL: the service worker recognises the files by it.
+- **Languages:** if each language has its own subtitles, put the `subtitles` list in each language file, like the video URL.
+
+## Directions
+
+A stop with a `location` gets a **Directions** button. It opens a short list with Google Maps, Apple Maps and Waze. Each one is a plain link to the stop's coordinates and opens in a new tab; on a phone, the installed maps app takes over.
+
+- Nothing is loaded or sent until the visitor taps a link.
+- It works without the map view.
+- It works for every stop type with a `location`, not only audio stops.
+- Coordinates outside the valid range (latitude -90 to 90, longitude -180 to 180) are ignored, so that stop gets no button.
+
+```json
+{
+  "showDirections": false
+}
+```
+
+## Embed allowlist
+
+`embedAllowlist` is an app setting: it goes in `app.json` (see [Multiple tours](/docs/content/multi-tour)), or in the `app` object of a [manifest](/docs/deployment/manifest-mode). It lists the hostnames that embed stops may show.
+
+```json
+{
+  "embedAllowlist": ["maps.example.org", "*.widgets.example.net"]
+}
+```
+
+When the list has entries, an embed stop of **any** type (`youtube`, `spotify`, `video`, `generic` or none) whose host is not on the list is not shown. Visitors see a neutral notice instead ("This content is not available here."), without the address.
+
+- `maps.example.org` matches that host only.
+- `*.example.net` matches every subdomain, at any depth, but not `example.net` itself.
+- Case does not matter. Write the host only: no `https://`, port or path.
+- An empty or missing list means no limit.
+- The list is checked against the host as written in the stop's `embedUrl`.
+
+<Warning>
+YouTube and Spotify are not exempt. When you set a list, add `www.youtube.com` (or `youtube.com`, `youtube-nocookie.com`, `www.youtube-nocookie.com`) and `open.spotify.com` if your tour uses them.
+</Warning>
+
+The allowlist adds to the player's built-in embed rules, which always apply first: embeds must use `https`, can never point at the player's own domain, and generic embeds run in a sandbox that allows scripts only.
+
+## Embed host rules
+
+YouTube and Spotify embeds need a less strict sandbox to work. The player only gives it to their own hosts, over `https`:
+
+| `embedType` | Allowed hosts |
+|-------------|---------------|
+| `youtube` | `youtube.com`, `www.youtube.com`, `youtube-nocookie.com`, `www.youtube-nocookie.com` |
+| `spotify` | `open.spotify.com` |
+
+The player always shows YouTube videos from `www.youtube-nocookie.com` (YouTube's privacy-enhanced mode).
+
+An embed with `embedType: "youtube"` or `"spotify"` on any other host is treated as a generic embed: scripts-only sandbox, no media permissions, and subject to the allowlist. So a wrongly typed embed cannot get around the allowlist.

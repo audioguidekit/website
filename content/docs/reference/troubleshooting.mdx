@@ -257,10 +257,11 @@ lsof -ti:3000 | xargs kill -9
 
 **Solutions:**
 
-1. **Add font link** - Add Google Fonts link to `index.html`
-2. **Check font name** - Must match Google Fonts name exactly
-3. **Include fallbacks** - `['Inter', 'system-ui', 'sans-serif']`
-4. **Check Network tab** - Look for failed font requests
+1. **Use a bundled font** - The player only ships `Inter`, `IBM Plex Sans`, `Space Grotesk` and `JetBrains Mono`. It does not load Google Fonts, so a `<link>` to Google Fonts is not the fix
+2. **Check font name** - It must match the family name exactly, such as `'Space Grotesk'`
+3. **Bundle other families** - Install with `bun add --exact @fontsource/<name>` and import the CSS files in `src/fonts/index.ts`
+4. **Include fallbacks** - End every list with a generic family: `['Inter', 'system-ui', 'sans-serif']`
+5. **Check Network tab** - Font files load from your own domain; look for failed requests
 
 ### Colors look wrong
 

@@ -319,13 +319,19 @@ export const themes = {
 export type ThemeName = keyof typeof themes;
 ```
 
-## Step 6: Load custom fonts (if needed)
+## Step 6: Pick fonts
 
-If you're using fonts not already loaded, add them to `index.html`:
+Fonts are bundled with the player, nothing is loaded from Google Fonts. You can use `Inter`, `IBM Plex Sans`, `Space Grotesk` and `JetBrains Mono` in `fontFamily` without any extra step.
 
-```html
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+For another family, install it from Fontsource and import it in `src/fonts/index.ts` (see [Custom fonts](/docs/branding/overview)):
+
+```bash
+bun add --exact @fontsource/playfair-display
+```
+
+```typescript
+// src/fonts/index.ts
+import '@fontsource/playfair-display/latin-700.css';
 ```
 
 ## Step 7: Test your theme

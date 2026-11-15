@@ -84,7 +84,8 @@ Audio is the fully supported, fully tested type. The following additional types 
 | `image-gallery` | Swipeable horizontal image gallery |
 | `image-comparison` | Before/after drag slider |
 | `image-hotspot` | Image with tappable annotation pins |
-| `video` | Video playback |
+| `video` | Video playback, with optional WebVTT subtitles |
+| `embed` | Embedded page: YouTube, Spotify or any `https` page |
 | `3d-object` | Interactive 3D model viewer |
 | `headline` | Large text header / section divider |
 | `quote` | Styled quotation |
@@ -101,11 +102,28 @@ Theming is handled with styled-components via a `ThemeConfig`, selected per tour
 
 You can also set custom app icons (for PWA installation) and an `imageColor` that tints the TourStart background and the iOS status-bar area when there's no cover image. Display toggles like `showStopImage` (`true` / `"thumbnail"` / `false`), `showStopDuration`, `showStopNumber`, `showProgressBar`, and `showLanguageLabel` adjust the layout without code changes.
 
+Fonts are self-hosted: the player bundles Inter, IBM Plex Sans, Space Grotesk and JetBrains Mono and makes no requests to Google Fonts. Other families can be added with Fontsource.
+
 ### 7. Feedback collection
-Set `collectFeedback: true` to show a rating button; there are also `rating` and `email` stop types for inline star ratings and newsletter capture.
+The rating button is on by default (`collectFeedback: false` removes it and any rating stops); there are also `rating` and `email` stop types for inline star ratings and newsletter capture. Ratings and email addresses are sent to the analytics endpoint when the build has one; otherwise they stay on the device.
 
 ### 8. Deep linking and haptics
 Tours support deep links directly to a specific stop. Haptic feedback (`hapticsEnabled`, default `true`) uses the Vibration API on Android and the Taptic Engine on iOS; it's a no-op on desktop.
+
+### 8a. Visitor controls
+- **Tour structure** (`tourStructure`): `"guided"` (default; numbered stops that play one after another, route line on the map) or `"free"` (visitors start each stop themselves; no numbers, no route line).
+- **Playback speed** (`showPlaybackSpeed`, default on): 0.75x, 1x, 1.25x, 1.5x, 2x, remembered on the device.
+- **Stop search** (`stopSearchThreshold`, default `8`): a search field above the stop list when the tour has more stops than this.
+- **Text size** (`showTextSize`, default on): three steps (1x, 1.15x, 1.3x) on top of the device's own text size.
+- **Video subtitles** (stop `subtitles`): WebVTT files `{ src, srclang, label }`, included in offline downloads.
+- **Directions** (`showDirections`, default on): stops with a `location` get links to Google Maps, Apple Maps and Waze.
+- **Embed allowlist** (`app.json` `embedAllowlist`): hostnames embed stops may show (`"maps.example.org"`, `"*.example.org"`); empty or missing means no limit.
+
+### 8b. Privacy-friendly analytics
+Optional anonymous events (`app_open`, `tour_open`, `stop_view`, `audio_play`, `audio_complete`, `tour_complete`, …) sent in batches to one endpoint. No cookies, a per-tab random session id, no third parties. Browsers with Global Privacy Control or Do Not Track are never counted; `"analytics": false` in `app.json` switches it off. Standard builds send nothing until `VITE_ANALYTICS_ENDPOINT` is set; manifest-mode builds send to `/e`.
+
+### 8c. Manifest mode
+One generic build (`VITE_DATA_SOURCE=manifest bun run build:manifest`) that fetches `/data/manifest.json` at runtime, so publishing new content needs no rebuild. `bun run manifest` builds the manifest from `src/data`. Editors can live-preview manifests in an iframe via `postMessage` from allowed origins. The `@audioguidekit/schema` package (in the player repo, not yet on npm) provides the types, JSON Schemas, `validateManifest` and editor field descriptions.
 
 ### 9. Multiple tours
 One deployment can host several tours — a venue with multiple walking routes, or a museum with a guide per wing. Each tour lives in its own folder under `src/data/tour/<tour-id>/`. With more than one tour the app opens on a tour-selection screen (a list of cards) and offers a "Back to tours" button on each tour; navigation between the picker and a tour uses a native iOS-style push/pop slide with an interactive edge-swipe back gesture. A single tour skips the picker and opens directly, so single-tour deployments are unaffected. The selection screen is themed by an optional app-level `app.json` (see Content Model).
@@ -163,12 +181,13 @@ src/data/tour/
 | `id` | string | — | Unique tour identifier |
 | `defaultLanguage` | string | `"en"` | Fallback language code |
 | `offlineMode` | `"optional"` \| `"online-only"` \| `"offline-only"` | `"optional"` | Offline behavior |
-| `transitionAudio` | string | — | Audio played between stops |
+| `tourStructure` | `"guided"` \| `"free"` | `"guided"` | Guided route or free exploration |
+| `transitionAudio` | string | — | Audio played when a stop ends: between stops on a guided route, as a "finished" signal in free exploration |
 | `themeId` | string | — | `"default-light"`, `"default-dark"`, or a custom theme |
 | `imageColor` | string | — | Status-bar / start-screen background when there's no cover image (e.g. `"#1A2634"`) |
 | `image` | string | — | Default tour cover image URL (overridable per language) |
 | `transcriptAvailable` | boolean | — | Show the transcription toggle |
-| `collectFeedback` | boolean | — | Show the rating button |
+| `collectFeedback` | boolean | `true` | Show the rating button and keep rating stops |
 | `fullscreenPlayer` | boolean | `false` | Enable the fullscreen overlay player |
 | `showProgressBar` | boolean | `true` | Show the playback progress bar |
 | `showLanguageLabel` | boolean | `true` | Show the language name next to the flag |
@@ -176,6 +195,10 @@ src/data/tour/
 | `showStopDuration` | boolean | `true` | Show duration on stop cards |
 | `showStopNumber` | boolean | `true` | Show the number indicator on stops |
 | `hapticsEnabled` | boolean | `true` | Haptic feedback on taps |
+| `showPlaybackSpeed` | boolean | `true` | Playback speed control (0.75x to 2x) |
+| `showTextSize` | boolean | `true` | Text size control (three steps) above the stop list |
+| `stopSearchThreshold` | number | `8` | Show stop search when the tour has more stops than this |
+| `showDirections` | boolean | `true` | "Directions" button on stops with a `location` |
 | `listView` | boolean | `true` | Enable the list view |
 | `mapView` | boolean | `false` | Enable the map view |
 | `mapProvider` | `"openfreemap"` \| `"openstreetmap"` \| `"carto"` \| `"mapbox"` \| `"jawg"` \| `"maptiler"` | `"openfreemap"` | Map tile provider |
@@ -225,7 +248,7 @@ API keys for Mapbox, Jawg, MapTiler, and CARTO are set as environment variables 
 | `title` | Yes | Tour title |
 | `description` | Yes | Short tour description |
 | `totalDuration` | Yes | Human-readable duration (e.g. `"45 mins"`) |
-| `totalStops` | Yes | Number of stops |
+| `totalStops` | Yes | Number of audio stops (the build fails if it does not match) |
 | `image` | No | Cover image (overrides metadata) |
 | `stops` | Yes | Array of stop objects |
 
@@ -240,7 +263,7 @@ API keys for Mapbox, Jawg, MapTiler, and CARTO are set as environment variables 
 | `image` | No | Stop image URL (also used as the marker when `mapMarker: "image"`) |
 | `audioFile` | For audio | Audio URL (MP3, M4A) |
 | `transcription` | No | Text transcription of the audio |
-| `location` | No | `{ lat, lng }` — audio stops with a location appear as map markers |
+| `location` | No | `{ lat, lng }` — audio stops with a location appear as map markers; every stop with a location gets a "Directions" button |
 | `mapMarkerIcon` | No | Per-stop custom marker image (overrides tour-level icon and any `mapMarker` mode) |
 
 ### CARTO map styles (API key required)
@@ -275,8 +298,14 @@ Optional file at the `src/data/tour/` root that themes and authors the tour-sele
 | `statusBarColor` | string (hex) | theme header color | Browser chrome / iOS status bar color while the splash is shown |
 | `tourOrder` | string[] | discovery order | Tour `id`s in display order; unlisted tours appended |
 | `tourCard` | object | all shown | Card layout: `showImage`, `showDescription`, `showMeta` (each boolean, default `true`; title always shown) |
+| `embedAllowlist` | string[] | no limit | Hostnames embed stops may show (`"maps.example.org"`, `"*.example.org"`) |
+| `analytics` | boolean | on when the build has an endpoint | `false` switches off anonymous analytics |
+| `name`, `shortName`, `description` | string | `"AudioGuideKit"`, `name`, built-in | Installed-app name and description (also the page title) |
+| `themeColor`, `backgroundColor` | string (hex) | `"#ffffff"`, `"#f3f4f6"` | Installed-app colours |
+| `display` | `"standalone"` \| `"minimal-ui"` \| `"browser"` \| `"fullscreen"` | `"standalone"` | How the installed app is framed |
+| `orientation` | `"portrait"` \| `"landscape"` \| `"any"` | `"portrait"` | Orientation lock of the installed app |
 
-`app.json` is bundled at build time, so changes require a rebuild/reload. It carries a `$schema` reference and is validated by `bun run validate` against a schema generated from `types.ts`.
+`app.json` is bundled at build time, so changes require a rebuild/reload. It carries a `$schema` reference and is validated by `bun run validate` against a schema from the `@audioguidekit/schema` package (`packages/schema`).
 
 ## What AudioGuideKit Does NOT Include
 
@@ -284,7 +313,7 @@ AudioGuideKit is intentionally focused on being an excellent player. It does not
 
 - **Content Management System** — edit JSON directly, or export from a headless CMS (WordPress, Contentful, Strapi, Sanity) to JSON.
 - **Audio and image hosting** — host media on your own CDN or object storage (Cloudflare R2, AWS S3, Backblaze B2). Compress audio (~64–96 kbps for voice) and prefer WebP for images.
-- **Analytics** — integrate Google Analytics, Plausible, Matomo, or a custom solution.
+- **Analytics dashboard** — the player can send anonymous events to an endpoint you run (see Privacy-friendly analytics); storing and charting them is up to you.
 - **Payment / access control** — add your own gate, access codes, or ticketing integration if you sell tours.
 - **Backend server** — pure static deployment; add Next.js API routes, serverless functions, or a separate service only if you need one.
 
@@ -342,7 +371,7 @@ HTTPS is required for PWA features (free with Let's Encrypt or included with mod
 
 - **No backend attack surface**: static files only — no database, no server-side code, no API to secure.
 - **HTTPS** enforced for PWA features.
-- **Privacy**: no accounts and no personal data collected by default (GDPR-friendly). If you add analytics, you control the data and can choose privacy-focused or self-hosted options.
+- **Privacy**: no accounts and no personal data collected by default (GDPR-friendly). The built-in analytics are anonymous, off in standard builds until you set an endpoint, and never count browsers with Global Privacy Control or Do Not Track. Fonts are self-hosted, so no requests go to Google Fonts.
 - **Accessibility-conscious**: transcriptions for audio, large touch targets, high-contrast theming, semantic markup, and respect for user font-size preferences.
 
 ## Frequently Asked Questions

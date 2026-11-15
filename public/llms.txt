@@ -58,14 +58,22 @@ AudioGuideKit is a production-ready audio guide player that you host yourself. V
 
 9. **Deploy anywhere**: Pure static output — host on Vercel, Netlify, Cloudflare Pages, GitHub Pages, AWS S3, or any static server. Zero backend.
 
+10. **Tour structure**: `tourStructure` is `"guided"` (numbered stops that play one after another, with a route line) or `"free"` (visitors start each stop themselves, for museums and galleries).
+
+11. **Visitor controls**: playback speed (0.75x to 2x), stop search, text size, WebVTT video subtitles, and directions to a stop in Google Maps, Apple Maps or Waze. Each can be switched off per tour. An app-level `embedAllowlist` limits which sites embed stops may show. Fonts are self-hosted (no Google Fonts requests).
+
+12. **Privacy-friendly analytics** (optional): anonymous events to an endpoint you choose; no cookies, honours Global Privacy Control and Do Not Track, `"analytics": false` switches it off. Off in standard builds until you set `VITE_ANALYTICS_ENDPOINT`.
+
+13. **Manifest mode** (optional): one generic build that loads its content from `manifest.json` at runtime (`VITE_DATA_SOURCE=manifest`), with live preview for editors. The `@audioguidekit/schema` package (in the player repo) holds the types, JSON Schemas, manifest validation and editor field descriptions.
+
 ## Content Model
 
 Tours live in `src/data/tour/<tour-id>/`:
 
-- **`metadata.json`** — tour-wide settings: `id`, `themeId`, `offlineMode`, feature toggles (`transcriptAvailable`, `collectFeedback`, `fullscreenPlayer`, `showProgressBar`, `hapticsEnabled`, …), and map config (`mapView`, `listView`, `mapProvider`, `mapStyle`, `mapCenter`, `mapRoute`, `mapMarkerColors`, …).
-- **Language files** (`en.json`, `es.json`, …) — `title`, `description`, `totalDuration`, `totalStops`, cover `image`, and the `stops` array.
+- **`metadata.json`** — tour-wide settings: `id`, `themeId`, `offlineMode`, `tourStructure`, feature toggles (`transcriptAvailable`, `collectFeedback`, `fullscreenPlayer`, `showProgressBar`, `hapticsEnabled`, `showPlaybackSpeed`, `showTextSize`, `stopSearchThreshold`, `showDirections`, …), and map config (`mapView`, `listView`, `mapProvider`, `mapStyle`, `mapCenter`, `mapRoute`, `mapMarkerColors`, …).
+- **Language files** (`en.json`, `es.json`, …) — `title`, `description`, `totalDuration`, `totalStops` (the number of audio stops), cover `image`, and the `stops` array.
 - **Stops** — `id`, `type`, `title`, `duration`, `image`, `audioFile`, optional `transcription`, `location` (`{ lat, lng }`), and per-stop `mapMarkerIcon`.
-- **`app.json`** (optional, at `src/data/tour/` root) — themes the tour-selection screen for multi-tour deployments: `themeId`, `title`, `subtitle`, `logo`, `hero`, `splash`, `tourOrder`, and `tourCard` layout.
+- **`app.json`** (optional, at `src/data/tour/` root) — themes the tour-selection screen for multi-tour deployments: `themeId`, `title`, `subtitle`, `logo`, `hero`, `splash`, `tourOrder`, and `tourCard` layout; also the installed-app identity (`name`, `shortName`, `description`, `themeColor`, `backgroundColor`, `display`, `orientation`), `embedAllowlist` and `analytics`.
 
 JSON files carry a `$schema` reference for live editor validation, and `bun run validate` gates the build against the schema.
 
@@ -74,7 +82,7 @@ JSON files carry a `$schema` reference for live editor validation, and `bun run 
 AudioGuideKit is intentionally focused on the player. You provide:
 - **Content management**: Edit JSON directly, or export from your own CMS to JSON.
 - **Audio and image hosting**: Host media on your own CDN or object storage (Cloudflare R2, AWS S3, Backblaze B2, etc.).
-- **Analytics**: Add Google Analytics, Plausible, Matomo, or your own.
+- **Analytics dashboard**: The player can send anonymous events to an endpoint you run; storing and charting them is up to you.
 - **Payment / access control**: Add your own gate if you sell tours.
 - **Backend server**: Pure static deployment; add your own API only if you need one.
 

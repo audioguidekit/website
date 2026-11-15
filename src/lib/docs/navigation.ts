@@ -52,9 +52,11 @@ export const docsNavigation: NavGroup[] = [
     title: "Features",
     items: [
       { title: "Tour structure", href: "/docs/features/tour-structure" },
+      { title: "Visitor features", href: "/docs/features/visitor-features" },
       { title: "Offline support", href: "/docs/features/offline" },
       { title: "Deep linking", href: "/docs/features/deeplinking" },
       { title: "Feedback collection", href: "/docs/features/feedback" },
+      { title: "Analytics", href: "/docs/features/analytics" },
     ],
   },
   {
@@ -62,6 +64,7 @@ export const docsNavigation: NavGroup[] = [
     items: [
       { title: "Overview", href: "/docs/deployment/overview" },
       { title: "Platform guides", href: "/docs/deployment/platforms" },
+      { title: "Manifest mode", href: "/docs/deployment/manifest-mode" },
     ],
   },
   {
