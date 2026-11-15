@@ -42,7 +42,8 @@ Create `src/data/tour/metadata.json`:
 | `id` | Yes | Unique identifier for your tour (lowercase, hyphens okay) |
 | `offlineMode` | No | `"optional"`, `"online-only"`, or `"offline-only"` |
 | `themeId` | No | Theme name: `"default-light"`, `"default-dark"`, or your custom theme |
-| `transitionAudio` | No | URL to audio played between stops |
+| `tourStructure` | No | `"guided"` (default): numbered stops that play one after another, with the route line on the map. `"free"`: visitors start each stop themselves, with no numbers and no route line. See [Tour structure](/docs/features/tour-structure) |
+| `transitionAudio` | No | URL to audio played when a stop ends: between stops on a guided route, as a "finished" signal in free exploration |
 | `transcriptAvailable` | No | Show transcription toggle when `true` |
 | `collectFeedback` | No | Show rating button when `true` |
 | `showLanguageLabel` | No | Show language name next to flag (default: `true`) |

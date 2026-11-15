@@ -275,7 +275,7 @@ When stops are close together, AudioGuideKit can group them into cluster bubbles
 
 ## Route line
 
-An optional polyline connects stops in sequence. It splits into two visual segments: solid for visited stops, dashed for stops still ahead — a progress indicator along the route.
+An optional polyline connects stops in sequence. It belongs to a guided route: a tour set to free exploration (`"tourStructure": "free"`, see [Tour structure](/docs/features/tour-structure)) never draws it. It splits into two visual segments: solid for visited stops, dashed for stops still ahead — a progress indicator along the route.
 
 The line only appears at street-level zoom (configurable via `minZoom`) and hides on overview zoom, keeping the map uncluttered.
 

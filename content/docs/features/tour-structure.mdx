@@ -1,0 +1,44 @@
+---
+title: "Tour structure"
+description: "Guided route or free exploration: how visitors move through a tour"
+---
+
+A tour is either a **guided route** that visitors follow from stop to stop, or **free exploration**, where they pick the stop in front of them. One setting in `metadata.json` switches between the two.
+
+```json
+{
+  "id": "museum",
+  "tourStructure": "free"
+}
+```
+
+| Value | When to use it | What visitors get |
+|-------|----------------|-------------------|
+| `"guided"` (default) | Walking tours, trails, a fixed path through a building | Numbered stops. When a stop ends, the next one plays on its own. The map draws the route line between stops (with `mapRoute`). |
+| `"free"` | Museums, galleries, gardens: anywhere visitors choose their own order | No numbers on stops. When a stop ends, playback stops and the visitor starts the next one. No route line on the map. |
+
+Leave the setting out for a guided route; that is how every tour behaved before the setting existed.
+
+## Free exploration in detail
+
+- **Nothing plays next on its own.** When a stop ends, the player stops. Visitors start another stop from the list, the map, a QR code or a [deep link](/docs/features/deeplinking).
+- **No numbers.** Stop cards, the player and numbered map markers drop their numbers. A photo marker (`mapMarker: "image"`) or a custom marker icon stays as it is.
+- **No route line.** The map shows the stops only, even if `mapRoute` is set.
+- **Previous and next stay.** The buttons in the player still work, because the visitor presses them.
+- **The transition sound still plays.** If the tour has a `transitionAudio`, it plays once when a stop ends, as a "this stop has finished" signal.
+
+Free exploration only changes what is shown. `showStopNumber` and `mapRoute` keep their values and apply again if you switch the tour back to `"guided"`.
+
+## Transition sound
+
+`transitionAudio` plays when a stop ends in both structures:
+
+- **Guided route:** between stops, before the next one starts.
+- **Free exploration:** once, as a signal that the stop is over.
+
+```json
+{
+  "tourStructure": "free",
+  "transitionAudio": "https://example.com/audio/chime.m4a"
+}
+```

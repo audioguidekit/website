@@ -43,6 +43,22 @@ function groupByDate(entries: ChangelogEntry[]) {
 // Newest first.
 const changelog: ChangelogEntry[] = [
   {
+    id: "tour-structure",
+    date: "Nov 15, 2026",
+    title: "Guided route or free exploration",
+    tag: "New",
+    description: (
+      <>
+        A new <code>tourStructure</code> setting. A guided route (the default) numbers its stops, plays them one after another and draws the route line. Free exploration is for museums and galleries: visitors start each stop themselves, with no numbers and no route line, and the transition sound marks the end of a stop.
+        Read the{" "}
+        <Link href="/docs/features/tour-structure" className="underline hover:text-foreground transition-colors">
+          docs
+        </Link>
+        .
+      </>
+    ),
+  },
+  {
     id: "multi-tour",
     date: "Sep 12, 2026",
     title: "Multiple tours in one app",
