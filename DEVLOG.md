@@ -8,9 +8,9 @@ New pages `features/visitor-features.mdx` (playback speed, stop search, text siz
 → *Memory saved: `docs-sync-from-player-react.md` (updated)*
 
 ### Docs and changelog for the player's tour structure (guided route or free exploration)
-There is a new docs page, `content/docs/features/tour-structure.mdx`, linked in the Features nav. The `tourStructure` row is in the creating-guide metadata table, the `transitionAudio` wording is updated, `map.mdx` notes that the route line belongs to a guided route, `branding/overview.mdx` notes that `showStopNumber` is hidden in free exploration, and `/updates` has an entry. All of it is on branch `docs/tour-structure`, not merged: the feature is in player `dev` (b3ab016), not yet in a release on `main`, so publish it together with that release.
+There is a new docs page, `content/docs/features/tour-structure.mdx`, linked in the Features nav. The `tourStructure` row is in the creating-guide metadata table, the `transitionAudio` wording is updated, `map.mdx` notes that the route line belongs to a guided route, `branding/overview.mdx` notes that `showStopNumber` is hidden in free exploration, and `/updates` has an entry. Published together with player release v1.3.0 (2026-11-15).
 
-**Root cause / approach:** The docs track released player behaviour, so changes for an unreleased feature wait on a branch. Known drift found while doing this: the player's 2026-11-14 features in `dev` (playback speed, stop search, text size, video subtitles, directions, embed allowlist, analytics, runtime manifest mode) have no docs here yet.
+**Root cause / approach:** The docs track released player behaviour, so changes for an unreleased feature wait on a branch until the release. Known drift found while doing this: the player's 2026-11-14 features in `dev` (playback speed, stop search, text size, video subtitles, directions, embed allowlist, analytics, runtime manifest mode) have no docs here yet.
 
 No new memory entries.
 
