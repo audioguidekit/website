@@ -1,5 +1,12 @@
 ## 2026-11-15
 
+### Reference > Schema package page (branch docs/schema-npm, waits for the npm publish)
+New `reference/schema-package.mdx`: install, `validateManifest` and its three checks, field descriptions for editors, `$schema` via unpkg, versions. Manifest mode now links there instead of the "not on npm yet" note; nav, llms files and an Updates entry. Merge only after `@audioguidekit/schema` is on npm.
+
+**Root cause / approach:** `<CodeGroup>` is listed in content/docs/CLAUDE.md but not registered in `mdx-components.tsx`, so it fails the prerender; the guide now says so.
+
+→ *No new memory entries.*
+
 ### Docs, changelog and llms files synced to player v1.3.0
 New pages `features/visitor-features.mdx` (playback speed, stop search, text size, video subtitles, directions, embed allowlist and host rules), `features/analytics.mdx` and `deployment/manifest-mode.mdx` (incl. `@audioguidekit/schema`), all in the nav. Updated the creating-guide settings table, stop-types (video `subtitles`, a missing `embed` section, email `consentText`), multi-tour (`embedAllowlist`, `analytics`, installed-app identity fields), feedback (ratings/emails now go to the analytics endpoint; `collectFeedback` defaults on), icons, and replaced every "add a Google Fonts link" instruction with the bundled-fonts rule. Five `/updates` entries dated Nov 15, 2026 after the tour-structure one; `public/llms.txt` and `llms-full.txt` updated too.
 
