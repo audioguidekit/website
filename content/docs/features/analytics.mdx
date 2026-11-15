@@ -1,0 +1,109 @@
+---
+title: "Analytics"
+description: "Anonymous, privacy-friendly visit counts: what is sent, how to switch it off, how to run your own endpoint"
+---
+
+The player can count visits anonymously. Nothing goes to a third party, nothing identifies a visitor, and a visitor who asks not to be tracked is not counted. Events go to **one endpoint** that you choose, by default `/e` on the player's own domain.
+
+## When it is on
+
+| Build | Analytics |
+|-------|-----------|
+| Standard build (`bun run build`, what you get from the repo) | **Off.** Nothing is sent, stored or timed until you set `VITE_ANALYTICS_ENDPOINT` at build time |
+| [Manifest mode](/docs/deployment/manifest-mode) (`VITE_DATA_SOURCE=manifest`) | **On**, sending to `/e`. The host must accept the events |
+
+If you self-host a standard build and do nothing, nothing changes: no requests are made.
+
+## Switching it off
+
+**For the whole app:** set `analytics` to `false` in `app.json` (or in the manifest's `app` object). Nothing is sent, even when an endpoint is set.
+
+```json
+{
+  "analytics": false
+}
+```
+
+**For a visitor:** a browser that sends **Global Privacy Control** or **Do Not Track** is never counted. The player does not even create a session id, a timer or an offline queue. This applies in every build and no setting can override it.
+
+## What is sent
+
+Events are sent in batches as `POST` requests with `Content-Type: text/plain`:
+
+```json
+{
+  "events": [
+    { "type": "stop_view", "sid": "k3J9x...", "tourId": "barcelona", "stopId": "3", "lang": "en" }
+  ]
+}
+```
+
+A request holds at most 50 events and 4096 bytes. A longer queue is split into several requests. The player sends no timestamp; the receiving server adds it.
+
+| Event | Sent when | Fields |
+|-------|-----------|--------|
+| `app_open` | The player starts | |
+| `tour_open` | A tour screen opens (once per tour per visit) | `tourId`, `lang` |
+| `stop_view` | A stop becomes the current stop (once per stop) | `tourId`, `stopId`, `lang` |
+| `tour_start` | Audio plays for the first time in a tour | `tourId`, `lang` |
+| `audio_play` | A stop's audio plays for the first time | `tourId`, `stopId`, `lang` |
+| `audio_complete` | A stop's audio plays to the end | `tourId`, `stopId`, `lang`, `value` (seconds actually listened) |
+| `tour_complete` | All of the tour's audio has been listened to (when the "tour complete" sheet opens) | `tourId`, `lang` |
+| `language_change` | The visitor picks another language | `tourId`, `lang` (the new language) |
+| `offline_download` | "Download for offline" finishes | `tourId`, `lang` |
+| `feedback_submit` | The rating sheet is submitted (once per device and tour) | `tourId`, `value` (rating 1-5), `comment` |
+| `email_submit` | A visitor submits an email address from an email stop or the rating sheet | `tourId`, `stopId`, `lang`, `email`, `consent` |
+
+`sid` is the session id described below.
+
+## Privacy
+
+- **No cookies.** No `localStorage` entries either, apart from the existing "already rated" and progress data, which never leave the device.
+- **Session id:** 128 random bits, kept in `sessionStorage`. It ends when the tab closes. There is no install id, no user id and no link between visits.
+- **No fingerprinting:** the player reads nothing from the device beyond what the event needs.
+- **No third parties:** the endpoint is on the player's own domain by default.
+- **Opt-outs come first:** with Global Privacy Control or Do Not Track, `analytics: false`, or no endpoint, there are no requests, no timers and no stored queue.
+
+### Email addresses
+
+An email address is only sent when the visitor submits a form. That is a deliberate action, not tracking, so it is sent even with Global Privacy Control or Do Not Track on. It still needs an endpoint (manifest mode, or `VITE_ANALYTICS_ENDPOINT`).
+
+- With no endpoint, an email stop shows its thank-you card and sends nothing, as before.
+- An email stop with `consentText` shows a checkbox that must be ticked first (see [Stop types](/docs/content/stop-types)).
+- The rating sheet's email step always has an unticked consent checkbox. "Subscribe" stays disabled until it is ticked, and "Skip" discards what was typed.
+- An address is sent on its own, never in a batch, and never kept in the offline queue. If sending fails, the visitor sees an error and can try again.
+
+## Delivery
+
+- Events wait in memory and go out every 60 seconds, or as soon as 20 are waiting.
+- When the tab is hidden or closed, the queue is sent straight away with `navigator.sendBeacon` (or `fetch` with `keepalive`).
+- When the device is offline, or the server answers with a network error or a 5xx status, events are kept in IndexedDB (`agk-analytics`) and sent when the connection returns, or at the next start. At most 500 events are kept; beyond that the oldest are dropped.
+- A 4xx answer drops the events instead of retrying.
+
+## Running your own endpoint
+
+<Steps>
+  <Step title="Run a receiver">
+    Run something that accepts the batches (requirements below), on the same domain as the player or on another domain that accepts `POST` with `Content-Type: text/plain` from yours.
+  </Step>
+  <Step title="Build with the endpoint">
+    ```bash
+    VITE_ANALYTICS_ENDPOINT=/e bun run build
+    ```
+    A full URL such as `https://stats.example.org/e` also works.
+  </Step>
+  <Step title="Check it">
+    Open the browser's network tab: requests go to your endpoint, and they stop when Global Privacy Control is on.
+  </Step>
+</Steps>
+
+The receiver must:
+
+- accept `POST` with a JSON body `{ "events": [...] }` (or a single event object) of up to 4096 bytes and 50 events, whatever the `Content-Type`;
+- check each event's `type` against the list above and answer `204`;
+- answer `400` for a batch it will not accept, never a `5xx`, so the player does not retry it;
+- if it is on another domain, check the `Origin` header itself.
+
+<Note>
+Two events have extra limits. A `feedback_submit` comment is at most 2000 characters and `value` is 1-5. An `email_submit` carries one address of at most 254 characters and `consent: true`, and it is always the only event in its request.
+</Note>

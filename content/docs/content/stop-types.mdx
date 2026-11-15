@@ -19,7 +19,8 @@ At the moment only audio stops are fully supported and tested. Other stop types 
 | `image-gallery` | Swipeable horizontal image gallery | Photo collections |
 | `image-comparison` | Before/after drag slider | Historical then-and-now |
 | `image-hotspot` | Image with tappable annotation pins | Diagrams, maps, artwork |
-| `video` | Video playback | Demonstrations, intros |
+| `video` | Video playback, with optional subtitles | Demonstrations, intros |
+| `embed` | Embedded page: YouTube, Spotify or any `https` page | Existing videos, playlists, widgets |
 | `3d-object` | Interactive 3D model viewer | Artifacts, architecture |
 | `headline` | Large text header | Section dividers |
 | `quote` | Styled quotation | Historical quotes |
@@ -119,11 +120,40 @@ Embed video content. Useful for introductions, demonstrations, or drone footage.
 | Field | Required | Description |
 |-------|----------|-------------|
 | `videoUrl` | Yes | Video file URL (MP4 recommended) |
+| `subtitles` | No | WebVTT subtitle files for the browser's captions menu: a list of `{ "src", "srclang", "label" }`. Downloaded with the video for offline use. See [Video subtitles](/docs/features/visitor-features) |
+| `caption` | No | Caption below the player |
 | Other standard fields | Yes | `id`, `type`, `title`, `duration`, `image` |
 
 <Warning>
 Video files are large and may not work well offline. Consider using video stops only for online-only tours or keep videos short.
 </Warning>
+
+## Embed stops
+
+Show another page inside the tour: a YouTube video, a Spotify playlist, or any page served over `https`. The player sizes the frame to fit.
+
+```json
+{
+  "id": "7",
+  "type": "embed",
+  "embedUrl": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+  "embedType": "youtube",
+  "caption": "Original documentary footage"
+}
+```
+
+### Embed stop fields
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `embedUrl` | Yes | The page to embed. Must start with `https://` and cannot be on the player's own domain |
+| `embedType` | No | `"youtube"`, `"spotify"`, `"video"` or `"generic"`. Sets the default aspect ratio and the sandbox. `youtube` only works on YouTube hosts and `spotify` only on `open.spotify.com`; on any other host the stop is treated as `generic` |
+| `aspectRatio` | No | Override the aspect ratio, such as `"16/9"` |
+| `caption` | No | Caption below the embed |
+
+<Note>
+An app can limit which sites embeds may show with `embedAllowlist`. See [Embed allowlist](/docs/features/visitor-features).
+</Note>
 
 ## 3D object stops
 
@@ -242,10 +272,12 @@ Collect email addresses for newsletters or follow-up communication.
 |-------|----------|-------------|
 | `description` | No | Text explaining why to sign up |
 | `placeholder` | No | Input placeholder text |
+| `buttonText` | No | Submit button label |
+| `consentText` | No | Adds a checkbox with this text that must be ticked before the form can be submitted |
 | Other standard fields | Yes | `id`, `type`, `title`, `image` |
 
 <Warning>
-Email collection requires backend integration to actually store emails. The stop type provides the UI, but you'll need to connect it to your email service.
+The address only goes somewhere if the build has an analytics endpoint: the player then posts it there, and shows an error if that fails. Without an endpoint the form only shows its thank-you card. See [Analytics](/docs/features/analytics).
 </Warning>
 
 ## Image gallery stops

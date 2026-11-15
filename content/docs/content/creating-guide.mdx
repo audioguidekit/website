@@ -42,10 +42,15 @@ Create `src/data/tour/metadata.json`:
 | `id` | Yes | Unique identifier for your tour (lowercase, hyphens okay) |
 | `offlineMode` | No | `"optional"`, `"online-only"`, or `"offline-only"` |
 | `themeId` | No | Theme name: `"default-light"`, `"default-dark"`, or your custom theme |
-| `transitionAudio` | No | URL to audio played between stops |
+| `tourStructure` | No | `"guided"` (default): numbered stops that play one after another, with the route line on the map. `"free"`: visitors start each stop themselves, with no numbers and no route line. See [Tour structure](/docs/features/tour-structure) |
+| `transitionAudio` | No | URL to audio played when a stop ends: between stops on a guided route, as a "finished" signal in free exploration |
 | `transcriptAvailable` | No | Show transcription toggle when `true` |
-| `collectFeedback` | No | Show rating button when `true` |
+| `collectFeedback` | No | Show the rating button and keep rating stops (default: `true`); `false` removes both |
 | `showLanguageLabel` | No | Show language name next to flag (default: `true`) |
+| `showPlaybackSpeed` | No | Playback speed control (0.75× to 2×) in the player (default: `true`). See [Visitor features](/docs/features/visitor-features) |
+| `showTextSize` | No | Text size control (three steps) above the stop list (default: `true`). See [Visitor features](/docs/features/visitor-features) |
+| `stopSearchThreshold` | No | Show a stop search field when the tour has more stops than this (default: `8`). See [Visitor features](/docs/features/visitor-features) |
+| `showDirections` | No | "Directions" button (Google Maps, Apple Maps, Waze) on stops with a `location` (default: `true`). See [Visitor features](/docs/features/visitor-features) |
 | `hapticsEnabled` | No | Enable haptic feedback on stop taps — Android uses the Vibration API, iOS triggers the Taptic Engine (default: `true`) |
 | `image` | No | Default tour cover image URL |
 | `mapView` | No | Show an interactive map tab when `true` |
@@ -105,7 +110,7 @@ Create `src/data/tour/en.json` for English content:
 | `title` | Yes | Tour title (displayed on start screen) |
 | `description` | Yes | Tour description (1-2 engaging sentences) |
 | `totalDuration` | Yes | Human-readable duration (`"45 mins"`) |
-| `totalStops` | Yes | Number of stops in the tour |
+| `totalStops` | Yes | Number of **audio** stops in the tour (not the length of `stops`). The progress bar counts these, and `bun run build` stops with an error when the number does not match |
 | `image` | No | Tour cover image (overrides metadata) |
 | `stops` | Yes | Array of stop objects |
 
@@ -140,7 +145,7 @@ Each item in the `stops` array represents one tour stop:
 | `image` | Yes | Stop image URL |
 | `audioFile` | For audio | Audio file URL (MP3 or M4A) |
 | `transcription` | No | Text transcription of the audio |
-| `location` | No | GPS coordinates for the map pin: `{ "lat": 51.5007, "lng": -0.1246 }` — audio stops only |
+| `location` | No | GPS coordinates: `{ "lat": 51.5007, "lng": -0.1246 }`. Audio stops with a location get a map marker; every stop with a location gets a [Directions](/docs/features/visitor-features) button |
 | `mapMarkerIcon` | No | Custom marker image URL for this stop only (overrides the tour-level `mapMarkerIcon` and any `mapMarker` mode) |
 
 <Warning>

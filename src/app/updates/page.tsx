@@ -43,6 +43,94 @@ function groupByDate(entries: ChangelogEntry[]) {
 // Newest first.
 const changelog: ChangelogEntry[] = [
   {
+    id: "tour-structure",
+    date: "Nov 15, 2026",
+    title: "Guided route or free exploration",
+    tag: "New",
+    description: (
+      <>
+        A new <code>tourStructure</code> setting. A guided route (the default) numbers its stops, plays them one after another and draws the route line. Free exploration is for museums and galleries: visitors start each stop themselves, with no numbers and no route line, and the transition sound marks the end of a stop.
+        Read the{" "}
+        <Link href="/docs/features/tour-structure" className="underline hover:text-foreground transition-colors">
+          docs
+        </Link>
+        .
+      </>
+    ),
+  },
+  {
+    id: "visitor-features",
+    date: "Nov 15, 2026",
+    title: "Playback speed, stop search, text size, subtitles and directions",
+    tag: "New",
+    description: (
+      <>
+        Visitors can listen at 0.75x to 2x, search the stop list (shown from 9 stops), make texts larger in three steps, turn on video subtitles (WebVTT, also offline) and open a stop in Google Maps, Apple Maps or Waze. Each control has a tour setting to switch it off. A new app setting, <code>embedAllowlist</code>, limits which sites embed stops may show.
+        Read the{" "}
+        <Link href="/docs/features/visitor-features" className="underline hover:text-foreground transition-colors">
+          docs
+        </Link>
+        .
+      </>
+    ),
+  },
+  {
+    id: "analytics",
+    date: "Nov 15, 2026",
+    title: "Privacy-friendly analytics",
+    tag: "New",
+    description: (
+      <>
+        The player can count visits anonymously: no cookies, no user ids, nothing sent to third parties. Browsers with Global Privacy Control or Do Not Track are never counted, and <code>{'"analytics": false'}</code> switches it off. Standard builds send nothing until you set your own endpoint.
+        Read the{" "}
+        <Link href="/docs/features/analytics" className="underline hover:text-foreground transition-colors">
+          docs
+        </Link>
+        .
+      </>
+    ),
+  },
+  {
+    id: "manifest-mode",
+    date: "Nov 15, 2026",
+    title: "Manifest mode and the schema package",
+    tag: "New",
+    description: (
+      <>
+        Build the player once and load its tours from a <code>manifest.json</code> at runtime, so publishing content needs no rebuild. Editors can show a live preview in a frame. The new <code>@audioguidekit/schema</code> package holds the types, JSON Schemas, manifest validation and field descriptions for tools that write manifests.
+        Read the{" "}
+        <Link href="/docs/deployment/manifest-mode" className="underline hover:text-foreground transition-colors">
+          docs
+        </Link>
+        .
+      </>
+    ),
+  },
+  {
+    id: "self-hosted-fonts",
+    date: "Nov 15, 2026",
+    title: "Self-hosted fonts and safer embeds",
+    tag: "Improved",
+    description: (
+      <>
+        Fonts are bundled with the player, so it makes no requests to Google Fonts. Embed stops follow stricter rules: <code>https</code> only, and the YouTube and Spotify sandbox only for their own hosts. Downloads for offline use are more reliable.
+        Read about{" "}
+        <Link href="/docs/branding/overview" className="underline hover:text-foreground transition-colors">
+          fonts
+        </Link>
+        .
+      </>
+    ),
+  },
+  {
+    id: "keep-hand-authored-tours",
+    date: "Nov 15, 2026",
+    title: "Hand-authored tours are kept",
+    tag: "Fixed",
+    description:
+      "Running dev or build no longer deletes tours you wrote by hand in src/data/tour.",
+  },
+  {
     id: "multi-tour",
     date: "Sep 12, 2026",
     title: "Multiple tours in one app",

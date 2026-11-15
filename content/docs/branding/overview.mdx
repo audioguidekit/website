@@ -41,7 +41,7 @@ Themes control colors, fonts, and visual styling — but several **layout and UI
 |----------|------|-------------|
 | `showStopImage` | `boolean \| "thumbnail"` | Stop card layout: `true` = full image card, `"thumbnail"` = compact row with small thumbnail, `false` = text-only list |
 | `showStopDuration` | `boolean` | Show/hide the duration badge on stop cards |
-| `showStopNumber` | `boolean` | Show/hide the numbered circle indicator on stop cards |
+| `showStopNumber` | `boolean` | Show/hide the numbered circle indicator on stop cards (always hidden in [free exploration](/docs/features/tour-structure)) |
 | `showProgressBar` | `boolean` | Show/hide the playback progress bar |
 | `showLanguageLabel` | `boolean` | Show/hide the language name next to the flag in the language selector |
 | `fullscreenPlayer` | `boolean` | Enable the fullscreen overlay player (slides up over the stop list) |
@@ -163,22 +163,38 @@ Spanish visitors would see `warm-theme` while others see whatever's in `metadata
 
 ## Custom fonts
 
-Themes support custom fonts from Google Fonts (or self-hosted):
+Fonts are self-hosted: the player bundles them and never loads anything from Google Fonts. These families are included:
+
+| Name to use in `fontFamily` | Style |
+|-----------------------------|-------|
+| `Inter` | Neutral sans (the default) |
+| `IBM Plex Sans` | Humanist sans |
+| `Space Grotesk` | Geometric, good for headings and numbers |
+| `JetBrains Mono` | Monospace |
+
+A theme picks a font by putting its name first in the list:
 
 ```typescript
 typography: {
   fontFamily: {
-    sans: ['Roboto', 'system-ui', 'sans-serif'],
-    heading: ['Playfair Display', 'serif'],
+    sans: ['IBM Plex Sans', 'system-ui', 'sans-serif'],
+    heading: ['Space Grotesk', 'Inter', 'sans-serif'],
     numbers: ['JetBrains Mono', 'monospace'],
   },
 }
 ```
 
-Remember to add the font to `index.html`:
+A name that is not bundled (and not installed on the visitor's device) falls back to the next name in the list, so always end with a generic family such as `sans-serif`.
 
-```html
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+To bundle another family, install it from Fontsource and import it in `src/fonts/index.ts`:
+
+```bash
+bun add --exact @fontsource/playfair-display
+```
+
+```typescript
+// src/fonts/index.ts
+import '@fontsource/playfair-display/latin-700.css';
 ```
 
 ## Branding: Custom logo

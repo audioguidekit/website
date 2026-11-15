@@ -5,18 +5,18 @@ description: "Collect ratings and emails from your visitors"
 
 AudioGuideKit includes built-in features to collect visitor feedback: star ratings, written feedback, and email signup.
 
-## Enabling feedback
+## Turning feedback on or off
 
-Enable the feedback button in `metadata.json`:
+Feedback is on by default: a rating button appears on the tour start screen. To remove it, set `collectFeedback` to `false` in `metadata.json`:
 
 ```json
 {
   "id": "barcelona",
-  "collectFeedback": true
+  "collectFeedback": false
 }
 ```
 
-When `true`, a feedback button appears on the tour start screen. Set to `false` to hide it.
+With `false`, both the rating button and any rating stops in the tour are removed.
 
 ## Star ratings
 
@@ -63,11 +63,12 @@ Collect email addresses for newsletters or follow-up communication.
   "title": "Stay in Touch",
   "description": "Get notified about new tours and special events.",
   "placeholder": "Enter your email",
-  "buttonText": "Subscribe"
+  "buttonText": "Subscribe",
+  "consentText": "I agree to receive emails about new tours."
 }
 ```
 
-All fields are optional and have sensible defaults from the UI translations.
+All fields are optional and have sensible defaults from the UI translations. With `consentText`, the form shows a checkbox with that text, and the visitor must tick it before submitting.
 
 ### What visitors see
 
@@ -76,58 +77,27 @@ All fields are optional and have sensible defaults from the UI translations.
 - Submit button with your button text
 - Success message after submission
 
-## Data storage
+## Where the data goes
 
-Out of the box, feedback is stored in the browser's localStorage. The data includes:
+Every rating is saved in the browser's `localStorage`, so the player knows the visitor has already rated this tour:
 
 ```typescript
 {
   tourId: string;
   rating: number;      // 1-5 stars
   feedback: string;    // Written feedback text
-  email: string;       // Optional email
+  email: string;       // Only if the visitor subscribed
   submittedAt: string; // ISO timestamp
 }
 ```
 
-### Connecting to your backend
+To receive ratings and email addresses yourself, give the build an analytics endpoint. The player then sends:
 
-To collect and analyze feedback, you'll need to modify the app to send data to your backend.
+- a `feedback_submit` event with the rating and the comment, once per device and tour;
+- an `email_submit` event when a visitor submits an address from an email stop, or subscribes in the rating sheet's email step (which always asks for consent first).
 
-The rating context (`context/RatingContext.tsx`) handles all feedback state. Modify the `submitRating` function to POST data to your endpoint:
-
-```typescript
-// Example modification to RatingContext.tsx
-const submitRating = async () => {
-  const ratingData = {
-    tourId,
-    rating,
-    feedback,
-    email,
-    submittedAt: new Date().toISOString(),
-  };
-
-  // Send to your backend
-  await fetch('https://your-api.com/feedback', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(ratingData),
-  });
-
-  // Mark as submitted
-  setIsSubmitted(true);
-};
-```
-
-### Backend options
-
-| Service | Complexity | Cost |
-|---------|------------|------|
-| Zapier Webhook | Easy | Free tier available |
-| Supabase | Medium | Free tier available |
-| Google Sheets API | Easy | Free |
-| Custom API | Harder | Varies |
+Without an endpoint nothing leaves the device: the email form shows its thank-you card and sends nothing. The [Analytics](/docs/features/analytics) page explains how to set an endpoint and what your server receives.
 
 <Note>
-Backend integration requires code changes. AudioGuideKit provides the UI and local storage, but you customize where data goes.
+Ratings follow the visitor's privacy settings: with Global Privacy Control or Do Not Track on, no `feedback_submit` event is sent. An email address is still sent, because the visitor typed and submitted it on purpose.
 </Note>

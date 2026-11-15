@@ -1,3 +1,19 @@
+## 2026-11-15
+
+### Docs, changelog and llms files synced to player v1.3.0
+New pages `features/visitor-features.mdx` (playback speed, stop search, text size, video subtitles, directions, embed allowlist and host rules), `features/analytics.mdx` and `deployment/manifest-mode.mdx` (incl. `@audioguidekit/schema`), all in the nav. Updated the creating-guide settings table, stop-types (video `subtitles`, a missing `embed` section, email `consentText`), multi-tour (`embedAllowlist`, `analytics`, installed-app identity fields), feedback (ratings/emails now go to the analytics endpoint; `collectFeedback` defaults on), icons, and replaced every "add a Google Fonts link" instruction with the bundled-fonts rule. Five `/updates` entries dated Nov 15, 2026 after the tour-structure one; `public/llms.txt` and `llms-full.txt` updated too.
+
+**Root cause / approach:** Release notes alone undersell a release: `git diff v1.2.1 v1.3.0 -- docs` in player-react surfaced quiet but user-visible changes (`totalStops` must equal the audio-stop count or `bun run build` fails, email consent, app.json identity fields). Facts were checked in `packages/schema/src/types.ts`, `fields/tourSettings.ts`, `src/fonts/index.ts`, `vite.config.ts` and `context/RatingContext.tsx`. The docs headings have no ids, so links point to pages, not `#anchors`; the schema package is not on npm yet, so the page says to use it as a local folder.
+
+→ *Memory saved: `docs-sync-from-player-react.md` (updated)*
+
+### Docs and changelog for the player's tour structure (guided route or free exploration)
+There is a new docs page, `content/docs/features/tour-structure.mdx`, linked in the Features nav. The `tourStructure` row is in the creating-guide metadata table, the `transitionAudio` wording is updated, `map.mdx` notes that the route line belongs to a guided route, `branding/overview.mdx` notes that `showStopNumber` is hidden in free exploration, and `/updates` has an entry. Published together with player release v1.3.0 (2026-11-15).
+
+**Root cause / approach:** The docs track released player behaviour, so changes for an unreleased feature wait on a branch until the release. Known drift found while doing this: the player's 2026-11-14 features in `dev` (playback speed, stop search, text size, video subtitles, directions, embed allowlist, analytics, runtime manifest mode) have no docs here yet.
+
+No new memory entries.
+
 ## 2026-09-18
 
 ### Switched agent markdown to the web-for-agents library; every page now covered, canonical bug fixed

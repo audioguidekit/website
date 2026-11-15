@@ -1,0 +1,202 @@
+---
+title: "Manifest mode"
+description: "One generic build that loads its tours from manifest.json at runtime, with live preview and the @audioguidekit/schema package"
+---
+
+By default the player **compiles your content in**. Tours, themes, interface texts and `app.json` are read from `src/data/` when you build, so every content change needs a new build.
+
+**Manifest mode** turns that around. You build the player **once**, with no content in it. When it starts, it fetches a single `manifest.json`. Publishing new content then means uploading a new file, and one build can serve any number of different apps.
+
+| | Standard build (default) | Manifest mode |
+|---|---|---|
+| Content comes from | `src/data/`, bundled into the build | `/data/manifest.json`, fetched at startup |
+| A content change needs | A new build | Uploading a new `manifest.json` |
+| Selected by | Nothing | `VITE_DATA_SOURCE=manifest` at build time |
+| Installed-app name and icons | Built in from `app.json` | Served by your host |
+| [Analytics](/docs/features/analytics) | Off unless you set an endpoint | On, sending to `/e` |
+
+<Note>
+Nothing changes for you unless you set `VITE_DATA_SOURCE=manifest`. Most self-hosted tours are fine with the standard build.
+</Note>
+
+## Building
+
+<Steps>
+  <Step title="Build the player without content">
+    ```bash
+    bun run build:manifest
+    ```
+    This is the same as `VITE_DATA_SOURCE=manifest vite build`.
+  </Step>
+  <Step title="Build a manifest from your tour files">
+    ```bash
+    bun run manifest
+    ```
+    This reads your files in `src/data` (tours, themes, interface texts, `app.json`) and writes `dist/data/manifest.json`.
+  </Step>
+  <Step title="Deploy">
+    Serve `dist/` with the manifest at `/data/manifest.json`.
+  </Step>
+</Steps>
+
+`bun run manifest` takes these options:
+
+| Option | Default | Meaning |
+|--------|---------|---------|
+| `--data <dir>` | `src/data` | Where your tour files are |
+| `--out <file>` | `dist/data/manifest.json` | Where to write the manifest |
+| `--include-hidden` | off | Include tours whose `id` starts with `_` (test tours, left out otherwise) |
+
+It checks what it writes and stops with an error on any problem. `bun run build` (validate, then the standard build) is unchanged.
+
+A manifest build contains **no tour data and no app identity**. It never reads `app.json`, generates no web app manifest, and does not copy `public/data/tour` into the output.
+
+### Build settings
+
+| Variable | Default | Meaning |
+|----------|---------|---------|
+| `VITE_DATA_SOURCE` | `compiled` | `manifest` turns on manifest mode |
+| `VITE_MANIFEST_URL` | `/data/manifest.json` | Where to fetch the manifest. Another domain needs CORS headers |
+| `VITE_ANALYTICS_ENDPOINT` | `/e` in manifest mode, none otherwise | Where analytics events go. See [Analytics](/docs/features/analytics) |
+| `VITE_PREVIEW_ORIGINS` | none | Comma-separated origins allowed to send live-preview manifests (see below) |
+
+## What happens at startup
+
+1. The player shows a loading screen and fetches the manifest.
+2. It checks `schemaVersion`. If this build does not know that version, visitors see a message that the guide needs a newer version of the app. The player never guesses.
+3. It loads the content and starts the app. It does not run the full schema check: that is the publisher's job (see `validateManifest` below). It only refuses what it cannot run.
+4. It sets the tab title, home screen title, description and `theme-color` from `manifest.app`.
+
+If the fetch fails, an error screen with **Try again** appears, unless the visitor has opened the app before.
+
+### Offline
+
+The service worker fetches the manifest from the network first (with a 4 second timeout) and falls back to the copy from the last successful visit. So an app that has been opened once opens again without a signal, and a new publish shows up on the next online visit.
+
+Only a response that is valid JSON with a supported `schemaVersion` is stored. A Wi-Fi login page or a broken publish cannot replace the last good copy.
+
+## Installed-app name and icons
+
+The web app manifest and icons belong to one app, so a generic build cannot contain them. In manifest mode, `index.html` links to `/manifest.webmanifest`, `/favicon.svg`, `/apple-touch-icon.png` and `/icons/icon-*.png`, and **your host must serve them**, built from `manifest.app`.
+
+Serve `/manifest.webmanifest` with `Content-Type: application/manifest+json`:
+
+```json
+{
+  "name": "<app.name>",
+  "short_name": "<app.shortName, or app.name>",
+  "description": "<app.description>",
+  "theme_color": "<app.themeColor>",
+  "background_color": "<app.backgroundColor>",
+  "display": "<app.display, or standalone>",
+  "orientation": "<app.orientation, or portrait>",
+  "scope": "/",
+  "start_url": "/",
+  "icons": [{ "src": "/icons/icon-192x192.png", "sizes": "192x192", "type": "image/png" }]
+}
+```
+
+The build keeps neutral AudioGuideKit icons in `dist/` as a fallback for a plain static host. The service worker does not cache the icons, so your own icons replace them as soon as you serve them. See [App icons](/docs/branding/icons) for the sizes.
+
+## The manifest format
+
+The manifest is your `src/data` folder as one JSON document:
+
+```json
+{
+  "schemaVersion": 1,
+  "app": { "name": "City walks" },
+  "themes": [],
+  "ui": { "en": {} },
+  "tours": [
+    {
+      "id": "barcelona",
+      "metadata": { "id": "barcelona", "themeId": "default-light" },
+      "languages": {
+        "en": { "id": "barcelona", "language": "en", "title": "Barcelona", "stops": [] }
+      }
+    }
+  ]
+}
+```
+
+| Key | What it holds | In a standard build |
+|-----|---------------|---------------------|
+| `schemaVersion` | The manifest format version (currently `1`) | |
+| `app` | App settings and installed-app identity (optional) | `app.json` |
+| `themes` | Custom themes (optional) | `themes/*.json` |
+| `ui` | Interface texts per language, merged over the built-in ones (optional) | `ui/<lang>.json` |
+| `tours[].metadata` | Shared tour settings, `id` included | `metadata.json` |
+| `tours[].languages` | One entry per language | `en.json`, `de.json`, … |
+| `tours[].route` | Route GeoJSON (optional), replaces `mapRoute.geoJSON` | `route.geojson` |
+
+Media is always a URL, never embedded in the manifest.
+
+Beyond the schema, a valid manifest follows these rules:
+
+- Tour ids and theme ids are unique.
+- A tour's `id`, its `metadata.id` and each language file's `id` match.
+- A language file's `language` matches its key.
+- `totalStops` equals the number of audio stops.
+- Every tour has at least one language.
+- Every theme reference (`app.themeId`, a tour's `themeId`, a theme's `extends`) names a built-in theme (`default-light`, `default-dark`) or a theme in the manifest. A custom theme cannot reuse a built-in id, and `extends` chains must not loop.
+- Every id in `app.tourOrder` is a tour.
+
+### Versions
+
+A player refuses a manifest whose `schemaVersion` differs from its own. The version only goes up for breaking changes (a field removed or renamed, a changed meaning, a new required field). Adding an optional field does not change it.
+
+## Live preview
+
+An editor can show the player in an `<iframe>` and send it whole manifests to preview changes without publishing:
+
+```js
+iframe.contentWindow.postMessage({ type: 'agk:manifest', manifest }, playerOrigin);
+```
+
+The player only accepts messages from allowed origins. You set them in one of two ways:
+
+- **At runtime**, with a tag in `index.html` (as the first thing inside `<head>`). Add it on the preview host only:
+
+  ```html
+  <meta name="agk-preview-origins" content="https://app.example.com,http://localhost:5173">
+  ```
+
+- **At build time**, with `VITE_PREVIEW_ORIGINS` (same format). It is used when there is no tag with a valid origin.
+
+Entries must be exact origins; `*` and `null` are ignored. With no origins at all, live preview is off. A page with the tag does not register the service worker.
+
+The player applies a preview manifest without reloading the page. The open stop and scroll position reset, but the URL and the frame stay. It answers the sender:
+
+| Message | When |
+|---------|------|
+| `{ type: 'agk:ready' }` | At startup, once it listens |
+| `{ type: 'agk:manifest-applied' }` | The manifest was applied |
+| `{ type: 'agk:manifest-error', message }` | The manifest was refused (for example an unknown `schemaVersion`); the screen stays as it was |
+
+## The `@audioguidekit/schema` package
+
+`packages/schema` in the player repo is the contract between the player and anything that writes manifests, such as an editor or a CMS export.
+
+```ts
+import { validateManifest, SCHEMA_VERSION, type Manifest } from '@audioguidekit/schema';
+import { FIELD_CATALOG, STOP_TYPES } from '@audioguidekit/schema/fields';
+
+const result = validateManifest(manifest); // { valid, errors: string[] }
+```
+
+It contains:
+
+- **Types** for the manifest, tours, language files, `app.json`, every stop type, themes and interface texts.
+- **JSON Schemas** for a language file, `metadata.json`, `app.json` and the manifest.
+- **`validateManifest`**, which runs the schema and the extra rules above.
+- **Field descriptions** (`FIELD_CATALOG`): label, group, control, default, options and help text for every field the schemas accept, so an editor can be generated from them.
+
+<Note>
+The package is not on npm yet. To use it from another project, depend on the folder and build it once:
+
+```bash
+# in your package.json: "@audioguidekit/schema": "file:../player-react/packages/schema"
+bun run --cwd ../player-react/packages/schema build
+```
+</Note>
