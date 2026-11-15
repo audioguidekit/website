@@ -43,6 +43,22 @@ function groupByDate(entries: ChangelogEntry[]) {
 // Newest first.
 const changelog: ChangelogEntry[] = [
   {
+    id: "schema-npm",
+    date: "Nov 15, 2026",
+    title: "@audioguidekit/schema on npm",
+    tag: "New",
+    description: (
+      <>
+        The data contract of the player is now a package: <code>npm install @audioguidekit/schema</code>. It has the types, the JSON Schemas, <code>validateManifest</code> and the field descriptions an editor is built from, for anyone whose tool writes tours or manifests.
+        Read the{" "}
+        <Link href="/docs/reference/schema-package" className="underline hover:text-foreground transition-colors">
+          docs
+        </Link>
+        .
+      </>
+    ),
+  },
+  {
     id: "tour-structure",
     date: "Nov 15, 2026",
     title: "Guided route or free exploration",

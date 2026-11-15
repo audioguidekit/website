@@ -64,7 +64,7 @@ AudioGuideKit is a production-ready audio guide player that you host yourself. V
 
 12. **Privacy-friendly analytics** (optional): anonymous events to an endpoint you choose; no cookies, honours Global Privacy Control and Do Not Track, `"analytics": false` switches it off. Off in standard builds until you set `VITE_ANALYTICS_ENDPOINT`.
 
-13. **Manifest mode** (optional): one generic build that loads its content from `manifest.json` at runtime (`VITE_DATA_SOURCE=manifest`), with live preview for editors. The `@audioguidekit/schema` package (in the player repo) holds the types, JSON Schemas, manifest validation and editor field descriptions.
+13. **Manifest mode** (optional): one generic build that loads its content from `manifest.json` at runtime (`VITE_DATA_SOURCE=manifest`), with live preview for editors. The `@audioguidekit/schema` package (on npm, source in the player repo) holds the types, JSON Schemas, manifest validation and editor field descriptions.
 
 ## Content Model
 

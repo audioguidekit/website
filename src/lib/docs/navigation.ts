@@ -70,6 +70,7 @@ export const docsNavigation: NavGroup[] = [
   {
     title: "Reference",
     items: [
+      { title: "Schema package", href: "/docs/reference/schema-package" },
       { title: "Troubleshooting", href: "/docs/reference/troubleshooting" },
     ],
   },

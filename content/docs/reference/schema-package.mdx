@@ -1,0 +1,85 @@
+---
+title: "Schema package"
+description: "@audioguidekit/schema on npm: types, JSON Schemas, manifest validation and editor field descriptions for tools that write AudioGuideKit content"
+---
+
+`@audioguidekit/schema` is the data contract of the player, published on npm. It describes exactly what a tour, an `app.json` and a manifest may contain, and checks that a file follows the rules.
+
+You **don't need it to run the player**. The player already has it inside. You need it when you build something that **writes** content for the player: an editor, a CMS export, a script that turns a spreadsheet into tours, or a check in your own build.
+
+## Install
+
+```bash
+npm install @audioguidekit/schema
+```
+
+With Bun it is `bun add @audioguidekit/schema`.
+
+It is an ES module and runs in Node 20.10 or later, in Bun, or in any bundler. The source lives in the player repo, in [`packages/schema`](https://github.com/audioguidekit/player-react/tree/main/packages/schema).
+
+## Check a manifest before you publish it
+
+```ts
+import { validateManifest, type Manifest } from '@audioguidekit/schema';
+
+const result = validateManifest(manifest);
+if (!result.valid) {
+  console.error(result.errors);
+}
+```
+
+Every error starts with the path to the problem, such as `tours[0].languages.en.stops[3]: …`, so you know which stop to fix.
+
+`validateManifest` checks three things, in this order:
+
+1. **`schemaVersion`**: a manifest written for another version of the format is refused straight away, because the player would refuse it too.
+2. **The JSON Schema**: unknown properties, wrong values, missing required fields.
+3. **Rules a schema cannot express**: tour ids that match across files, no duplicate ids, themes that exist, and `totalStops` equal to the number of audio stops.
+
+For single files there are `validateTourFile` (a language file like `en.json`), `validateTourMetadata` (`metadata.json`) and `validateAppConfig` (`app.json`).
+
+<Tip>
+Run the check in the step that publishes the manifest. A file that fails it would show an error screen in the player instead of your tour.
+</Tip>
+
+## What is inside
+
+- **Types** for the manifest, tours, language files, `app.json`, every stop type, themes and interface texts: `Manifest`, `ManifestTour`, `TourFile`, `TourMetadataFile`, `AppConfigFile`, `ThemeConfig`, `CustomTheme`, `UiText` and more.
+- **JSON Schemas** for a language file, `metadata.json`, `app.json` and the manifest. You get them as `jsonSchemas` from the package, or as files: `@audioguidekit/schema/schemas/manifest.schema.json` (also `tour-file`, `tour-metadata` and `app-config`).
+- **Field descriptions**, for building an editor (below).
+- **`SCHEMA_VERSION`**, the version of the manifest format that this release of the package understands.
+
+## Build an editor from the field descriptions
+
+```ts
+import { FIELD_CATALOG, STOP_TYPES } from '@audioguidekit/schema/fields';
+```
+
+For **every field the schemas accept**, the package says how to show it in a form: label, group, kind of control, default, options and help text. `STOP_TYPES` lists them per stop type. `FIELD_CATALOG` puts every field in one list, each with a `scope`: a stop type, the tour (content, settings, map), `app`, a custom `theme` or `ui` (interface texts).
+
+So when the player gets a new setting, an editor built on the catalog shows it after a package update, with no new form code.
+
+## Check JSON files in your code editor
+
+Point the `$schema` key of a file at the schema on a CDN, and VS Code and most other editors underline mistakes while you type:
+
+```json en.json
+{
+  "$schema": "https://unpkg.com/@audioguidekit/schema@1/dist/schemas/tour-file.schema.json",
+  "id": "barcelona",
+  "language": "en"
+}
+```
+
+Inside the player repo the files already point at local copies, so you don't need this there.
+
+## Versions
+
+The package follows [semver](https://semver.org). A change that would break existing manifests raises `SCHEMA_VERSION` and is a new **major** version of the package. Everything else (new optional fields, new stop types, better help texts) comes in minor and patch versions, so `^1` is safe to depend on.
+
+The package has its own version numbers, separate from the player's. New versions are listed on [Updates](/updates) and on [npm](https://www.npmjs.com/package/@audioguidekit/schema).
+
+## Related
+
+- [Manifest mode](/docs/deployment/manifest-mode): the format the package validates, and how the player loads it.
+- [Stop types](/docs/content/stop-types): what each stop type looks like in a tour file.

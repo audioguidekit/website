@@ -192,11 +192,4 @@ It contains:
 - **`validateManifest`**, which runs the schema and the extra rules above.
 - **Field descriptions** (`FIELD_CATALOG`): label, group, control, default, options and help text for every field the schemas accept, so an editor can be generated from them.
 
-<Note>
-The package is not on npm yet. To use it from another project, depend on the folder and build it once:
-
-```bash
-# in your package.json: "@audioguidekit/schema": "file:../player-react/packages/schema"
-bun run --cwd ../player-react/packages/schema build
-```
-</Note>
+Install it with `npm install @audioguidekit/schema`. Everything about it, including building an editor from the field descriptions, is on the [Schema package](/docs/reference/schema-package) page.
